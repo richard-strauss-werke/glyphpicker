@@ -1,18 +1,13 @@
 package com.aerhard.oxygen.plugin.glyphpicker.controller;
 
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import javax.imageio.ImageIO;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
@@ -30,7 +25,6 @@ import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.auth.BasicScheme;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.util.EntityUtils;
 import org.apache.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -43,7 +37,7 @@ public class DataStore {
     private static final Logger LOGGER = Logger.getLogger(DataStore.class
             .getName());
 
-    private Boolean isLocalFile(String path) {
+    public static Boolean isLocalFile(String path) {
         return (!path.matches("^\\w+:\\/\\/.*"));
     }
 
@@ -56,28 +50,6 @@ public class DataStore {
             data = glyphList.toArray(data);
         }
         return data;
-    }
-
-    public BufferedImage loadImage(String path, String relativePath) {
-        BufferedImage image = null;
-        if (relativePath != null) {
-            if (isLocalFile(path)) {
-                File a = new File(path);
-                File parentFolder = new File(a.getParent());
-                File b = new File(parentFolder, relativePath);
-                image = getImageFromFile(b);
-            } else {
-                try {
-                    String imagePath = (new URL(new URL(path), relativePath))
-                            .toString();
-                    image = getImageFromUrl("guest", "guest", imagePath);
-                } catch (MalformedURLException e) {
-                    LOGGER.info(e);
-                }
-
-            }
-        }
-        return image;
     }
 
     public List<GlyphModel> loadDataFromUrl(String user, String password,
@@ -236,50 +208,5 @@ public class DataStore {
         }
         return glyphList;
     }
-
-    public BufferedImage getImageFromFile(File file) {
-        BufferedImage image = null;
-        try {
-            image = ImageIO.read(file);
-        } catch (IOException e) {
-            LOGGER.info(e);
-        }
-        return image;
-    };
-
-    public BufferedImage getImageFromUrl(String user, String password,
-            String url) {
-        HttpResponse response = null;
-        BufferedImage image = null;
-        DefaultHttpClient httpclient = new DefaultHttpClient();
-        try {
-            HttpGet httpGet = new HttpGet(url);
-            if (httpGet != null) {
-                httpGet.addHeader(BasicScheme.authenticate(
-                        new UsernamePasswordCredentials(user, password),
-                        "UTF-8", false));
-                response = httpclient.execute(httpGet);
-
-                StatusLine statusLine = response.getStatusLine();
-                int statusCode = statusLine.getStatusCode();
-                if (statusCode == 200) {
-                    HttpEntity entity = response.getEntity();
-                    byte[] bytes = EntityUtils.toByteArray(entity);
-                    image = ImageIO.read(new ByteArrayInputStream(bytes));
-                    return image;
-                } else {
-                    throw new IOException(
-                            "Download failed, HTTP response code " + statusCode
-                                    + " - " + statusLine.getReasonPhrase());
-                }
-
-            }
-        } catch (IOException e) {
-            LOGGER.info("Error loading image from \"" + url + "\"", e);
-        } finally {
-            httpclient.getConnectionManager().shutdown();
-        }
-        return image;
-    };
 
 }
