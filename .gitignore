@@ -1,5 +1,7 @@
 target/*
 !target/update
 /target
+
 .project
 .classpath
+.settings
