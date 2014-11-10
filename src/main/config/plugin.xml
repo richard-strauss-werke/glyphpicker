@@ -3,7 +3,7 @@
 <plugin
     id="com.aerhard.oxygen.plugin.glyphpicker"
     name="${project.name}"
-    description="Glyph Picker Plugin for TEI"
+    description="GlyphPicker Plugin for TEI"
     version="${project.version}"
     vendor="Alexander Erhard"
     class="com.aerhard.oxygen.plugin.glyphpicker.GlyphPickerPlugin"

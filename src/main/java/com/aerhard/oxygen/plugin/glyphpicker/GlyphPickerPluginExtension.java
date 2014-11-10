@@ -84,7 +84,7 @@ public class GlyphPickerPluginExtension implements
                     panel.setMinimumSize(new Dimension(200, 200));
 
                     viewInfo.setComponent(panel);
-                    viewInfo.setTitle("Glyph Picker Plugin");
+                    viewInfo.setTitle("GlyphPicker Plugin");
 
                     // TODO add icon
                     // viewInfo.setIcon(Icons

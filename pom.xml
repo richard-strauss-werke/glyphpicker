@@ -201,5 +201,5 @@
 		</profile>
 	</profiles>
 	<artifactId>glyphpicker</artifactId>
-	<name>Glyph Picker Plugin</name>
+	<name>GlyphPicker Plugin</name>
 </project>

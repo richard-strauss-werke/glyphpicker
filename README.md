@@ -1,2 +1,2 @@
-Glyph Picker Plugin for oXygen
+GlyphPicker Plugin for oXygen
 ========

@@ -43,7 +43,7 @@ public class UITest {
         when(workspace.getPreferencesDirectory()).thenReturn("/Users/Ahlse/Desktop/gBankImages");
         
 
-        JFrame frame = new JFrame("Test");
+        JFrame frame = new JFrame("UI Test");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         controller = new MainController(workspace);
