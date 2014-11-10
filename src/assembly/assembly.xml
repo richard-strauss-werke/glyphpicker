@@ -27,4 +27,10 @@
 			<outputDirectory>/</outputDirectory>
 		</file>
 	</files>
+	<fileSets>
+	   <fileSet>
+	       <directory>target/dependency-jars</directory>
+	       <outputDirectory>/lib</outputDirectory>
+	   </fileSet>
+	</fileSets>
 </assembly>
