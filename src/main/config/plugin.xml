@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plugin SYSTEM "../plugin.dtd">
+<plugin
+    id="com.aerhard.oxygen.plugin.glyphpicker"
+    name="${project.name}"
+    description="Glyph Picker Plugin for TEI"
+    version="${project.version}"
+    vendor="Alexander Erhard"
+    class="com.aerhard.oxygen.plugin.glyphpicker.GlyphPickerPlugin"
+    classLoaderType="preferReferencedResources">
+    <runtime>
+        <library name="lib/org.eclipse.persistence.antlr-2.5.0.jar"/>
+        <library name="lib/org.eclipse.persistence.asm-2.5.0.jar"/>
+        <library name="lib/org.eclipse.persistence.core-2.5.0.jar"/>
+        <library name="lib/org.eclipse.persistence.moxy-2.5.0.jar"/>
+        <library name="lib/${project.build.finalName}.jar"/>
+    </runtime>
+    <extension type="WorkspaceAccess" 
+    class="com.aerhard.oxygen.plugin.glyphpicker.GlyphPickerPluginExtension"/>
+    <view id="GlyphPicker" initialSide="EAST" initialRow="0"/>
+</plugin> 
