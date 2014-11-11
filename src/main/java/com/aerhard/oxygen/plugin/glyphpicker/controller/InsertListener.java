@@ -4,6 +4,6 @@ import com.aerhard.oxygen.plugin.glyphpicker.model.tei.GlyphModel;
 
 public interface InsertListener {
 
-    public void insert(GlyphModel model);
+    void insert(GlyphModel model);
 
 }

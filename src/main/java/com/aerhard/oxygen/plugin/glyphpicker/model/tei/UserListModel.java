@@ -1,6 +1,7 @@
 package com.aerhard.oxygen.plugin.glyphpicker.model.tei;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.AbstractListModel;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -14,9 +15,9 @@ public class UserListModel extends AbstractListModel<GlyphModel> {
     private static final long serialVersionUID = 1L;
 
     @XmlElement(name = "char")
-    private ArrayList<GlyphModel> data = new ArrayList<GlyphModel>();
+    private List<GlyphModel> data = new ArrayList<GlyphModel>();
 
-    public UserListModel(ArrayList<GlyphModel> arrayList) {
+    public UserListModel(List<GlyphModel> arrayList) {
         data = arrayList;
     }
 

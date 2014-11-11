@@ -16,7 +16,6 @@
 
 package com.aerhard.oxygen.plugin.glyphpicker;
 
-import java.awt.Dimension;
 import javax.swing.JPanel;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Position;
@@ -80,8 +79,7 @@ public class GlyphPickerPluginExtension implements
                 if ("GlyphPicker".equals(viewInfo.getViewID())) {
 
                     JPanel panel = mainController.getMainPanel();
-
-                    panel.setMinimumSize(new Dimension(200, 200));
+                    mainController.loadData();
 
                     viewInfo.setComponent(panel);
                     viewInfo.setTitle("GlyphPicker");

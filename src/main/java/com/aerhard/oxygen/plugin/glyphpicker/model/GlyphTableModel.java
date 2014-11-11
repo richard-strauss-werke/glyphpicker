@@ -31,8 +31,9 @@ public class GlyphTableModel extends AbstractTableModel {
         String range;
         for (int i=0,j=data.length;i<j;i++) {
             range = ((GlyphModel)data[i][0]).getRange();
-            if (!ranges.contains(range))
-            ranges.add(range);
+            if (!ranges.contains(range)) {
+                ranges.add(range);    
+            }
         }
         return ranges;
     }
@@ -43,8 +44,9 @@ public class GlyphTableModel extends AbstractTableModel {
         for (int i=0,j=data.length;i<j;i++) {
             itemClasses = ((GlyphModel)data[i][0]).getClasses();
             for (String itemClass : itemClasses) {
-                if (!classes.contains(itemClass))
+                if (!classes.contains(itemClass)) {
                     classes.add(itemClass);
+                }
             }
         }
         return classes;

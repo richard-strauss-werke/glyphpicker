@@ -52,47 +52,52 @@ public class DataStore {
         return data;
     }
 
+    
+    private class GlyphResponseHandler implements ResponseHandler<List<GlyphModel>> {
+
+        private String url;
+        
+        public GlyphResponseHandler(String url) {
+            this.url = url;
+        }
+        
+        @Override
+        public List<GlyphModel> handleResponse(final HttpResponse response)
+                throws IOException {
+            StatusLine statusLine = response.getStatusLine();
+            HttpEntity entity = response.getEntity();
+            if (statusLine.getStatusCode() >= 300) {
+                throw new HttpResponseException(statusLine.getStatusCode(),
+                        statusLine.getReasonPhrase());
+            }
+            if (entity == null) {
+                throw new ClientProtocolException(
+                        "Response contains no content");
+            }
+
+            InputStream inputStream = entity.getContent();
+
+            String contentType = response.getFirstHeader("Content-Type")
+                    .getValue();
+
+            if (contentType.indexOf("xml") > -1) {
+                return parseXml(inputStream, url);
+            } else {
+                return parseJson(inputStream, url);
+            }
+        }
+        
+    }
+    
     public List<GlyphModel> loadDataFromUrl(String user, String password,
             final String url) {
-
-        ResponseHandler<List<GlyphModel>> rh = new ResponseHandler<List<GlyphModel>>() {
-            @Override
-            public List<GlyphModel> handleResponse(final HttpResponse response)
-                    throws IOException {
-                StatusLine statusLine = response.getStatusLine();
-                HttpEntity entity = response.getEntity();
-                if (statusLine.getStatusCode() >= 300) {
-                    throw new HttpResponseException(statusLine.getStatusCode(),
-                            statusLine.getReasonPhrase());
-                }
-                if (entity == null) {
-                    throw new ClientProtocolException(
-                            "Response contains no content");
-                }
-
-                InputStream inputStream = entity.getContent();
-
-                String contentType = response.getFirstHeader("Content-Type")
-                        .getValue();
-
-                if (contentType.indexOf("xml") > -1) {
-                    return parseXml(inputStream, url);
-                } else {
-                    return parseJson(inputStream, url);
-                }
-            }
-        };
-
         DefaultHttpClient httpclient = new DefaultHttpClient();
         try {
             HttpGet httpGet = new HttpGet(url);
-            if (httpGet != null) {
-                httpGet.addHeader(BasicScheme.authenticate(
-                        new UsernamePasswordCredentials(user, password),
-                        "UTF-8", false));
-
-                return httpclient.execute(httpGet, rh);
-            }
+            httpGet.addHeader(BasicScheme.authenticate(
+                    new UsernamePasswordCredentials(user, password), "UTF-8",
+                    false));
+            return httpclient.execute(httpGet, new GlyphResponseHandler(url));
         } catch (IOException e) {
             LOGGER.info("Error loading data from \"" + url + "\"", e);
         } finally {

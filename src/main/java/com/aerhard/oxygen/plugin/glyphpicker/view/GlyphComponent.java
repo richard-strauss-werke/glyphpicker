@@ -34,15 +34,12 @@ public class GlyphComponent extends JLabel {
 
     private static final Logger LOGGER = Logger.getLogger(GlyphComponent.class
             .getName());
-    
+
     private GlyphModel model;
     private static final int GLYPH_SIZE = 50;
     private static final int GLYPH_BORDER = 10;
 
-    private SwingWorker<GlyphIcon, Void> worker = null;
-
-    public GlyphComponent(GlyphModel model, DataStore dataStore, Boolean text) {
-
+    public GlyphComponent(GlyphModel model, Boolean text) {
         this.model = model;
         if (text) {
             setText(formatText(model));
@@ -50,17 +47,9 @@ public class GlyphComponent extends JLabel {
         setIconTextGap(20);
         setBorder(BorderFactory.createEmptyBorder(GLYPH_BORDER, GLYPH_BORDER,
                 GLYPH_BORDER, GLYPH_BORDER));
-
-        loadIcon();
     }
 
     public GlyphComponent() {
-    }
-
-    public void checkIcon() {
-        if (getIcon() == null && worker == null) {
-            loadIcon();
-        }
     }
 
     private JComponent container = null;
@@ -69,39 +58,39 @@ public class GlyphComponent extends JLabel {
         this.container = table;
     }
 
-    private void loadIcon() {
-
-        // LOGGER.info("Starting image loading worker for " +
-        // model.getCharName());
-
-        worker = new SwingWorker<GlyphIcon, Void>() {
-            public GlyphIcon doInBackground() throws IOException {
-                BufferedImage bi = loadImage(model.getBaseUrl(),
-                        model.getUrl());
-                if (bi != null) {
-                    return new GlyphIcon(scaleToBound(bi, GLYPH_SIZE,
-                            GLYPH_SIZE), GLYPH_SIZE);
-                }
-                return null;
+    
+    private class IconLoader extends SwingWorker<GlyphIcon, Void> {
+        
+        @Override
+        public GlyphIcon doInBackground() throws IOException {
+            BufferedImage bi = loadImage(model.getBaseUrl(), model.getUrl());
+            if (bi != null) {
+                return new GlyphIcon(scaleToBound(bi, GLYPH_SIZE,
+                        GLYPH_SIZE), GLYPH_SIZE);
             }
+            return null;
+        }
 
-            public void done() {
-                try {
-                    GlyphIcon icon = get();
-                    if (icon != null) {
-                        setIcon(icon);
-                        if (container != null) {
-                            // LOGGER.info("REPAINT " + model.getCharName());
-                            container.repaint();
-                        }
+        @Override
+        public void done() {
+            try {
+                GlyphIcon icon = get();
+                if (icon != null) {
+                    setIcon(icon);
+                    if (container != null) {
+                        // LOGGER.info("REPAINT " + model.getCharName());
+                        container.repaint();
                     }
-                } catch (Exception ex) {
-                    ex.printStackTrace();
                 }
+            } catch (Exception e) {
+                LOGGER.warn(e);
             }
-        };
+        }
+    }
+    
+    public void loadIcon() {
+        IconLoader worker = new IconLoader();
         worker.execute();
-
     }
 
     private String formatText(GlyphModel model) {
@@ -174,7 +163,7 @@ public class GlyphComponent extends JLabel {
         return image.getScaledInstance(resultWidth, resultHeight,
                 Image.SCALE_AREA_AVERAGING);
     }
-    
+
     public BufferedImage loadImage(String path, String relativePath) {
         BufferedImage image = null;
         if (relativePath != null) {
@@ -195,8 +184,8 @@ public class GlyphComponent extends JLabel {
             }
         }
         return image;
-    }    
-    
+    }
+
     public BufferedImage getImageFromFile(File file) {
         BufferedImage image = null;
         try {
@@ -214,25 +203,21 @@ public class GlyphComponent extends JLabel {
         DefaultHttpClient httpclient = new DefaultHttpClient();
         try {
             HttpGet httpGet = new HttpGet(url);
-            if (httpGet != null) {
-                httpGet.addHeader(BasicScheme.authenticate(
-                        new UsernamePasswordCredentials(user, password),
-                        "UTF-8", false));
-                response = httpclient.execute(httpGet);
+            httpGet.addHeader(BasicScheme.authenticate(
+                    new UsernamePasswordCredentials(user, password), "UTF-8",
+                    false));
+            response = httpclient.execute(httpGet);
 
-                StatusLine statusLine = response.getStatusLine();
-                int statusCode = statusLine.getStatusCode();
-                if (statusCode == 200) {
-                    HttpEntity entity = response.getEntity();
-                    byte[] bytes = EntityUtils.toByteArray(entity);
-                    image = ImageIO.read(new ByteArrayInputStream(bytes));
-                    return image;
-                } else {
-                    throw new IOException(
-                            "Download failed, HTTP response code " + statusCode
-                                    + " - " + statusLine.getReasonPhrase());
-                }
-
+            StatusLine statusLine = response.getStatusLine();
+            int statusCode = statusLine.getStatusCode();
+            if (statusCode == 200) {
+                HttpEntity entity = response.getEntity();
+                byte[] bytes = EntityUtils.toByteArray(entity);
+                image = ImageIO.read(new ByteArrayInputStream(bytes));
+                return image;
+            } else {
+                throw new IOException("Download failed, HTTP response code "
+                        + statusCode + " - " + statusLine.getReasonPhrase());
             }
         } catch (IOException e) {
             LOGGER.info("Error loading image from \"" + url + "\"", e);
@@ -241,6 +226,5 @@ public class GlyphComponent extends JLabel {
         }
         return image;
     };
-
 
 }

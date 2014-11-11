@@ -22,6 +22,7 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.ScrollPaneConstants;
 
+import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
@@ -43,12 +44,22 @@ public class MainPanel extends JPanel {
     // private TableFilterHeader tableFilter;
     private JList<GlyphModel> userList;
     private JTabbedPane tabbedPane;
-    private JScrollPane scrollPane;
     private AutoCompletionComboBox rangeCombo;
     private AutoCompletionComboBox classCombo;
 
     public MainPanel() {
-        init();
+        setLayout(new BorderLayout(0, 0));
+
+        tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+        tabbedPane.setBorder(new EmptyBorder(8, 8, 8, 8));
+        add(tabbedPane, BorderLayout.CENTER);
+
+        createUserListPanel();
+        createBrowserPanel();
+
+        setMinimumSize(new Dimension(200, 200));
+
+        setLoadingMask();
     }
 
     public InfiniteProgressPanel getLoadingMask() {
@@ -61,49 +72,7 @@ public class MainPanel extends JPanel {
         // setGlassPane(loadingMask);
     }
 
-    private void init() {
-
-        setLayout(new BorderLayout(0, 0));
-
-        tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-        tabbedPane.setBorder(new EmptyBorder(8, 8, 8, 8));
-        add(tabbedPane, BorderLayout.CENTER);
-
-        JPanel userPalettePanel = new JPanel();
-        tabbedPane.addTab(null, null, userPalettePanel, null);
-        tabbedPane.setTabComponentAt(0, new JLabel("User Collection"));
-        userPalettePanel.setLayout(new BorderLayout(0, 0));
-
-        JPanel paletteTablePanel = new JPanel();
-        paletteTablePanel.setBorder(new EmptyBorder(11, 8, 7, 8));
-        userPalettePanel.add(paletteTablePanel);
-        paletteTablePanel.setLayout(new BorderLayout(0, 0));
-
-        userList = new JList<GlyphModel>();
-        userList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        userList.setCellRenderer(new ListItemRenderer());
-
-        scrollPane = new JScrollPane(userList);
-        scrollPane
-                .setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        paletteTablePanel.add(scrollPane);
-
-        JPanel userButtonPanel = new JPanel();
-        userPalettePanel.add(userButtonPanel, BorderLayout.SOUTH);
-        userButtonPanel.setBorder(new MatteBorder(1, 0, 0, 0,
-                (Color) Color.GRAY));
-
-        userButtonRemove = new JButton("Remove from Collection");
-        userButtonRemove.setEnabled(false);
-        userButtonPanel.add(userButtonRemove);
-
-        userButtonInsert = new JButton("Insert XML");
-        userButtonInsert.setEnabled(false);
-        userButtonPanel.add(userButtonInsert);
-
-        // userButtonClose = new JButton("Close");
-        // userButtonPanel.add(userButtonClose);
-
+    private void createBrowserPanel() {
         JPanel browserPanel = new JPanel();
         tabbedPane.addTab(null, null, browserPanel, null);
         tabbedPane.setTabComponentAt(1, new JLabel("All Glyphs"));
@@ -113,87 +82,84 @@ public class MainPanel extends JPanel {
         dataSourcePanel.setBorder(new EmptyBorder(8, 8, 0, 8));
         browserPanel.add(dataSourcePanel, BorderLayout.NORTH);
         GridBagLayout gbl_dataSourcePanel = new GridBagLayout();
-        gbl_dataSourcePanel.columnWidths = new int[]{62, 199, 55, 0};
-        gbl_dataSourcePanel.rowHeights = new int[] {0, 0};
-        gbl_dataSourcePanel.columnWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
-        gbl_dataSourcePanel.rowWeights = new double[]{0.0, Double.MIN_VALUE};
+        gbl_dataSourcePanel.columnWidths = new int[] { 62, 199, 55, 0 };
+        gbl_dataSourcePanel.rowHeights = new int[] { 0, 0 };
+        gbl_dataSourcePanel.columnWeights = new double[] { 0.0, 0.0, 0.0,
+                Double.MIN_VALUE };
+        gbl_dataSourcePanel.rowWeights = new double[] { 0.0, Double.MIN_VALUE };
         dataSourcePanel.setLayout(gbl_dataSourcePanel);
-                        
-                                JLabel dataSourceLabel = new JLabel("Data source:");
-                                GridBagConstraints gbc_dataSourceLabel = new GridBagConstraints();
-                                gbc_dataSourceLabel.anchor = GridBagConstraints.WEST;
-                                gbc_dataSourceLabel.fill = GridBagConstraints.VERTICAL;
-                                gbc_dataSourceLabel.insets = new Insets(0, 0, 0, 5);
-                                gbc_dataSourceLabel.gridx = 0;
-                                gbc_dataSourceLabel.gridy = 0;
-                                dataSourcePanel.add(dataSourceLabel, gbc_dataSourceLabel);
-                
-                        pathCombo = new JComboBox<String>();
-                        pathCombo.setEditable(true);
-                        GridBagConstraints gbc_pathCombo = new GridBagConstraints();
-                        gbc_pathCombo.weightx = 1.0;
-                        gbc_pathCombo.fill = GridBagConstraints.BOTH;
-                        gbc_pathCombo.insets = new Insets(5, 0, 5, 5);
-                        gbc_pathCombo.gridx = 1;
-                        gbc_pathCombo.gridy = 0;
-                        dataSourcePanel.add(pathCombo, gbc_pathCombo);
-        
-                browserButtonLoad = new JButton("Load");
-                GridBagConstraints gbc_browserButtonLoad = new GridBagConstraints();
-                gbc_browserButtonLoad.insets = new Insets(3, 0, 3, 0);
-                gbc_browserButtonLoad.fill = GridBagConstraints.VERTICAL;
-                gbc_browserButtonLoad.anchor = GridBagConstraints.WEST;
-                gbc_browserButtonLoad.gridx = 2;
-                gbc_browserButtonLoad.gridy = 0;
-                dataSourcePanel.add(browserButtonLoad, gbc_browserButtonLoad);
 
-                JLabel rangeLabel = new JLabel("Range:");
-                GridBagConstraints gbc_rangeLabel = new GridBagConstraints();
-                gbc_rangeLabel.anchor = GridBagConstraints.WEST;
-                gbc_rangeLabel.fill = GridBagConstraints.VERTICAL;
-                gbc_rangeLabel.insets = new Insets(0, 0, 0, 5);
-                gbc_rangeLabel.gridx = 0;
-                gbc_rangeLabel.gridy = 1;
-                dataSourcePanel.add(rangeLabel, gbc_rangeLabel);
-                
-                rangeCombo = new AutoCompletionComboBox();
-                rangeCombo.setStrict(false);
-                GridBagConstraints gbc_rangeCombo = new GridBagConstraints();
-                gbc_rangeCombo.insets = new Insets(5, 0, 5, 5);
-                gbc_rangeCombo.anchor = GridBagConstraints.NORTH;
-                gbc_rangeCombo.fill = GridBagConstraints.HORIZONTAL;
-                gbc_rangeCombo.gridx = 1;
-                gbc_rangeCombo.gridy = 1;
-                dataSourcePanel.add(rangeCombo, gbc_rangeCombo);
-                
-                JLabel classLabel = new JLabel("Class:");
-                GridBagConstraints gbc_classLabel = new GridBagConstraints();
-                gbc_classLabel.anchor = GridBagConstraints.WEST;
-                gbc_classLabel.fill = GridBagConstraints.VERTICAL;
-                gbc_classLabel.insets = new Insets(0, 0, 0, 5);
-                gbc_classLabel.gridx = 0;
-                gbc_classLabel.gridy = 2;
-                dataSourcePanel.add(classLabel, gbc_classLabel);
-                
-                classCombo = new AutoCompletionComboBox();
-                classCombo.setStrict(false);
-                GridBagConstraints gbc_classCombo = new GridBagConstraints();
-                gbc_classCombo.insets = new Insets(5, 0, 5, 5);
-                gbc_classCombo.anchor = GridBagConstraints.NORTH;
-                gbc_classCombo.fill = GridBagConstraints.HORIZONTAL;
-                gbc_classCombo.gridx = 1;
-                gbc_classCombo.gridy = 2;
-                dataSourcePanel.add(classCombo, gbc_classCombo);
+        JLabel dataSourceLabel = new JLabel("Data source:");
+        GridBagConstraints gbc_dataSourceLabel = new GridBagConstraints();
+        gbc_dataSourceLabel.anchor = GridBagConstraints.WEST;
+        gbc_dataSourceLabel.fill = GridBagConstraints.VERTICAL;
+        gbc_dataSourceLabel.insets = new Insets(0, 0, 0, 5);
+        gbc_dataSourceLabel.gridx = 0;
+        gbc_dataSourceLabel.gridy = 0;
+        dataSourcePanel.add(dataSourceLabel, gbc_dataSourceLabel);
 
+        pathCombo = new JComboBox<String>();
+        pathCombo.setEditable(true);
+        GridBagConstraints gbc_pathCombo = new GridBagConstraints();
+        gbc_pathCombo.weightx = 1.0;
+        gbc_pathCombo.fill = GridBagConstraints.BOTH;
+        gbc_pathCombo.insets = new Insets(5, 0, 5, 5);
+        gbc_pathCombo.gridx = 1;
+        gbc_pathCombo.gridy = 0;
+        dataSourcePanel.add(pathCombo, gbc_pathCombo);
 
-                
-                
+        browserButtonLoad = new JButton("Load");
+        GridBagConstraints gbc_browserButtonLoad = new GridBagConstraints();
+        gbc_browserButtonLoad.insets = new Insets(3, 0, 3, 0);
+        gbc_browserButtonLoad.fill = GridBagConstraints.VERTICAL;
+        gbc_browserButtonLoad.anchor = GridBagConstraints.WEST;
+        gbc_browserButtonLoad.gridx = 2;
+        gbc_browserButtonLoad.gridy = 0;
+        dataSourcePanel.add(browserButtonLoad, gbc_browserButtonLoad);
+
+        JLabel rangeLabel = new JLabel("Range:");
+        GridBagConstraints gbc_rangeLabel = new GridBagConstraints();
+        gbc_rangeLabel.anchor = GridBagConstraints.WEST;
+        gbc_rangeLabel.fill = GridBagConstraints.VERTICAL;
+        gbc_rangeLabel.insets = new Insets(0, 0, 0, 5);
+        gbc_rangeLabel.gridx = 0;
+        gbc_rangeLabel.gridy = 1;
+        dataSourcePanel.add(rangeLabel, gbc_rangeLabel);
+
+        rangeCombo = new AutoCompletionComboBox();
+        rangeCombo.setStrict(false);
+        GridBagConstraints gbc_rangeCombo = new GridBagConstraints();
+        gbc_rangeCombo.insets = new Insets(5, 0, 5, 5);
+        gbc_rangeCombo.anchor = GridBagConstraints.NORTH;
+        gbc_rangeCombo.fill = GridBagConstraints.HORIZONTAL;
+        gbc_rangeCombo.gridx = 1;
+        gbc_rangeCombo.gridy = 1;
+        dataSourcePanel.add(rangeCombo, gbc_rangeCombo);
+
+        JLabel classLabel = new JLabel("Class:");
+        GridBagConstraints gbc_classLabel = new GridBagConstraints();
+        gbc_classLabel.anchor = GridBagConstraints.WEST;
+        gbc_classLabel.fill = GridBagConstraints.VERTICAL;
+        gbc_classLabel.insets = new Insets(0, 0, 0, 5);
+        gbc_classLabel.gridx = 0;
+        gbc_classLabel.gridy = 2;
+        dataSourcePanel.add(classLabel, gbc_classLabel);
+
+        classCombo = new AutoCompletionComboBox();
+        classCombo.setStrict(false);
+        GridBagConstraints gbc_classCombo = new GridBagConstraints();
+        gbc_classCombo.insets = new Insets(5, 0, 5, 5);
+        gbc_classCombo.anchor = GridBagConstraints.NORTH;
+        gbc_classCombo.fill = GridBagConstraints.HORIZONTAL;
+        gbc_classCombo.gridx = 1;
+        gbc_classCombo.gridy = 2;
+        dataSourcePanel.add(classCombo, gbc_classCombo);
+
         JPanel tablePanel = new JPanel();
         browserPanel.add(tablePanel, BorderLayout.CENTER);
         tablePanel.setBorder(new EmptyBorder(11, 8, 7, 4));
         tablePanel.setLayout(new BorderLayout(0, 12));
 
-        
         table = new GlyphTable();
         table.setFillsViewportHeight(true);
 
@@ -217,14 +183,40 @@ public class MainPanel extends JPanel {
 
         browserButtonInsert = new JButton("Insert XML");
         browserButtonPanel.add(browserButtonInsert);
+    }
 
-        // browserButtonClose = new JButton("Close");
-        // browserButtonPanel.add(browserButtonClose);
+    private void createUserListPanel() {
+        JPanel userPalettePanel = new JPanel();
+        tabbedPane.addTab(null, null, userPalettePanel, null);
+        tabbedPane.setTabComponentAt(0, new JLabel("User Collection"));
+        userPalettePanel.setLayout(new BorderLayout(0, 0));
 
-        enableBrowserButtons(false);
+        JPanel paletteTablePanel = new JPanel();
+        paletteTablePanel.setBorder(new EmptyBorder(11, 8, 7, 8));
+        userPalettePanel.add(paletteTablePanel);
+        paletteTablePanel.setLayout(new BorderLayout(0, 0));
 
-        setLoadingMask();
+        userList = new JList<GlyphModel>();
+        userList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        userList.setCellRenderer(new ListItemRenderer());
 
+        JScrollPane scrollPane = new JScrollPane(userList);
+        scrollPane
+                .setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        paletteTablePanel.add(scrollPane);
+
+        JPanel userButtonPanel = new JPanel();
+        userPalettePanel.add(userButtonPanel, BorderLayout.SOUTH);
+        userButtonPanel.setBorder(new MatteBorder(1, 0, 0, 0,
+                (Color) Color.GRAY));
+
+        userButtonRemove = new JButton("Remove from Collection");
+        userButtonRemove.setEnabled(false);
+        userButtonPanel.add(userButtonRemove);
+
+        userButtonInsert = new JButton("Insert XML");
+        userButtonInsert.setEnabled(false);
+        userButtonPanel.add(userButtonInsert);
     }
 
     public void enableBrowserButtons(Boolean enable) {
@@ -263,14 +255,6 @@ public class MainPanel extends JPanel {
         return userButtonRemove;
     }
 
-    // public JButton getUserButtonClose() {
-    // return userButtonClose;
-    // }
-    //
-    // public JButton getBrowserButtonClose() {
-    // return browserButtonClose;
-    // }
-
     public JComboBox<String> getPathCombo() {
         return pathCombo;
     }
@@ -279,10 +263,6 @@ public class MainPanel extends JPanel {
         return browserButtonLoad;
     }
 
-    // public TableFilterHeader getTableFilter() {
-    // return tableFilter;
-    // }
-
     public JList<GlyphModel> getUserList() {
         return userList;
     }
@@ -290,7 +270,7 @@ public class MainPanel extends JPanel {
     public JTabbedPane getTabbedPane() {
         return tabbedPane;
     }
-    
+
     public AutoCompletionComboBox getRangeFilterCombo() {
         return rangeCombo;
     }
@@ -299,5 +279,4 @@ public class MainPanel extends JPanel {
         return classCombo;
     }
 
-    
 }

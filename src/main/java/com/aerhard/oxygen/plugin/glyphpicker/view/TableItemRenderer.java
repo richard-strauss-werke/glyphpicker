@@ -6,14 +6,11 @@ import javax.swing.table.TableCellRenderer;
 
 import java.awt.Component;
 
-import com.aerhard.oxygen.plugin.glyphpicker.controller.DataStore;
 import com.aerhard.oxygen.plugin.glyphpicker.model.tei.GlyphModel;
 
 public class TableItemRenderer extends JLabel implements TableCellRenderer {
 
     private static final long serialVersionUID = 1L;
-
-    private DataStore dataStore = new DataStore();
 
     public TableItemRenderer() {
     }
@@ -27,12 +24,12 @@ public class TableItemRenderer extends JLabel implements TableCellRenderer {
         } else {
             GlyphModel model = (GlyphModel) value;
             if (model.getComponent() == null) {
-                c = new GlyphComponent(model, dataStore, true);
+                c = new GlyphComponent(model, true);
+                c.loadIcon();
                 c.setContainer(table);
                 model.setComponent(c);
             } else {
                 c = model.getComponent();
-                c.checkIcon();
             }
         }
 

@@ -65,6 +65,8 @@ public class MainController {
         userListController.load();
 
         mainPanel = new MainPanel();
+        mainPanel.enableBrowserButtons(false);
+
         userList = mainPanel.getUserList();
         table = mainPanel.getTable();
         glyphTableModel = new GlyphTableModel();
@@ -89,8 +91,6 @@ public class MainController {
 
         setBrowserListeners();
         setUserListListeners();
-
-        loadData();
 
     }
 
@@ -161,8 +161,9 @@ public class MainController {
     }
 
     public void fireInsertGlyph(GlyphModel model) {
-        for (InsertListener il : listeners)
+        for (InsertListener il : listeners) {
             il.insert(model);
+        }
     }
 
     private void insertGlyphFromBrowser() {
@@ -286,17 +287,14 @@ public class MainController {
                 new ListSelectionListener() {
                     @Override
                     public void valueChanged(ListSelectionEvent event) {
-                        if (event.getValueIsAdjusting() == false) {
-                            int row = table.getSelectedRow();
-                            if (row == -1) {
+                        if (!event.getValueIsAdjusting()) {
+                            if (table.getSelectedRow() == -1) {
                                 mainPanel.enableBrowserButtons(false);
                             } else {
                                 mainPanel.enableBrowserButtons(true);
                             }
                         }
-
                     }
-
                 });
 
         table.addMouseListener(new MouseAdapter() {
@@ -342,9 +340,8 @@ public class MainController {
                 new ListSelectionListener() {
                     @Override
                     public void valueChanged(ListSelectionEvent event) {
-                        if (event.getValueIsAdjusting() == false) {
-                            int index = userList.getSelectedIndex();
-                            if (index == -1) {
+                        if (!event.getValueIsAdjusting()) {
+                            if (userList.getSelectedIndex() == -1) {
                                 mainPanel.enableUserButtons(false);
                             } else {
                                 mainPanel.enableUserButtons(true);
@@ -365,7 +362,7 @@ public class MainController {
         });
     }
 
-    private void loadData() {
+    public void loadData() {
 
         final String path = mainPanel.getPathCombo().getSelectedItem()
                 .toString();

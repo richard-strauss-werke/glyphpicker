@@ -1,6 +1,6 @@
 package com.aerhard.oxygen.plugin.glyphpicker.model;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.AbstractListModel;
 import javax.swing.ComboBoxModel;
@@ -21,10 +21,10 @@ public class PathComboModel extends AbstractListModel<String> implements
     @XmlTransient
     private Object selectedItem;
 
-    @XmlElement(name = "path", namespace = "")
-    private ArrayList<String> data;
+    @XmlElement(name = "path")
+    private List<String> data;
 
-    public PathComboModel(ArrayList<String> arrayList) {
+    public PathComboModel(List<String> arrayList) {
         data = arrayList;
         if (arrayList.size() > 0) {
             selectedItem = data.get(0);

@@ -10,7 +10,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Config {
 
     @XmlElement(name = "paths")
-    PathComboModel paths = null;
+    private PathComboModel paths = null;
 
     /**
      * @return the paths

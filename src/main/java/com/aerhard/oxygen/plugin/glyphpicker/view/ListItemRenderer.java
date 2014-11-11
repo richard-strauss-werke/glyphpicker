@@ -6,13 +6,10 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.ListCellRenderer;
 
-import com.aerhard.oxygen.plugin.glyphpicker.controller.DataStore;
 import com.aerhard.oxygen.plugin.glyphpicker.model.tei.GlyphModel;
 
 class ListItemRenderer extends JLabel implements ListCellRenderer<Object> {
     private static final long serialVersionUID = 1L;
-
-    private DataStore dataStore = new DataStore();
 
     public Component getListCellRendererComponent(JList<?> list, Object value,
             int index, boolean isSelected, boolean cellHasFocus) {
@@ -23,12 +20,12 @@ class ListItemRenderer extends JLabel implements ListCellRenderer<Object> {
         } else {
             GlyphModel model = (GlyphModel) value;
             if (model.getComponent() == null) {
-                c = new GlyphComponent(model, dataStore, true);
+                c = new GlyphComponent(model, true);
+                c.loadIcon();
                 c.setContainer(list);
                 model.setComponent(c);
             } else {
                 c = model.getComponent();
-                c.checkIcon();
             }
         }
 

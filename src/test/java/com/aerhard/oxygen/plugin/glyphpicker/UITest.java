@@ -65,6 +65,8 @@ public class UITest {
                 controller.getUserListController().save();
             }
         });
+        
+        controller.loadData();
 
         frame.pack();
         frame.setLocationRelativeTo(null);
