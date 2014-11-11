@@ -11,7 +11,6 @@ import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.SwingWorker;
@@ -40,7 +39,7 @@ public class GlyphComponent extends JLabel {
     private static final int GLYPH_SIZE = 50;
     private static final int GLYPH_BORDER = 10;
 
-    private SwingWorker<ImageIcon, Void> worker = null;
+    private SwingWorker<GlyphIcon, Void> worker = null;
 
     public GlyphComponent(GlyphModel model, DataStore dataStore, Boolean text) {
 
@@ -48,7 +47,7 @@ public class GlyphComponent extends JLabel {
         if (text) {
             setText(formatText(model));
         }
-        // setVerticalAlignment(SwingConstants.TOP);
+        setIconTextGap(20);
         setBorder(BorderFactory.createEmptyBorder(GLYPH_BORDER, GLYPH_BORDER,
                 GLYPH_BORDER, GLYPH_BORDER));
 
@@ -75,27 +74,22 @@ public class GlyphComponent extends JLabel {
         // LOGGER.info("Starting image loading worker for " +
         // model.getCharName());
 
-        worker = new SwingWorker<ImageIcon, Void>() {
-            public ImageIcon doInBackground() throws IOException {
-                ImageIcon icon = null;
-
+        worker = new SwingWorker<GlyphIcon, Void>() {
+            public GlyphIcon doInBackground() throws IOException {
                 BufferedImage bi = loadImage(model.getBaseUrl(),
                         model.getUrl());
                 if (bi != null) {
-                    icon = new ImageIcon(scaleToBound(bi, GLYPH_SIZE,
-                            GLYPH_SIZE));
+                    return new GlyphIcon(scaleToBound(bi, GLYPH_SIZE,
+                            GLYPH_SIZE), GLYPH_SIZE);
                 }
-
-                return icon;
+                return null;
             }
 
             public void done() {
                 try {
-                    ImageIcon icon = get();
+                    GlyphIcon icon = get();
                     if (icon != null) {
                         setIcon(icon);
-                        setIconTextGap(GLYPH_SIZE + 20
-                                - getIcon().getIconWidth());
                         if (container != null) {
                             // LOGGER.info("REPAINT " + model.getCharName());
                             container.repaint();
