@@ -12,12 +12,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JList;
+import javax.swing.RowFilter;
 import javax.swing.SwingWorker;
 import javax.swing.Timer;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.table.TableRowSorter;
 
 import org.apache.log4j.Logger;
 
@@ -29,6 +32,7 @@ import com.aerhard.oxygen.plugin.glyphpicker.model.tei.GlyphModel;
 import com.aerhard.oxygen.plugin.glyphpicker.model.tei.UserListModel;
 import com.aerhard.oxygen.plugin.glyphpicker.view.GlyphTable;
 import com.aerhard.oxygen.plugin.glyphpicker.view.MainPanel;
+import com.jidesoft.swing.AutoCompletionComboBox;
 
 public class MainController {
 
@@ -46,8 +50,11 @@ public class MainController {
     private UserListController userListController;
     private UserListModel userListModel;
     private Color tabForeground = null;
+    private AutoCompletionComboBox rangeCombo;
 
     private List<InsertListener> listeners = new ArrayList<InsertListener>();
+
+    private TableRowSorter<GlyphTableModel> sorter;
 
     public MainController(StandalonePluginWorkspace workspace) {
         configController = new ConfigController(workspace);
@@ -61,24 +68,23 @@ public class MainController {
         table = mainPanel.getTable();
         glyphTableModel = new GlyphTableModel();
 
+        // tableFilter = new TableFilterHeader(table, AutoChoices.ENABLED);
+
         dataStore = new DataStore();
 
         mainPanel.getTable().setModel(glyphTableModel);
-        // mainPanel.getTable().getColumnModel().getColumn(0)
-        // .setMinWidth(GLYPH_COL_WIDTH);
-        // mainPanel.getTable().getColumnModel().getColumn(0)
-        // .setMaxWidth(GLYPH_COL_WIDTH);
-        // mainPanel.getTable().getColumnModel().getColumn(1)
-        // .setMinWidth(CODEPOINT_COL_WIDTH);
-        // mainPanel.getTable().getColumnModel().getColumn(1)
-        // .setMaxWidth(CODEPOINT_COL_WIDTH);
 
+        sorter = new TableRowSorter<GlyphTableModel>(glyphTableModel);
+        table.setRowSorter(sorter);
+        
         pathComboModel = configController.getConfig().getPaths();
         mainPanel.getPathCombo().setModel(pathComboModel);
 
         userListModel = userListController.getUserListModel();
         mainPanel.getUserList().setModel(userListModel);
 
+        rangeCombo = mainPanel.getRangeFilterCombo();
+        
         setBrowserListeners();
         setUserListListeners();
 
@@ -86,6 +92,35 @@ public class MainController {
 
     }
 
+    private void newFilter(final String value) {
+
+        RowFilter<GlyphTableModel, Integer> glyphFilter = new RowFilter<GlyphTableModel, Integer>() {
+            public boolean include(
+                    Entry<? extends GlyphTableModel, ? extends Integer> entry) {
+
+                String entryRange = ((GlyphModel) entry.getValue(0)).getRange();
+
+                if (entryRange != null && entryRange.startsWith(value)) {
+                    return true;
+                }
+
+                return false;
+            }
+        };
+
+        sorter.setRowFilter(glyphFilter);
+
+    }
+
+    
+    @SuppressWarnings("unchecked")
+    private void updateRangeCombo() {
+        List<String> ranges = glyphTableModel.getUniqueRanges();
+        ranges.add(0, "");
+        String[] rangesArray = ranges.toArray(new String[ranges.size()]);
+        rangeCombo.setModel(new DefaultComboBoxModel<String>(rangesArray));
+    }
+    
     public void addListener(InsertListener toAdd) {
         listeners.add(toAdd);
     }
@@ -112,7 +147,7 @@ public class MainController {
             fireInsertGlyph(userListModel.getElementAt(index));
         }
     }
-    
+
     public void highlightTabButton(int index) {
         final Component tab = mainPanel.getTabbedPane()
                 .getTabComponentAt(index);
@@ -164,6 +199,15 @@ public class MainController {
                     }
                 });
 
+        
+        rangeCombo.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                newFilter(rangeCombo.getSelectedItem().toString());
+            }
+            
+        });
+        
         JButton btn;
 
         btn = mainPanel.getBrowserButtonAdd();
@@ -309,8 +353,10 @@ public class MainController {
                         glyphTableModel.clear();
                     } else {
                         glyphTableModel.setData(data);
+                        updateRangeCombo();
                         pathComboModel.setFirstItem(path);
                     }
+                    newFilter("");
                     setBaseUrl(path);
                     mainPanel.getLoadingMask().stop();
                     isLoading = false;
@@ -323,7 +369,6 @@ public class MainController {
         };
         worker.execute();
     }
-
 
     public ConfigController getConfigController() {
         return configController;
@@ -345,5 +390,4 @@ public class MainController {
         this.baseUrl = baseUrl;
     }
 
-    
 }

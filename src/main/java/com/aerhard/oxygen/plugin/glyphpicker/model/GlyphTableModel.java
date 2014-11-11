@@ -1,5 +1,7 @@
 package com.aerhard.oxygen.plugin.glyphpicker.model;
 
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
 import com.aerhard.oxygen.plugin.glyphpicker.model.tei.GlyphModel;
@@ -21,6 +23,17 @@ public class GlyphTableModel extends AbstractTableModel {
 
     public int getRowCount() {
         return data.length;
+    }
+    
+    public List<String> getUniqueRanges() {
+        List<String> ranges = new ArrayList<String>();
+        String range;
+        for (int i=0,j=data.length;i<j;i++) {
+            range = ((GlyphModel)data[i][0]).getRange();
+            if (!ranges.contains(range))
+            ranges.add(range);
+        }
+        return ranges;
     }
 
     public String getColumnName(int col) {

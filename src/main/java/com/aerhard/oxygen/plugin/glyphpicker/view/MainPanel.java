@@ -13,6 +13,7 @@ import javax.swing.border.MatteBorder;
 import java.awt.Color;
 
 import com.aerhard.oxygen.plugin.glyphpicker.model.tei.GlyphModel;
+import com.jidesoft.swing.AutoCompletionComboBox;
 import com.jidesoft.swing.InfiniteProgressPanel;
 
 import javax.swing.JTabbedPane;
@@ -20,6 +21,10 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.ScrollPaneConstants;
+
+import java.awt.GridBagLayout;
+import java.awt.GridBagConstraints;
+import java.awt.Insets;
 
 public class MainPanel extends JPanel {
 
@@ -39,6 +44,9 @@ public class MainPanel extends JPanel {
     private JList<GlyphModel> userList;
     private JTabbedPane tabbedPane;
     private JScrollPane scrollPane;
+    private AutoCompletionComboBox rangeCombo;
+    private JLabel rangeLabel;
+//    private AutoCompletionComboBox classCombo;
 
     public MainPanel() {
         init();
@@ -105,29 +113,77 @@ public class MainPanel extends JPanel {
         JPanel dataSourcePanel = new JPanel();
         dataSourcePanel.setBorder(new EmptyBorder(8, 8, 0, 8));
         browserPanel.add(dataSourcePanel, BorderLayout.NORTH);
-        dataSourcePanel.setLayout(new BorderLayout(8, 0));
+        GridBagLayout gbl_dataSourcePanel = new GridBagLayout();
+        gbl_dataSourcePanel.columnWidths = new int[]{62, 199, 55, 0};
+        gbl_dataSourcePanel.rowHeights = new int[] {0, 0};
+        gbl_dataSourcePanel.columnWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
+        gbl_dataSourcePanel.rowWeights = new double[]{0.0, Double.MIN_VALUE};
+        dataSourcePanel.setLayout(gbl_dataSourcePanel);
+                        
+                                JLabel dataSourceLabel = new JLabel("Data source:");
+                                GridBagConstraints gbc_dataSourceLabel = new GridBagConstraints();
+                                gbc_dataSourceLabel.anchor = GridBagConstraints.WEST;
+                                gbc_dataSourceLabel.fill = GridBagConstraints.VERTICAL;
+                                gbc_dataSourceLabel.insets = new Insets(0, 0, 0, 5);
+                                gbc_dataSourceLabel.gridx = 0;
+                                gbc_dataSourceLabel.gridy = 0;
+                                dataSourcePanel.add(dataSourceLabel, gbc_dataSourceLabel);
+                
+                        pathCombo = new JComboBox<String>();
+                        pathCombo.setEditable(true);
+                        GridBagConstraints gbc_pathCombo = new GridBagConstraints();
+                        gbc_pathCombo.weightx = 1.0;
+                        gbc_pathCombo.fill = GridBagConstraints.BOTH;
+                        gbc_pathCombo.insets = new Insets(5, 0, 5, 5);
+                        gbc_pathCombo.gridx = 1;
+                        gbc_pathCombo.gridy = 0;
+                        dataSourcePanel.add(pathCombo, gbc_pathCombo);
+        
+                browserButtonLoad = new JButton("Load");
+                GridBagConstraints gbc_browserButtonLoad = new GridBagConstraints();
+                gbc_browserButtonLoad.insets = new Insets(3, 0, 3, 0);
+                gbc_browserButtonLoad.fill = GridBagConstraints.VERTICAL;
+                gbc_browserButtonLoad.anchor = GridBagConstraints.WEST;
+                gbc_browserButtonLoad.gridx = 2;
+                gbc_browserButtonLoad.gridy = 0;
+                dataSourcePanel.add(browserButtonLoad, gbc_browserButtonLoad);
 
-        JLabel dataSourceLabel = new JLabel("Data source:");
-        dataSourcePanel.add(dataSourceLabel, BorderLayout.WEST);
+                rangeLabel = new JLabel("Range:");
+                GridBagConstraints gbc_rangeLabel = new GridBagConstraints();
+                gbc_rangeLabel.anchor = GridBagConstraints.WEST;
+                gbc_rangeLabel.fill = GridBagConstraints.VERTICAL;
+                gbc_rangeLabel.insets = new Insets(0, 0, 0, 5);
+                gbc_rangeLabel.gridx = 0;
+                gbc_rangeLabel.gridy = 1;
+                dataSourcePanel.add(rangeLabel, gbc_rangeLabel);
+                
+                rangeCombo = new AutoCompletionComboBox();
+                rangeCombo.setStrict(false);
+                GridBagConstraints gbc_rangeCombo = new GridBagConstraints();
+                gbc_rangeCombo.insets = new Insets(5, 0, 5, 5);
+                gbc_rangeCombo.anchor = GridBagConstraints.NORTH;
+                gbc_rangeCombo.fill = GridBagConstraints.HORIZONTAL;
+                gbc_rangeCombo.gridx = 1;
+                gbc_rangeCombo.gridy = 1;
+                dataSourcePanel.add(rangeCombo, gbc_rangeCombo);
+                
+//                classCombo = new AutoCompletionComboBox();
+//                classCombo.setStrict(false);
+//                classCombo.setName("Class");
+//                filterPanel.add(classCombo);
 
-        pathCombo = new JComboBox<String>();
-        pathCombo.setEditable(true);
-        dataSourcePanel.add(pathCombo, BorderLayout.CENTER);
-
-        browserButtonLoad = new JButton("Load");
-        dataSourcePanel.add(browserButtonLoad, BorderLayout.EAST);
-
+                
+                
         JPanel tablePanel = new JPanel();
         browserPanel.add(tablePanel, BorderLayout.CENTER);
         tablePanel.setBorder(new EmptyBorder(11, 8, 7, 4));
-        tablePanel.setLayout(new BorderLayout(0, 0));
+        tablePanel.setLayout(new BorderLayout(0, 12));
 
+        
         table = new GlyphTable();
         table.setFillsViewportHeight(true);
 
         table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-
-        // tableFilter = new TableFilterHeader(table, AutoChoices.ENABLED);
 
         JScrollPane jpane = new JScrollPane(table);
         jpane.setBorder(new EtchedBorder());
@@ -219,6 +275,10 @@ public class MainPanel extends JPanel {
 
     public JTabbedPane getTabbedPane() {
         return tabbedPane;
+    }
+    
+    public AutoCompletionComboBox getRangeFilterCombo() {
+        return rangeCombo;
     }
 
 }
