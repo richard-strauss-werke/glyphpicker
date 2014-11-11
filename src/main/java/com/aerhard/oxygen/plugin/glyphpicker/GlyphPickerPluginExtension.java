@@ -84,7 +84,7 @@ public class GlyphPickerPluginExtension implements
                     panel.setMinimumSize(new Dimension(200, 200));
 
                     viewInfo.setComponent(panel);
-                    viewInfo.setTitle("GlyphPicker Plugin");
+                    viewInfo.setTitle("GlyphPicker");
 
                     // TODO add icon
                     // viewInfo.setIcon(Icons
@@ -110,7 +110,6 @@ public class GlyphPickerPluginExtension implements
             WSTextEditorPage page = (WSTextEditorPage) currentPage;
 
             // TODO make this namespace aware
-            // TODO set cursor to position after
 
             page.beginCompoundUndoableEdit();
             int selectionOffset = page.getSelectionStart();
@@ -126,8 +125,6 @@ public class GlyphPickerPluginExtension implements
 
         } else if (currentPage instanceof WSAuthorEditorPage) {
             WSAuthorEditorPage page = (WSAuthorEditorPage) currentPage;
-
-            // TODO set position to the right right
 
             AuthorAccess authorAccess = page.getAuthorAccess();
             try {
