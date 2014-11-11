@@ -51,6 +51,7 @@ public class MainController {
     private UserListModel userListModel;
     private Color tabForeground = null;
     private AutoCompletionComboBox rangeCombo;
+    private AutoCompletionComboBox classCombo;
 
     private List<InsertListener> listeners = new ArrayList<InsertListener>();
 
@@ -76,7 +77,7 @@ public class MainController {
 
         sorter = new TableRowSorter<GlyphTableModel>(glyphTableModel);
         table.setRowSorter(sorter);
-        
+
         pathComboModel = configController.getConfig().getPaths();
         mainPanel.getPathCombo().setModel(pathComboModel);
 
@@ -84,7 +85,8 @@ public class MainController {
         mainPanel.getUserList().setModel(userListModel);
 
         rangeCombo = mainPanel.getRangeFilterCombo();
-        
+        classCombo = mainPanel.getClassFilterCombo();
+
         setBrowserListeners();
         setUserListListeners();
 
@@ -92,27 +94,52 @@ public class MainController {
 
     }
 
-    private void newFilter(final String value) {
+    private void newFilter() {
 
-        RowFilter<GlyphTableModel, Integer> glyphFilter = new RowFilter<GlyphTableModel, Integer>() {
+        final String rangeValue = rangeCombo.getSelectedItem().toString();
+        final String classValue = classCombo.getSelectedItem().toString();
+
+        RowFilter<GlyphTableModel, Integer> rangeFilter = new RowFilter<GlyphTableModel, Integer>() {
             public boolean include(
                     Entry<? extends GlyphTableModel, ? extends Integer> entry) {
-
-                String entryRange = ((GlyphModel) entry.getValue(0)).getRange();
-
-                if (entryRange != null && entryRange.startsWith(value)) {
+                GlyphModel model = (GlyphModel) entry.getValue(0);
+                String entryRange = model.getRange();
+                if (entryRange != null && entryRange.startsWith(rangeValue)) {
                     return true;
                 }
-
                 return false;
             }
         };
 
-        sorter.setRowFilter(glyphFilter);
+        RowFilter<GlyphTableModel, Integer> classFilter = new RowFilter<GlyphTableModel, Integer>() {
+            public boolean include(
+                    Entry<? extends GlyphTableModel, ? extends Integer> entry) {
+                GlyphModel model = (GlyphModel) entry.getValue(0);
+                List<String> entryClasses = model.getClasses();
+                for (String entryClass : entryClasses) {
+                    if (entryClass.startsWith(classValue)) {
+                        return true;
+                    }
+                }
+                return false;
+            }
+        };
+
+        if (!rangeValue.equals("") && !rangeValue.equals("")) {
+            List<RowFilter<GlyphTableModel, Integer>> filters = new ArrayList<RowFilter<GlyphTableModel, Integer>>();
+            filters.add(classFilter);
+            filters.add(rangeFilter);
+            sorter.setRowFilter(RowFilter.andFilter(filters));
+        } else if (!classValue.equals("")) {
+            sorter.setRowFilter(classFilter);
+        } else if (!rangeValue.equals("")) {
+            sorter.setRowFilter(rangeFilter);
+        } else {
+            sorter.setRowFilter(null);
+        }
 
     }
 
-    
     @SuppressWarnings("unchecked")
     private void updateRangeCombo() {
         List<String> ranges = glyphTableModel.getUniqueRanges();
@@ -120,7 +147,15 @@ public class MainController {
         String[] rangesArray = ranges.toArray(new String[ranges.size()]);
         rangeCombo.setModel(new DefaultComboBoxModel<String>(rangesArray));
     }
-    
+
+    @SuppressWarnings("unchecked")
+    private void updateClassCombo() {
+        List<String> classes = glyphTableModel.getUniqueClasses();
+        classes.add(0, "");
+        String[] classesArray = classes.toArray(new String[classes.size()]);
+        classCombo.setModel(new DefaultComboBoxModel<String>(classesArray));
+    }
+
     public void addListener(InsertListener toAdd) {
         listeners.add(toAdd);
     }
@@ -199,15 +234,20 @@ public class MainController {
                     }
                 });
 
-        
-        rangeCombo.addActionListener(new ActionListener(){
+        rangeCombo.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                newFilter(rangeCombo.getSelectedItem().toString());
+                newFilter();
             }
-            
         });
-        
+
+        classCombo.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                newFilter();
+            }
+        });
+
         JButton btn;
 
         btn = mainPanel.getBrowserButtonAdd();
@@ -354,9 +394,10 @@ public class MainController {
                     } else {
                         glyphTableModel.setData(data);
                         updateRangeCombo();
+                        updateClassCombo();
                         pathComboModel.setFirstItem(path);
                     }
-                    newFilter("");
+                    newFilter();
                     setBaseUrl(path);
                     mainPanel.getLoadingMask().stop();
                     isLoading = false;

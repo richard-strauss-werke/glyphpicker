@@ -45,8 +45,7 @@ public class MainPanel extends JPanel {
     private JTabbedPane tabbedPane;
     private JScrollPane scrollPane;
     private AutoCompletionComboBox rangeCombo;
-    private JLabel rangeLabel;
-//    private AutoCompletionComboBox classCombo;
+    private AutoCompletionComboBox classCombo;
 
     public MainPanel() {
         init();
@@ -148,7 +147,7 @@ public class MainPanel extends JPanel {
                 gbc_browserButtonLoad.gridy = 0;
                 dataSourcePanel.add(browserButtonLoad, gbc_browserButtonLoad);
 
-                rangeLabel = new JLabel("Range:");
+                JLabel rangeLabel = new JLabel("Range:");
                 GridBagConstraints gbc_rangeLabel = new GridBagConstraints();
                 gbc_rangeLabel.anchor = GridBagConstraints.WEST;
                 gbc_rangeLabel.fill = GridBagConstraints.VERTICAL;
@@ -167,10 +166,25 @@ public class MainPanel extends JPanel {
                 gbc_rangeCombo.gridy = 1;
                 dataSourcePanel.add(rangeCombo, gbc_rangeCombo);
                 
-//                classCombo = new AutoCompletionComboBox();
-//                classCombo.setStrict(false);
-//                classCombo.setName("Class");
-//                filterPanel.add(classCombo);
+                JLabel classLabel = new JLabel("Class:");
+                GridBagConstraints gbc_classLabel = new GridBagConstraints();
+                gbc_classLabel.anchor = GridBagConstraints.WEST;
+                gbc_classLabel.fill = GridBagConstraints.VERTICAL;
+                gbc_classLabel.insets = new Insets(0, 0, 0, 5);
+                gbc_classLabel.gridx = 0;
+                gbc_classLabel.gridy = 2;
+                dataSourcePanel.add(classLabel, gbc_classLabel);
+                
+                classCombo = new AutoCompletionComboBox();
+                classCombo.setStrict(false);
+                GridBagConstraints gbc_classCombo = new GridBagConstraints();
+                gbc_classCombo.insets = new Insets(5, 0, 5, 5);
+                gbc_classCombo.anchor = GridBagConstraints.NORTH;
+                gbc_classCombo.fill = GridBagConstraints.HORIZONTAL;
+                gbc_classCombo.gridx = 1;
+                gbc_classCombo.gridy = 2;
+                dataSourcePanel.add(classCombo, gbc_classCombo);
+
 
                 
                 
@@ -281,4 +295,9 @@ public class MainPanel extends JPanel {
         return rangeCombo;
     }
 
+    public AutoCompletionComboBox getClassFilterCombo() {
+        return classCombo;
+    }
+
+    
 }

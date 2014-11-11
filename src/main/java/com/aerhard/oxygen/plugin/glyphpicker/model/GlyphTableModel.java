@@ -2,6 +2,7 @@ package com.aerhard.oxygen.plugin.glyphpicker.model;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.swing.table.AbstractTableModel;
 
 import com.aerhard.oxygen.plugin.glyphpicker.model.tei.GlyphModel;
@@ -36,6 +37,19 @@ public class GlyphTableModel extends AbstractTableModel {
         return ranges;
     }
 
+    public List<String> getUniqueClasses() {
+        List<String> classes = new ArrayList<String>();
+        List<String> itemClasses;
+        for (int i=0,j=data.length;i<j;i++) {
+            itemClasses = ((GlyphModel)data[i][0]).getClasses();
+            for (String itemClass : itemClasses) {
+                if (!classes.contains(itemClass))
+                    classes.add(itemClass);
+            }
+        }
+        return classes;
+    }
+    
     public String getColumnName(int col) {
         return columnNames[col];
     }
