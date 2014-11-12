@@ -1,4 +1,12 @@
 GlyphPicker Plugin for oXygen
 ========
 
-update site: http://aerhard.github.io/glyphpicker/update/latest.xml
+Update Site
+-----------
+
+http://aerhard.github.io/glyphpicker/update/latest.xml
+
+Build with Maven
+-----
+
+run `mvn assembly:assembly` from the root of the project directory
