@@ -47,9 +47,6 @@ public class GlyphPickerPluginExtension implements
     private static final Logger LOGGER = Logger
             .getLogger(GlyphPickerPluginExtension.class.getName());
 
-    /** The plugin properties loaded from the properties file. */
-    // private Properties properties = new Properties();
-
     private MainController mainController;
 
     /*

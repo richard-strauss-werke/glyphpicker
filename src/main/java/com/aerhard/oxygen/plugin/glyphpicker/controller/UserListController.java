@@ -1,6 +1,7 @@
 package com.aerhard.oxygen.plugin.glyphpicker.controller;
 
 import java.io.File;
+import java.util.Properties;
 
 import javax.xml.bind.DataBindingException;
 import javax.xml.bind.JAXB;
@@ -16,15 +17,19 @@ public class UserListController {
     private static final Logger LOGGER = Logger
             .getLogger(UserListController.class.getName());
 
-    private String path;
+    private String pathName;
+    private String fileName;
     private UserListModel userListModel = null;
 
-    public UserListController(StandalonePluginWorkspace workspace) {
-        path = workspace.getPreferencesDirectory() + File.separator + "glyphpicker_user.xml";
+    public UserListController(StandalonePluginWorkspace workspace, Properties properties) {
+        pathName = workspace.getPreferencesDirectory() + "/" + properties.getProperty("config.path");
+        fileName = properties.getProperty("userdata.filename");
     }
 
     public void save() {
-        File file = new File(path);
+        File path = new File(pathName);
+        path.mkdir();
+        File file = new File(path, fileName);
         LOGGER.info("Storing user list.");
         try {
             JAXB.marshal(userListModel, file);
@@ -34,7 +39,7 @@ public class UserListController {
     }
 
     public void load() {
-        File file = new File(path);
+        File file = new File(pathName + "/" + fileName);
         userListModel = null;
         try {
             userListModel = JAXB.unmarshal(file, UserListModel.class);

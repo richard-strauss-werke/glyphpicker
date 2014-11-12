@@ -11,9 +11,9 @@ public class GlyphTableModel extends AbstractTableModel {
 
     private static final long serialVersionUID = 1L;
 
-    private static String[] columnNames = new String[] { "Glyph" };
+    private static String[] columnNames = new String[] { "Glyph", "Description" };
 
-    private Object[][] data = new Object[0][];
+    private GlyphModel[] data = new GlyphModel[0];
 
     public GlyphTableModel() {
     }
@@ -30,7 +30,7 @@ public class GlyphTableModel extends AbstractTableModel {
         List<String> ranges = new ArrayList<String>();
         String range;
         for (int i=0,j=data.length;i<j;i++) {
-            range = ((GlyphModel)data[i][0]).getRange();
+            range = data[i].getRange();
             if (!ranges.contains(range)) {
                 ranges.add(range);    
             }
@@ -42,7 +42,7 @@ public class GlyphTableModel extends AbstractTableModel {
         List<String> classes = new ArrayList<String>();
         List<String> itemClasses;
         for (int i=0,j=data.length;i<j;i++) {
-            itemClasses = ((GlyphModel)data[i][0]).getClasses();
+            itemClasses = data[i].getClasses();
             for (String itemClass : itemClasses) {
                 if (!classes.contains(itemClass)) {
                     classes.add(itemClass);
@@ -57,15 +57,15 @@ public class GlyphTableModel extends AbstractTableModel {
     }
 
     public GlyphModel getModelAt(int row) {
-        return (GlyphModel) data[row][0];
+        return data[row];
     }
 
     public Object getValueAt(int row, int col) {
-        return (data.length == 0) ? null : data[row][col];
+        return (data.length == 0) ? null : data[row];
     }
 
     public void clear() {
-        data = new Object[0][];
+        data = new GlyphModel[0];
         fireTableDataChanged();
     }
 
@@ -74,12 +74,13 @@ public class GlyphTableModel extends AbstractTableModel {
         return (value == null ? Object.class : value.getClass());
     }
 
-    public void setData(GlyphModel[] models) {
-        this.data = new Object[models.length][];
-        for (int i = 0, j = models.length; i < j; i++) {
-            this.data[i] = new Object[] { models[i] };
+    public void setData(List<GlyphModel> models) {
+        GlyphModel[] data = null;
+        if (models != null) {
+            data = new GlyphModel[models.size()];
+            data = models.toArray(data);
         }
-
+        this.data = data;
         fireTableDataChanged();
     }
 

@@ -3,6 +3,8 @@ package com.aerhard.oxygen.plugin.glyphpicker;
 import java.awt.BorderLayout;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.IOException;
+import java.util.Properties;
 
 import javax.swing.JFrame;
 import javax.swing.UIManager;
@@ -39,8 +41,19 @@ public class UITest {
     public static void main(String[] args) {
         setSystemLookAndFeel();
         
+        Properties properties = new Properties();
+        try {
+            properties.load(UITest.class
+                    .getResourceAsStream("/mock.properties"));
+        } catch (IOException e) {
+            LOGGER.error("Could not read \"mock.properties\".");
+        }
+        
+        String oxyPropFolder = properties.getProperty("oxygen.propertyfolder");
+        
+        
         StandalonePluginWorkspace workspace = mock(StandalonePluginWorkspace.class);
-        when(workspace.getPreferencesDirectory()).thenReturn("/Users/Ahlse/Desktop/gBankImages");
+        when(workspace.getPreferencesDirectory()).thenReturn(oxyPropFolder);
         
 
         JFrame frame = new JFrame("UI Test");

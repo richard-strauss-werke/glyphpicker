@@ -30,18 +30,14 @@ import java.awt.Insets;
 public class MainPanel extends JPanel {
 
     private static final long serialVersionUID = 1L;
-    // private DetailPanel detailView;
     private GlyphTable table;
     private InfiniteProgressPanel loadingMask;
     private JButton browserButtonAdd;
     private JButton browserButtonInsert;
     private JButton userButtonInsert;
     private JButton userButtonRemove;
-    // private JButton userButtonClose;
-    // private JButton browserButtonClose;
     private JComboBox<String> pathCombo;
     private JButton browserButtonLoad;
-    // private TableFilterHeader tableFilter;
     private JList<GlyphModel> userList;
     private JTabbedPane tabbedPane;
     private AutoCompletionComboBox rangeCombo;
@@ -157,7 +153,7 @@ public class MainPanel extends JPanel {
 
         JPanel tablePanel = new JPanel();
         browserPanel.add(tablePanel, BorderLayout.CENTER);
-        tablePanel.setBorder(new EmptyBorder(11, 8, 7, 4));
+        tablePanel.setBorder(new EmptyBorder(11, 8, 7, 8));
         tablePanel.setLayout(new BorderLayout(0, 12));
 
         table = new GlyphTable();
@@ -168,10 +164,6 @@ public class MainPanel extends JPanel {
         JScrollPane jpane = new JScrollPane(table);
         jpane.setBorder(new EtchedBorder());
         tablePanel.add(jpane, BorderLayout.CENTER);
-
-        // detailView = new DetailPanel();
-        // browserPanel.add(detailView, BorderLayout.EAST);
-        // detailView.setBorder(new EmptyBorder(4, 4, 4, 4));
 
         JPanel browserButtonPanel = new JPanel();
         browserButtonPanel.setBorder(new MatteBorder(1, 0, 0, 0,

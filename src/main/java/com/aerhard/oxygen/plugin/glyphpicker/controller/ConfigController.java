@@ -3,6 +3,7 @@ package com.aerhard.oxygen.plugin.glyphpicker.controller;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Properties;
 
 import javax.xml.bind.DataBindingException;
 import javax.xml.bind.JAXB;
@@ -19,15 +20,22 @@ public class ConfigController {
     private static final Logger LOGGER = Logger
             .getLogger(ConfigController.class.getName());
 
-    private String path;
+    private String pathName;
+    private String fileName;
     private Config config = null;
+
+    private Properties properties;
     
-    public ConfigController(StandalonePluginWorkspace workspace) {
-        path = workspace.getPreferencesDirectory() + File.separator + "glyphpicker_config.xml";
+    public ConfigController(StandalonePluginWorkspace workspace, Properties properties) {
+        this.properties = properties;
+        pathName = workspace.getPreferencesDirectory() + "/" + properties.getProperty("config.path");
+        fileName = properties.getProperty("config.filename");
     }
 
     public void save() {
-        File file = new File(path);
+        File path = new File(pathName);
+        path.mkdir();
+        File file = new File(path, fileName);
         LOGGER.info("Storing config.");
         try {
             JAXB.marshal(config, file);
@@ -37,7 +45,7 @@ public class ConfigController {
     }
 
     public void load() {
-        File file = new File(path);
+        File file = new File(pathName + "/" + fileName);
         config = null;
         try {
             config = JAXB.unmarshal(file, Config.class);
@@ -56,14 +64,16 @@ public class ConfigController {
     }
 
     private PathComboModel getDefaultPaths() {
-        return new PathComboModel(
-                new ArrayList<String>(
-                        Arrays.asList(new String[] {
-                                "/Users/Ahlse/Desktop/SMuFL-Browser-1.0/data/charDecl.xml",
-                                "/Users/Ahlse/Desktop/gBankImages/gBank.xml",
-                                "/Users/Ahlse/Desktop/SMuFL-Browser-1.0/data/smufl.json",
-                                "http://localhost:8080/exist/apps/smufl-browser/list/",
-                                "http://localhost:8080/exist/apps/smufl-browser/data/charDecl.xml" })));
+        String[] pathArray;
+        try {
+            String paths = properties.getProperty("config.defaultpaths");
+            pathArray = paths.split(",");
+        } catch (Exception e) {
+            LOGGER.error("Could not read config.defaultpaths");
+            pathArray = new String[]{""};
+        }
+        return new PathComboModel(new ArrayList<String>(
+                Arrays.asList(pathArray)));
     }
 
     public Config getConfig() {

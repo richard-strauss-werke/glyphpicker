@@ -8,8 +8,11 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Properties;
 import java.util.concurrent.ExecutionException;
 
 import javax.swing.DefaultComboBoxModel;
@@ -53,15 +56,26 @@ public class MainController {
     private AutoCompletionComboBox rangeCombo;
     private AutoCompletionComboBox classCombo;
 
+    private Properties properties;
+    
     private List<InsertListener> listeners = new ArrayList<InsertListener>();
 
     private TableRowSorter<GlyphTableModel> sorter;
 
     public MainController(StandalonePluginWorkspace workspace) {
-        configController = new ConfigController(workspace);
+        
+        properties = new Properties();
+        try {
+            properties.load(ConfigController.class
+                    .getResourceAsStream("/plugin.properties"));
+        } catch (IOException e) {
+            LOGGER.error("Could not read \"plugin.properties\".");
+        }
+        
+        configController = new ConfigController(workspace, properties);
         configController.load();
 
-        userListController = new UserListController(workspace);
+        userListController = new UserListController(workspace, properties);
         userListController.load();
 
         mainPanel = new MainPanel();
@@ -75,7 +89,9 @@ public class MainController {
 
         dataStore = new DataStore();
 
-        mainPanel.getTable().setModel(glyphTableModel);
+        table.setModel(glyphTableModel);
+        table.getColumnModel().getColumn(0).setMinWidth(70);
+        table.getColumnModel().getColumn(0).setMaxWidth(70);
 
         sorter = new TableRowSorter<GlyphTableModel>(glyphTableModel);
         table.setRowSorter(sorter);
@@ -125,15 +141,15 @@ public class MainController {
             }
         };
 
-        if (!rangeValue.equals("") && !rangeValue.equals("")) {
+        if (!rangeValue.equals("") && !classValue.equals("")) {
             List<RowFilter<GlyphTableModel, Integer>> filters = new ArrayList<RowFilter<GlyphTableModel, Integer>>();
             filters.add(classFilter);
             filters.add(rangeFilter);
             sorter.setRowFilter(RowFilter.andFilter(filters));
-        } else if (!classValue.equals("")) {
-            sorter.setRowFilter(classFilter);
         } else if (!rangeValue.equals("")) {
             sorter.setRowFilter(rangeFilter);
+        } else if (!classValue.equals("")) {
+            sorter.setRowFilter(classFilter);
         } else {
             sorter.setRowFilter(null);
         }
@@ -143,6 +159,7 @@ public class MainController {
     @SuppressWarnings("unchecked")
     private void updateRangeCombo() {
         List<String> ranges = glyphTableModel.getUniqueRanges();
+        Collections.sort(ranges);
         ranges.add(0, "");
         String[] rangesArray = ranges.toArray(new String[ranges.size()]);
         rangeCombo.setModel(new DefaultComboBoxModel<String>(rangesArray));
@@ -151,6 +168,7 @@ public class MainController {
     @SuppressWarnings("unchecked")
     private void updateClassCombo() {
         List<String> classes = glyphTableModel.getUniqueClasses();
+        Collections.sort(classes);
         classes.add(0, "");
         String[] classesArray = classes.toArray(new String[classes.size()]);
         classCombo.setModel(new DefaultComboBoxModel<String>(classesArray));
@@ -374,26 +392,25 @@ public class MainController {
         isLoading = true;
         mainPanel.getLoadingMask().start();
 
-        SwingWorker<GlyphModel[], Void> worker = new SwingWorker<GlyphModel[], Void>() {
+        SwingWorker<List<GlyphModel>, Void> worker = new SwingWorker<List<GlyphModel>, Void>() {
             @Override
-            public GlyphModel[] doInBackground() {
-                GlyphModel[] data = dataStore.loadData(path);
-                return data;
+            public List<GlyphModel> doInBackground() {
+                return dataStore.loadData(path);
             }
 
             @Override
             public void done() {
                 try {
-                    GlyphModel[] data = get();
+                    List<GlyphModel> data = get();
                     if (data == null) {
                         LOGGER.warn("Data is null");
                         glyphTableModel.clear();
                     } else {
                         glyphTableModel.setData(data);
-                        updateRangeCombo();
-                        updateClassCombo();
                         pathComboModel.setFirstItem(path);
                     }
+                    updateRangeCombo();
+                    updateClassCombo();
                     newFilter();
                     setBaseUrl(path);
                     mainPanel.getLoadingMask().stop();

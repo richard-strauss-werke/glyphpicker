@@ -7,8 +7,6 @@ import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.List;
-
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.JComponent;
@@ -42,7 +40,7 @@ public class GlyphComponent extends JLabel {
     public GlyphComponent(GlyphModel model, Boolean text) {
         this.model = model;
         if (text) {
-            setText(formatText(model));
+            setText(TableDescriptionRenderer.formatText(model));
         }
         setIconTextGap(20);
         setBorder(BorderFactory.createEmptyBorder(GLYPH_BORDER, GLYPH_BORDER,
@@ -91,51 +89,6 @@ public class GlyphComponent extends JLabel {
     public void loadIcon() {
         IconLoader worker = new IconLoader();
         worker.execute();
-    }
-
-    private String formatText(GlyphModel model) {
-        List<String> classes = model.getClasses();
-        StringBuilder sb = new StringBuilder();
-
-        sb.append("<html>");
-
-        if (model.getCharName() != null) {
-            sb.append("<p><nobr><b>");
-            sb.append(model.getCharName());
-            sb.append("</b></nobr></p>");
-        }
-
-        if (model.getCodePoint() != null) {
-            sb.append("<p><nobr>Codepoint: ");
-            sb.append(model.getCodePoint());
-            sb.append("</nobr></p>");
-        }
-
-        if (model.getRange() != null) {
-            sb.append("<p><nobr>Range: ");
-            sb.append(model.getRange());
-            sb.append("</nobr></p>");
-        }
-
-        if (model.getClasses().size() > 0) {
-            sb.append("<p><nobr>Classes: ");
-            for (String cl : classes) {
-                sb.append(cl);
-                sb.append(" ");
-            }
-            sb.append("</nobr></p>");
-        }
-
-        if (model.getId() != null) {
-            sb.append("<p><nobr><em>");
-            sb.append(model.getId());
-            sb.append("</em></nobr></p>");
-        }
-
-        sb.append("</div></html>");
-
-        return sb.toString();
-
     }
 
     public Image scaleToBound(BufferedImage image, int boundX, int boundY) {
@@ -191,7 +144,7 @@ public class GlyphComponent extends JLabel {
         try {
             image = ImageIO.read(file);
         } catch (IOException e) {
-            LOGGER.info(e);
+            LOGGER.warn("\""+ file.toPath() + "\" could not be loaded.", e);
         }
         return image;
     };

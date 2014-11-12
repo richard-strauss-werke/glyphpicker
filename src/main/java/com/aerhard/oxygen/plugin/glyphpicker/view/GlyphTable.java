@@ -1,5 +1,7 @@
 package com.aerhard.oxygen.plugin.glyphpicker.view;
 
+import java.awt.Dimension;
+
 import javax.swing.JTable;
 import javax.swing.table.TableCellRenderer;
 
@@ -7,20 +9,28 @@ public class GlyphTable extends JTable {
 
     private static final long serialVersionUID = 1L;
 
-    private TableItemRenderer tableIconRenderer;
+    private TableIconRenderer tableIconRenderer;
+    private TableDescriptionRenderer tableDescriptionRenderer;
 
     public GlyphTable() {
-        tableIconRenderer = new TableItemRenderer();
+        tableIconRenderer = new TableIconRenderer();
+        tableDescriptionRenderer = new TableDescriptionRenderer();
         setRowHeight(90);
+        setShowVerticalLines(false);
+        setIntercellSpacing(new Dimension(0, 1));
+
     }
 
-    public TableItemRenderer getTableIconRenderer() {
+    public TableIconRenderer getTableIconRenderer() {
         return tableIconRenderer;
     }
 
     public TableCellRenderer getCellRenderer(int row, int column) {
         if (column == 0) {
             return tableIconRenderer;
+        }
+        if (column == 1) {
+            return tableDescriptionRenderer;
         }
         return super.getCellRenderer(row, column);
     }

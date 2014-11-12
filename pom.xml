@@ -175,6 +175,12 @@
 				</includes>
 				<filtering>true</filtering>
 			</resource>
+			<resource>
+                <directory>src/test/resources</directory>
+                <excludes>
+                    <exclude>**/*.*</exclude>
+                </excludes>
+            </resource>
 			<!-- Add filtered latest.xml to the root of the build folder; oXygen will 
 				check this file for updates. -->
 			<resource>
@@ -194,7 +200,6 @@
 				<activeByDefault>true</activeByDefault>
 			</activation>
 			<properties>
-				<db.url>http://localhost:8080/exist/rest/db/dbtagger/dbtagger.xql</db.url>
 				<db.username>guest</db.username>
 				<db.password>guest</db.password>
 			</properties>

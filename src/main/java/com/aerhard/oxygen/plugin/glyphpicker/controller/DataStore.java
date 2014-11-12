@@ -41,15 +41,10 @@ public class DataStore {
         return (!path.matches("^\\w+:\\/\\/.*"));
     }
 
-    public GlyphModel[] loadData(String path) {
+    public List<GlyphModel> loadData(String path) {
         List<GlyphModel> glyphList = (isLocalFile(path)) ? loadDataFromFile(path)
                 : loadDataFromUrl("guest", "guest", path);
-        GlyphModel[] data = null;
-        if (glyphList != null) {
-            data = new GlyphModel[glyphList.size()];
-            data = glyphList.toArray(data);
-        }
-        return data;
+        return glyphList;
     }
 
     
