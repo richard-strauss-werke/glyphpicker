@@ -15,32 +15,38 @@ import ro.sync.exml.workspace.api.standalone.StandalonePluginWorkspace;
 import com.aerhard.oxygen.plugin.glyphpicker.model.Config;
 import com.aerhard.oxygen.plugin.glyphpicker.model.PathComboModel;
 
-public class ConfigController {
+public class ConfigLoader {
 
-    private static final Logger LOGGER = Logger
-            .getLogger(ConfigController.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(ConfigLoader.class
+            .getName());
 
     private String pathName;
     private String fileName;
     private Config config = null;
 
     private Properties properties;
-    
-    public ConfigController(StandalonePluginWorkspace workspace, Properties properties) {
+
+    public ConfigLoader(StandalonePluginWorkspace workspace,
+            Properties properties) {
         this.properties = properties;
-        pathName = workspace.getPreferencesDirectory() + "/" + properties.getProperty("config.path");
+        pathName = workspace.getPreferencesDirectory() + "/"
+                + properties.getProperty("config.path");
         fileName = properties.getProperty("config.filename");
     }
 
     public void save() {
         File path = new File(pathName);
-        path.mkdir();
-        File file = new File(path, fileName);
-        LOGGER.info("Storing config.");
-        try {
-            JAXB.marshal(config, file);
-        } catch (DataBindingException e) {
-            LOGGER.error("Error storing config.", e);
+        Boolean pathExists = (path.exists()) ? true : path.mkdir();
+        if (pathExists) {
+            File file = new File(path, fileName);
+            LOGGER.info("Storing config.");
+            try {
+                JAXB.marshal(config, file);
+            } catch (DataBindingException e) {
+                LOGGER.error("Error storing config.", e);
+            }
+        } else {
+            LOGGER.error("Could not create folder " + pathName);
         }
     }
 
@@ -70,7 +76,7 @@ public class ConfigController {
             pathArray = paths.split(",");
         } catch (Exception e) {
             LOGGER.error("Could not read config.defaultpaths");
-            pathArray = new String[]{""};
+            pathArray = new String[] { "" };
         }
         return new PathComboModel(new ArrayList<String>(
                 Arrays.asList(pathArray)));

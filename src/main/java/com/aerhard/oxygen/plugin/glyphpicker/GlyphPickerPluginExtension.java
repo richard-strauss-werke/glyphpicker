@@ -24,8 +24,7 @@ import org.apache.log4j.Logger;
 
 import com.aerhard.oxygen.plugin.glyphpicker.controller.InsertListener;
 import com.aerhard.oxygen.plugin.glyphpicker.controller.MainController;
-import com.aerhard.oxygen.plugin.glyphpicker.model.tei.GlyphModel;
-
+import com.aerhard.oxygen.plugin.glyphpicker.model.tei.GlyphItem;
 import ro.sync.ecss.extensions.api.AuthorAccess;
 import ro.sync.ecss.extensions.api.AuthorOperationException;
 import ro.sync.exml.plugin.workspace.WorkspaceAccessPluginExtension;
@@ -62,7 +61,7 @@ public class GlyphPickerPluginExtension implements
         mainController = new MainController(workspace);
         mainController.addListener(new InsertListener() {
             @Override
-            public void insert(GlyphModel model) {
+            public void insert(GlyphItem model) {
                 insertFragment(workspace, model);
             }
         });
@@ -76,7 +75,7 @@ public class GlyphPickerPluginExtension implements
                 if ("GlyphPicker".equals(viewInfo.getViewID())) {
 
                     JPanel panel = mainController.getMainPanel();
-                    mainController.loadData();
+                    mainController.getBrowserController().loadData();
 
                     viewInfo.setComponent(panel);
                     viewInfo.setTitle("GlyphPicker");
@@ -91,14 +90,14 @@ public class GlyphPickerPluginExtension implements
 
     }
 
-    private String formatModel(GlyphModel model, Boolean setNs) {
+    private String formatModel(GlyphItem model, Boolean setNs) {
         String ns = (setNs) ? " xmlns=\"http://www.tei-c.org/ns/1.0\"" : "";
         return "<g" + ns + " ref=\"" + model.getBaseUrl() + "#" + model.getId()
                 + "\"/>";
     }
 
     private void insertFragment(StandalonePluginWorkspace workspace,
-            GlyphModel model) {
+            GlyphItem model) {
         WSEditorPage currentPage = workspace.getCurrentEditorAccess(
                 PluginWorkspace.MAIN_EDITING_AREA).getCurrentPage();
         if (currentPage instanceof WSTextEditorPage) {
@@ -161,8 +160,8 @@ public class GlyphPickerPluginExtension implements
 
         // TODO check + ask when data has changed
 
-        mainController.getConfigController().save();
-        mainController.getUserListController().save();
+        mainController.getConfigLoader().save();
+        mainController.getUserListController().getUserListLoader().save();
 
         return true;
     };

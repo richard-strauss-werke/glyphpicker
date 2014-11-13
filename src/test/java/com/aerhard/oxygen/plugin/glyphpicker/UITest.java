@@ -19,7 +19,7 @@ import ro.sync.exml.workspace.api.standalone.StandalonePluginWorkspace;
 
 import com.aerhard.oxygen.plugin.glyphpicker.controller.InsertListener;
 import com.aerhard.oxygen.plugin.glyphpicker.controller.MainController;
-import com.aerhard.oxygen.plugin.glyphpicker.model.tei.GlyphModel;
+import com.aerhard.oxygen.plugin.glyphpicker.model.tei.GlyphItem;
 
 import static org.mockito.Mockito.*;
 
@@ -66,7 +66,7 @@ public class UITest {
 
         controller.addListener(new InsertListener() {
             @Override
-            public void insert(GlyphModel model) {
+            public void insert(GlyphItem model) {
                 LOGGER.info("Insertion triggered: " + model.getCharName());
             }
         });
@@ -74,12 +74,12 @@ public class UITest {
         frame.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
-                controller.getConfigController().save();
-                controller.getUserListController().save();
+                controller.getConfigLoader().save();
+                controller.getUserListController().getUserListLoader().save();
             }
         });
         
-        controller.loadData();
+        controller.getBrowserController().loadData();
 
         frame.pack();
         frame.setLocationRelativeTo(null);

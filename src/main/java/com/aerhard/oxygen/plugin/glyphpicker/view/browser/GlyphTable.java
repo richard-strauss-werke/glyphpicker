@@ -1,4 +1,4 @@
-package com.aerhard.oxygen.plugin.glyphpicker.view;
+package com.aerhard.oxygen.plugin.glyphpicker.view.browser;
 
 import java.awt.Dimension;
 

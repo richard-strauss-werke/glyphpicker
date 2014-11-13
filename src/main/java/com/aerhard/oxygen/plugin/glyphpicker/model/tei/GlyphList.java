@@ -15,7 +15,7 @@ public class GlyphList {
     @XmlElement(name = "desc")
     private String desc;
     @XmlElement(name = "char")
-    private List<GlyphModel> chars = new ArrayList<GlyphModel>();
+    private List<GlyphItem> chars = new ArrayList<GlyphItem>();
 
     /**
      * @return the desc
@@ -35,7 +35,7 @@ public class GlyphList {
     /**
      * @return the chars
      */
-    public List<GlyphModel> getChars() {
+    public List<GlyphItem> getChars() {
         return chars;
     }
 
@@ -43,7 +43,7 @@ public class GlyphList {
      * @param chars
      *            the chars to set
      */
-    public void setChars(List<GlyphModel> chars) {
+    public void setChars(List<GlyphItem> chars) {
         this.chars = chars;
     }
 
@@ -52,7 +52,7 @@ public class GlyphList {
     }
 
     public void addAdditionalData(String baseUrl) {
-        for (GlyphModel model : chars) {
+        for (GlyphItem model : chars) {
             model.setBaseUrl(baseUrl);
             model.setRange(desc);
         }

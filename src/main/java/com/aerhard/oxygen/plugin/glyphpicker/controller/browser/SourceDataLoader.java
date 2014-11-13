@@ -1,4 +1,4 @@
-package com.aerhard.oxygen.plugin.glyphpicker.controller;
+package com.aerhard.oxygen.plugin.glyphpicker.controller.browser;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -30,34 +30,34 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.aerhard.oxygen.plugin.glyphpicker.model.tei.GlyphList;
-import com.aerhard.oxygen.plugin.glyphpicker.model.tei.GlyphModel;
+import com.aerhard.oxygen.plugin.glyphpicker.model.tei.GlyphItem;
 
-public class DataStore {
+public class SourceDataLoader {
 
-    private static final Logger LOGGER = Logger.getLogger(DataStore.class
-            .getName());
+    private static final Logger LOGGER = Logger
+            .getLogger(SourceDataLoader.class.getName());
 
     public static Boolean isLocalFile(String path) {
         return (!path.matches("^\\w+:\\/\\/.*"));
     }
 
-    public List<GlyphModel> loadData(String path) {
-        List<GlyphModel> glyphList = (isLocalFile(path)) ? loadDataFromFile(path)
+    public List<GlyphItem> loadData(String path) {
+        List<GlyphItem> glyphList = (isLocalFile(path)) ? loadDataFromFile(path)
                 : loadDataFromUrl("guest", "guest", path);
         return glyphList;
     }
 
-    
-    private class GlyphResponseHandler implements ResponseHandler<List<GlyphModel>> {
+    private class GlyphResponseHandler implements
+            ResponseHandler<List<GlyphItem>> {
 
         private String url;
-        
+
         public GlyphResponseHandler(String url) {
             this.url = url;
         }
-        
+
         @Override
-        public List<GlyphModel> handleResponse(final HttpResponse response)
+        public List<GlyphItem> handleResponse(final HttpResponse response)
                 throws IOException {
             StatusLine statusLine = response.getStatusLine();
             HttpEntity entity = response.getEntity();
@@ -81,10 +81,10 @@ public class DataStore {
                 return parseJson(inputStream, url);
             }
         }
-        
+
     }
-    
-    public List<GlyphModel> loadDataFromUrl(String user, String password,
+
+    public List<GlyphItem> loadDataFromUrl(String user, String password,
             final String url) {
         DefaultHttpClient httpclient = new DefaultHttpClient();
         try {
@@ -102,10 +102,10 @@ public class DataStore {
         return null;
     }
 
-    private List<GlyphModel> parseXml(InputStream inputStream, String baseUrl) {
+    private List<GlyphItem> parseXml(InputStream inputStream, String baseUrl) {
         GlyphList charDecl;
         List<GlyphList> charDeclList = new ArrayList<GlyphList>();
-        List<GlyphModel> charList = new ArrayList<GlyphModel>();
+        List<GlyphItem> charList = new ArrayList<GlyphItem>();
         try {
             XMLInputFactory xif = XMLInputFactory.newInstance();
             XMLStreamReader xsr = xif.createXMLStreamReader(inputStream);
@@ -140,9 +140,9 @@ public class DataStore {
         return null;
     }
 
-    public List<GlyphModel> parseJson(InputStream inputStream, String baseUrl) {
+    public List<GlyphItem> parseJson(InputStream inputStream, String baseUrl) {
 
-        List<GlyphModel> glyphList = new ArrayList<GlyphModel>();
+        List<GlyphItem> glyphList = new ArrayList<GlyphItem>();
         StringBuilder builder = new StringBuilder();
 
         try {
@@ -166,7 +166,7 @@ public class DataStore {
                                 classes.add(classesArray.get(j).toString());
                             }
                         }
-                        glyphList.add(new GlyphModel(obj.getString("id"), obj
+                        glyphList.add(new GlyphItem(obj.getString("id"), obj
                                 .getString("name"), obj.getString("codepoint"),
                                 obj.getString("range"), obj.getString("url"),
                                 baseUrl, classes));
@@ -180,9 +180,9 @@ public class DataStore {
         return null;
     }
 
-    public List<GlyphModel> loadDataFromFile(String fileName) {
+    public List<GlyphItem> loadDataFromFile(String fileName) {
 
-        List<GlyphModel> glyphList = null;
+        List<GlyphItem> glyphList = null;
 
         if (fileName != null) {
             File file = new File(fileName);

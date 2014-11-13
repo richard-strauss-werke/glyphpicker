@@ -17,7 +17,7 @@ import com.aerhard.oxygen.plugin.glyphpicker.view.GlyphComponent;
 
 @XmlRootElement(name = "char")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class GlyphModel {
+public class GlyphItem {
 
     @XmlAttribute(name = "xml:id")
     private String id;
@@ -45,11 +45,11 @@ public class GlyphModel {
     @XmlTransient
     private ImageIcon icon = null;
 
-    public GlyphModel() {
+    public GlyphItem() {
 
     }
 
-    public GlyphModel(GlyphModel ch) {
+    public GlyphItem(GlyphItem ch) {
         this.id = ch.getId();
         this.charName = ch.getCharName();
         this.codePoint = ch.getCodePoint();
@@ -59,7 +59,7 @@ public class GlyphModel {
         this.baseUrl = ch.getBaseUrl();
     }
 
-    public GlyphModel(String id, String name, String codepoint, String range,
+    public GlyphItem(String id, String name, String codepoint, String range,
             String url, String baseUrl, List<String> classes) {
         this.id = id;
         this.charName = name;

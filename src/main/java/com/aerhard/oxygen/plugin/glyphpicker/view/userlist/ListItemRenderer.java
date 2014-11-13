@@ -1,4 +1,4 @@
-package com.aerhard.oxygen.plugin.glyphpicker.view;
+package com.aerhard.oxygen.plugin.glyphpicker.view.userlist;
 
 import java.awt.Component;
 
@@ -6,9 +6,11 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.ListCellRenderer;
 
-import com.aerhard.oxygen.plugin.glyphpicker.model.tei.GlyphModel;
+import com.aerhard.oxygen.plugin.glyphpicker.model.tei.GlyphItem;
+import com.aerhard.oxygen.plugin.glyphpicker.view.GlyphComponent;
 
-class ListItemRenderer extends JLabel implements ListCellRenderer<Object> {
+public class ListItemRenderer extends JLabel implements
+        ListCellRenderer<Object> {
     private static final long serialVersionUID = 1L;
 
     public Component getListCellRendererComponent(JList<?> list, Object value,
@@ -18,7 +20,7 @@ class ListItemRenderer extends JLabel implements ListCellRenderer<Object> {
         if (value == null) {
             c = new GlyphComponent();
         } else {
-            GlyphModel model = (GlyphModel) value;
+            GlyphItem model = (GlyphItem) value;
             if (model.getComponent() == null) {
                 c = new GlyphComponent(model, true);
                 c.loadIcon();

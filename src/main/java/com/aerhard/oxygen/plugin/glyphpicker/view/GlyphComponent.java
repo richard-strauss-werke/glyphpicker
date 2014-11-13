@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.JComponent;
@@ -23,8 +24,8 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 import org.apache.log4j.Logger;
 
-import com.aerhard.oxygen.plugin.glyphpicker.controller.DataStore;
-import com.aerhard.oxygen.plugin.glyphpicker.model.tei.GlyphModel;
+import com.aerhard.oxygen.plugin.glyphpicker.model.tei.GlyphItem;
+import com.aerhard.oxygen.plugin.glyphpicker.view.browser.TableDescriptionRenderer;
 
 public class GlyphComponent extends JLabel {
 
@@ -33,11 +34,11 @@ public class GlyphComponent extends JLabel {
     private static final Logger LOGGER = Logger.getLogger(GlyphComponent.class
             .getName());
 
-    private GlyphModel model;
+    private GlyphItem model;
     private static final int GLYPH_SIZE = 50;
     private static final int GLYPH_BORDER = 10;
 
-    public GlyphComponent(GlyphModel model, Boolean text) {
+    public GlyphComponent(GlyphItem model, Boolean text) {
         this.model = model;
         if (text) {
             setText(TableDescriptionRenderer.formatText(model));
@@ -56,15 +57,14 @@ public class GlyphComponent extends JLabel {
         this.container = table;
     }
 
-    
     private class IconLoader extends SwingWorker<GlyphIcon, Void> {
-        
+
         @Override
         public GlyphIcon doInBackground() throws IOException {
             BufferedImage bi = loadImage(model.getBaseUrl(), model.getUrl());
             if (bi != null) {
-                return new GlyphIcon(scaleToBound(bi, GLYPH_SIZE,
-                        GLYPH_SIZE), GLYPH_SIZE);
+                return new GlyphIcon(scaleToBound(bi, GLYPH_SIZE, GLYPH_SIZE),
+                        GLYPH_SIZE);
             }
             return null;
         }
@@ -85,7 +85,7 @@ public class GlyphComponent extends JLabel {
             }
         }
     }
-    
+
     public void loadIcon() {
         IconLoader worker = new IconLoader();
         worker.execute();
@@ -117,10 +117,14 @@ public class GlyphComponent extends JLabel {
                 Image.SCALE_AREA_AVERAGING);
     }
 
+    public static Boolean isLocalFile(String path) {
+        return (!path.matches("^\\w+:\\/\\/.*"));
+    }
+
     public BufferedImage loadImage(String path, String relativePath) {
         BufferedImage image = null;
         if (relativePath != null) {
-            if (DataStore.isLocalFile(path)) {
+            if (isLocalFile(path)) {
                 File a = new File(path);
                 File parentFolder = new File(a.getParent());
                 File b = new File(parentFolder, relativePath);
@@ -144,7 +148,7 @@ public class GlyphComponent extends JLabel {
         try {
             image = ImageIO.read(file);
         } catch (IOException e) {
-            LOGGER.warn("\""+ file.toPath() + "\" could not be loaded.", e);
+            LOGGER.warn("\"" + file.toPath() + "\" could not be loaded.", e);
         }
         return image;
     };

@@ -1,4 +1,4 @@
-package com.aerhard.oxygen.plugin.glyphpicker.view;
+package com.aerhard.oxygen.plugin.glyphpicker.view.browser;
 
 import javax.swing.JLabel;
 import javax.swing.JTable;
@@ -7,9 +7,10 @@ import javax.swing.table.TableCellRenderer;
 import java.awt.Component;
 import java.util.List;
 
-import com.aerhard.oxygen.plugin.glyphpicker.model.tei.GlyphModel;
+import com.aerhard.oxygen.plugin.glyphpicker.model.tei.GlyphItem;
 
-public class TableDescriptionRenderer extends JLabel implements TableCellRenderer {
+public class TableDescriptionRenderer extends JLabel implements
+        TableCellRenderer {
 
     private static final long serialVersionUID = 1L;
 
@@ -22,7 +23,7 @@ public class TableDescriptionRenderer extends JLabel implements TableCellRendere
         if (value == null) {
             setText("");
         } else {
-            GlyphModel model = (GlyphModel) value;
+            GlyphItem model = (GlyphItem) value;
             setText(formatText(model));
         }
 
@@ -37,8 +38,8 @@ public class TableDescriptionRenderer extends JLabel implements TableCellRendere
         setOpaque(true);
         return this;
     }
-    
-    public static String formatText(GlyphModel model) {
+
+    public static String formatText(GlyphItem model) {
         List<String> classes = model.getClasses();
         StringBuilder sb = new StringBuilder();
 

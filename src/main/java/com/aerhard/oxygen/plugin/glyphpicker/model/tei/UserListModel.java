@@ -11,26 +11,26 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name = "charDecl")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class UserListModel extends AbstractListModel<GlyphModel> {
+public class UserListModel extends AbstractListModel<GlyphItem> {
     private static final long serialVersionUID = 1L;
 
     @XmlElement(name = "char")
-    private List<GlyphModel> data = new ArrayList<GlyphModel>();
+    private List<GlyphItem> data = new ArrayList<GlyphItem>();
 
-    public UserListModel(List<GlyphModel> arrayList) {
+    public UserListModel(List<GlyphItem> arrayList) {
         data = arrayList;
     }
 
     public UserListModel() {
     }
 
-    public void addElement(GlyphModel item) {
+    public void addElement(GlyphItem item) {
         data.add(item);
         fireContentsChanged(this, 0, getSize());
     }
 
     public void removeElement(int index) {
-        GlyphModel removed = data.remove(index);
+        GlyphItem removed = data.remove(index);
         if (removed != null) {
             fireContentsChanged(this, 0, getSize());
         }
@@ -41,7 +41,7 @@ public class UserListModel extends AbstractListModel<GlyphModel> {
         return data.size();
     }
 
-    public GlyphModel getElementAt(int i) {
+    public GlyphItem getElementAt(int i) {
         return data.get(i);
     }
 }
