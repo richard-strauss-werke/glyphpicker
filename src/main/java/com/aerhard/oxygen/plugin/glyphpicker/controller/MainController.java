@@ -106,7 +106,7 @@ public class MainController {
                 userListController.getListModel().addElement(ch);
 
                 // TODO add change listener
-                mainPanel.highlightTabButton(0);
+                mainPanel.highlightTabTitle(0);
             }
         }
     }
