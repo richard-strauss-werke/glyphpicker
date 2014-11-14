@@ -151,6 +151,7 @@ public class BrowserController extends Controller {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (e.getClickCount() == 2) {
+                    browserPanel.getBtnInsert().highlight();
                     insertGlyphFromBrowser();
                 }
             }

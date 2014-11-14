@@ -13,13 +13,16 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.MatteBorder;
 
 import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinition;
+import com.aerhard.oxygen.plugin.glyphpicker.view.HighlightButton;
 
 public class UserListPanel extends JPanel {
 
     private static final long serialVersionUID = 1L;
     private JList<GlyphDefinition> userList;
     private JButton btnRemove;
-    private JButton btnInsert;
+    private HighlightButton btnInsert;
+    private JButton btnSave;
+    private JButton btnReset;
 
     public UserListPanel() {
 
@@ -43,23 +46,38 @@ public class UserListPanel extends JPanel {
         add(buttonPanel, BorderLayout.SOUTH);
         buttonPanel.setBorder(new MatteBorder(1, 0, 0, 0, (Color) Color.GRAY));
 
-        btnRemove = new JButton("Remove from Collection");
-        btnRemove.setEnabled(false);
-        buttonPanel.add(btnRemove);
-
-        btnInsert = new JButton("Insert XML");
+        btnInsert = new HighlightButton("Insert XML");
         btnInsert.setEnabled(false);
         buttonPanel.add(btnInsert);
 
+        btnRemove = new JButton("Remove Item");
+        btnRemove.setEnabled(false);
+        buttonPanel.add(btnRemove);
+
+        btnSave = new JButton("Save Collection");
+        btnSave.setEnabled(false);
+        buttonPanel.add(btnSave);
+
+        btnReset = new JButton("Reset Collection");
+        btnReset.setEnabled(false);
+        buttonPanel.add(btnReset);
+
+        
     }
 
-    public void enableUserButtons(Boolean enable) {
+    public void enableSelectionButtons(Boolean enable) {
         btnInsert.setEnabled(enable);
         btnRemove.setEnabled(enable);
 
     }
+    
+    public void enableSaveButtons(Boolean enable) {
+        btnSave.setEnabled(enable);
+        btnReset.setEnabled(enable);
 
-    public JButton getBtnInsert() {
+    }
+
+    public HighlightButton getBtnInsert() {
         return btnInsert;
     }
 
@@ -67,6 +85,15 @@ public class UserListPanel extends JPanel {
         return btnRemove;
     }
 
+    public JButton getBtnSave() {
+        return btnSave;
+    }
+    
+    public JButton getBtnReset() {
+        return btnReset;
+    }
+
+    
     public JList<GlyphDefinition> getUserList() {
         return userList;
     }

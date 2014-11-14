@@ -8,6 +8,8 @@ import java.util.Properties;
 
 import javax.swing.JButton;
 import javax.swing.JList;
+import javax.swing.event.ListDataEvent;
+import javax.swing.event.ListDataListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -75,11 +77,34 @@ public class UserListController extends Controller {
                 insertGlyphFromUser();
             }
         });
+        
+        btn = userListPanel.getBtnSave();
+        btn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                
+                // TODO expect return value
+                saveData();
+                userListPanel.enableSaveButtons(false);
+            }
+        });
+        
+        btn = userListPanel.getBtnReset();
+        btn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                
+                // TODO expect return value
+                loadData();
+                userListPanel.enableSaveButtons(false);
+            }
+        });
 
         userList.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (e.getClickCount() == 2) {
+                    userListPanel.getBtnInsert().highlight();
                     insertGlyphFromUser();
                 }
             }
@@ -91,9 +116,9 @@ public class UserListController extends Controller {
                     public void valueChanged(ListSelectionEvent event) {
                         if (!event.getValueIsAdjusting()) {
                             if (userList.getSelectedIndex() == -1) {
-                                userListPanel.enableUserButtons(false);
+                                userListPanel.enableSelectionButtons(false);
                             } else {
-                                userListPanel.enableUserButtons(true);
+                                userListPanel.enableSelectionButtons(true);
                             }
                         }
                     }
@@ -111,14 +136,30 @@ public class UserListController extends Controller {
 
     @Override
     public void loadData() {
+        
         userListLoader.load();
         userListModel = userListLoader.getUserListModel();
         userList.setModel(userListModel);
+        userListModel.addListDataListener(new ListDataListener(){
+            @Override
+            public void contentsChanged(ListDataEvent arg0) {
+                userListPanel.enableSaveButtons(true);
+            }
+
+            @Override
+            public void intervalAdded(ListDataEvent arg0) {
+            }
+
+            @Override
+            public void intervalRemoved(ListDataEvent arg0) {
+            }
+        });
     }
     
     @Override
     public void saveData() {
         userListLoader.save();
+        userListModel.setInSync(true);
     }
 
     @Override

@@ -19,6 +19,21 @@ public class UserListModel extends AbstractListModel<GlyphDefinition> {
     @XmlElement(name = "char", namespace="http://www.tei-c.org/ns/1.0")
     private List<GlyphDefinition> data = new ArrayList<GlyphDefinition>();
 
+    /**
+     * specifies if the current data is in sync with the data storage.
+     * The value is initially true, because each list model instance gets 
+     * created by unmarshalling XML
+     */
+    private Boolean inSync = true;
+    
+    public Boolean isInSync() {
+        return inSync;
+    }
+    
+    public void setInSync(Boolean inSync) {
+        this.inSync = inSync;
+    }
+    
     public UserListModel(List<GlyphDefinition> arrayList) {
         data = arrayList;
     }
@@ -27,11 +42,13 @@ public class UserListModel extends AbstractListModel<GlyphDefinition> {
     }
 
     public void addElement(GlyphDefinition item) {
+        inSync = false;
         data.add(item);
         fireContentsChanged(this, 0, getSize());
     }
 
     public void removeElement(int index) {
+        inSync = false;
         GlyphDefinition removed = data.remove(index);
         if (removed != null) {
             fireContentsChanged(this, 0, getSize());
@@ -47,17 +64,5 @@ public class UserListModel extends AbstractListModel<GlyphDefinition> {
         return data.get(i);
     }
 
-    /**
-     * @return the data
-     */
-    public List<GlyphDefinition> getData() {
-        return data;
-    }
-
-    /**
-     * @param data the data to set
-     */
-    public void setData(List<GlyphDefinition> data) {
-        this.data = data;
-    }
+ 
 }

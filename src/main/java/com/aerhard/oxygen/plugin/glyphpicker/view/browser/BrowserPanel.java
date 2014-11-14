@@ -16,6 +16,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.MatteBorder;
 
+import com.aerhard.oxygen.plugin.glyphpicker.view.HighlightButton;
 import com.jidesoft.swing.AutoCompletionComboBox;
 
 public class BrowserPanel extends JPanel {
@@ -30,7 +31,7 @@ public class BrowserPanel extends JPanel {
 
     private JButton btnAdd;
 
-    private JButton btnInsert;
+    private HighlightButton btnInsert;
 
     public BrowserPanel() {
         setLayout(new BorderLayout(0, 0));
@@ -131,11 +132,11 @@ public class BrowserPanel extends JPanel {
                 (Color) Color.GRAY));
         add(browserButtonPanel, BorderLayout.SOUTH);
 
-        btnAdd = new JButton("Add to User Collection");
-        browserButtonPanel.add(btnAdd);
-
-        btnInsert = new JButton("Insert XML");
+        btnInsert = new HighlightButton("Insert XML");
         browserButtonPanel.add(btnInsert);
+        
+        btnAdd = new JButton("Add to Collection");
+        browserButtonPanel.add(btnAdd);
 
     }
 
@@ -153,7 +154,7 @@ public class BrowserPanel extends JPanel {
         return btnAdd;
     }
 
-    public JButton getBtnInsert() {
+    public HighlightButton getBtnInsert() {
         return btnInsert;
     }
 
