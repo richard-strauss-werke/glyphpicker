@@ -1,7 +1,9 @@
-package com.aerhard.oxygen.plugin.glyphpicker.controller.userlist;
+package com.aerhard.oxygen.plugin.glyphpicker.controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.Properties;
 
 import javax.swing.JButton;
@@ -11,16 +13,16 @@ import javax.swing.event.ListSelectionListener;
 
 import ro.sync.exml.workspace.api.standalone.StandalonePluginWorkspace;
 
-import com.aerhard.oxygen.plugin.glyphpicker.model.tei.GlyphItem;
-import com.aerhard.oxygen.plugin.glyphpicker.model.tei.UserListModel;
+import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinition;
+import com.aerhard.oxygen.plugin.glyphpicker.model.UserListModel;
 import com.aerhard.oxygen.plugin.glyphpicker.view.userlist.UserListPanel;
 
-public class UserListController {
+public class UserListController extends Controller {
 
     private UserListPanel userListPanel;
     private UserListLoader userListLoader;
     private UserListModel userListModel;
-    private JList<GlyphItem> userList;
+    private JList<GlyphDefinition> userList;
 
     public UserListController(StandalonePluginWorkspace workspace,
             Properties properties) {
@@ -29,10 +31,6 @@ public class UserListController {
         userList = userListPanel.getUserList();
 
         userListLoader = new UserListLoader(workspace, properties);
-        userListLoader.load();
-
-        userListModel = userListLoader.getUserListModel();
-        userList.setModel(userListModel);
 
         setListeners();
 
@@ -42,6 +40,24 @@ public class UserListController {
         return userListPanel;
     }
 
+    private void removeItemFromUserList() {
+        int index = userList.getSelectedIndex();
+        if (index != -1) {
+            userListModel.removeElement(index);
+            index = Math.min(index, userListModel.getSize() - 1);
+            if (index >= 0) {
+                userList.setSelectedIndex(index);
+            }
+        }
+    }
+
+    private void insertGlyphFromUser() {
+        int index = userList.getSelectedIndex();
+        if (index != -1) {
+            fireEvent("insert", getListModel().getElementAt(index));
+        }
+    }
+
     private void setListeners() {
         JButton btn;
         btn = userListPanel.getBtnRemove();
@@ -49,6 +65,23 @@ public class UserListController {
             @Override
             public void actionPerformed(ActionEvent e) {
                 removeItemFromUserList();
+            }
+        });
+
+        btn = userListPanel.getBtnInsert();
+        btn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                insertGlyphFromUser();
+            }
+        });
+
+        userList.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 2) {
+                    insertGlyphFromUser();
+                }
             }
         });
 
@@ -68,23 +101,32 @@ public class UserListController {
 
     }
 
-    private void removeItemFromUserList() {
-        int index = userList.getSelectedIndex();
-        if (index != -1) {
-            userListModel.removeElement(index);
-            index = Math.min(index, userListModel.getSize() - 1);
-            if (index >= 0) {
-                userList.setSelectedIndex(index);
-            }
-        }
-    }
-
     public UserListModel getListModel() {
         return userListModel;
     }
 
     public UserListLoader getUserListLoader() {
         return userListLoader;
+    }
+
+    @Override
+    public void loadData() {
+        userListLoader.load();
+        userListModel = userListLoader.getUserListModel();
+        userList.setModel(userListModel);
+    }
+    
+    @Override
+    public void saveData() {
+        userListLoader.save();
+    }
+
+    @Override
+    public void eventOccured(String type, GlyphDefinition model) {
+        if ("export".equals(type)) {
+            getListModel().addElement(model);
+        }
+
     }
 
 }

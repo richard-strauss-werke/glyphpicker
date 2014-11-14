@@ -1,9 +1,11 @@
-package com.aerhard.oxygen.plugin.glyphpicker.controller.browser;
+package com.aerhard.oxygen.plugin.glyphpicker.controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -22,14 +24,14 @@ import javax.swing.table.TableRowSorter;
 import org.apache.log4j.Logger;
 
 import com.aerhard.oxygen.plugin.glyphpicker.model.Config;
+import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinition;
 import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphTableModel;
 import com.aerhard.oxygen.plugin.glyphpicker.model.PathComboModel;
-import com.aerhard.oxygen.plugin.glyphpicker.model.tei.GlyphItem;
 import com.aerhard.oxygen.plugin.glyphpicker.view.browser.BrowserPanel;
 import com.aerhard.oxygen.plugin.glyphpicker.view.browser.GlyphTable;
 import com.jidesoft.swing.AutoCompletionComboBox;
 
-public class BrowserController {
+public class BrowserController extends Controller {
 
     private static final Logger LOGGER = Logger
             .getLogger(BrowserController.class.getName());
@@ -41,7 +43,7 @@ public class BrowserController {
     private PathComboModel pathComboModel;
     private AutoCompletionComboBox rangeCombo;
     private AutoCompletionComboBox classCombo;
-    private SourceDataLoader dataStore;
+    private GlyphDefinitionLoader dataStore;
     private boolean isLoading = false;
 
     public BrowserController(Config config) {
@@ -63,7 +65,7 @@ public class BrowserController {
         rangeCombo = browserPanel.getRangeCombo();
         classCombo = browserPanel.getClassCombo();
 
-        dataStore = new SourceDataLoader();
+        dataStore = new GlyphDefinitionLoader();
 
         setListeners();
 
@@ -77,7 +79,18 @@ public class BrowserController {
         return glyphTableModel;
     }
 
-    private final void setListeners() {
+    private void insertGlyphFromBrowser() {
+        int row = table.getSelectedRow();
+        if (row != -1) {
+            GlyphDefinition selectedModel = getTableModel().getModelAt(
+                    table.convertRowIndexToModel(row));
+            if (selectedModel != null) {
+                fireEvent("insert", selectedModel);
+            }
+        }
+    }
+
+    private void setListeners() {
         browserPanel.getPathCombo().getEditor().getEditorComponent()
                 .addKeyListener(new KeyAdapter() {
                     public void keyReleased(KeyEvent e) {
@@ -103,11 +116,43 @@ public class BrowserController {
 
         JButton btn;
 
+        btn = browserPanel.getBtnAdd();
+        btn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int row = table.getSelectedRow();
+                if (row != -1) {
+                    GlyphDefinition selectedModel = getTableModel().getModelAt(
+                            table.convertRowIndexToModel(row));
+                    if (selectedModel != null) {
+                        fireEvent("export", selectedModel);
+                    }
+                }
+            }
+        });
+
         btn = browserPanel.getBtnLoad();
         btn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 loadData();
+            }
+        });
+
+        btn = browserPanel.getBtnInsert();
+        btn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                insertGlyphFromBrowser();
+            }
+        });
+
+        table.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 2) {
+                    insertGlyphFromBrowser();
+                }
             }
         });
 
@@ -144,7 +189,7 @@ public class BrowserController {
         RowFilter<GlyphTableModel, Integer> rangeFilter = new RowFilter<GlyphTableModel, Integer>() {
             public boolean include(
                     Entry<? extends GlyphTableModel, ? extends Integer> entry) {
-                GlyphItem model = (GlyphItem) entry.getValue(0);
+                GlyphDefinition model = (GlyphDefinition) entry.getValue(0);
                 String entryRange = model.getRange();
                 if (entryRange != null && entryRange.startsWith(rangeValue)) {
                     return true;
@@ -156,7 +201,7 @@ public class BrowserController {
         RowFilter<GlyphTableModel, Integer> classFilter = new RowFilter<GlyphTableModel, Integer>() {
             public boolean include(
                     Entry<? extends GlyphTableModel, ? extends Integer> entry) {
-                GlyphItem model = (GlyphItem) entry.getValue(0);
+                GlyphDefinition model = (GlyphDefinition) entry.getValue(0);
                 List<String> entryClasses = model.getClasses();
                 for (String entryClass : entryClasses) {
                     if (entryClass.startsWith(classValue)) {
@@ -200,6 +245,7 @@ public class BrowserController {
         classCombo.setModel(new DefaultComboBoxModel<String>(classesArray));
     }
 
+    @Override
     public void loadData() {
 
         final String path = browserPanel.getPathCombo().getSelectedItem()
@@ -212,16 +258,16 @@ public class BrowserController {
         isLoading = true;
         // mainPanel.getLoadingMask().start();
 
-        SwingWorker<List<GlyphItem>, Void> worker = new SwingWorker<List<GlyphItem>, Void>() {
+        SwingWorker<List<GlyphDefinition>, Void> worker = new SwingWorker<List<GlyphDefinition>, Void>() {
             @Override
-            public List<GlyphItem> doInBackground() {
+            public List<GlyphDefinition> doInBackground() {
                 return dataStore.loadData(path);
             }
 
             @Override
             public void done() {
                 try {
-                    List<GlyphItem> data = get();
+                    List<GlyphDefinition> data = get();
                     glyphTableModel.setData(data);
 
                     // when loading was successful, set the loading path as
@@ -239,6 +285,14 @@ public class BrowserController {
             }
         };
         worker.execute();
+    }
+
+    @Override
+    public void saveData() {
+    }
+
+    @Override
+    public void eventOccured(String type, GlyphDefinition model) {
     }
 
 }

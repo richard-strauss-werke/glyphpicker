@@ -17,9 +17,9 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import ro.sync.exml.workspace.api.standalone.StandalonePluginWorkspace;
 
-import com.aerhard.oxygen.plugin.glyphpicker.controller.InsertListener;
+import com.aerhard.oxygen.plugin.glyphpicker.controller.GlyphEventListener;
 import com.aerhard.oxygen.plugin.glyphpicker.controller.MainController;
-import com.aerhard.oxygen.plugin.glyphpicker.model.tei.GlyphItem;
+import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinition;
 
 import static org.mockito.Mockito.*;
 
@@ -29,7 +29,7 @@ public class UITest {
     private static final Logger LOGGER = Logger.getLogger(UITest.class
             .getName());
 
-    private static MainController controller;
+    private static MainController mainController;
 
     
     @Test
@@ -59,27 +59,27 @@ public class UITest {
         JFrame frame = new JFrame("UI Test");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        controller = new MainController(workspace);
+        mainController = new MainController(workspace);
 
         frame.setLayout(new BorderLayout(0, 0));
-        frame.getContentPane().add(controller.getMainPanel());
+        frame.getContentPane().add(mainController.getPanel());
 
-        controller.addListener(new InsertListener() {
-            @Override
-            public void insert(GlyphItem model) {
-                LOGGER.info("Insertion triggered: " + model.getCharName());
+        mainController.addListener(new GlyphEventListener() {
+            public void eventOccured(String type, GlyphDefinition model) {
+                if ("insert".equals(type)) {
+                    LOGGER.info("Insertion triggered: " + model.getCharName());
+                }
             }
         });
 
         frame.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
-                controller.getConfigLoader().save();
-                controller.getUserListController().getUserListLoader().save();
+                mainController.saveData();
             }
         });
         
-        controller.getBrowserController().loadData();
+        mainController.loadData();
 
         frame.pack();
         frame.setLocationRelativeTo(null);

@@ -12,12 +12,12 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.MatteBorder;
 
-import com.aerhard.oxygen.plugin.glyphpicker.model.tei.GlyphItem;
+import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinition;
 
 public class UserListPanel extends JPanel {
 
     private static final long serialVersionUID = 1L;
-    private JList<GlyphItem> userList;
+    private JList<GlyphDefinition> userList;
     private JButton btnRemove;
     private JButton btnInsert;
 
@@ -30,7 +30,7 @@ public class UserListPanel extends JPanel {
         add(paletteTablePanel);
         paletteTablePanel.setLayout(new BorderLayout(0, 0));
 
-        userList = new JList<GlyphItem>();
+        userList = new JList<GlyphDefinition>();
         userList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         userList.setCellRenderer(new ListItemRenderer());
 
@@ -67,7 +67,7 @@ public class UserListPanel extends JPanel {
         return btnRemove;
     }
 
-    public JList<GlyphItem> getUserList() {
+    public JList<GlyphDefinition> getUserList() {
         return userList;
     }
 

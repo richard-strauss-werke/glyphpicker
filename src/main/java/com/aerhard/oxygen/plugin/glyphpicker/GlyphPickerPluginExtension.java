@@ -16,15 +16,16 @@
 
 package com.aerhard.oxygen.plugin.glyphpicker;
 
-import javax.swing.JPanel;
+import javax.swing.JComponent;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Position;
 
 import org.apache.log4j.Logger;
 
-import com.aerhard.oxygen.plugin.glyphpicker.controller.InsertListener;
+import com.aerhard.oxygen.plugin.glyphpicker.controller.GlyphEventListener;
 import com.aerhard.oxygen.plugin.glyphpicker.controller.MainController;
-import com.aerhard.oxygen.plugin.glyphpicker.model.tei.GlyphItem;
+import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinition;
+
 import ro.sync.ecss.extensions.api.AuthorAccess;
 import ro.sync.ecss.extensions.api.AuthorOperationException;
 import ro.sync.exml.plugin.workspace.WorkspaceAccessPluginExtension;
@@ -59,10 +60,12 @@ public class GlyphPickerPluginExtension implements
     public void applicationStarted(final StandalonePluginWorkspace workspace) {
 
         mainController = new MainController(workspace);
-        mainController.addListener(new InsertListener() {
+        mainController.addListener(new GlyphEventListener() {
             @Override
-            public void insert(GlyphItem model) {
-                insertFragment(workspace, model);
+            public void eventOccured(String type, GlyphDefinition model) {
+                if ("insert".equals(type)) {
+                    insertFragment(workspace, model);
+                }
             }
         });
 
@@ -74,8 +77,8 @@ public class GlyphPickerPluginExtension implements
             public void customizeView(ViewInfo viewInfo) {
                 if ("GlyphPicker".equals(viewInfo.getViewID())) {
 
-                    JPanel panel = mainController.getMainPanel();
-                    mainController.getBrowserController().loadData();
+                    JComponent panel = mainController.getPanel();
+                    mainController.loadData();
 
                     viewInfo.setComponent(panel);
                     viewInfo.setTitle("GlyphPicker");
@@ -90,14 +93,14 @@ public class GlyphPickerPluginExtension implements
 
     }
 
-    private String formatModel(GlyphItem model, Boolean setNs) {
+    private String formatModel(GlyphDefinition model, Boolean setNs) {
         String ns = (setNs) ? " xmlns=\"http://www.tei-c.org/ns/1.0\"" : "";
         return "<g" + ns + " ref=\"" + model.getBaseUrl() + "#" + model.getId()
                 + "\"/>";
     }
 
     private void insertFragment(StandalonePluginWorkspace workspace,
-            GlyphItem model) {
+            GlyphDefinition model) {
         WSEditorPage currentPage = workspace.getCurrentEditorAccess(
                 PluginWorkspace.MAIN_EDITING_AREA).getCurrentPage();
         if (currentPage instanceof WSTextEditorPage) {
@@ -158,10 +161,7 @@ public class GlyphPickerPluginExtension implements
     @Override
     public boolean applicationClosing() {
 
-        // TODO check + ask when data has changed
-
-        mainController.getConfigLoader().save();
-        mainController.getUserListController().getUserListLoader().save();
+        mainController.saveData();
 
         return true;
     };

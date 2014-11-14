@@ -1,19 +1,15 @@
-package com.aerhard.oxygen.plugin.glyphpicker.controller.browser;
+package com.aerhard.oxygen.plugin.glyphpicker.controller;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Unmarshaller;
-import javax.xml.stream.XMLInputFactory;
-import javax.xml.stream.XMLStreamException;
-import javax.xml.stream.XMLStreamReader;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -28,27 +24,41 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.xml.sax.SAXException;
 
-import com.aerhard.oxygen.plugin.glyphpicker.model.tei.GlyphList;
-import com.aerhard.oxygen.plugin.glyphpicker.model.tei.GlyphItem;
+import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinition;
+import com.icl.saxon.aelfred.SAXParserFactoryImpl;
 
-public class SourceDataLoader {
+public class GlyphDefinitionLoader {
 
     private static final Logger LOGGER = Logger
-            .getLogger(SourceDataLoader.class.getName());
+            .getLogger(GlyphDefinitionLoader.class.getName());
+
+    private SAXParser parser;
+
+    public GlyphDefinitionLoader() {
+        
+        SAXParserFactory parserFactory = SAXParserFactoryImpl.newInstance();
+        try {
+            parser = parserFactory.newSAXParser();
+        } catch (ParserConfigurationException | SAXException e) {
+            LOGGER.error(e);
+        }
+
+    }
 
     public static Boolean isLocalFile(String path) {
         return (!path.matches("^\\w+:\\/\\/.*"));
     }
 
-    public List<GlyphItem> loadData(String path) {
-        List<GlyphItem> glyphList = (isLocalFile(path)) ? loadDataFromFile(path)
+    public List<GlyphDefinition> loadData(String path) {
+        List<GlyphDefinition> glyphList = (isLocalFile(path)) ? loadDataFromFile(path)
                 : loadDataFromUrl("guest", "guest", path);
         return glyphList;
     }
 
     private class GlyphResponseHandler implements
-            ResponseHandler<List<GlyphItem>> {
+            ResponseHandler<List<GlyphDefinition>> {
 
         private String url;
 
@@ -57,7 +67,7 @@ public class SourceDataLoader {
         }
 
         @Override
-        public List<GlyphItem> handleResponse(final HttpResponse response)
+        public List<GlyphDefinition> handleResponse(final HttpResponse response)
                 throws IOException {
             StatusLine statusLine = response.getStatusLine();
             HttpEntity entity = response.getEntity();
@@ -76,7 +86,7 @@ public class SourceDataLoader {
                     .getValue();
 
             if (contentType.indexOf("xml") > -1) {
-                return parseXml(inputStream, url);
+                return parseXmlSax(inputStream, url);
             } else {
                 return parseJson(inputStream, url);
             }
@@ -84,7 +94,7 @@ public class SourceDataLoader {
 
     }
 
-    public List<GlyphItem> loadDataFromUrl(String user, String password,
+    public List<GlyphDefinition> loadDataFromUrl(String user, String password,
             final String url) {
         DefaultHttpClient httpclient = new DefaultHttpClient();
         try {
@@ -102,47 +112,24 @@ public class SourceDataLoader {
         return null;
     }
 
-    private List<GlyphItem> parseXml(InputStream inputStream, String baseUrl) {
-        GlyphList charDecl;
-        List<GlyphList> charDeclList = new ArrayList<GlyphList>();
-        List<GlyphItem> charList = new ArrayList<GlyphItem>();
+    public List<GlyphDefinition> parseXmlSax(InputStream is, String path) {
+
+        GlyphDefinitionHandler handler = new GlyphDefinitionHandler(path);
         try {
-            XMLInputFactory xif = XMLInputFactory.newInstance();
-            XMLStreamReader xsr = xif.createXMLStreamReader(inputStream);
-            JAXBContext context = JAXBContext.newInstance(GlyphList.class);
-            Unmarshaller unmarshaller = context.createUnmarshaller();
-            while (xsr.hasNext()) {
-                xsr.next();
-                if (xsr.getEventType() == XMLStreamReader.START_ELEMENT
-                        && xsr.getLocalName().equals("charDecl")) {
-                    charDecl = unmarshaller.unmarshal(xsr, GlyphList.class)
-                            .getValue();
-                    charDecl.addAdditionalData(baseUrl);
-                    charDeclList.add(charDecl);
-                }
-            }
-            Iterator<GlyphList> iterator = charDeclList.iterator();
-            while (iterator.hasNext()) {
-                charList.addAll(iterator.next().getChars());
-            }
-            return charList;
-        } catch (XMLStreamException e) {
-            LOGGER.info(e);
-        } catch (JAXBException e) {
-            LOGGER.info(e);
-        } finally {
-            try {
-                inputStream.close();
-            } catch (IOException e) {
-                LOGGER.info(e);
-            }
+            parser.parse(is, handler);
+        } catch (SAXException e) {
+            LOGGER.error(e);
+        } catch (IOException e) {
+            LOGGER.error(e);
         }
-        return null;
+
+        return handler.getGlyphDefinitions();
     }
 
-    public List<GlyphItem> parseJson(InputStream inputStream, String baseUrl) {
+    public List<GlyphDefinition> parseJson(InputStream inputStream,
+            String baseUrl) {
 
-        List<GlyphItem> glyphList = new ArrayList<GlyphItem>();
+        List<GlyphDefinition> glyphList = new ArrayList<GlyphDefinition>();
         StringBuilder builder = new StringBuilder();
 
         try {
@@ -166,10 +153,11 @@ public class SourceDataLoader {
                                 classes.add(classesArray.get(j).toString());
                             }
                         }
-                        glyphList.add(new GlyphItem(obj.getString("id"), obj
-                                .getString("name"), obj.getString("codepoint"),
-                                obj.getString("range"), obj.getString("url"),
-                                baseUrl, classes));
+                        glyphList.add(new GlyphDefinition(obj.getString("id"),
+                                obj.getString("name"), obj
+                                        .getString("codepoint"), obj
+                                        .getString("range"), obj
+                                        .getString("url"), baseUrl, classes));
                     }
                     return glyphList;
                 }
@@ -180,9 +168,9 @@ public class SourceDataLoader {
         return null;
     }
 
-    public List<GlyphItem> loadDataFromFile(String fileName) {
+    public List<GlyphDefinition> loadDataFromFile(String fileName) {
 
-        List<GlyphItem> glyphList = null;
+        List<GlyphDefinition> glyphList = null;
 
         if (fileName != null) {
             File file = new File(fileName);
@@ -201,7 +189,7 @@ public class SourceDataLoader {
                 LOGGER.info(e);
             }
             if (inputStream != null && mimeType != null) {
-                glyphList = (mimeType.indexOf("xml") > -1) ? parseXml(
+                glyphList = (mimeType.indexOf("xml") > -1) ? parseXmlSax(
                         inputStream, fileName) : parseJson(inputStream,
                         fileName);
             }

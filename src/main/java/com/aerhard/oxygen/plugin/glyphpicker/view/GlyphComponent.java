@@ -24,7 +24,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 import org.apache.log4j.Logger;
 
-import com.aerhard.oxygen.plugin.glyphpicker.model.tei.GlyphItem;
+import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinition;
 import com.aerhard.oxygen.plugin.glyphpicker.view.browser.TableDescriptionRenderer;
 
 public class GlyphComponent extends JLabel {
@@ -34,11 +34,11 @@ public class GlyphComponent extends JLabel {
     private static final Logger LOGGER = Logger.getLogger(GlyphComponent.class
             .getName());
 
-    private GlyphItem model;
+    private GlyphDefinition model;
     private static final int GLYPH_SIZE = 50;
     private static final int GLYPH_BORDER = 10;
 
-    public GlyphComponent(GlyphItem model, Boolean text) {
+    public GlyphComponent(GlyphDefinition model, Boolean text) {
         this.model = model;
         if (text) {
             setText(TableDescriptionRenderer.formatText(model));

@@ -7,7 +7,7 @@ import javax.swing.table.TableCellRenderer;
 import java.awt.Component;
 import java.util.List;
 
-import com.aerhard.oxygen.plugin.glyphpicker.model.tei.GlyphItem;
+import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinition;
 
 public class TableDescriptionRenderer extends JLabel implements
         TableCellRenderer {
@@ -23,7 +23,7 @@ public class TableDescriptionRenderer extends JLabel implements
         if (value == null) {
             setText("");
         } else {
-            GlyphItem model = (GlyphItem) value;
+            GlyphDefinition model = (GlyphDefinition) value;
             setText(formatText(model));
         }
 
@@ -39,7 +39,7 @@ public class TableDescriptionRenderer extends JLabel implements
         return this;
     }
 
-    public static String formatText(GlyphItem model) {
+    public static String formatText(GlyphDefinition model) {
         List<String> classes = model.getClasses();
         StringBuilder sb = new StringBuilder();
 

@@ -1,4 +1,4 @@
-package com.aerhard.oxygen.plugin.glyphpicker.controller.userlist;
+package com.aerhard.oxygen.plugin.glyphpicker.controller;
 
 import java.io.File;
 import java.util.Properties;
@@ -10,7 +10,7 @@ import org.apache.log4j.Logger;
 
 import ro.sync.exml.workspace.api.standalone.StandalonePluginWorkspace;
 
-import com.aerhard.oxygen.plugin.glyphpicker.model.tei.UserListModel;
+import com.aerhard.oxygen.plugin.glyphpicker.model.UserListModel;
 
 public class UserListLoader {
 

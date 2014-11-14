@@ -6,7 +6,7 @@ import javax.swing.table.TableCellRenderer;
 
 import java.awt.Component;
 
-import com.aerhard.oxygen.plugin.glyphpicker.model.tei.GlyphItem;
+import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinition;
 import com.aerhard.oxygen.plugin.glyphpicker.view.GlyphComponent;
 
 public class TableIconRenderer extends JLabel implements TableCellRenderer {
@@ -23,7 +23,7 @@ public class TableIconRenderer extends JLabel implements TableCellRenderer {
         if (value == null) {
             c = new GlyphComponent();
         } else {
-            GlyphItem model = (GlyphItem) value;
+            GlyphDefinition model = (GlyphDefinition) value;
             if (model.getComponent() == null) {
                 c = new GlyphComponent(model, false);
                 c.loadIcon();

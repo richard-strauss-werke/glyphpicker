@@ -1,9 +1,12 @@
 package com.aerhard.oxygen.plugin.glyphpicker.view;
 
 import java.awt.BorderLayout;
+
+import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JTabbedPane;
+
 import java.awt.Dimension;
 
 public class MainPanel extends JPanel {
@@ -11,10 +14,10 @@ public class MainPanel extends JPanel {
     private static final long serialVersionUID = 1L;
     private JTabbedPane tabbedPane;
 
-    public MainPanel(JPanel browserPanel, JPanel userListPanel) {
+    public MainPanel(JComponent browserPanel, JComponent userListPanel) {
 
         setLayout(new BorderLayout(0, 0));
-        
+
         tabbedPane = new JTabbedPane(JTabbedPane.TOP);
         tabbedPane.setBorder(new EmptyBorder(8, 8, 8, 8));
 

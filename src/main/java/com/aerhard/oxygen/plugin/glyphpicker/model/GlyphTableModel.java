@@ -5,15 +5,13 @@ import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
 
-import com.aerhard.oxygen.plugin.glyphpicker.model.tei.GlyphItem;
-
 public class GlyphTableModel extends AbstractTableModel {
 
     private static final long serialVersionUID = 1L;
 
     private static String[] columnNames = new String[] { "Glyph", "Description" };
 
-    private GlyphItem[] data = new GlyphItem[0];
+    private GlyphDefinition[] data = new GlyphDefinition[0];
 
     public GlyphTableModel() {
     }
@@ -56,7 +54,7 @@ public class GlyphTableModel extends AbstractTableModel {
         return columnNames[col];
     }
 
-    public GlyphItem getModelAt(int row) {
+    public GlyphDefinition getModelAt(int row) {
         return data[row];
     }
 
@@ -69,11 +67,11 @@ public class GlyphTableModel extends AbstractTableModel {
         return (value == null ? Object.class : value.getClass());
     }
 
-    public void setData(List<GlyphItem> models) {
+    public void setData(List<GlyphDefinition> models) {
         if (models == null) {
-            data = new GlyphItem[0];
+            data = new GlyphDefinition[0];
         } else {
-            data = new GlyphItem[models.size()];
+            data = new GlyphDefinition[models.size()];
             data = models.toArray(data);
         }
         fireTableDataChanged();

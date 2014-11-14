@@ -6,7 +6,7 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.ListCellRenderer;
 
-import com.aerhard.oxygen.plugin.glyphpicker.model.tei.GlyphItem;
+import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinition;
 import com.aerhard.oxygen.plugin.glyphpicker.view.GlyphComponent;
 
 public class ListItemRenderer extends JLabel implements
@@ -20,7 +20,7 @@ public class ListItemRenderer extends JLabel implements
         if (value == null) {
             c = new GlyphComponent();
         } else {
-            GlyphItem model = (GlyphItem) value;
+            GlyphDefinition model = (GlyphDefinition) value;
             if (model.getComponent() == null) {
                 c = new GlyphComponent(model, true);
                 c.loadIcon();

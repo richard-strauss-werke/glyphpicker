@@ -11,11 +11,6 @@
 	</properties>
 	<dependencies>
 		<dependency>
-			<groupId>org.eclipse.persistence</groupId>
-			<artifactId>org.eclipse.persistence.moxy</artifactId>
-			<version>2.5.0</version>
-		</dependency>
-		<dependency>
 			<groupId>com.oxygenxml</groupId>
 			<artifactId>oxygen-sdk</artifactId>
 			<version>16.0.0</version>
@@ -68,34 +63,6 @@
 						</goals>
 						<configuration>
 							<artifactItems>
-							<artifactItem>
-                                    <groupId>org.eclipse.persistence</groupId>
-                                    <artifactId>org.eclipse.persistence.antlr</artifactId>
-                                    <version>2.5.0</version>
-                                    <type>jar</type>
-                                    <overWrite>true</overWrite>
-                                </artifactItem>
-                                <artifactItem>
-                                    <groupId>org.eclipse.persistence</groupId>
-                                    <artifactId>org.eclipse.persistence.asm</artifactId>
-                                    <version>2.5.0</version>
-                                    <type>jar</type>
-                                    <overWrite>true</overWrite>
-                                </artifactItem>
-                                <artifactItem>
-                                    <groupId>org.eclipse.persistence</groupId>
-                                    <artifactId>org.eclipse.persistence.core</artifactId>
-                                    <version>2.5.0</version>
-                                    <type>jar</type>
-                                    <overWrite>true</overWrite>
-                                </artifactItem>
-								<artifactItem>
-									<groupId>org.eclipse.persistence</groupId>
-									<artifactId>org.eclipse.persistence.moxy</artifactId>
-									<version>2.5.0</version>
-									<type>jar</type>
-									<overWrite>true</overWrite>
-								</artifactItem>
 								<artifactItem>
 									<groupId>org.json</groupId>
 									<artifactId>json</artifactId>
@@ -176,11 +143,11 @@
 				<filtering>true</filtering>
 			</resource>
 			<resource>
-                <directory>src/test/resources</directory>
-                <excludes>
-                    <exclude>**/*.*</exclude>
-                </excludes>
-            </resource>
+				<directory>src/test/resources</directory>
+				<excludes>
+					<exclude>**/*.*</exclude>
+				</excludes>
+			</resource>
 			<!-- Add filtered latest.xml to the root of the build folder; oXygen will 
 				check this file for updates. -->
 			<resource>

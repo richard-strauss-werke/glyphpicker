@@ -1,4 +1,4 @@
-package com.aerhard.oxygen.plugin.glyphpicker.model.tei;
+package com.aerhard.oxygen.plugin.glyphpicker.model;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,48 +8,47 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
-import org.eclipse.persistence.oxm.annotations.XmlPath;
-
 import com.aerhard.oxygen.plugin.glyphpicker.view.GlyphComponent;
 
-@XmlRootElement(name = "char")
+@XmlRootElement(name = "char", namespace="http://www.tei-c.org/ns/1.0")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class GlyphItem {
+public class GlyphDefinition {
 
-    @XmlAttribute(name = "xml:id")
+    @XmlAttribute(name = "id", namespace = "http://www.w3.org/XML/1998/namespace")
     private String id;
 
-    @XmlAttribute(name = "xml:base")
+    @XmlAttribute(name = "base", namespace = "http://www.w3.org/XML/1998/namespace")
     private String baseUrl;
 
-    // character name: SMuFL browser has <charName>, ENRICH <desc>
-    @XmlElement(name = "charName")
+    @XmlElement(name = "charName", namespace="http://www.tei-c.org/ns/1.0")
     private String charName;
-    // currently only gets the first mapping
-    @XmlPath("mapping[1]/text()")
+    
+    @XmlElement(name="mapping", namespace="http://www.tei-c.org/ns/1.0")
     private String codePoint;
-    @XmlPath("note/list/item/text()")
+    
+    @XmlElementWrapper(name="list", namespace="http://www.tei-c.org/ns/1.0")
     private List<String> classes = new ArrayList<String>();
-    @XmlPath("tei:graphic/@url")
+    
+    @XmlElement(name="graphic", namespace="http://www.tei-c.org/ns/1.0")
     private String url;
 
-    private String htmlEntity;
+    @XmlElement(name="range")
     private String range;
-    private String teiCode;
 
     @XmlTransient
     private GlyphComponent component = null;
     @XmlTransient
     private ImageIcon icon = null;
 
-    public GlyphItem() {
+    public GlyphDefinition() {
 
     }
 
-    public GlyphItem(GlyphItem ch) {
+    public GlyphDefinition(GlyphDefinition ch) {
         this.id = ch.getId();
         this.charName = ch.getCharName();
         this.codePoint = ch.getCodePoint();
@@ -59,8 +58,8 @@ public class GlyphItem {
         this.baseUrl = ch.getBaseUrl();
     }
 
-    public GlyphItem(String id, String name, String codepoint, String range,
-            String url, String baseUrl, List<String> classes) {
+    public GlyphDefinition(String id, String name, String codepoint,
+            String range, String url, String baseUrl, List<String> classes) {
         this.id = id;
         this.charName = name;
         this.codePoint = codepoint;
@@ -101,21 +100,6 @@ public class GlyphItem {
     }
 
     /**
-     * @return the htmlEntity
-     */
-    public String getHtmlEntity() {
-        return htmlEntity;
-    }
-
-    /**
-     * @param htmlEntity
-     *            the htmlEntity to set
-     */
-    public void setHtmlEntity(String htmlEntity) {
-        this.htmlEntity = htmlEntity;
-    }
-
-    /**
      * @return the range
      */
     public String getRange() {
@@ -143,21 +127,6 @@ public class GlyphItem {
      */
     public void setClasses(List<String> classes) {
         this.classes = classes;
-    }
-
-    /**
-     * @return the teiCode
-     */
-    public String getTeiCode() {
-        return teiCode;
-    }
-
-    /**
-     * @param teiCode
-     *            the teiCode to set
-     */
-    public void setTeiCode(String teiCode) {
-        this.teiCode = teiCode;
     }
 
     public String getId() {
