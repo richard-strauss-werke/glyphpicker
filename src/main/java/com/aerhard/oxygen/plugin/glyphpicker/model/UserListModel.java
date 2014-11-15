@@ -34,8 +34,8 @@ public class UserListModel extends AbstractListModel<GlyphDefinition> {
         this.inSync = inSync;
     }
     
-    public UserListModel(List<GlyphDefinition> arrayList) {
-        data = arrayList;
+    public UserListModel(List<GlyphDefinition> data) {
+        this.data = data;
     }
 
     public UserListModel() {
@@ -62,6 +62,16 @@ public class UserListModel extends AbstractListModel<GlyphDefinition> {
 
     public GlyphDefinition getElementAt(int i) {
         return data.get(i);
+    }
+    
+    public void setData(List<GlyphDefinition> data) {
+        inSync = true;
+        this.data = data;
+        fireContentsChanged(this, 0, getSize());
+    }
+    
+    public List<GlyphDefinition> getData(){
+        return data;
     }
 
  

@@ -32,6 +32,9 @@ public class UserListController extends Controller {
         userListPanel = new UserListPanel();
         userList = userListPanel.getUserList();
 
+        userListModel = new UserListModel();
+        userList.setModel(userListModel);
+
         userListLoader = new UserListLoader(workspace, properties);
 
         setListeners();
@@ -82,19 +85,15 @@ public class UserListController extends Controller {
         btn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                
-                // TODO expect return value
                 saveData();
                 userListPanel.enableSaveButtons(false);
             }
         });
         
-        btn = userListPanel.getBtnReset();
+        btn = userListPanel.getBtnReload();
         btn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                
-                // TODO expect return value
                 loadData();
                 userListPanel.enableSaveButtons(false);
             }
@@ -124,6 +123,25 @@ public class UserListController extends Controller {
                     }
                 });
 
+        userListModel.addListDataListener(new ListDataListener(){
+            @Override
+            public void contentsChanged(ListDataEvent e) {
+                if (((UserListModel) e.getSource()).isInSync()) {
+                    userListPanel.enableSaveButtons(false);    
+                } else {
+                    userListPanel.enableSaveButtons(true);
+                }
+            }
+
+            @Override
+            public void intervalAdded(ListDataEvent arg0) {
+            }
+
+            @Override
+            public void intervalRemoved(ListDataEvent arg0) {
+            }
+        });
+        
     }
 
     public UserListModel getListModel() {
@@ -136,29 +154,12 @@ public class UserListController extends Controller {
 
     @Override
     public void loadData() {
-        
-        userListLoader.load();
-        userListModel = userListLoader.getUserListModel();
-        userList.setModel(userListModel);
-        userListModel.addListDataListener(new ListDataListener(){
-            @Override
-            public void contentsChanged(ListDataEvent arg0) {
-                userListPanel.enableSaveButtons(true);
-            }
-
-            @Override
-            public void intervalAdded(ListDataEvent arg0) {
-            }
-
-            @Override
-            public void intervalRemoved(ListDataEvent arg0) {
-            }
-        });
+        userListModel.setData(userListLoader.load().getData());
     }
-    
+
     @Override
     public void saveData() {
-        userListLoader.save();
+        userListLoader.save(userListModel);
         userListModel.setInSync(true);
     }
 

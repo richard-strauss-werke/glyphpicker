@@ -19,7 +19,6 @@ public class UserListLoader {
 
     private String pathName;
     private String fileName;
-    private UserListModel userListModel = null;
 
     public UserListLoader(StandalonePluginWorkspace workspace,
             Properties properties) {
@@ -28,7 +27,7 @@ public class UserListLoader {
         fileName = properties.getProperty("userdata.filename");
     }
 
-    public void save() {
+    public void save(UserListModel userListModel) {
         File path = new File(pathName);
         Boolean pathExists = (path.exists()) ? true : path.mkdir();
         if (pathExists) {
@@ -44,9 +43,9 @@ public class UserListLoader {
         }
     }
 
-    public void load() {
+    public UserListModel load() {
         File file = new File(pathName + "/" + fileName);
-        userListModel = null;
+        UserListModel userListModel = null;
         try {
             userListModel = JAXB.unmarshal(file, UserListModel.class);
         } catch (DataBindingException e) {
@@ -55,14 +54,7 @@ public class UserListLoader {
         if (userListModel == null) {
             userListModel = new UserListModel();
         }
-    }
-
-    public UserListModel getUserListModel() {
         return userListModel;
-    }
-
-    public void setUserListModel(UserListModel userListModel) {
-        this.userListModel = userListModel;
     }
 
 }

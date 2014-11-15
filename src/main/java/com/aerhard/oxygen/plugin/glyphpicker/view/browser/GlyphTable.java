@@ -9,11 +9,10 @@ public class GlyphTable extends JTable {
 
     private static final long serialVersionUID = 1L;
 
-    private TableIconRenderer tableIconRenderer;
-    private TableDescriptionRenderer tableDescriptionRenderer;
+    private TableCellRenderer tableIconRenderer;
+    private TableCellRenderer tableDescriptionRenderer;
 
     public GlyphTable() {
-        tableIconRenderer = new TableIconRenderer();
         tableDescriptionRenderer = new TableDescriptionRenderer();
         setRowHeight(90);
         setShowVerticalLines(false);
@@ -21,7 +20,11 @@ public class GlyphTable extends JTable {
 
     }
 
-    public TableIconRenderer getTableIconRenderer() {
+    public void setTableIconRenderer(TableCellRenderer renderer) {
+        tableIconRenderer = renderer;
+    }
+    
+    public TableCellRenderer getTableIconRenderer() {
         return tableIconRenderer;
     }
 

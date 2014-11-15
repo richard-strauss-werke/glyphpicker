@@ -29,6 +29,7 @@ import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphTableModel;
 import com.aerhard.oxygen.plugin.glyphpicker.model.PathComboModel;
 import com.aerhard.oxygen.plugin.glyphpicker.view.browser.BrowserPanel;
 import com.aerhard.oxygen.plugin.glyphpicker.view.browser.GlyphTable;
+import com.aerhard.oxygen.plugin.glyphpicker.view.browser.TableIconShapeRenderer;
 import com.jidesoft.swing.AutoCompletionComboBox;
 
 public class BrowserController extends Controller {
@@ -53,6 +54,11 @@ public class BrowserController extends Controller {
         browserPanel.enableBrowserButtons(false);
 
         table = browserPanel.getTable();
+        
+//        table.setTableIconRenderer(new TableIconBitmapRenderer());
+//        table.setTableIconRenderer(new TableIconFontRenderer());
+        table.setTableIconRenderer(new TableIconShapeRenderer());
+        
         glyphTableModel = new GlyphTableModel();
         table.setModel(glyphTableModel);
         table.getColumnModel().getColumn(0).setMinWidth(70);

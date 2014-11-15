@@ -2,6 +2,7 @@ package com.aerhard.oxygen.plugin.glyphpicker.view.userlist;
 
 import java.awt.Component;
 
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.ListCellRenderer;
@@ -16,16 +17,17 @@ public class ListItemRenderer extends JLabel implements
     public Component getListCellRendererComponent(JList<?> list, Object value,
             int index, boolean isSelected, boolean cellHasFocus) {
 
-        GlyphComponent c;
+        JComponent c;
         if (value == null) {
             c = new GlyphComponent();
         } else {
             GlyphDefinition model = (GlyphDefinition) value;
             if (model.getComponent() == null) {
-                c = new GlyphComponent(model, true);
-                c.loadIcon();
-                c.setContainer(list);
-                model.setComponent(c);
+                GlyphComponent gc = new GlyphComponent(model, true);
+                gc.loadIcon();
+                gc.setContainer(list);
+                model.setComponent(gc);
+                c = gc;
             } else {
                 c = model.getComponent();
             }

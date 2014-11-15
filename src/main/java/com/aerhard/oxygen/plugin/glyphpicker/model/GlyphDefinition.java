@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.ImageIcon;
+import javax.swing.JComponent;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
@@ -40,7 +41,7 @@ public class GlyphDefinition {
     private String range;
 
     @XmlTransient
-    private GlyphComponent component = null;
+    private JComponent component = null;
     @XmlTransient
     private ImageIcon icon = null;
 
@@ -164,7 +165,7 @@ public class GlyphDefinition {
     /**
      * @return the component
      */
-    public GlyphComponent getComponent() {
+    public JComponent getComponent() {
         return component;
     }
 
@@ -172,7 +173,7 @@ public class GlyphDefinition {
      * @param c
      *            the component to set
      */
-    public void setComponent(GlyphComponent c) {
+    public void setComponent(JComponent c) {
         this.component = c;
     }
 

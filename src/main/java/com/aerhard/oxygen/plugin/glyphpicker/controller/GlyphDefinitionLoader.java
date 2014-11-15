@@ -114,7 +114,7 @@ public class GlyphDefinitionLoader {
 
     public List<GlyphDefinition> parseXmlSax(InputStream is, String path) {
 
-        GlyphDefinitionHandler handler = new GlyphDefinitionHandler(path);
+        GlyphDefinitionXmlHandler handler = new GlyphDefinitionXmlHandler(path);
         try {
             parser.parse(is, handler);
         } catch (SAXException e) {

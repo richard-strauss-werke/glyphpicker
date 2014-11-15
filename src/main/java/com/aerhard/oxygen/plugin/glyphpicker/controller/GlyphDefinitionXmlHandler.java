@@ -10,7 +10,7 @@ import org.xml.sax.SAXException;
 import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinition;
 import com.icl.saxon.aelfred.DefaultHandler;
 
-public class GlyphDefinitionHandler extends DefaultHandler {
+public class GlyphDefinitionXmlHandler extends DefaultHandler {
 
     private Boolean inChar = false;
 
@@ -25,7 +25,7 @@ public class GlyphDefinitionHandler extends DefaultHandler {
 
     private StringBuffer textContent = new StringBuffer();
 
-    public GlyphDefinitionHandler(String path) {
+    public GlyphDefinitionXmlHandler(String path) {
         this.baseUrl = path;
     }
 

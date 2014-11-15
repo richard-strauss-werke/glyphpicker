@@ -22,7 +22,7 @@ public class UserListPanel extends JPanel {
     private JButton btnRemove;
     private HighlightButton btnInsert;
     private JButton btnSave;
-    private JButton btnReset;
+    private JButton btnReload;
 
     public UserListPanel() {
 
@@ -58,9 +58,9 @@ public class UserListPanel extends JPanel {
         btnSave.setEnabled(false);
         buttonPanel.add(btnSave);
 
-        btnReset = new JButton("Reset Collection");
-        btnReset.setEnabled(false);
-        buttonPanel.add(btnReset);
+        btnReload = new JButton("Reload Collection");
+        btnReload.setEnabled(false);
+        buttonPanel.add(btnReload);
 
         
     }
@@ -73,7 +73,7 @@ public class UserListPanel extends JPanel {
     
     public void enableSaveButtons(Boolean enable) {
         btnSave.setEnabled(enable);
-        btnReset.setEnabled(enable);
+        btnReload.setEnabled(enable);
 
     }
 
@@ -89,8 +89,8 @@ public class UserListPanel extends JPanel {
         return btnSave;
     }
     
-    public JButton getBtnReset() {
-        return btnReset;
+    public JButton getBtnReload() {
+        return btnReload;
     }
 
     
