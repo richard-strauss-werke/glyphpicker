@@ -12,7 +12,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 @XmlRootElement(name = "charDecl", namespace="http://www.tei-c.org/ns/1.0")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class UserListModel extends AbstractListModel<GlyphDefinition> {
+public class UserListModel extends AbstractListModel<GlyphDefinition> implements GlyphListModel {
     @XmlTransient
     private static final long serialVersionUID = 1L;
 
@@ -68,6 +68,11 @@ public class UserListModel extends AbstractListModel<GlyphDefinition> {
         inSync = true;
         this.data = data;
         fireContentsChanged(this, 0, getSize());
+    }
+    
+    public void applyModel(GlyphListModel model) {
+        data = model.getData();
+        // TODO sync property
     }
     
     public List<GlyphDefinition> getData(){

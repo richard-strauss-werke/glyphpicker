@@ -13,6 +13,8 @@ import java.util.concurrent.ExecutionException;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.ListSelectionModel;
 import javax.swing.RowFilter;
 import javax.swing.SwingWorker;
 import javax.swing.event.ListSelectionEvent;
@@ -27,8 +29,11 @@ import com.aerhard.oxygen.plugin.glyphpicker.model.Config;
 import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinition;
 import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphTableModel;
 import com.aerhard.oxygen.plugin.glyphpicker.model.PathComboModel;
+import com.aerhard.oxygen.plugin.glyphpicker.model.UserListModel;
 import com.aerhard.oxygen.plugin.glyphpicker.view.browser.BrowserPanel;
 import com.aerhard.oxygen.plugin.glyphpicker.view.browser.GlyphTable;
+import com.aerhard.oxygen.plugin.glyphpicker.view.browser.ListGrid;
+import com.aerhard.oxygen.plugin.glyphpicker.view.browser.ListItemShapeRenderer;
 import com.aerhard.oxygen.plugin.glyphpicker.view.browser.TableIconShapeRenderer;
 import com.jidesoft.swing.AutoCompletionComboBox;
 
@@ -47,29 +52,48 @@ public class BrowserController extends Controller {
     private GlyphDefinitionLoader dataStore;
     private boolean isLoading = false;
 
+    private JComboBox<String> viewCombo;
+
+    private ListGrid listGrid;
+
+    private UserListModel listGridModel;
+    
     public BrowserController(Config config) {
 
         browserPanel = new BrowserPanel();
 
-        browserPanel.enableBrowserButtons(false);
+        table = new GlyphTable();
 
-        table = browserPanel.getTable();
-        
-//        table.setTableIconRenderer(new TableIconBitmapRenderer());
-//        table.setTableIconRenderer(new TableIconFontRenderer());
+        // table.setTableIconRenderer(new TableIconBitmapRenderer());
+        // table.setTableIconRenderer(new TableIconFontRenderer());
         table.setTableIconRenderer(new TableIconShapeRenderer());
-        
+
         glyphTableModel = new GlyphTableModel();
         table.setModel(glyphTableModel);
-        table.getColumnModel().getColumn(0).setMinWidth(70);
-        table.getColumnModel().getColumn(0).setMaxWidth(70);
+
+        table.getColumnModel().getColumn(0).setPreferredWidth(70);
+        table.getColumnModel().getColumn(0).setMinWidth(30);
+        table.getColumnModel().getColumn(1).setPreferredWidth(600);
+        table.getColumnModel().getColumn(1).setMinWidth(10);
         sorter = new TableRowSorter<GlyphTableModel>(glyphTableModel);
         table.setRowSorter(sorter);
+
+        // TODO share model // synchronize filters
+        listGrid = new ListGrid();
+        listGrid.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        listGrid.setCellRenderer(new ListItemShapeRenderer());
+        listGridModel = new UserListModel();
+        listGrid.setModel(listGridModel);
+        
+        browserPanel.setListComponent(table);
+        browserPanel.enableBrowserButtons(false);
+        
         pathComboModel = config.getPaths();
         browserPanel.getPathCombo().setModel(pathComboModel);
 
         rangeCombo = browserPanel.getRangeCombo();
         classCombo = browserPanel.getClassCombo();
+        viewCombo = browserPanel.getViewCombo();
 
         dataStore = new GlyphDefinitionLoader();
 
@@ -77,6 +101,7 @@ public class BrowserController extends Controller {
 
     }
 
+    
     public BrowserPanel getPanel() {
         return browserPanel;
     }
@@ -117,6 +142,19 @@ public class BrowserController extends Controller {
             @Override
             public void actionPerformed(ActionEvent e) {
                 newFilter();
+            }
+        });
+
+        viewCombo.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int index = ((JComboBox<?>) e.getSource()).getSelectedIndex();
+                
+                if (index == 0) {
+                    browserPanel.setListComponent(table);
+                } else{
+                    browserPanel.setListComponent(listGrid);
+                }
             }
         });
 
@@ -275,7 +313,10 @@ public class BrowserController extends Controller {
             public void done() {
                 try {
                     List<GlyphDefinition> data = get();
+                    
+                    // TODO create shared model
                     glyphTableModel.setData(data);
+                    listGridModel.setData(data);
 
                     // when loading was successful, set the loading path as
                     // first item in the pathComboModel

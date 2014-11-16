@@ -1,12 +1,7 @@
 package com.aerhard.oxygen.plugin.glyphpicker.view.browser;
 
-import javax.swing.JLabel;
-import javax.swing.JTable;
-import javax.swing.table.TableCellRenderer;
-
-import org.apache.log4j.Logger;
-
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -17,10 +12,16 @@ import java.awt.font.FontRenderContext;
 import java.awt.font.GlyphVector;
 import java.awt.geom.AffineTransform;
 
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.ListCellRenderer;
+
+import org.apache.log4j.Logger;
+
 import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinition;
 
-public class TableIconShapeRenderer extends JLabel implements TableCellRenderer {
-
+public class ListItemShapeRenderer extends JLabel implements
+        ListCellRenderer<Object> {
     private static final long serialVersionUID = 1L;
 
     private static final Logger LOGGER = Logger
@@ -37,14 +38,15 @@ public class TableIconShapeRenderer extends JLabel implements TableCellRenderer 
 
     private String ch = null;
 
-    public TableIconShapeRenderer() {
+    public ListItemShapeRenderer() {
         setVerticalAlignment(CENTER);
         setHorizontalAlignment(CENTER);
         setText(null);
+        setPreferredSize(new Dimension(90, 90));
     }
 
-    public Component getTableCellRendererComponent(JTable table, Object value,
-            boolean isSelected, boolean hasFocus, int row, int column) {
+    public Component getListCellRendererComponent(JList<?> list, Object value,
+            int index, boolean isSelected, boolean cellHasFocus) {
 
         if (value == null) {
             ch = null;
@@ -53,16 +55,19 @@ public class TableIconShapeRenderer extends JLabel implements TableCellRenderer 
         }
 
         if (isSelected) {
-            setBackground(table.getSelectionBackground());
-            setForeground(table.getSelectionForeground());
+            setBackground(list.getSelectionBackground());
+            setForeground(list.getSelectionForeground());
         } else {
-            setBackground(table.getBackground());
-            setForeground(table.getForeground());
+            setBackground(list.getBackground());
+            setForeground(list.getForeground());
         }
 
         setOpaque(true);
         return this;
     }
+
+
+
 
     @Override
     protected void paintComponent(Graphics g) {
@@ -125,3 +130,4 @@ public class TableIconShapeRenderer extends JLabel implements TableCellRenderer 
     }
     
 }
+

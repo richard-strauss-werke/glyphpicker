@@ -5,13 +5,13 @@ import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
 
-public class GlyphTableModel extends AbstractTableModel {
+public class GlyphTableModel extends AbstractTableModel implements GlyphListModel {
 
     private static final long serialVersionUID = 1L;
 
     private static String[] columnNames = new String[] { "Glyph", "Description" };
 
-    private GlyphDefinition[] data = new GlyphDefinition[0];
+    private List<GlyphDefinition> data = new ArrayList<GlyphDefinition>();
 
     public GlyphTableModel() {
     }
@@ -21,14 +21,14 @@ public class GlyphTableModel extends AbstractTableModel {
     }
 
     public int getRowCount() {
-        return data.length;
+        return data.size();
     }
 
     public List<String> getUniqueRanges() {
         List<String> ranges = new ArrayList<String>();
         String range;
-        for (int i = 0, j = data.length; i < j; i++) {
-            range = data[i].getRange();
+        for (int i = 0, j = data.size(); i < j; i++) {
+            range = data.get(i).getRange();
             if (!ranges.contains(range)) {
                 ranges.add(range);
             }
@@ -39,8 +39,8 @@ public class GlyphTableModel extends AbstractTableModel {
     public List<String> getUniqueClasses() {
         List<String> classes = new ArrayList<String>();
         List<String> itemClasses;
-        for (int i = 0, j = data.length; i < j; i++) {
-            itemClasses = data[i].getClasses();
+        for (int i = 0, j = data.size(); i < j; i++) {
+            itemClasses = data.get(i).getClasses();
             for (String itemClass : itemClasses) {
                 if (!classes.contains(itemClass)) {
                     classes.add(itemClass);
@@ -55,11 +55,11 @@ public class GlyphTableModel extends AbstractTableModel {
     }
 
     public GlyphDefinition getModelAt(int row) {
-        return data[row];
+        return data.get(row);
     }
 
     public Object getValueAt(int row, int col) {
-        return (data.length == 0) ? null : data[row];
+        return (data.size() == 0) ? null : data.get(row);
     }
 
     public Class<? extends Object> getColumnClass(int column) {
@@ -67,14 +67,21 @@ public class GlyphTableModel extends AbstractTableModel {
         return (value == null ? Object.class : value.getClass());
     }
 
-    public void setData(List<GlyphDefinition> models) {
-        if (models == null) {
-            data = new GlyphDefinition[0];
+    public void setData(List<GlyphDefinition> data) {
+        if (data == null) {
+            this.data = new ArrayList<GlyphDefinition>();
         } else {
-            data = new GlyphDefinition[models.size()];
-            data = models.toArray(data);
+            this.data = data;
         }
         fireTableDataChanged();
+    }
+    
+    public void applyModel(GlyphListModel model) {
+        data = model.getData();
+    }
+    
+    public List<GlyphDefinition> getData() {
+        return data;
     }
 
 }

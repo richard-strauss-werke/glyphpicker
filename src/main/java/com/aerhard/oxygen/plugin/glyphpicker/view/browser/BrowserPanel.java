@@ -8,16 +8,17 @@ import java.awt.Insets;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.ListSelectionModel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.MatteBorder;
 
 import com.aerhard.oxygen.plugin.glyphpicker.view.HighlightButton;
 import com.jidesoft.swing.AutoCompletionComboBox;
+import com.jidesoft.swing.JideScrollPane;
 
 public class BrowserPanel extends JPanel {
 
@@ -25,10 +26,12 @@ public class BrowserPanel extends JPanel {
 
     private AutoCompletionComboBox classCombo;
     private AutoCompletionComboBox rangeCombo;
-    private GlyphTable table;
     private JButton btnLoad;
     private JComboBox<String> pathCombo;
-
+    private JComboBox<String> viewCombo;
+    
+    private JScrollPane jPane;
+    
     private JButton btnAdd;
 
     private HighlightButton btnInsert;
@@ -94,6 +97,17 @@ public class BrowserPanel extends JPanel {
         gbc_rangeCombo.gridy = 1;
         dataSourcePanel.add(rangeCombo, gbc_rangeCombo);
 
+        viewCombo = new JComboBox<String>();
+        viewCombo.addItem("List");
+        viewCombo.addItem("Grid");
+        GridBagConstraints gbc_viewCombo = new GridBagConstraints();
+        gbc_viewCombo.insets = new Insets(3, 0, 3, 0);
+        gbc_viewCombo.fill = GridBagConstraints.VERTICAL;
+        gbc_viewCombo.anchor = GridBagConstraints.WEST;
+        gbc_viewCombo.gridx = 2;
+        gbc_viewCombo.gridy = 1;
+        dataSourcePanel.add(viewCombo, gbc_viewCombo);
+        
         JLabel classLabel = new JLabel("Class:");
         GridBagConstraints gbc_classLabel = new GridBagConstraints();
         gbc_classLabel.anchor = GridBagConstraints.WEST;
@@ -118,14 +132,14 @@ public class BrowserPanel extends JPanel {
         tablePanel.setBorder(new EmptyBorder(11, 8, 7, 8));
         tablePanel.setLayout(new BorderLayout(0, 12));
 
-        table = new GlyphTable();
-        table.setFillsViewportHeight(true);
-
-        table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-
-        JScrollPane jpane = new JScrollPane(table);
-        jpane.setBorder(new EtchedBorder());
-        tablePanel.add(jpane, BorderLayout.CENTER);
+        jPane = new JScrollPane();
+//        jPane.setLayout(new GridLayout(1,1));
+//        jpane.setHorizontalScrollBarPolicy(JideScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+//        jpane.setVerticalScrollBarPolicy(JideScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        jPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);;
+        
+        jPane.setBorder(new EtchedBorder());
+        tablePanel.add(jPane, BorderLayout.CENTER);
 
         JPanel browserButtonPanel = new JPanel();
         browserButtonPanel.setBorder(new MatteBorder(1, 0, 0, 0,
@@ -146,10 +160,6 @@ public class BrowserPanel extends JPanel {
 
     }
 
-    public GlyphTable getTable() {
-        return table;
-    }
-
     public JButton getBtnAdd() {
         return btnAdd;
     }
@@ -166,12 +176,20 @@ public class BrowserPanel extends JPanel {
         return pathCombo;
     }
 
+    public JComboBox<String> getViewCombo() {
+        return viewCombo;
+    }
+    
     public AutoCompletionComboBox getRangeCombo() {
         return rangeCombo;
     }
 
     public AutoCompletionComboBox getClassCombo() {
         return classCombo;
+    }
+    
+    public void setListComponent(JComponent component){
+        jPane.setViewportView(component);
     }
 
 }

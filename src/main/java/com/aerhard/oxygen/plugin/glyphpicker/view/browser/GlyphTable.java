@@ -3,6 +3,7 @@ package com.aerhard.oxygen.plugin.glyphpicker.view.browser;
 import java.awt.Dimension;
 
 import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
 import javax.swing.table.TableCellRenderer;
 
 public class GlyphTable extends JTable {
@@ -18,12 +19,16 @@ public class GlyphTable extends JTable {
         setShowVerticalLines(false);
         setIntercellSpacing(new Dimension(0, 1));
 
+        setFillsViewportHeight(true);
+        // setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
     }
 
     public void setTableIconRenderer(TableCellRenderer renderer) {
         tableIconRenderer = renderer;
     }
-    
+
     public TableCellRenderer getTableIconRenderer() {
         return tableIconRenderer;
     }
