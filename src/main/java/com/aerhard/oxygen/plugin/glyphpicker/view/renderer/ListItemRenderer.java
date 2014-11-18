@@ -1,4 +1,4 @@
-package com.aerhard.oxygen.plugin.glyphpicker.view.userlist;
+package com.aerhard.oxygen.plugin.glyphpicker.view.renderer;
 
 import java.awt.Component;
 

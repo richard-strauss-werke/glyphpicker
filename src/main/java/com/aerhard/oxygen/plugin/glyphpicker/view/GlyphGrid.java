@@ -1,18 +1,25 @@
-package com.aerhard.oxygen.plugin.glyphpicker.view.browser;
+package com.aerhard.oxygen.plugin.glyphpicker.view;
 
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 
 import javax.swing.JList;
+import javax.swing.ListSelectionModel;
 
 import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinition;
+import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphGridModel;
 
-public class ListGrid extends JList<GlyphDefinition> {
+public class GlyphGrid extends JList<GlyphDefinition> {
 
     private static final long serialVersionUID = 1L;
 
-    public ListGrid() {
+    public GlyphGrid(GlyphGridModel listGridModel) {
         setLayoutOrientation(JList.HORIZONTAL_WRAP);
+        
+        setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        
+        setModel(listGridModel);
+        
         addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(ComponentEvent e) {

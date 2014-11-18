@@ -25,7 +25,7 @@ import org.apache.http.util.EntityUtils;
 import org.apache.log4j.Logger;
 
 import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinition;
-import com.aerhard.oxygen.plugin.glyphpicker.view.browser.TableDescriptionRenderer;
+import com.aerhard.oxygen.plugin.glyphpicker.view.renderer.DescriptionRenderer;
 
 public class GlyphComponent extends JLabel {
 
@@ -41,7 +41,7 @@ public class GlyphComponent extends JLabel {
     public GlyphComponent(GlyphDefinition model, Boolean text) {
         this.model = model;
         if (text) {
-            setText(TableDescriptionRenderer.formatText(model));
+            setText(DescriptionRenderer.formatText(model));
         }
         setIconTextGap(20);
         setBorder(BorderFactory.createEmptyBorder(GLYPH_BORDER, GLYPH_BORDER,

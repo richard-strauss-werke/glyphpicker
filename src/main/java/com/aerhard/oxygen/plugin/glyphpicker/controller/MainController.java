@@ -43,6 +43,7 @@ public class MainController extends Controller {
 
         mainPanel = new MainPanel(browserController.getPanel(), userListController.getPanel());
 
+        mainPanel.getTabbedPane().setSelectedIndex(1); 
     }
 
     public ConfigLoader getConfigLoader() {

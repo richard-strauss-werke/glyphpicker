@@ -1,4 +1,4 @@
-package com.aerhard.oxygen.plugin.glyphpicker.view.browser;
+package com.aerhard.oxygen.plugin.glyphpicker.view.renderer;
 
 import javax.swing.JComponent;
 import javax.swing.JLabel;
@@ -10,11 +10,11 @@ import java.awt.Component;
 import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinition;
 import com.aerhard.oxygen.plugin.glyphpicker.view.GlyphComponent;
 
-public class TableIconBitmapRenderer extends JLabel implements TableCellRenderer {
+public class GlyphBitmapRenderer extends JLabel implements TableCellRenderer {
 
     private static final long serialVersionUID = 1L;
 
-    public TableIconBitmapRenderer() {
+    public GlyphBitmapRenderer() {
     }
 
     public Component getTableCellRendererComponent(JTable table, Object value,
@@ -35,10 +35,6 @@ public class TableIconBitmapRenderer extends JLabel implements TableCellRenderer
                 c = model.getComponent();
             }
         }
-
-        // if(c.getPreferredSize().height > 1) {
-        // table.setRowHeight(row, c.getPreferredSize().height);
-        // }
 
         if (isSelected) {
             c.setBackground(table.getSelectionBackground());

@@ -1,4 +1,4 @@
-package com.aerhard.oxygen.plugin.glyphpicker.view.userlist;
+package com.aerhard.oxygen.plugin.glyphpicker.view;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -13,7 +13,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.MatteBorder;
 
 import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinition;
-import com.aerhard.oxygen.plugin.glyphpicker.view.HighlightButton;
+import com.aerhard.oxygen.plugin.glyphpicker.view.renderer.ListItemRenderer;
 
 public class UserListPanel extends JPanel {
 

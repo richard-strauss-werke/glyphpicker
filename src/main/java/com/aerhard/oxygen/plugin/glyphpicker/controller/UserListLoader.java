@@ -10,7 +10,7 @@ import org.apache.log4j.Logger;
 
 import ro.sync.exml.workspace.api.standalone.StandalonePluginWorkspace;
 
-import com.aerhard.oxygen.plugin.glyphpicker.model.UserListModel;
+import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphGridModel;
 
 public class UserListLoader {
 
@@ -27,7 +27,7 @@ public class UserListLoader {
         fileName = properties.getProperty("userdata.filename");
     }
 
-    public void save(UserListModel userListModel) {
+    public void save(GlyphGridModel userListModel) {
         File path = new File(pathName);
         Boolean pathExists = (path.exists()) ? true : path.mkdir();
         if (pathExists) {
@@ -43,16 +43,16 @@ public class UserListLoader {
         }
     }
 
-    public UserListModel load() {
+    public GlyphGridModel load() {
         File file = new File(pathName + "/" + fileName);
-        UserListModel userListModel = null;
+        GlyphGridModel userListModel = null;
         try {
-            userListModel = JAXB.unmarshal(file, UserListModel.class);
+            userListModel = JAXB.unmarshal(file, GlyphGridModel.class);
         } catch (DataBindingException e) {
             LOGGER.error("Error loading config.", e);
         }
         if (userListModel == null) {
-            userListModel = new UserListModel();
+            userListModel = new GlyphGridModel();
         }
         return userListModel;
     }

@@ -13,12 +13,10 @@ import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
-import com.aerhard.oxygen.plugin.glyphpicker.view.GlyphComponent;
-
 @XmlRootElement(name = "char", namespace="http://www.tei-c.org/ns/1.0")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class GlyphDefinition {
-
+    
     @XmlAttribute(name = "id", namespace = "http://www.w3.org/XML/1998/namespace")
     private String id;
 
@@ -90,6 +88,16 @@ public class GlyphDefinition {
      */
     public String getCodePoint() {
         return codePoint;
+    }
+    
+    public String getCharString() {
+        try {
+            String cp = codePoint.substring(2);
+            int c = Integer.parseInt(cp, 16);
+            return Character.toString((char) c);    
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     /**

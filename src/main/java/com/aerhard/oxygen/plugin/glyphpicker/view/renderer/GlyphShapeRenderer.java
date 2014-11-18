@@ -1,7 +1,12 @@
-package com.aerhard.oxygen.plugin.glyphpicker.view.browser;
+package com.aerhard.oxygen.plugin.glyphpicker.view.renderer;
+
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JTable;
+import javax.swing.ListCellRenderer;
+import javax.swing.table.TableCellRenderer;
 
 import java.awt.Component;
-import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -12,20 +17,12 @@ import java.awt.font.FontRenderContext;
 import java.awt.font.GlyphVector;
 import java.awt.geom.AffineTransform;
 
-import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.ListCellRenderer;
-
-import org.apache.log4j.Logger;
-
 import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinition;
 
-public class ListItemShapeRenderer extends JLabel implements
-        ListCellRenderer<Object> {
-    private static final long serialVersionUID = 1L;
+public class GlyphShapeRenderer extends JLabel implements TableCellRenderer,
+ListCellRenderer<Object>{
 
-    private static final Logger LOGGER = Logger
-            .getLogger(TableIconShapeRenderer.class.getName());
+    private static final long serialVersionUID = 1L;
 
     private String fontName = "BravuraText";
     private int padding = 12;
@@ -34,26 +31,45 @@ public class ListItemShapeRenderer extends JLabel implements
         this.padding = padding;
     }
 
-    private FontRenderContext frc = new FontRenderContext(null, true, true);
+    private FontRenderContext frc;
 
     private String ch = null;
 
-    public ListItemShapeRenderer() {
+    public GlyphShapeRenderer() {
+        frc = new FontRenderContext(null, true, true);
         setVerticalAlignment(CENTER);
         setHorizontalAlignment(CENTER);
         setText(null);
-        setPreferredSize(new Dimension(90, 90));
     }
 
-    public Component getListCellRendererComponent(JList<?> list, Object value,
-            int index, boolean isSelected, boolean cellHasFocus) {
-
+    @Override
+    public Component getTableCellRendererComponent(JTable table, Object value,
+            boolean isSelected, boolean hasFocus, int row, int column) {
         if (value == null) {
             ch = null;
         } else {
-            ch = getGlyph(((GlyphDefinition) value).getCodePoint());
+            ch = ((GlyphDefinition) value).getCharString();
         }
+        if (isSelected) {
+            setBackground(table.getSelectionBackground());
+            setForeground(table.getSelectionForeground());
+        } else {
+            setBackground(table.getBackground());
+            setForeground(table.getForeground());
+        }
+        setOpaque(true);
+        return this;
+    }
 
+    @Override
+    public Component getListCellRendererComponent(JList<?> list, Object value,
+            int index, boolean isSelected, boolean cellHasFocus) {
+        
+        if (value == null) {
+            ch = null;
+        } else {
+            ch = ((GlyphDefinition) value).getCharString();
+        }
         if (isSelected) {
             setBackground(list.getSelectionBackground());
             setForeground(list.getSelectionForeground());
@@ -61,14 +77,10 @@ public class ListItemShapeRenderer extends JLabel implements
             setBackground(list.getBackground());
             setForeground(list.getForeground());
         }
-
         setOpaque(true);
         return this;
     }
-
-
-
-
+    
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -76,14 +88,16 @@ public class ListItemShapeRenderer extends JLabel implements
             Graphics2D g2 = (Graphics2D) g;
             g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
                     RenderingHints.VALUE_ANTIALIAS_ON);
-            drawGlyph(g2, ch, fontName, padding, g);
+            drawGlyph(g2, ch, fontName, padding);
             g2.dispose();
         }
     }
 
     private void drawGlyph(Graphics2D g2, String text, String fontName,
-            int padding, Graphics g) {
+            int padding) {
 
+//        frc = g2.getFontRenderContext();
+        
         float w = getWidth() - (2 * padding);
         float h = getHeight() - (2 * padding);
 
@@ -116,18 +130,6 @@ public class ListItemShapeRenderer extends JLabel implements
 
     }
 
-    private String getGlyph(String code) {
-        try {
-            String cp = code.substring(2);
-            int c = Integer.parseInt(cp, 16);
-            String nn = Character.toString((char) c);
-            return nn;    
-        } catch (Exception e) {
-            LOGGER.info("Could not convert \"" + code
-                    + "\" to code point");
-            return null;
-        }
-    }
+
     
 }
-

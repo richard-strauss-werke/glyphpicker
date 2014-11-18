@@ -17,6 +17,10 @@ public class HighlightButton extends JButton {
         originalForeground = getForeground();
     }
 
+    public HighlightButton() {
+        originalForeground = getForeground();
+    }
+    
     public void highlight() {
         setForeground(Color.GRAY);
         Timer timer = new Timer(300, new ActionListener() {

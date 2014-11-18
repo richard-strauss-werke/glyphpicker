@@ -76,10 +76,6 @@ public class GlyphTableModel extends AbstractTableModel implements GlyphListMode
         fireTableDataChanged();
     }
     
-    public void applyModel(GlyphListModel model) {
-        data = model.getData();
-    }
-    
     public List<GlyphDefinition> getData() {
         return data;
     }

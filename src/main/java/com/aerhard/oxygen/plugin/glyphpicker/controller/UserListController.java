@@ -16,14 +16,14 @@ import javax.swing.event.ListSelectionListener;
 import ro.sync.exml.workspace.api.standalone.StandalonePluginWorkspace;
 
 import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinition;
-import com.aerhard.oxygen.plugin.glyphpicker.model.UserListModel;
-import com.aerhard.oxygen.plugin.glyphpicker.view.userlist.UserListPanel;
+import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphGridModel;
+import com.aerhard.oxygen.plugin.glyphpicker.view.UserListPanel;
 
 public class UserListController extends Controller {
 
     private UserListPanel userListPanel;
     private UserListLoader userListLoader;
-    private UserListModel userListModel;
+    private GlyphGridModel userListModel;
     private JList<GlyphDefinition> userList;
 
     public UserListController(StandalonePluginWorkspace workspace,
@@ -32,7 +32,7 @@ public class UserListController extends Controller {
         userListPanel = new UserListPanel();
         userList = userListPanel.getUserList();
 
-        userListModel = new UserListModel();
+        userListModel = new GlyphGridModel();
         userList.setModel(userListModel);
 
         userListLoader = new UserListLoader(workspace, properties);
@@ -126,7 +126,7 @@ public class UserListController extends Controller {
         userListModel.addListDataListener(new ListDataListener(){
             @Override
             public void contentsChanged(ListDataEvent e) {
-                if (((UserListModel) e.getSource()).isInSync()) {
+                if (((GlyphGridModel) e.getSource()).isInSync()) {
                     userListPanel.enableSaveButtons(false);    
                 } else {
                     userListPanel.enableSaveButtons(true);
@@ -144,7 +144,7 @@ public class UserListController extends Controller {
         
     }
 
-    public UserListModel getListModel() {
+    public GlyphGridModel getListModel() {
         return userListModel;
     }
 

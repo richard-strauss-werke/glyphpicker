@@ -1,31 +1,29 @@
-package com.aerhard.oxygen.plugin.glyphpicker.view.browser;
+package com.aerhard.oxygen.plugin.glyphpicker.view.renderer;
 
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.table.TableCellRenderer;
 
 import java.awt.Component;
-import java.awt.Dimension;
-import java.util.ArrayList;
 import java.util.List;
 
 import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinition;
 
-public class TableDescriptionRenderer extends JLabel implements
+public class DescriptionRenderer extends JLabel implements
         TableCellRenderer {
 
     private static final long serialVersionUID = 1L;
 
-    public TableDescriptionRenderer() {
+    public DescriptionRenderer() {
     }
 
-    private int padding = 12;
+//    private int padding = 12;
 
-    public void setPadding(int padding) {
-        this.padding = padding;
-    }
+//    public void setPadding(int padding) {
+//        this.padding = padding;
+//    }
     
-    private List<List<Integer>> rowColHeight = new ArrayList<>();
+//    private List<List<Integer>> rowColHeight = new ArrayList<>();
 
     public Component getTableCellRendererComponent(JTable table, Object value,
             boolean isSelected, boolean hasFocus, int row, int column) {
@@ -95,30 +93,30 @@ public class TableDescriptionRenderer extends JLabel implements
 
     }
 
-    private void adjustRowHeight(JTable table, int row, int column) {
-
-        int cWidth = table.getTableHeader().getColumnModel().getColumn(column)
-                .getWidth();
-        setSize(new Dimension(cWidth, 1000));
-        int prefH = getPreferredSize().height;
-        while (rowColHeight.size() <= row) {
-            rowColHeight.add(new ArrayList<Integer>(column));
-        }
-        List<Integer> colHeights = rowColHeight.get(row);
-        while (colHeights.size() <= column) {
-            colHeights.add(0);
-        }
-        colHeights.set(column, prefH);
-        int maxH = prefH;
-        for (Integer colHeight : colHeights) {
-            if (colHeight > maxH) {
-                maxH = colHeight;
-            }
-        }
-        maxH+=padding;
-        if (table.getRowHeight(row) != maxH) {
-            table.setRowHeight(row, maxH);
-        }
-    }
+//    private void adjustRowHeight(JTable table, int row, int column) {
+//
+//        int cWidth = table.getTableHeader().getColumnModel().getColumn(column)
+//                .getWidth();
+//        setSize(new Dimension(cWidth, 1000));
+//        int prefH = getPreferredSize().height;
+//        while (rowColHeight.size() <= row) {
+//            rowColHeight.add(new ArrayList<Integer>(column));
+//        }
+//        List<Integer> colHeights = rowColHeight.get(row);
+//        while (colHeights.size() <= column) {
+//            colHeights.add(0);
+//        }
+//        colHeights.set(column, prefH);
+//        int maxH = prefH;
+//        for (Integer colHeight : colHeights) {
+//            if (colHeight > maxH) {
+//                maxH = colHeight;
+//            }
+//        }
+//        maxH+=padding;
+//        if (table.getRowHeight(row) != maxH) {
+//            table.setRowHeight(row, maxH);
+//        }
+//    }
 
 }

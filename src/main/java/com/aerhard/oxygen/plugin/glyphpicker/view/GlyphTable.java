@@ -1,10 +1,13 @@
-package com.aerhard.oxygen.plugin.glyphpicker.view.browser;
+package com.aerhard.oxygen.plugin.glyphpicker.view;
 
 import java.awt.Dimension;
 
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.TableCellRenderer;
+
+import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphTableModel;
+import com.aerhard.oxygen.plugin.glyphpicker.view.renderer.DescriptionRenderer;
 
 public class GlyphTable extends JTable {
 
@@ -13,8 +16,8 @@ public class GlyphTable extends JTable {
     private TableCellRenderer tableIconRenderer;
     private TableCellRenderer tableDescriptionRenderer;
 
-    public GlyphTable() {
-        tableDescriptionRenderer = new TableDescriptionRenderer();
+    public GlyphTable(GlyphTableModel glyphTableModel) {
+        tableDescriptionRenderer = new DescriptionRenderer();
         setRowHeight(90);
         setShowVerticalLines(false);
         setIntercellSpacing(new Dimension(0, 1));
@@ -23,6 +26,13 @@ public class GlyphTable extends JTable {
         // setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
+        setModel(glyphTableModel);
+
+        getColumnModel().getColumn(0).setPreferredWidth(70);
+        getColumnModel().getColumn(0).setMinWidth(30);
+        getColumnModel().getColumn(1).setPreferredWidth(600);
+        getColumnModel().getColumn(1).setMinWidth(10);
+        
     }
 
     public void setTableIconRenderer(TableCellRenderer renderer) {
