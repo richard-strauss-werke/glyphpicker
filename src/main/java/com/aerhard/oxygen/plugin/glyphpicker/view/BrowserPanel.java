@@ -12,6 +12,7 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.MatteBorder;
@@ -33,6 +34,7 @@ public class BrowserPanel extends JPanel {
     private JButton btnAdd;
 
     private HighlightButton btnInsert;
+    private JTextField infoLabel;
     public BrowserPanel() {
         setLayout(new BorderLayout(0, 0));
         
@@ -137,6 +139,10 @@ public class BrowserPanel extends JPanel {
         
         jPane.setBorder(new EtchedBorder());
         tablePanel.add(jPane, BorderLayout.CENTER);
+        
+        infoLabel = new JTextField(null);
+        infoLabel.setEditable(false);
+        tablePanel.add(infoLabel, BorderLayout.SOUTH);
 
         JPanel browserButtonPanel = new JPanel();
         browserButtonPanel.setBorder(new MatteBorder(1, 0, 0, 0,
@@ -181,6 +187,10 @@ public class BrowserPanel extends JPanel {
     
     public void setListComponent(JComponent component){
         jPane.setViewportView(component);
+    }
+    
+    public JTextField getInfoLabel() {
+        return infoLabel;
     }
 
 }

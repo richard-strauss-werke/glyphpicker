@@ -14,11 +14,9 @@ import java.util.concurrent.ExecutionException;
 
 import javax.swing.AbstractAction;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.DefaultListSelectionModel;
 import javax.swing.JComboBox;
 import javax.swing.ListSelectionModel;
 import javax.swing.RowFilter;
-import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -102,12 +100,10 @@ public class BrowserController extends Controller {
 
         dataStore = new GlyphDefinitionLoader();
 
-        
         ListSelectionModel selectionModel = listGrid.getSelectionModel();
         table.setSelectionModel(selectionModel);
-        
-        selectionModel.addListSelectionListener(
-                new GlyphSelectionListener());
+
+        selectionModel.addListSelectionListener(new GlyphSelectionListener());
 
         setListeners();
 
@@ -148,21 +144,24 @@ public class BrowserController extends Controller {
         public void actionPerformed(ActionEvent e) {
             int index = ((JComboBox<?>) e.getSource()).getSelectedIndex();
 
-            // TODO add condition: if selection then ensure selection visible else 
+            // TODO add condition: if selection then ensure selection visible
+            // else
             // some other row
-            
+
             if (index == 0) {
                 browserPanel.setListComponent(table);
-                table.scrollRectToVisible(new Rectangle(table.getCellRect(1000, 0, true)));
-                } else {
-                    
+                table.scrollRectToVisible(new Rectangle(table.getCellRect(1000,
+                        0, true)));
+            } else {
+
                 browserPanel.setListComponent(listGrid);
 
-                // TODO put this in a listener and call after component is initiated
-//              listGrid.ensureIndexIsVisible(1000);
-//                listGrid.scrollRectToVisible(listGrid.getCellBounds(1000, 1000));
-                
-                
+                // TODO put this in a listener and call after component is
+                // initiated
+                // listGrid.ensureIndexIsVisible(1000);
+                // listGrid.scrollRectToVisible(listGrid.getCellBounds(1000,
+                // 1000));
+
             }
         }
     }
@@ -223,15 +222,34 @@ public class BrowserController extends Controller {
         @Override
         public void valueChanged(ListSelectionEvent event) {
             if (!event.getValueIsAdjusting()) {
-                int index = ((DefaultListSelectionModel) event.getSource())
-                        .getMinSelectionIndex();
-                if (index == -1) {
-                    addAction.setEnabled(false);
-                    insertAction.setEnabled(false);
+                // int index = ((DefaultListSelectionModel) event.getSource())
+                // .getMinSelectionIndex();
+
+                // TODO make this work with filters and sorting in table and list
+
+                
+//                int index = event.getFirstIndex();
+                int index = listGrid.getSelectedIndex();
+                
+//                index = table.convertRowIndexToModel(index);
+                
+                Boolean enableButtons = (index != -1);
+
+                // GlyphDefinition model = getTableModel().getModelAt(
+                // table.convertRowIndexToModel(index));
+
+                GlyphDefinition model = (index == -1) ? null : listGridModel
+                        .getElementAt(index);
+
+                if (model == null) {
+                    browserPanel.getInfoLabel().setText(null);
                 } else {
-                    addAction.setEnabled(true);
-                    insertAction.setEnabled(true);
+                    browserPanel.getInfoLabel().setText(
+                            model.getCodePoint() + ": " + model.getCharName());
                 }
+
+                addAction.setEnabled(enableButtons);
+                insertAction.setEnabled(enableButtons);
             }
         }
     }
