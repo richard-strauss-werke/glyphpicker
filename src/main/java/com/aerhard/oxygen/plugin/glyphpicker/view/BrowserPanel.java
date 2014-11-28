@@ -17,8 +17,6 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.MatteBorder;
 
-import com.jidesoft.swing.AutoCompletionComboBox;
-
 public class BrowserPanel extends JPanel {
 
     private static final long serialVersionUID = 1L;

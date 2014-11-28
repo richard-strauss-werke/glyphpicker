@@ -103,6 +103,9 @@ public class BrowserController extends Controller {
         list = new GlyphGrid(new DefaultEventListModel<GlyphDefinition>(
                 filterList));
 
+       
+//        GlyphTextRenderer r = new GlyphTextRenderer();
+//        GlyphBitmapRenderer r = new GlyphBitmapRenderer();
         GlyphShapeRenderer r = new GlyphShapeRenderer();
         r.setPreferredSize(new Dimension(90, 90));
         list.setCellRenderer(r);
