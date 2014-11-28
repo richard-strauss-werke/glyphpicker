@@ -10,6 +10,11 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 	<dependencies>
+	   <dependency>
+	   <groupId>net.java.dev.glazedlists</groupId>
+	   <artifactId>glazedlists_java15</artifactId>
+	   <version>1.9.0</version>
+	   </dependency>
 		<dependency>
 			<groupId>com.oxygenxml</groupId>
 			<artifactId>oxygen-sdk</artifactId>

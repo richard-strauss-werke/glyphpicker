@@ -8,32 +8,41 @@ import java.util.Properties;
 
 import javax.swing.JButton;
 import javax.swing.JList;
-import javax.swing.event.ListDataEvent;
-import javax.swing.event.ListDataListener;
+import javax.swing.SwingUtilities;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import ro.sync.exml.workspace.api.standalone.StandalonePluginWorkspace;
+import ca.odell.glazedlists.BasicEventList;
+import ca.odell.glazedlists.event.ListEvent;
+import ca.odell.glazedlists.event.ListEventListener;
+import ca.odell.glazedlists.swing.DefaultEventListModel;
 
 import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinition;
-import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphGridModel;
+import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinitions;
 import com.aerhard.oxygen.plugin.glyphpicker.view.UserListPanel;
 
 public class UserListController extends Controller {
 
     private UserListPanel userListPanel;
     private UserListLoader userListLoader;
-    private GlyphGridModel userListModel;
+    private BasicEventList<GlyphDefinition> userListModel;
     private JList<GlyphDefinition> userList;
+    protected boolean listInSync = true;
 
+    @SuppressWarnings("unchecked")
     public UserListController(StandalonePluginWorkspace workspace,
             Properties properties) {
 
         userListPanel = new UserListPanel();
+
+        userListModel = new BasicEventList<GlyphDefinition>();
+
         userList = userListPanel.getUserList();
 
-        userListModel = new GlyphGridModel();
-        userList.setModel(userListModel);
+        // userListModel = new SharedListModel();
+        userList.setModel(new DefaultEventListModel<GlyphDefinition>(
+                userListModel));
 
         userListLoader = new UserListLoader(workspace, properties);
 
@@ -48,8 +57,9 @@ public class UserListController extends Controller {
     private void removeItemFromUserList() {
         int index = userList.getSelectedIndex();
         if (index != -1) {
-            userListModel.removeElement(index);
-            index = Math.min(index, userListModel.getSize() - 1);
+            listInSync=false;
+            userListModel.remove(index);
+            index = Math.min(index, userListModel.size() - 1);
             if (index >= 0) {
                 userList.setSelectedIndex(index);
             }
@@ -59,7 +69,7 @@ public class UserListController extends Controller {
     private void insertGlyphFromUser() {
         int index = userList.getSelectedIndex();
         if (index != -1) {
-            fireEvent("insert", getListModel().getElementAt(index));
+            fireEvent("insert", getListModel().get(index));
         }
     }
 
@@ -80,7 +90,7 @@ public class UserListController extends Controller {
                 insertGlyphFromUser();
             }
         });
-        
+
         btn = userListPanel.getBtnSave();
         btn.addActionListener(new ActionListener() {
             @Override
@@ -89,7 +99,7 @@ public class UserListController extends Controller {
                 userListPanel.enableSaveButtons(false);
             }
         });
-        
+
         btn = userListPanel.getBtnReload();
         btn.addActionListener(new ActionListener() {
             @Override
@@ -123,28 +133,21 @@ public class UserListController extends Controller {
                     }
                 });
 
-        userListModel.addListDataListener(new ListDataListener(){
+        userListModel.addListEventListener(new ListEventListener<GlyphDefinition>() {
             @Override
-            public void contentsChanged(ListDataEvent e) {
-                if (((GlyphGridModel) e.getSource()).isInSync()) {
-                    userListPanel.enableSaveButtons(false);    
+            public void listChanged(ListEvent<GlyphDefinition> e) {
+                if (listInSync) {
+                    userListPanel.enableSaveButtons(false);
                 } else {
                     userListPanel.enableSaveButtons(true);
                 }
-            }
-
-            @Override
-            public void intervalAdded(ListDataEvent arg0) {
-            }
-
-            @Override
-            public void intervalRemoved(ListDataEvent arg0) {
+                
             }
         });
-        
+
     }
 
-    public GlyphGridModel getListModel() {
+    public BasicEventList<GlyphDefinition> getListModel() {
         return userListModel;
     }
 
@@ -154,19 +157,27 @@ public class UserListController extends Controller {
 
     @Override
     public void loadData() {
-        userListModel.setData(userListLoader.load().getData());
+        SwingUtilities.invokeLater(new Runnable(){
+            @Override
+            public void run() {
+                listInSync = true;
+                userListModel.clear();
+                userListModel.addAll(userListLoader.load().getData());    
+            }
+        });
     }
 
     @Override
     public void saveData() {
-        userListLoader.save(userListModel);
-        userListModel.setInSync(true);
+        userListLoader.save(new GlyphDefinitions(userListModel));
+        listInSync=true;
     }
 
     @Override
     public void eventOccured(String type, GlyphDefinition model) {
         if ("export".equals(type)) {
-            getListModel().addElement(model);
+            listInSync=false;
+            userListModel.add(model);
         }
 
     }

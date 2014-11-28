@@ -23,18 +23,21 @@ public class BrowserPanel extends JPanel {
 
     private static final long serialVersionUID = 1L;
 
-    private AutoCompletionComboBox classCombo;
-    private AutoCompletionComboBox rangeCombo;
+//    private AutoCompletionComboBox classCombo;
+//    private JComboBox<String> rangeCombo;
     private JButton btnLoad;
     private JComboBox<String> pathCombo;
     private JComboBox<String> viewCombo;
     
     private JScrollPane jPane;
     
+
     private JButton btnAdd;
 
     private HighlightButton btnInsert;
     private JTextField infoLabel;
+
+    private JTextField ftTextField;
     public BrowserPanel() {
         setLayout(new BorderLayout(0, 0));
         
@@ -49,6 +52,17 @@ public class BrowserPanel extends JPanel {
         gbl_dataSourcePanel.rowWeights = new double[] { 0.0, Double.MIN_VALUE, 0.0, 0.0 };
         dataSourcePanel.setLayout(gbl_dataSourcePanel);
 
+        viewCombo = new JComboBox<String>();
+        viewCombo.addItem("Grid");
+        viewCombo.addItem("List");
+        GridBagConstraints gbc_viewCombo = new GridBagConstraints();
+        gbc_viewCombo.insets = new Insets(3, 0, 5, 0);
+        gbc_viewCombo.fill = GridBagConstraints.BOTH;
+        gbc_viewCombo.anchor = GridBagConstraints.WEST;
+        gbc_viewCombo.gridx = 2;
+        gbc_viewCombo.gridy = 0;
+        dataSourcePanel.add(viewCombo, gbc_viewCombo);
+        
         JLabel dataSourceLabel = new JLabel("Data source:");
         GridBagConstraints gbc_dataSourceLabel = new GridBagConstraints();
         gbc_dataSourceLabel.anchor = GridBagConstraints.WEST;
@@ -77,54 +91,67 @@ public class BrowserPanel extends JPanel {
         gbc_browserButtonLoad.gridy = 1;
         dataSourcePanel.add(btnLoad, gbc_browserButtonLoad);
 
-        JLabel rangeLabel = new JLabel("Range:");
-        GridBagConstraints gbc_rangeLabel = new GridBagConstraints();
-        gbc_rangeLabel.anchor = GridBagConstraints.WEST;
-        gbc_rangeLabel.fill = GridBagConstraints.VERTICAL;
-        gbc_rangeLabel.insets = new Insets(0, 0, 5, 5);
-        gbc_rangeLabel.gridx = 0;
-        gbc_rangeLabel.gridy = 2;
-        dataSourcePanel.add(rangeLabel, gbc_rangeLabel);
-
-        rangeCombo = new AutoCompletionComboBox();
-        rangeCombo.setStrict(false);
-        GridBagConstraints gbc_rangeCombo = new GridBagConstraints();
-        gbc_rangeCombo.insets = new Insets(5, 0, 5, 5);
-        gbc_rangeCombo.anchor = GridBagConstraints.NORTH;
-        gbc_rangeCombo.fill = GridBagConstraints.HORIZONTAL;
-        gbc_rangeCombo.gridx = 1;
-        gbc_rangeCombo.gridy = 2;
-        dataSourcePanel.add(rangeCombo, gbc_rangeCombo);
-
-        viewCombo = new JComboBox<String>();
-        viewCombo.addItem("List");
-        viewCombo.addItem("Grid");
-        GridBagConstraints gbc_viewCombo = new GridBagConstraints();
-        gbc_viewCombo.insets = new Insets(3, 0, 5, 0);
-        gbc_viewCombo.fill = GridBagConstraints.BOTH;
-        gbc_viewCombo.anchor = GridBagConstraints.WEST;
-        gbc_viewCombo.gridx = 2;
-        gbc_viewCombo.gridy = 0;
-        dataSourcePanel.add(viewCombo, gbc_viewCombo);
         
-        JLabel classLabel = new JLabel("Class:");
-        GridBagConstraints gbc_classLabel = new GridBagConstraints();
-        gbc_classLabel.anchor = GridBagConstraints.WEST;
-        gbc_classLabel.fill = GridBagConstraints.VERTICAL;
-        gbc_classLabel.insets = new Insets(0, 0, 0, 5);
-        gbc_classLabel.gridx = 0;
-        gbc_classLabel.gridy = 3;
-        dataSourcePanel.add(classLabel, gbc_classLabel);
+        JLabel ftLabel = new JLabel("Search:");
+        GridBagConstraints gbc_ftLabel = new GridBagConstraints();
+        gbc_ftLabel.anchor = GridBagConstraints.WEST;
+        gbc_ftLabel.fill = GridBagConstraints.VERTICAL;
+        gbc_ftLabel.insets = new Insets(0, 0, 5, 5);
+        gbc_ftLabel.gridx = 0;
+        gbc_ftLabel.gridy = 2;
+        dataSourcePanel.add(ftLabel, gbc_ftLabel);
 
-        classCombo = new AutoCompletionComboBox();
-        classCombo.setStrict(false);
-        GridBagConstraints gbc_classCombo = new GridBagConstraints();
-        gbc_classCombo.insets = new Insets(5, 0, 0, 5);
-        gbc_classCombo.anchor = GridBagConstraints.NORTH;
-        gbc_classCombo.fill = GridBagConstraints.HORIZONTAL;
-        gbc_classCombo.gridx = 1;
-        gbc_classCombo.gridy = 3;
-        dataSourcePanel.add(classCombo, gbc_classCombo);
+        
+        ftTextField = new JTextField();
+        ftTextField.setEditable(true);
+        GridBagConstraints gbc_ftTextField = new GridBagConstraints();
+        gbc_ftTextField.weightx = 1.0;
+        gbc_ftTextField.fill = GridBagConstraints.BOTH;
+        gbc_ftTextField.insets = new Insets(5, 0, 5, 5);
+        gbc_ftTextField.gridx = 1;
+        gbc_ftTextField.gridy = 2;
+        dataSourcePanel.add(ftTextField, gbc_ftTextField);
+        
+
+        
+//        JLabel rangeLabel = new JLabel("Range:");
+//        GridBagConstraints gbc_rangeLabel = new GridBagConstraints();
+//        gbc_rangeLabel.anchor = GridBagConstraints.WEST;
+//        gbc_rangeLabel.fill = GridBagConstraints.VERTICAL;
+//        gbc_rangeLabel.insets = new Insets(0, 0, 5, 5);
+//        gbc_rangeLabel.gridx = 0;
+//        gbc_rangeLabel.gridy = 3;
+//        dataSourcePanel.add(rangeLabel, gbc_rangeLabel);
+//
+//        rangeCombo = new JComboBox<String>();
+//        rangeCombo.setEditable(true);
+////        rangeCombo.setStrict(false);
+//        GridBagConstraints gbc_rangeCombo = new GridBagConstraints();
+//        gbc_rangeCombo.insets = new Insets(5, 0, 5, 5);
+//        gbc_rangeCombo.anchor = GridBagConstraints.NORTH;
+//        gbc_rangeCombo.fill = GridBagConstraints.HORIZONTAL;
+//        gbc_rangeCombo.gridx = 1;
+//        gbc_rangeCombo.gridy = 3;
+//        dataSourcePanel.add(rangeCombo, gbc_rangeCombo);
+//
+//        JLabel classLabel = new JLabel("Class:");
+//        GridBagConstraints gbc_classLabel = new GridBagConstraints();
+//        gbc_classLabel.anchor = GridBagConstraints.WEST;
+//        gbc_classLabel.fill = GridBagConstraints.VERTICAL;
+//        gbc_classLabel.insets = new Insets(0, 0, 0, 5);
+//        gbc_classLabel.gridx = 0;
+//        gbc_classLabel.gridy = 4;
+//        dataSourcePanel.add(classLabel, gbc_classLabel);
+//
+//        classCombo = new AutoCompletionComboBox();
+//        classCombo.setStrict(false);
+//        GridBagConstraints gbc_classCombo = new GridBagConstraints();
+//        gbc_classCombo.insets = new Insets(5, 0, 0, 5);
+//        gbc_classCombo.anchor = GridBagConstraints.NORTH;
+//        gbc_classCombo.fill = GridBagConstraints.HORIZONTAL;
+//        gbc_classCombo.gridx = 1;
+//        gbc_classCombo.gridy = 4;
+//        dataSourcePanel.add(classCombo, gbc_classCombo);
 
         JPanel tablePanel = new JPanel();
         add(tablePanel, BorderLayout.CENTER);
@@ -176,21 +203,34 @@ public class BrowserPanel extends JPanel {
     public JComboBox<String> getViewCombo() {
         return viewCombo;
     }
-    
-    public AutoCompletionComboBox getRangeCombo() {
-        return rangeCombo;
-    }
 
-    public AutoCompletionComboBox getClassCombo() {
-        return classCombo;
+    public JTextField getFtTextField() {
+        return ftTextField;
     }
+    
+//    public JComboBox<String> getRangeCombo() {
+//        return rangeCombo;
+//    }
+//
+//    public AutoCompletionComboBox getClassCombo() {
+//        return classCombo;
+//    }
     
     public void setListComponent(JComponent component){
         jPane.setViewportView(component);
+//        jPane.getViewport().removeAll();
+//        jPane.getViewport().add(component);
     }
     
     public JTextField getInfoLabel() {
         return infoLabel;
     }
 
+    /**
+     * @return the jPane
+     */
+    public JScrollPane getjPane() {
+        return jPane;
+    }
+    
 }

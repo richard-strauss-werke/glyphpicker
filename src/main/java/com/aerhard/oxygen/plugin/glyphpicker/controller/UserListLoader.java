@@ -10,7 +10,7 @@ import org.apache.log4j.Logger;
 
 import ro.sync.exml.workspace.api.standalone.StandalonePluginWorkspace;
 
-import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphGridModel;
+import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinitions;
 
 public class UserListLoader {
 
@@ -27,14 +27,14 @@ public class UserListLoader {
         fileName = properties.getProperty("userdata.filename");
     }
 
-    public void save(GlyphGridModel userListModel) {
+    public void save(GlyphDefinitions glyphDefinitions) {
         File path = new File(pathName);
         Boolean pathExists = (path.exists()) ? true : path.mkdir();
         if (pathExists) {
             File file = new File(path, fileName);
             LOGGER.info("Storing user list.");
             try {
-                JAXB.marshal(userListModel, file);
+                JAXB.marshal(glyphDefinitions, file);
             } catch (DataBindingException e) {
                 LOGGER.error("Error storing config.", e);
             }
@@ -43,18 +43,18 @@ public class UserListLoader {
         }
     }
 
-    public GlyphGridModel load() {
+    public GlyphDefinitions load() {
         File file = new File(pathName + "/" + fileName);
-        GlyphGridModel userListModel = null;
+        GlyphDefinitions glyphDefinitions = null;
         try {
-            userListModel = JAXB.unmarshal(file, GlyphGridModel.class);
+            glyphDefinitions = JAXB.unmarshal(file, GlyphDefinitions.class);
         } catch (DataBindingException e) {
             LOGGER.error("Error loading config.", e);
         }
-        if (userListModel == null) {
-            userListModel = new GlyphGridModel();
+        if (glyphDefinitions == null) {
+            glyphDefinitions = new GlyphDefinitions();
         }
-        return userListModel;
+        return glyphDefinitions;
     }
 
 }

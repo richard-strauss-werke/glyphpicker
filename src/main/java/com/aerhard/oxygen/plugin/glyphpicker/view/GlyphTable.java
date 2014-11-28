@@ -1,12 +1,15 @@
 package com.aerhard.oxygen.plugin.glyphpicker.view;
 
 import java.awt.Dimension;
+import java.awt.Point;
+import java.awt.Rectangle;
 
 import javax.swing.JTable;
+import javax.swing.JViewport;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableModel;
 
-import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphTableModel;
 import com.aerhard.oxygen.plugin.glyphpicker.view.renderer.DescriptionRenderer;
 
 public class GlyphTable extends JTable {
@@ -16,17 +19,16 @@ public class GlyphTable extends JTable {
     private TableCellRenderer tableIconRenderer;
     private TableCellRenderer tableDescriptionRenderer;
 
-    public GlyphTable(GlyphTableModel glyphTableModel) {
+    public GlyphTable(TableModel sharedListModel) {
         tableDescriptionRenderer = new DescriptionRenderer();
         setRowHeight(90);
         setShowVerticalLines(false);
         setIntercellSpacing(new Dimension(0, 1));
 
         setFillsViewportHeight(true);
-        // setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
-        setModel(glyphTableModel);
+        setModel(sharedListModel);
 
         getColumnModel().getColumn(0).setPreferredWidth(70);
         getColumnModel().getColumn(0).setMinWidth(30);
@@ -35,6 +37,21 @@ public class GlyphTable extends JTable {
         
     }
 
+
+    public int getTopVisibleRow() {
+        JViewport viewport = (JViewport) getParent();
+        Point pt = viewport.getViewPosition();
+        return rowAtPoint(pt);
+    }
+
+    public void setTopVisibleRow(int row) {
+        Rectangle cellBounds = getCellRect(row, 0, true);
+        int h = getVisibleRect().height;
+        Rectangle targetViewRect = new Rectangle(cellBounds.x - h
+                + cellBounds.height, cellBounds.y, cellBounds.width, h);
+        scrollRectToVisible(targetViewRect);
+    }
+    
     public void setTableIconRenderer(TableCellRenderer renderer) {
         tableIconRenderer = renderer;
     }

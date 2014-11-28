@@ -184,5 +184,9 @@ public class GlyphDefinition {
     public void setComponent(JComponent c) {
         this.component = c;
     }
+    
+    public String toString() {
+        return codePoint + ": " + charName + " (" + range + ")"; 
+    }
 
 }
