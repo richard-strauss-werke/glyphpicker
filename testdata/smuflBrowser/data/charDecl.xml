@@ -24,6 +24,13 @@
          </sourceDesc>
       </fileDesc>
       <encodingDesc>
+      	<tagsDecl>
+      		<rendition xml:id="fontBravuraText" scheme="css">font-family: "BravuraText";</rendition>
+      		<namespace name="http://www.tei-c.org/ns/1.0">
+      			<tagUsage gi="g" render="#fontBravuraText"/>
+      			<tagUsage gi="mapping" render="#fontBravuraText"/>
+      		</namespace>
+      	</tagsDecl>
          <charDecl>
             <desc>Accordion</desc>
             <char xml:id="accdnRH3RanksPiccolo">
