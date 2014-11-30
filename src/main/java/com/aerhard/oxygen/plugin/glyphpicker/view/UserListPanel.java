@@ -2,8 +2,12 @@ package com.aerhard.oxygen.plugin.glyphpicker.view;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -14,28 +18,62 @@ import javax.swing.border.MatteBorder;
 
 import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinition;
 import com.aerhard.oxygen.plugin.glyphpicker.view.renderer.ListItemRenderer;
+import java.awt.Component;
+import javax.swing.Box;
 
 public class UserListPanel extends JPanel {
 
     private static final long serialVersionUID = 1L;
-    private JList<GlyphDefinition> userList;
+    private GlyphGrid userList;
     private JButton btnRemove;
     private HighlightButton btnInsert;
     private JButton btnSave;
     private JButton btnReload;
+    private JComboBox<String> viewCombo;
+    private Component horizontalGlue;
 
     public UserListPanel() {
 
         setLayout(new BorderLayout(0, 0));
 
+        
+        JPanel dataSourcePanel = new JPanel();
+        dataSourcePanel.setBorder(new EmptyBorder(8, 8, 0, 8));
+        add(dataSourcePanel, BorderLayout.NORTH);
+        GridBagLayout gbl_dataSourcePanel = new GridBagLayout();
+        gbl_dataSourcePanel.columnWidths = new int[] {62, 320, 55, 0};
+        gbl_dataSourcePanel.rowHeights = new int[] { 0, 0 };
+        gbl_dataSourcePanel.columnWeights = new double[] { 0.0, 0.0, 0.0,
+                Double.MIN_VALUE };
+        gbl_dataSourcePanel.rowWeights = new double[] { 0.0, Double.MIN_VALUE };
+        dataSourcePanel.setLayout(gbl_dataSourcePanel);
+
+        viewCombo = new JComboBox<String>();
+        viewCombo.addItem("Grid");
+        viewCombo.addItem("List");
+        
+        horizontalGlue = Box.createHorizontalGlue();
+        GridBagConstraints gbc_horizontalGlue = new GridBagConstraints();
+        gbc_horizontalGlue.fill = GridBagConstraints.BOTH;
+        gbc_horizontalGlue.weightx = 1.0;
+        gbc_horizontalGlue.insets = new Insets(0, 0, 0, 5);
+        gbc_horizontalGlue.gridx = 1;
+        gbc_horizontalGlue.gridy = 0;
+        dataSourcePanel.add(horizontalGlue, gbc_horizontalGlue);
+        GridBagConstraints gbc_viewCombo = new GridBagConstraints();
+        gbc_viewCombo.insets = new Insets(3, 0, 0, 0);
+        gbc_viewCombo.fill = GridBagConstraints.BOTH;
+        gbc_viewCombo.gridx = 2;
+        gbc_viewCombo.gridy = 0;
+        dataSourcePanel.add(viewCombo, gbc_viewCombo);
+        
+        
         JPanel paletteTablePanel = new JPanel();
         paletteTablePanel.setBorder(new EmptyBorder(11, 8, 7, 8));
         add(paletteTablePanel);
         paletteTablePanel.setLayout(new BorderLayout(0, 0));
 
-        userList = new JList<GlyphDefinition>();
-        userList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        userList.setCellRenderer(new ListItemRenderer());
+        userList = new GlyphGrid();
 
         JScrollPane scrollPane = new JScrollPane(userList);
         scrollPane
@@ -93,8 +131,11 @@ public class UserListPanel extends JPanel {
         return btnReload;
     }
 
+    public JComboBox<String> getViewCombo() {
+        return viewCombo;
+    }
     
-    public JList<GlyphDefinition> getUserList() {
+    public GlyphGrid getUserList() {
         return userList;
     }
 

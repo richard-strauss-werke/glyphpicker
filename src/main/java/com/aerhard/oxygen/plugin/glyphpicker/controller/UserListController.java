@@ -1,13 +1,17 @@
 package com.aerhard.oxygen.plugin.glyphpicker.controller;
 
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Properties;
 
+import javax.swing.AbstractAction;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JList;
+import javax.swing.ListSelectionModel;
 import javax.swing.SwingUtilities;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -21,6 +25,8 @@ import ca.odell.glazedlists.swing.DefaultEventListModel;
 import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinition;
 import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinitions;
 import com.aerhard.oxygen.plugin.glyphpicker.view.UserListPanel;
+import com.aerhard.oxygen.plugin.glyphpicker.view.renderer.GlyphShapeRenderer;
+import com.aerhard.oxygen.plugin.glyphpicker.view.renderer.ListItemRenderer;
 
 public class UserListController extends Controller {
 
@@ -29,6 +35,9 @@ public class UserListController extends Controller {
     private BasicEventList<GlyphDefinition> userListModel;
     private JList<GlyphDefinition> userList;
     protected boolean listInSync = true;
+    
+    private int activeListIndex;
+
 
     @SuppressWarnings("unchecked")
     public UserListController(StandalonePluginWorkspace workspace,
@@ -39,10 +48,19 @@ public class UserListController extends Controller {
         userListModel = new BasicEventList<GlyphDefinition>();
 
         userList = userListPanel.getUserList();
+        
+        userList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        GlyphShapeRenderer r = new GlyphShapeRenderer();
+        r.setPreferredSize(new Dimension(90, 90));
+        userList.setCellRenderer(r);
 
-        // userListModel = new SharedListModel();
         userList.setModel(new DefaultEventListModel<GlyphDefinition>(
                 userListModel));
+        
+        
+        
+        
+        userListPanel.getViewCombo().setAction(new ChangeViewAction());
 
         userListLoader = new UserListLoader(workspace, properties);
 
@@ -73,6 +91,30 @@ public class UserListController extends Controller {
         }
     }
 
+    
+    private class ChangeViewAction extends AbstractAction {
+        private static final long serialVersionUID = 1L;
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            int comboIndex = ((JComboBox<?>) e.getSource()).getSelectedIndex();
+            if (activeListIndex != comboIndex) {
+                if (comboIndex == 1) {
+                    userList.setCellRenderer(new ListItemRenderer());
+                    userList.setLayoutOrientation(JList.VERTICAL);
+                } else {
+                    GlyphShapeRenderer r = new GlyphShapeRenderer();
+                    r.setPreferredSize(new Dimension(90, 90));
+                    userList.setCellRenderer(r);
+                    userList.setLayoutOrientation(JList.HORIZONTAL_WRAP);
+                }
+                activeListIndex = comboIndex;
+            }
+        }
+    }
+
+    
+    
     private void setListeners() {
         JButton btn;
         btn = userListPanel.getBtnRemove();

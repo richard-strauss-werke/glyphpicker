@@ -105,7 +105,8 @@ ListCellRenderer<Object>{
 
         Font font = new Font(fontName, Font.PLAIN, fontSize);
         GlyphVector gv = font.createGlyphVector(frc, text);
-        Rectangle visualBounds = gv.getVisualBounds().getBounds();
+//        Rectangle visualBounds = gv.getVisualBounds().getBounds();
+        Rectangle visualBounds = gv.getPixelBounds(frc, 0, 0);
 
         float scaleFactor = Math.min(w / visualBounds.width, h
                 / visualBounds.height);

@@ -57,7 +57,7 @@ public class BrowserController extends Controller {
     protected AbstractAction addAction;
     protected AbstractAction insertAction;
 
-    public int activeListIndex;
+    private int activeListIndex;
 
     @SuppressWarnings({ "unchecked" })
     public BrowserController(Config config) {
@@ -285,7 +285,7 @@ public class BrowserController extends Controller {
 //        }
 //    }
 
-    private class ChangeViewAction extends AbstractAction {
+    public class ChangeViewAction extends AbstractAction {
         private static final long serialVersionUID = 1L;
 
         @Override

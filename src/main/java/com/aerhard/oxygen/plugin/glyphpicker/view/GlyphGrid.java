@@ -23,6 +23,22 @@ public class GlyphGrid extends JList<GlyphDefinition> {
 
         setModel(filteredListModel);
 
+        addComponentListener(new ResizeAdapter());
+    }
+
+    private class ResizeAdapter extends ComponentAdapter {
+        @Override
+        public void componentResized(ComponentEvent e) {
+            fixRowCountForVisibleColumns();
+        }        
+    }
+    
+    
+    public GlyphGrid() {
+        setLayoutOrientation(JList.HORIZONTAL_WRAP);
+
+        setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
         addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(ComponentEvent e) {
@@ -30,7 +46,7 @@ public class GlyphGrid extends JList<GlyphDefinition> {
             }
         });
     }
-
+    
     public int getTopVisibleRow() {
         JViewport viewport = (JViewport) getParent();
         Point pt = viewport.getViewPosition();
@@ -56,8 +72,8 @@ public class GlyphGrid extends JList<GlyphDefinition> {
     }
 
     private int computeVisibleColumnCount() {
-        System.out.println();
         Rectangle bounds = getCellBounds(0, 0);
+        System.out.println(bounds);
         if (bounds != null) {
             int cellWidth = Math.max(getCellBounds(0, 0).width, 1);
             int width = getVisibleRect().width;
