@@ -30,8 +30,9 @@ import ca.odell.glazedlists.swing.DefaultEventTableModel;
 import ca.odell.glazedlists.swing.TextComponentMatcherEditor;
 
 import com.aerhard.oxygen.plugin.glyphpicker.model.Config;
+import com.aerhard.oxygen.plugin.glyphpicker.model.DataSource;
+import com.aerhard.oxygen.plugin.glyphpicker.model.DataSourceList;
 import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinition;
-import com.aerhard.oxygen.plugin.glyphpicker.model.PathComboModel;
 import com.aerhard.oxygen.plugin.glyphpicker.view.BrowserPanel;
 import com.aerhard.oxygen.plugin.glyphpicker.view.GlyphGrid;
 import com.aerhard.oxygen.plugin.glyphpicker.view.GlyphTable;
@@ -50,11 +51,11 @@ public class BrowserController extends Controller {
     private BrowserPanel browserPanel;
     private GlyphTable table;
     private GlyphGrid list;
-    private PathComboModel pathComboModel;
+    private DataSourceList dataSourceList;
     private GlyphDefinitionLoader loader;
     private boolean isLoading = false;
 
-    protected AbstractAction addAction;
+    protected AbstractAction transferAction;
     protected AbstractAction insertAction;
 
     private int activeListIndex;
@@ -139,21 +140,21 @@ public class BrowserController extends Controller {
         // DefaultEventComboBoxModel<String>(classesEventList);
         // browserPanel.getRangeCombo().setModel(rangeComboModel);
 
-        pathComboModel = config.getPaths();
-        browserPanel.getPathCombo().setModel(pathComboModel);
+        dataSourceList = config.getDataSources();
+        browserPanel.getPathCombo().setModel(dataSourceList);
 
 //        browserPanel.getRangeCombo().setAction(new FilterAction());
 //        browserPanel.getClassCombo().setAction(new FilterAction());
         browserPanel.getViewCombo().setAction(new ChangeViewAction());
         browserPanel.getBtnLoad().setAction(new LoadDataAction());
 
-        addAction = new AddToUserListAction();
+        transferAction = new AddToUserCollectionAction();
         insertAction = new InsertXmlAction();
 
-        addAction.setEnabled(false);
+        transferAction.setEnabled(false);
         insertAction.setEnabled(false);
 
-        browserPanel.getBtnAdd().setAction(addAction);
+        browserPanel.getBtnAdd().setAction(transferAction);
         browserPanel.getBtnInsert().setAction(insertAction);
 
         loader = new GlyphDefinitionLoader();
@@ -294,15 +295,19 @@ public class BrowserController extends Controller {
             if (activeListIndex != comboIndex) {
                 if (comboIndex == 1) {
                     // NB get the old component's top row before the component
-                    // is switched!
+                    // is replaced!
                     int row = list.getTopVisibleRow();
                     browserPanel.setListComponent(table);
+                    browserPanel.getInfoLabel().setVisible(false);
+                    browserPanel.revalidate();
                     table.setTopVisibleRow(row);
                 } else {
                     // NB get the old component's top row before the component
-                    // is switched!
+                    // is replaced!
                     int row = table.getTopVisibleRow();
                     browserPanel.setListComponent(list);
+                    browserPanel.getInfoLabel().setVisible(true);
+                    browserPanel.revalidate();
                     list.setTopVisibleRow(row);
                 }
                 activeListIndex = comboIndex;
@@ -339,11 +344,11 @@ public class BrowserController extends Controller {
         }
     }
 
-    private class AddToUserListAction extends AbstractAction {
+    private class AddToUserCollectionAction extends AbstractAction {
         private static final long serialVersionUID = 1L;
 
-        private AddToUserListAction() {
-            super("Add to Collection");
+        private AddToUserCollectionAction() {
+            super("Transfer to User Collection");
             putValue(SHORT_DESCRIPTION,
                     "Add the selected glyph to the user collection.");
             putValue(MNEMONIC_KEY, Integer.valueOf(KeyEvent.VK_A));
@@ -355,7 +360,7 @@ public class BrowserController extends Controller {
             if (row != -1) {
                 GlyphDefinition selectedModel = filterList.get(row);
                 if (selectedModel != null) {
-                    fireEvent("export", selectedModel);
+                    fireEvent("transferToUserCollection", selectedModel);
                 }
             }
         }
@@ -382,7 +387,7 @@ public class BrowserController extends Controller {
                             model.getCodePoint() + ": " + model.getCharName());
                 }
 
-                addAction.setEnabled(enableButtons);
+                transferAction.setEnabled(enableButtons);
                 insertAction.setEnabled(enableButtons);
             }
         }
@@ -495,8 +500,18 @@ public class BrowserController extends Controller {
     @Override
     public void loadData() {
 
-        final String path = browserPanel.getPathCombo().getSelectedItem()
-                .toString();
+        final String path;
+        
+        int index = browserPanel.getPathCombo().getSelectedIndex();
+        
+        System.out.println(index);
+        if (index == -1) {
+            index = 0;
+        }
+        
+        DataSource ds = dataSourceList.getDataSourceAt(index);
+        
+        path = (ds != null) ? ds.getPath() : "";
 
         if (isLoading) {
             LOGGER.info("Skipping data loading.");
@@ -516,19 +531,25 @@ public class BrowserController extends Controller {
                 try {
                     List<GlyphDefinition> data = get();
                     glyphList.clear();
-                    glyphList.addAll(data);
 
                     // when loading was successful, set the loading path as
                     // first item in the pathComboModel
                     if (data != null) {
-                        pathComboModel.setFirstItem(path);
+                        glyphList.addAll(data);
+                        
+                        int index = browserPanel.getPathCombo().getSelectedIndex();
+                        if (index != -1) {
+                            dataSourceList.setFirstIndex(index);
+                        }
+                        
                     }
                     // mainPanel.getLoadingMask().stop();
-                    isLoading = false;
                 } catch (InterruptedException e) {
                     LOGGER.error(e);
                 } catch (ExecutionException e) {
                     LOGGER.error(e);
+                } finally {
+                    isLoading = false;
                 }
             }
         };

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<config>
+    <dataSources>
+        <dataSource>
+            <label>Edirom SMuFL-Browser local</label>
+            <path>/Users/Ahlse/Desktop/SMuFL-Browser-1.0/data/charDecl.xml</path>
+            <fontName>BravuraText</fontName>
+            <displayMode>vector</displayMode>
+            <template>${baseUrl}#${id}</template>
+        </dataSource>
+        <dataSource>
+            <label>gBank local</label>
+            <path>/Users/Ahlse/Desktop/gBankImages/gBank.xml</path>
+            <fontName>BravuraText</fontName>
+            <displayMode>vector</displayMode>
+            <template>${baseUrl}#${id}</template>
+        </dataSource>
+        <dataSource>
+            <label>Edirom SMuFL-Browser aerhard</label>
+            <path>http://aerhard.github.io/glyphpicker/testdata/smuflBrowser/data/charDecl.xml</path>
+            <fontName>BravuraText</fontName>
+            <displayMode>vector</displayMode>
+            <template>${baseUrl}#${id}</template>
+        </dataSource>
+        <dataSource>
+            <label>gBank aerhard</label>
+            <path>http://aerhard.github.io/glyphpicker/testdata/gBankImages/gBank.xml</path>
+            <fontName>BravuraText</fontName>
+            <displayMode>vector</displayMode>
+            <template>${baseUrl}#${id}</template>
+        </dataSource>
+        <dataSource>
+            <label>Edirom SMuFL-Browser json</label>
+            <path>/Users/Ahlse/Desktop/SMuFL-Browser-1.0/data/smufl.json</path>
+            <fontName>BravuraText</fontName>
+            <displayMode>vector</displayMode>
+            <template>${baseUrl}#${id}</template>
+        </dataSource>
+        <dataSource>
+            <label>Edirom SMuFL-Browser localhost 1</label>
+            <path>http://localhost:8080/exist/apps/smufl-browser/list/</path>
+            <fontName>BravuraText</fontName>
+            <displayMode>vector</displayMode>
+            <template>${baseUrl}#${id}</template>
+        </dataSource>
+        <dataSource>
+            <label>Edirom SMuFL-Browser localhost 2</label>
+            <path>http://localhost:8080/exist/apps/smufl-browser/data/charDecl.xml</path>
+            <fontName>BravuraText</fontName>
+            <displayMode>vector</displayMode>
+            <template>${baseUrl}#${id}</template>
+        </dataSource>
+    </dataSources>
+</config>

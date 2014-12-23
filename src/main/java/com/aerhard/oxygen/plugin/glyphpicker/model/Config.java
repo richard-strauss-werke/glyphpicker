@@ -1,46 +1,28 @@
 package com.aerhard.oxygen.plugin.glyphpicker.model;
 
-import java.awt.List;
-import java.util.ArrayList;
-
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name = "config")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Config {
 
-    @XmlElement(name = "paths")
-    private PathComboModel paths = null;
-
-    @XmlElementWrapper(name="dataSources")
-    private ArrayList<DataSource> dataSources = new ArrayList<DataSource>();
-    
-
+    @XmlElement(name = "dataSources")
+    private DataSourceList dataSources = null;
     
     /**
-     * @return the paths
+     * @return the dataSources
      */
-    public PathComboModel getPaths() {
-        return paths;
-    }
-
-    /**
-     * @param paths
-     *            the paths to set
-     */
-    public void setPaths(PathComboModel paths) {
-        this.paths = paths;
-    }
-
-    public ArrayList<DataSource> getDataSources() {
+    public DataSourceList getDataSources() {
         return dataSources;
     }
 
-    public void setDataSources(ArrayList<DataSource> dataSources) {
+    /**
+     * @param dataSources the dataSources to set
+     */
+    public void setDataSources(DataSourceList dataSources) {
         this.dataSources = dataSources;
     }
 

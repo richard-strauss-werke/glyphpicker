@@ -21,10 +21,10 @@ import com.aerhard.oxygen.plugin.glyphpicker.view.renderer.ListItemRenderer;
 import java.awt.Component;
 import javax.swing.Box;
 
-public class UserListPanel extends JPanel {
+public class UserCollectionPanel extends JPanel {
 
     private static final long serialVersionUID = 1L;
-    private GlyphGrid userList;
+    private GlyphGrid userCollection;
     private JButton btnRemove;
     private HighlightButton btnInsert;
     private JButton btnSave;
@@ -32,7 +32,7 @@ public class UserListPanel extends JPanel {
     private JComboBox<String> viewCombo;
     private Component horizontalGlue;
 
-    public UserListPanel() {
+    public UserCollectionPanel() {
 
         setLayout(new BorderLayout(0, 0));
 
@@ -73,9 +73,9 @@ public class UserListPanel extends JPanel {
         add(paletteTablePanel);
         paletteTablePanel.setLayout(new BorderLayout(0, 0));
 
-        userList = new GlyphGrid();
+        userCollection = new GlyphGrid();
 
-        JScrollPane scrollPane = new JScrollPane(userList);
+        JScrollPane scrollPane = new JScrollPane(userCollection);
         scrollPane
                 .setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         paletteTablePanel.add(scrollPane);
@@ -135,8 +135,8 @@ public class UserListPanel extends JPanel {
         return viewCombo;
     }
     
-    public GlyphGrid getUserList() {
-        return userList;
+    public GlyphGrid getUserCollection() {
+        return userCollection;
     }
 
 }

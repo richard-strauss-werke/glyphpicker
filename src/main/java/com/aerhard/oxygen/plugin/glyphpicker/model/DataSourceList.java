@@ -10,9 +10,9 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
-@XmlRootElement(name = "paths")
+@XmlRootElement(name = "dataSources")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class PathComboModel extends AbstractListModel<String> implements
+public class DataSourceList extends AbstractListModel<String> implements
         ComboBoxModel<String> {
     private static final long serialVersionUID = 1L;
 
@@ -21,26 +21,29 @@ public class PathComboModel extends AbstractListModel<String> implements
     @XmlTransient
     private Object selectedItem;
 
-    @XmlElement(name = "path")
-    private List<String> data;
+    @XmlElement(name = "dataSource")
+    private List<DataSource> data;
 
-    public PathComboModel(List<String> arrayList) {
+    public DataSourceList(List<DataSource> arrayList) {
         data = arrayList;
         if (arrayList.size() > 0) {
-            selectedItem = data.get(0);
+            selectedItem = data.get(0).getLabel();
         }
     }
 
-    public PathComboModel() {
+    public DataSourceList() {
     }
 
     public void init() {
         if (data != null && data.size() > 0) {
-            selectedItem = data.get(0);
+            selectedItem = data.get(0).getLabel();
         }
     }
 
-    public void setFirstItem(String item) {
+    public void setFirstIndex(int index) {
+        
+        DataSource item = getDataSourceAt(index);
+        
         data.add(0, item);
         for (int i = data.size() - 1; i > 0; i--) {
             if (item.equals(data.get(i)) || i > ITEM_MAX) {
@@ -64,6 +67,11 @@ public class PathComboModel extends AbstractListModel<String> implements
     }
 
     public String getElementAt(int i) {
+        return data.get(i).getLabel();
+    }
+
+    public DataSource getDataSourceAt(int i) {
         return data.get(i);
     }
+    
 }

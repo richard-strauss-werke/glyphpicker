@@ -19,7 +19,7 @@ public class MainController extends Controller {
     private ConfigLoader configLoader;
 
     private Controller browserController;
-    private Controller userListController;
+    private Controller userCollectionController;
 
     public MainController(StandalonePluginWorkspace workspace) {
 
@@ -37,11 +37,11 @@ public class MainController extends Controller {
         browserController = new BrowserController(configLoader.getConfig());
         browserController.addListener(this);
 
-        userListController = new UserListController(workspace, properties);
-        userListController.addListener(this);
-        addListener(userListController);
+        userCollectionController = new UserCollectionController(workspace, properties);
+        userCollectionController.addListener(this);
+        addListener(userCollectionController);
 
-        mainPanel = new MainPanel(browserController.getPanel(), userListController.getPanel());
+        mainPanel = new MainPanel(browserController.getPanel(), userCollectionController.getPanel());
 
         mainPanel.getTabbedPane().setSelectedIndex(1); 
     }
@@ -62,9 +62,9 @@ public class MainController extends Controller {
             fireEvent("insert", model);
         }
 
-        else if ("export".equals(type)) {
+        else if ("transferToUserCollection".equals(type)) {
             GlyphDefinition clone = new GlyphDefinition(model);
-            fireEvent("export", clone);
+            fireEvent("transferToUserCollection", clone);
             mainPanel.highlightTabTitle(0);
         }
 
@@ -72,14 +72,14 @@ public class MainController extends Controller {
 
     @Override
     public void loadData() {
-        userListController.loadData();
+        userCollectionController.loadData();
         browserController.loadData();
     }
 
     public void saveData() {
         // TODO check + ask when data has changed
         getConfigLoader().save();
-        userListController.saveData();
+        userCollectionController.saveData();
 
     }
     

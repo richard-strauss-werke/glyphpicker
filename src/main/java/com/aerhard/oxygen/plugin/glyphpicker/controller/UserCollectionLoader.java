@@ -12,15 +12,15 @@ import ro.sync.exml.workspace.api.standalone.StandalonePluginWorkspace;
 
 import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinitions;
 
-public class UserListLoader {
+public class UserCollectionLoader {
 
-    private static final Logger LOGGER = Logger.getLogger(UserListLoader.class
+    private static final Logger LOGGER = Logger.getLogger(UserCollectionLoader.class
             .getName());
 
     private String pathName;
     private String fileName;
 
-    public UserListLoader(StandalonePluginWorkspace workspace,
+    public UserCollectionLoader(StandalonePluginWorkspace workspace,
             Properties properties) {
         pathName = workspace.getPreferencesDirectory() + "/"
                 + properties.getProperty("config.path");

@@ -14,14 +14,14 @@ public class MainPanel extends JPanel {
     private static final long serialVersionUID = 1L;
     private JTabbedPane tabbedPane;
 
-    public MainPanel(JComponent browserPanel, JComponent userListPanel) {
+    public MainPanel(JComponent browserPanel, JComponent userCollectionPanel) {
 
         setLayout(new BorderLayout(0, 0));
 
         tabbedPane = new JTabbedPane(JTabbedPane.TOP);
         tabbedPane.setBorder(new EmptyBorder(8, 8, 8, 8));
 
-        tabbedPane.addTab(null, null, userListPanel, null);
+        tabbedPane.addTab(null, null, userCollectionPanel, null);
         tabbedPane.setTabComponentAt(0, new HighlightLabel("Collection"));
 
         tabbedPane.addTab(null, null, browserPanel, null);

@@ -24,68 +24,68 @@ import ca.odell.glazedlists.swing.DefaultEventListModel;
 
 import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinition;
 import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinitions;
-import com.aerhard.oxygen.plugin.glyphpicker.view.UserListPanel;
+import com.aerhard.oxygen.plugin.glyphpicker.view.UserCollectionPanel;
 import com.aerhard.oxygen.plugin.glyphpicker.view.renderer.GlyphShapeRenderer;
 import com.aerhard.oxygen.plugin.glyphpicker.view.renderer.ListItemRenderer;
 
-public class UserListController extends Controller {
+public class UserCollectionController extends Controller {
 
-    private UserListPanel userListPanel;
-    private UserListLoader userListLoader;
-    private BasicEventList<GlyphDefinition> userListModel;
-    private JList<GlyphDefinition> userList;
+    private UserCollectionPanel userCollectionPanel;
+    private UserCollectionLoader userCollectionLoader;
+    private BasicEventList<GlyphDefinition> userCollectionModel;
+    private JList<GlyphDefinition> userCollection;
     protected boolean listInSync = true;
     
     private int activeListIndex;
 
 
     @SuppressWarnings("unchecked")
-    public UserListController(StandalonePluginWorkspace workspace,
+    public UserCollectionController(StandalonePluginWorkspace workspace,
             Properties properties) {
 
-        userListPanel = new UserListPanel();
+        userCollectionPanel = new UserCollectionPanel();
 
-        userListModel = new BasicEventList<GlyphDefinition>();
+        userCollectionModel = new BasicEventList<GlyphDefinition>();
 
-        userList = userListPanel.getUserList();
+        userCollection = userCollectionPanel.getUserCollection();
         
-        userList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        userCollection.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         GlyphShapeRenderer r = new GlyphShapeRenderer();
         r.setPreferredSize(new Dimension(90, 90));
-        userList.setCellRenderer(r);
+        userCollection.setCellRenderer(r);
 
-        userList.setModel(new DefaultEventListModel<GlyphDefinition>(
-                userListModel));
+        userCollection.setModel(new DefaultEventListModel<GlyphDefinition>(
+                userCollectionModel));
         
         
         
         
-        userListPanel.getViewCombo().setAction(new ChangeViewAction());
+        userCollectionPanel.getViewCombo().setAction(new ChangeViewAction());
 
-        userListLoader = new UserListLoader(workspace, properties);
+        userCollectionLoader = new UserCollectionLoader(workspace, properties);
 
         setListeners();
 
     }
 
-    public UserListPanel getPanel() {
-        return userListPanel;
+    public UserCollectionPanel getPanel() {
+        return userCollectionPanel;
     }
 
-    private void removeItemFromUserList() {
-        int index = userList.getSelectedIndex();
+    private void removeItemFromUserCollection() {
+        int index = userCollection.getSelectedIndex();
         if (index != -1) {
             listInSync=false;
-            userListModel.remove(index);
-            index = Math.min(index, userListModel.size() - 1);
+            userCollectionModel.remove(index);
+            index = Math.min(index, userCollectionModel.size() - 1);
             if (index >= 0) {
-                userList.setSelectedIndex(index);
+                userCollection.setSelectedIndex(index);
             }
         }
     }
 
     private void insertGlyphFromUser() {
-        int index = userList.getSelectedIndex();
+        int index = userCollection.getSelectedIndex();
         if (index != -1) {
             fireEvent("insert", getListModel().get(index));
         }
@@ -100,13 +100,13 @@ public class UserListController extends Controller {
             int comboIndex = ((JComboBox<?>) e.getSource()).getSelectedIndex();
             if (activeListIndex != comboIndex) {
                 if (comboIndex == 1) {
-                    userList.setCellRenderer(new ListItemRenderer());
-                    userList.setLayoutOrientation(JList.VERTICAL);
+                    userCollection.setCellRenderer(new ListItemRenderer());
+                    userCollection.setLayoutOrientation(JList.VERTICAL);
                 } else {
                     GlyphShapeRenderer r = new GlyphShapeRenderer();
                     r.setPreferredSize(new Dimension(90, 90));
-                    userList.setCellRenderer(r);
-                    userList.setLayoutOrientation(JList.HORIZONTAL_WRAP);
+                    userCollection.setCellRenderer(r);
+                    userCollection.setLayoutOrientation(JList.HORIZONTAL_WRAP);
                 }
                 activeListIndex = comboIndex;
             }
@@ -117,15 +117,15 @@ public class UserListController extends Controller {
     
     private void setListeners() {
         JButton btn;
-        btn = userListPanel.getBtnRemove();
+        btn = userCollectionPanel.getBtnRemove();
         btn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                removeItemFromUserList();
+                removeItemFromUserCollection();
             }
         });
 
-        btn = userListPanel.getBtnInsert();
+        btn = userCollectionPanel.getBtnInsert();
         btn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -133,55 +133,55 @@ public class UserListController extends Controller {
             }
         });
 
-        btn = userListPanel.getBtnSave();
+        btn = userCollectionPanel.getBtnSave();
         btn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 saveData();
-                userListPanel.enableSaveButtons(false);
+                userCollectionPanel.enableSaveButtons(false);
             }
         });
 
-        btn = userListPanel.getBtnReload();
+        btn = userCollectionPanel.getBtnReload();
         btn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 loadData();
-                userListPanel.enableSaveButtons(false);
+                userCollectionPanel.enableSaveButtons(false);
             }
         });
 
-        userList.addMouseListener(new MouseAdapter() {
+        userCollection.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (e.getClickCount() == 2) {
-                    userListPanel.getBtnInsert().highlight();
+                    userCollectionPanel.getBtnInsert().highlight();
                     insertGlyphFromUser();
                 }
             }
         });
 
-        userList.getSelectionModel().addListSelectionListener(
+        userCollection.getSelectionModel().addListSelectionListener(
                 new ListSelectionListener() {
                     @Override
                     public void valueChanged(ListSelectionEvent event) {
                         if (!event.getValueIsAdjusting()) {
-                            if (userList.getSelectedIndex() == -1) {
-                                userListPanel.enableSelectionButtons(false);
+                            if (userCollection.getSelectedIndex() == -1) {
+                                userCollectionPanel.enableSelectionButtons(false);
                             } else {
-                                userListPanel.enableSelectionButtons(true);
+                                userCollectionPanel.enableSelectionButtons(true);
                             }
                         }
                     }
                 });
 
-        userListModel.addListEventListener(new ListEventListener<GlyphDefinition>() {
+        userCollectionModel.addListEventListener(new ListEventListener<GlyphDefinition>() {
             @Override
             public void listChanged(ListEvent<GlyphDefinition> e) {
                 if (listInSync) {
-                    userListPanel.enableSaveButtons(false);
+                    userCollectionPanel.enableSaveButtons(false);
                 } else {
-                    userListPanel.enableSaveButtons(true);
+                    userCollectionPanel.enableSaveButtons(true);
                 }
                 
             }
@@ -190,11 +190,11 @@ public class UserListController extends Controller {
     }
 
     public BasicEventList<GlyphDefinition> getListModel() {
-        return userListModel;
+        return userCollectionModel;
     }
 
-    public UserListLoader getUserListLoader() {
-        return userListLoader;
+    public UserCollectionLoader getUserCollectionLoader() {
+        return userCollectionLoader;
     }
 
     @Override
@@ -203,23 +203,23 @@ public class UserListController extends Controller {
             @Override
             public void run() {
                 listInSync = true;
-                userListModel.clear();
-                userListModel.addAll(userListLoader.load().getData());    
+                userCollectionModel.clear();
+                userCollectionModel.addAll(userCollectionLoader.load().getData());    
             }
         });
     }
 
     @Override
     public void saveData() {
-        userListLoader.save(new GlyphDefinitions(userListModel));
+        userCollectionLoader.save(new GlyphDefinitions(userCollectionModel));
         listInSync=true;
     }
 
     @Override
     public void eventOccured(String type, GlyphDefinition model) {
-        if ("export".equals(type)) {
+        if ("transferToUserCollection".equals(type)) {
             listInSync=false;
-            userListModel.add(model);
+            userCollectionModel.add(model);
         }
 
     }

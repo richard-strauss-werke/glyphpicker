@@ -9,9 +9,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class DataSource {
     
-    public static final String DISPLAY_MODE_TEXT = "text";
+    public static final String DISPLAY_MODE_VECTOR_PROPORTIONAL = "proportional";
+    public static final String DISPLAY_MODE_VECTOR_FIT = "fit";
     public static final String DISPLAY_MODE_BITMAP = "bitmap";
-    public static final String DISPLAY_MODE_SHAPE = "shape";
     
     @XmlElement(name = "label")
     private String label;
