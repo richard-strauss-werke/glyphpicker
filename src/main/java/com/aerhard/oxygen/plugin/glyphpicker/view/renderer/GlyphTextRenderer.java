@@ -11,15 +11,16 @@ import java.awt.Font;
 
 import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinition;
 
+//TODO add error message if the font is not present
+
 public class GlyphTextRenderer extends JLabel implements TableCellRenderer,
         ListCellRenderer<Object> {
 
     private static final long serialVersionUID = 1L;
 
-    private String fontName = "BravuraText";
+    private String fontName = null;
 
     public GlyphTextRenderer() {
-        setFont(new Font(fontName, Font.PLAIN, 40));
         setVerticalAlignment(CENTER);
         setHorizontalAlignment(CENTER);
     }
@@ -27,13 +28,21 @@ public class GlyphTextRenderer extends JLabel implements TableCellRenderer,
     public Component getTableCellRendererComponent(JTable table, Object value,
             boolean isSelected, boolean hasFocus, int row, int column) {
 
-        String ch;
+        String ch, fontName;
         if (value == null) {
             ch = null;
+            fontName = null;
         } else {
-            ch = ((GlyphDefinition) value).getCharString();
+            GlyphDefinition gd = ((GlyphDefinition) value); 
+            ch = gd.getCharString();
+            fontName = gd.getDataSource().getFontName();
         }
 
+        if (this.fontName != null && !this.fontName.equals(fontName)) {
+            setFont(new Font(fontName, Font.PLAIN, 40));
+            this.fontName = fontName;
+        }
+        
         setText(ch);
 
         if (isSelected) {
@@ -52,13 +61,21 @@ public class GlyphTextRenderer extends JLabel implements TableCellRenderer,
     public Component getListCellRendererComponent(JList<?> list, Object value,
             int index, boolean isSelected, boolean cellHasFocus) {
 
-        String ch;
+        String ch, fontName;
         if (value == null) {
             ch = null;
+            fontName = null;
         } else {
-            ch = ((GlyphDefinition) value).getCharString();
+            GlyphDefinition gd = ((GlyphDefinition) value); 
+            ch = gd.getCharString();
+            fontName = gd.getDataSource().getFontName();
         }
 
+        if (fontName != null && !fontName.equals(this.fontName)) {
+            setFont(new Font(fontName, Font.PLAIN, 40));
+            this.fontName = fontName;
+        }
+        
         setText(ch);
 
         if (isSelected) {

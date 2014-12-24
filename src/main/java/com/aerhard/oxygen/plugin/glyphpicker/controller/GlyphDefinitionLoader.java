@@ -53,7 +53,7 @@ public class GlyphDefinitionLoader {
     }
 
     public List<GlyphDefinition> loadData(DataSource dataSource) {
-        String path = dataSource.getPath();
+        String path = dataSource.getBasePath();
         List<GlyphDefinition> glyphList = (isLocalFile(path)) ? loadDataFromFile(dataSource)
                 : loadDataFromUrl("guest", "guest", dataSource);
         return glyphList;
@@ -100,14 +100,14 @@ public class GlyphDefinitionLoader {
             final DataSource dataSource) {
         DefaultHttpClient httpclient = new DefaultHttpClient();
         try {
-            HttpGet httpGet = new HttpGet(dataSource.getPath());
+            HttpGet httpGet = new HttpGet(dataSource.getBasePath());
             httpGet.addHeader(BasicScheme.authenticate(
                     new UsernamePasswordCredentials(user, password), "UTF-8",
                     false));
             return httpclient.execute(httpGet, new GlyphResponseHandler(
                     dataSource));
         } catch (IOException e) {
-            LOGGER.info("Error loading data from \"" + dataSource.getPath()
+            LOGGER.info("Error loading data from \"" + dataSource.getBasePath()
                     + "\"", e);
         } finally {
             httpclient.getConnectionManager().shutdown();
@@ -180,7 +180,7 @@ public class GlyphDefinitionLoader {
 
         List<GlyphDefinition> glyphList = null;
 
-        String fileName = dataSource.getPath();
+        String fileName = dataSource.getBasePath();
 
         if (fileName != null) {
             File file = new File(fileName);

@@ -14,6 +14,7 @@ import com.icl.saxon.aelfred.DefaultHandler;
 public class GlyphDefinitionXmlHandler extends DefaultHandler {
 
     private Boolean inChar = false;
+    private Boolean inMapping = false;
 
     private List<GlyphDefinition> glyphDefinitions = new ArrayList<GlyphDefinition>();
     private Stack<String> elementStack = new Stack<String>();
@@ -24,10 +25,15 @@ public class GlyphDefinitionXmlHandler extends DefaultHandler {
     private DataSource dataSource;
     private List<String> classes;
 
+    private String mappingAttName;
+    private String mappingAttValue;
+
     private StringBuffer textContent = new StringBuffer();
 
     public GlyphDefinitionXmlHandler(DataSource dataSource) {
         this.dataSource = dataSource;
+        this.mappingAttName = dataSource.getMappingAttName();
+        this.mappingAttValue = dataSource.getMappingAttValue();
     }
 
     public List<GlyphDefinition> getGlyphDefinitions() {
@@ -48,6 +54,14 @@ public class GlyphDefinitionXmlHandler extends DefaultHandler {
             else if ("graphic".equals(qName)) {
                 currentGlyphDefinition.setUrl(attrs.getValue("url"));
             }
+
+            if ("mapping".equals(qName) && mappingAttValue.equals(attrs.getValue(mappingAttName))) {
+                inMapping = true;
+              }
+            
+//            if ("mapping".equals(qName) && attrs.getValue(mappingAttName).equals(mappingAttValue)) {
+//              System.out.println("matched");
+//            }
 
         }
 
@@ -100,12 +114,9 @@ public class GlyphDefinitionXmlHandler extends DefaultHandler {
                 currentGlyphDefinition.setCharName(textContent.toString());
             }
 
-            // currently only the first mapping is read
-            // TODO handle multiple mappings + type / subtype (hashmap?)
-            else if ("mapping".equals(qName)
-                    && currentGlyphDefinition.getCodePoint() == null) {
-
+            else if (inMapping) {
                 currentGlyphDefinition.setCodePoint(textContent.toString());
+                inMapping = false;
             }
 
             else if ("item".equals(qName)) {

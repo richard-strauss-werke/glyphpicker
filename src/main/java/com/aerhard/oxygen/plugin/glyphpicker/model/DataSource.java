@@ -15,14 +15,46 @@ public class DataSource {
 
     @XmlElement(name = "label")
     private String label;
-    @XmlElement(name = "path")
-    private String path;
+    @XmlElement(name = "basePath")
+    private String basePath;
     @XmlElement(name = "fontName")
     private String fontName;
     @XmlElement(name = "displayMode")
     private String displayMode;
     @XmlElement(name = "template")
     private String template;
+    @XmlElement(name = "mappingAttName")
+    private String mappingAttName;
+    @XmlElement(name = "mappingAttValue")
+    private String mappingAttValue;
+
+    /**
+     * @return the mappingAttName
+     */
+    public String getMappingAttName() {
+        return mappingAttName;
+    }
+
+    /**
+     * @param mappingAttName the mappingAttName to set
+     */
+    public void setMappingAttName(String mappingAttName) {
+        this.mappingAttName = mappingAttName;
+    }
+
+    /**
+     * @return the mappingAttValue
+     */
+    public String getMappingAttValue() {
+        return mappingAttValue;
+    }
+
+    /**
+     * @param mappingAttValue the mappingAttValue to set
+     */
+    public void setMappingAttValue(String mappingAttValue) {
+        this.mappingAttValue = mappingAttValue;
+    }
 
     public DataSource() {
 
@@ -66,12 +98,12 @@ public class DataSource {
         this.fontName = fontName;
     }
 
-    public String getPath() {
-        return path;
+    public String getBasePath() {
+        return basePath;
     }
 
-    public void setPath(String path) {
-        this.path = path;
+    public void setBasePath(String path) {
+        this.basePath = path;
     }
 
     /**

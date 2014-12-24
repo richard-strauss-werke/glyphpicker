@@ -19,12 +19,14 @@ import java.awt.geom.AffineTransform;
 
 import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinition;
 
+// TODO add error message if the font is not present
+
 public class GlyphShapeRenderer extends JLabel implements TableCellRenderer,
         ListCellRenderer<Object> {
 
     private static final long serialVersionUID = 1L;
 
-    private String fontName = "BravuraText";
+    private String fontName = null;
     private int padding = 12;
 
     public void setPadding(int padding) {
@@ -47,8 +49,11 @@ public class GlyphShapeRenderer extends JLabel implements TableCellRenderer,
             boolean isSelected, boolean hasFocus, int row, int column) {
         if (value == null) {
             ch = null;
+            fontName = null;
         } else {
-            ch = ((GlyphDefinition) value).getCharString();
+            GlyphDefinition gd = ((GlyphDefinition) value); 
+            ch = gd.getCharString();
+            fontName = gd.getDataSource().getFontName();
         }
         if (isSelected) {
             setBackground(table.getSelectionBackground());
@@ -67,8 +72,11 @@ public class GlyphShapeRenderer extends JLabel implements TableCellRenderer,
 
         if (value == null) {
             ch = null;
+            fontName = null;
         } else {
-            ch = ((GlyphDefinition) value).getCharString();
+            GlyphDefinition gd = ((GlyphDefinition) value); 
+            ch = gd.getCharString();
+            fontName = gd.getDataSource().getFontName();
         }
         if (isSelected) {
             setBackground(list.getSelectionBackground());
@@ -84,12 +92,12 @@ public class GlyphShapeRenderer extends JLabel implements TableCellRenderer,
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        if (ch != null) {
-            Graphics2D g2 = (Graphics2D) g;
-            g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-                    RenderingHints.VALUE_ANTIALIAS_ON);
-            drawGlyph(g2, ch, fontName, padding);
-            g2.dispose();
+        if (ch != null && fontName != null) {
+                Graphics2D g2 = (Graphics2D) g;
+                                g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+                        RenderingHints.VALUE_ANTIALIAS_ON);
+                drawGlyph(g2, ch, fontName, padding);
+                g2.dispose();                
         }
     }
 

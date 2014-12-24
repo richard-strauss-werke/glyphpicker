@@ -198,7 +198,19 @@ public class GlyphDefinition {
     }
 
     public String getRefString() {
-        return getDataSource().getPath() + "#" + getId();
+        
+        String template = getDataSource().getTemplate();
+        
+        // if no template is specified, use default template
+        if (template == null) {
+            return getDataSource().getBasePath() + "#" + getId(); 
+        }
+        
+        // TODO make template apply
+        
+        return template.replaceAll("\\$\\{basePath\\}", getDataSource().getBasePath()).replaceAll("\\$\\{id\\}", getId());
+        
+//        return getDataSource().getPath() + "#" + getId();
     }
 
 }
