@@ -13,6 +13,8 @@ import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinition;
 
 //TODO add error message if the font is not present
 
+// TODO test in table view with gbank data!!
+
 public class GlyphTextRenderer extends JLabel implements TableCellRenderer,
         ListCellRenderer<Object> {
 
@@ -56,7 +58,7 @@ public class GlyphTextRenderer extends JLabel implements TableCellRenderer,
         setOpaque(true);
         return this;
     }
-
+    
     @Override
     public Component getListCellRendererComponent(JList<?> list, Object value,
             int index, boolean isSelected, boolean cellHasFocus) {

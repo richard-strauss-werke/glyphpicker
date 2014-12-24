@@ -40,7 +40,7 @@ import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinition;
 import com.aerhard.oxygen.plugin.glyphpicker.view.BrowserPanel;
 import com.aerhard.oxygen.plugin.glyphpicker.view.GlyphGrid;
 import com.aerhard.oxygen.plugin.glyphpicker.view.GlyphTable;
-import com.aerhard.oxygen.plugin.glyphpicker.view.renderer.GlyphShapeRenderer;
+import com.aerhard.oxygen.plugin.glyphpicker.view.renderer.GlyphRenderer;
 
 // TODO actionlistener on data source combo
 
@@ -112,7 +112,11 @@ public class BrowserController extends Controller {
 
         // GlyphTextRenderer r = new GlyphTextRenderer();
         // GlyphBitmapRenderer r = new GlyphBitmapRenderer();
-        GlyphShapeRenderer r = new GlyphShapeRenderer();
+//        GlyphShapeRenderer r = new GlyphShapeRenderer();
+        
+        // TODO use the same renderer for list and table!?
+        GlyphRenderer r = new GlyphRenderer();
+        
         r.setPreferredSize(new Dimension(90, 90));
         list.setCellRenderer(r);
 
@@ -123,7 +127,8 @@ public class BrowserController extends Controller {
 
         // table.setTableIconRenderer(new TableIconBitmapRenderer());
         // table.setTableIconRenderer(new TableIconFontRenderer());
-        table.setTableIconRenderer(new GlyphShapeRenderer());
+//        table.setTableIconRenderer(new GlyphShapeRenderer());
+        table.setTableIconRenderer(new GlyphRenderer());
 
         // sorter = new TableRowSorter<GlyphTableModel>(glyphTableModel);
         // sorter = new TableRowSorter<SharedListModel>(sharedListModel);
