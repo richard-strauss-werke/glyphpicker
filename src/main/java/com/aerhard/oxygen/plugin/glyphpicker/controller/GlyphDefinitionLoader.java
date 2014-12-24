@@ -32,6 +32,8 @@ import com.icl.saxon.aelfred.SAXParserFactoryImpl;
 
 public class GlyphDefinitionLoader {
 
+    // TODO show error messages to user instead of logging all of them
+    
     private static final Logger LOGGER = Logger
             .getLogger(GlyphDefinitionLoader.class.getName());
 
@@ -186,9 +188,6 @@ public class GlyphDefinitionLoader {
             File file = new File(fileName);
             InputStream inputStream = null;
             String mimeType = null;
-            // ClassLoader classLoader = getClass().getClassLoader();
-            // File file = new
-            // File(classLoader.getResource(fileName).getFile());
 
             try {
                 mimeType = file.toURI().toURL().openConnection()

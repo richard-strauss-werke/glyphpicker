@@ -7,8 +7,10 @@ import java.io.IOException;
 import java.util.Properties;
 
 import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+
 import org.apache.log4j.Logger;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -19,6 +21,7 @@ import ro.sync.exml.workspace.api.standalone.StandalonePluginWorkspace;
 import com.aerhard.oxygen.plugin.glyphpicker.controller.GlyphEventListener;
 import com.aerhard.oxygen.plugin.glyphpicker.controller.MainController;
 import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinition;
+
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -34,7 +37,7 @@ public class UITest {
         LOGGER.info("UI test.");
     }
 
-    public static void main(String[] args) {
+    private static void runTest() {
         setSystemLookAndFeel();
 
         Properties properties = new Properties();
@@ -101,6 +104,21 @@ public class UITest {
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
 
+
+    }
+    
+    public static void main(String[] args) {
+        
+        SwingUtilities.invokeLater(new Runnable() {
+            
+            @Override
+            public void run() {
+               runTest();
+                
+            }
+        });
+        
+ 
     }
 
     private static void setSystemLookAndFeel() {
