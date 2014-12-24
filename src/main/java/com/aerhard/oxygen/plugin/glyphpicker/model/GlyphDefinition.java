@@ -13,30 +13,30 @@ import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
-@XmlRootElement(name = "char", namespace="http://www.tei-c.org/ns/1.0")
+@XmlRootElement(name = "char", namespace = "http://www.tei-c.org/ns/1.0")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class GlyphDefinition {
-    
+
     @XmlAttribute(name = "id", namespace = "http://www.w3.org/XML/1998/namespace")
     private String id;
 
-    @XmlAttribute(name = "base", namespace = "http://www.w3.org/XML/1998/namespace")
-    private String baseUrl;
-
-    @XmlElement(name = "charName", namespace="http://www.tei-c.org/ns/1.0")
+    @XmlElement(name = "charName", namespace = "http://www.tei-c.org/ns/1.0")
     private String charName;
-    
-    @XmlElement(name="mapping", namespace="http://www.tei-c.org/ns/1.0")
+
+    @XmlElement(name = "mapping", namespace = "http://www.tei-c.org/ns/1.0")
     private String codePoint;
-    
-    @XmlElementWrapper(name="list", namespace="http://www.tei-c.org/ns/1.0")
+
+    @XmlElementWrapper(name = "list", namespace = "http://www.tei-c.org/ns/1.0")
     private List<String> classes = new ArrayList<String>();
-    
-    @XmlElement(name="graphic", namespace="http://www.tei-c.org/ns/1.0")
+
+    @XmlElement(name = "graphic", namespace = "http://www.tei-c.org/ns/1.0")
     private String url;
 
-    @XmlElement(name="range")
+    @XmlElement(name = "range")
     private String range;
+
+    @XmlElement(name = "dataSource")
+    private DataSource dataSource;
 
     @XmlTransient
     private JComponent component = null;
@@ -54,17 +54,18 @@ public class GlyphDefinition {
         this.range = ch.getRange();
         this.url = ch.getUrl();
         this.classes = ch.getClasses();
-        this.baseUrl = ch.getBaseUrl();
+        this.dataSource = ch.getDataSource();
     }
 
     public GlyphDefinition(String id, String name, String codepoint,
-            String range, String url, String baseUrl, List<String> classes) {
+            String range, String url, DataSource dataSource,
+            List<String> classes) {
         this.id = id;
         this.charName = name;
         this.codePoint = codepoint;
         this.range = range;
         this.url = url;
-        this.baseUrl = baseUrl;
+        this.dataSource = dataSource;
         this.classes = classes;
     }
 
@@ -89,12 +90,12 @@ public class GlyphDefinition {
     public String getCodePoint() {
         return codePoint;
     }
-    
+
     public String getCharString() {
         try {
             String cp = codePoint.substring(2);
             int c = Integer.parseInt(cp, 16);
-            return Character.toString((char) c);    
+            return Character.toString((char) c);
         } catch (Exception e) {
             return null;
         }
@@ -162,14 +163,6 @@ public class GlyphDefinition {
         return icon;
     }
 
-    public String getBaseUrl() {
-        return baseUrl;
-    }
-
-    public void setBaseUrl(String baseUrl) {
-        this.baseUrl = baseUrl;
-    }
-
     /**
      * @return the component
      */
@@ -184,9 +177,28 @@ public class GlyphDefinition {
     public void setComponent(JComponent c) {
         this.component = c;
     }
-    
+
     public String toString() {
-        return codePoint + ": " + charName + " (" + range + ")"; 
+        return codePoint + ": " + charName + " (" + range + ")";
+    }
+
+    /**
+     * @return the dataSource
+     */
+    public DataSource getDataSource() {
+        return dataSource;
+    }
+
+    /**
+     * @param dataSource
+     *            the dataSource to set
+     */
+    public void setDataSource(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
+
+    public String getRefString() {
+        return getDataSource().getPath() + "#" + getId();
     }
 
 }

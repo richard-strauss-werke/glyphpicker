@@ -11,7 +11,7 @@ public class Config {
 
     @XmlElement(name = "dataSources")
     private DataSourceList dataSources = null;
-    
+
     /**
      * @return the dataSources
      */
@@ -20,7 +20,8 @@ public class Config {
     }
 
     /**
-     * @param dataSources the dataSources to set
+     * @param dataSources
+     *            the dataSources to set
      */
     public void setDataSources(DataSourceList dataSources) {
         this.dataSources = dataSources;

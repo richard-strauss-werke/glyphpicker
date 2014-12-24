@@ -61,7 +61,8 @@ public class GlyphComponent extends JLabel {
 
         @Override
         public GlyphIcon doInBackground() throws IOException {
-            BufferedImage bi = loadImage(model.getBaseUrl(), model.getUrl());
+            BufferedImage bi = loadImage(model.getDataSource().getPath(),
+                    model.getUrl());
             if (bi != null) {
                 return new GlyphIcon(scaleToBound(bi, GLYPH_SIZE, GLYPH_SIZE),
                         GLYPH_SIZE);

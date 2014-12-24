@@ -34,9 +34,8 @@ public class GlyphTable extends JTable {
         getColumnModel().getColumn(0).setMinWidth(30);
         getColumnModel().getColumn(1).setPreferredWidth(600);
         getColumnModel().getColumn(1).setMinWidth(10);
-        
-    }
 
+    }
 
     public int getTopVisibleRow() {
         JViewport viewport = (JViewport) getParent();
@@ -51,7 +50,7 @@ public class GlyphTable extends JTable {
                 + cellBounds.height, cellBounds.y, cellBounds.width, h);
         scrollRectToVisible(targetViewRect);
     }
-    
+
     public void setTableIconRenderer(TableCellRenderer renderer) {
         tableIconRenderer = renderer;
     }

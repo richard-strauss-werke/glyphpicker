@@ -37,13 +37,15 @@ public class MainController extends Controller {
         browserController = new BrowserController(configLoader.getConfig());
         browserController.addListener(this);
 
-        userCollectionController = new UserCollectionController(workspace, properties);
+        userCollectionController = new UserCollectionController(workspace,
+                properties);
         userCollectionController.addListener(this);
         addListener(userCollectionController);
 
-        mainPanel = new MainPanel(browserController.getPanel(), userCollectionController.getPanel());
+        mainPanel = new MainPanel(browserController.getPanel(),
+                userCollectionController.getPanel());
 
-        mainPanel.getTabbedPane().setSelectedIndex(1); 
+        mainPanel.getTabbedPane().setSelectedIndex(1);
     }
 
     public ConfigLoader getConfigLoader() {
@@ -62,9 +64,9 @@ public class MainController extends Controller {
             fireEvent("insert", model);
         }
 
-        else if ("transferToUserCollection".equals(type)) {
+        else if ("copyToUserCollection".equals(type)) {
             GlyphDefinition clone = new GlyphDefinition(model);
-            fireEvent("transferToUserCollection", clone);
+            fireEvent("copyToUserCollection", clone);
             mainPanel.highlightTabTitle(0);
         }
 
@@ -80,7 +82,6 @@ public class MainController extends Controller {
         // TODO check + ask when data has changed
         getConfigLoader().save();
         userCollectionController.saveData();
-
     }
-    
+
 }

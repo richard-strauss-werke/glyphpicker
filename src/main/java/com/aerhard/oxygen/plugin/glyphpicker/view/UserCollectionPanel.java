@@ -36,12 +36,11 @@ public class UserCollectionPanel extends JPanel {
 
         setLayout(new BorderLayout(0, 0));
 
-        
         JPanel dataSourcePanel = new JPanel();
         dataSourcePanel.setBorder(new EmptyBorder(8, 8, 0, 8));
         add(dataSourcePanel, BorderLayout.NORTH);
         GridBagLayout gbl_dataSourcePanel = new GridBagLayout();
-        gbl_dataSourcePanel.columnWidths = new int[] {62, 320, 55, 0};
+        gbl_dataSourcePanel.columnWidths = new int[] { 62, 320, 55, 0 };
         gbl_dataSourcePanel.rowHeights = new int[] { 0, 0 };
         gbl_dataSourcePanel.columnWeights = new double[] { 0.0, 0.0, 0.0,
                 Double.MIN_VALUE };
@@ -51,7 +50,7 @@ public class UserCollectionPanel extends JPanel {
         viewCombo = new JComboBox<String>();
         viewCombo.addItem("Grid");
         viewCombo.addItem("List");
-        
+
         horizontalGlue = Box.createHorizontalGlue();
         GridBagConstraints gbc_horizontalGlue = new GridBagConstraints();
         gbc_horizontalGlue.fill = GridBagConstraints.BOTH;
@@ -66,8 +65,7 @@ public class UserCollectionPanel extends JPanel {
         gbc_viewCombo.gridx = 2;
         gbc_viewCombo.gridy = 0;
         dataSourcePanel.add(viewCombo, gbc_viewCombo);
-        
-        
+
         JPanel paletteTablePanel = new JPanel();
         paletteTablePanel.setBorder(new EmptyBorder(11, 8, 7, 8));
         add(paletteTablePanel);
@@ -100,7 +98,6 @@ public class UserCollectionPanel extends JPanel {
         btnReload.setEnabled(false);
         buttonPanel.add(btnReload);
 
-        
     }
 
     public void enableSelectionButtons(Boolean enable) {
@@ -108,7 +105,7 @@ public class UserCollectionPanel extends JPanel {
         btnRemove.setEnabled(enable);
 
     }
-    
+
     public void enableSaveButtons(Boolean enable) {
         btnSave.setEnabled(enable);
         btnReload.setEnabled(enable);
@@ -126,7 +123,7 @@ public class UserCollectionPanel extends JPanel {
     public JButton getBtnSave() {
         return btnSave;
     }
-    
+
     public JButton getBtnReload() {
         return btnReload;
     }
@@ -134,7 +131,7 @@ public class UserCollectionPanel extends JPanel {
     public JComboBox<String> getViewCombo() {
         return viewCombo;
     }
-    
+
     public GlyphGrid getUserCollection() {
         return userCollection;
     }

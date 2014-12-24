@@ -41,9 +41,9 @@ public class DataSourceList extends AbstractListModel<String> implements
     }
 
     public void setFirstIndex(int index) {
-        
+
         DataSource item = getDataSourceAt(index);
-        
+
         data.add(0, item);
         for (int i = data.size() - 1; i > 0; i--) {
             if (item.equals(data.get(i)) || i > ITEM_MAX) {
@@ -73,5 +73,5 @@ public class DataSourceList extends AbstractListModel<String> implements
     public DataSource getDataSourceAt(int i) {
         return data.get(i);
     }
-    
+
 }

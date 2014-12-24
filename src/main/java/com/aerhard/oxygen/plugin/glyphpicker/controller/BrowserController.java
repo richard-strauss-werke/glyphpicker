@@ -1,7 +1,10 @@
 package com.aerhard.oxygen.plugin.glyphpicker.controller;
 
+import java.awt.AWTEvent;
 import java.awt.Dimension;
+import java.awt.KeyboardFocusManager;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -9,6 +12,7 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import javax.swing.AbstractAction;
+import javax.swing.ActionMap;
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
@@ -38,6 +42,8 @@ import com.aerhard.oxygen.plugin.glyphpicker.view.GlyphGrid;
 import com.aerhard.oxygen.plugin.glyphpicker.view.GlyphTable;
 import com.aerhard.oxygen.plugin.glyphpicker.view.renderer.GlyphShapeRenderer;
 
+// TODO actionlistener on data source combo
+
 public class BrowserController extends Controller {
 
     private static final Logger LOGGER = Logger
@@ -55,7 +61,7 @@ public class BrowserController extends Controller {
     private GlyphDefinitionLoader loader;
     private boolean isLoading = false;
 
-    protected AbstractAction transferAction;
+    protected AbstractAction copyAction;
     protected AbstractAction insertAction;
 
     private int activeListIndex;
@@ -104,9 +110,8 @@ public class BrowserController extends Controller {
         list = new GlyphGrid(new DefaultEventListModel<GlyphDefinition>(
                 filterList));
 
-       
-//        GlyphTextRenderer r = new GlyphTextRenderer();
-//        GlyphBitmapRenderer r = new GlyphBitmapRenderer();
+        // GlyphTextRenderer r = new GlyphTextRenderer();
+        // GlyphBitmapRenderer r = new GlyphBitmapRenderer();
         GlyphShapeRenderer r = new GlyphShapeRenderer();
         r.setPreferredSize(new Dimension(90, 90));
         list.setCellRenderer(r);
@@ -126,11 +131,11 @@ public class BrowserController extends Controller {
 
         browserPanel.setListComponent(list);
 
-//        EventList<String> rangesNonUnique = new GlyphToRangeList(filterList);
-//        UniqueList<String> rangesEventList = new UniqueList<String>(
-//                rangesNonUnique);
-//        browserPanel.getRangeCombo().setModel(
-//                new DefaultEventComboBoxModel<String>(rangesEventList));
+        // EventList<String> rangesNonUnique = new GlyphToRangeList(filterList);
+        // UniqueList<String> rangesEventList = new UniqueList<String>(
+        // rangesNonUnique);
+        // browserPanel.getRangeCombo().setModel(
+        // new DefaultEventComboBoxModel<String>(rangesEventList));
 
         // EventList<List<String>> classesNonUnique = new
         // GlyphToClassList(filterList);
@@ -141,20 +146,21 @@ public class BrowserController extends Controller {
         // browserPanel.getRangeCombo().setModel(rangeComboModel);
 
         dataSourceList = config.getDataSources();
-        browserPanel.getPathCombo().setModel(dataSourceList);
+        browserPanel.getDataSourceCombo().setModel(dataSourceList);
 
-//        browserPanel.getRangeCombo().setAction(new FilterAction());
-//        browserPanel.getClassCombo().setAction(new FilterAction());
+        // browserPanel.getRangeCombo().setAction(new FilterAction());
+        // browserPanel.getClassCombo().setAction(new FilterAction());
         browserPanel.getViewCombo().setAction(new ChangeViewAction());
-        browserPanel.getBtnLoad().setAction(new LoadDataAction());
 
-        transferAction = new AddToUserCollectionAction();
+        browserPanel.getBtnConfigure().setAction(new ConfigureAction());
+
+        copyAction = new AddToUserCollectionAction();
         insertAction = new InsertXmlAction();
 
-        transferAction.setEnabled(false);
+        copyAction.setEnabled(false);
         insertAction.setEnabled(false);
 
-        browserPanel.getBtnAdd().setAction(transferAction);
+        browserPanel.getBtnAdd().setAction(copyAction);
         browserPanel.getBtnInsert().setAction(insertAction);
 
         loader = new GlyphDefinitionLoader();
@@ -199,57 +205,57 @@ public class BrowserController extends Controller {
 
     }
 
-//    private class GlyphToRangeList extends
-//            TransformedList<GlyphDefinition, String> {
-//
-//        public GlyphToRangeList(EventList<GlyphDefinition> source) {
-//            super(source);
-//            source.addListEventListener(this);
-//        }
-//
-//        public String get(int index) {
-//            return source.get(index).getRange();
-//        }
-//
-//        /**
-//         * When the source issues list changes, propogate the exact same changes
-//         * for the users list.
-//         */
-//        public void listChanged(ListEvent<GlyphDefinition> listChanges) {
-//            updates.forwardEvent(listChanges);
-//        }
-//
-//        /** {@inheritDoc} */
-//        protected boolean isWritable() {
-//            return false;
-//        }
-//    }
-//
-//    private class GlyphToClassList extends
-//            TransformedList<GlyphDefinition, List<String>> {
-//
-//        public GlyphToClassList(EventList<GlyphDefinition> source) {
-//            super(source);
-//            source.addListEventListener(this);
-//        }
-//
-//        public List<String> get(int index) {
-//            return source.get(index).getClasses();
-//        }
-//
-//        /**
-//         * When the source issues list changes, propogate the exact same changes
-//         * for the users list.
-//         */
-//        public void listChanged(ListEvent<GlyphDefinition> listChanges) {
-//            updates.forwardEvent(listChanges);
-//        }
-//
-//        /** {@inheritDoc} */
-//        protected boolean isWritable() {
-//            return false;
-//        }
-//    }
+    // private class GlyphToRangeList extends
+    // TransformedList<GlyphDefinition, String> {
+    //
+    // public GlyphToRangeList(EventList<GlyphDefinition> source) {
+    // super(source);
+    // source.addListEventListener(this);
+    // }
+    //
+    // public String get(int index) {
+    // return source.get(index).getRange();
+    // }
+    //
+    // /**
+    // * When the source issues list changes, propogate the exact same changes
+    // * for the users list.
+    // */
+    // public void listChanged(ListEvent<GlyphDefinition> listChanges) {
+    // updates.forwardEvent(listChanges);
+    // }
+    //
+    // /** {@inheritDoc} */
+    // protected boolean isWritable() {
+    // return false;
+    // }
+    // }
+    //
+    // private class GlyphToClassList extends
+    // TransformedList<GlyphDefinition, List<String>> {
+    //
+    // public GlyphToClassList(EventList<GlyphDefinition> source) {
+    // super(source);
+    // source.addListEventListener(this);
+    // }
+    //
+    // public List<String> get(int index) {
+    // return source.get(index).getClasses();
+    // }
+    //
+    // /**
+    // * When the source issues list changes, propogate the exact same changes
+    // * for the users list.
+    // */
+    // public void listChanged(ListEvent<GlyphDefinition> listChanges) {
+    // updates.forwardEvent(listChanges);
+    // }
+    //
+    // /** {@inheritDoc} */
+    // protected boolean isWritable() {
+    // return false;
+    // }
+    // }
 
     public class GlyphTextFilterator implements TextFilterator<GlyphDefinition> {
 
@@ -277,14 +283,14 @@ public class BrowserController extends Controller {
         }
     }
 
-//    private class FilterAction extends AbstractAction {
-//        private static final long serialVersionUID = 1L;
-//
-//        @Override
-//        public void actionPerformed(ActionEvent e) {
-//            // newFilter();
-//        }
-//    }
+    // private class FilterAction extends AbstractAction {
+    // private static final long serialVersionUID = 1L;
+    //
+    // @Override
+    // public void actionPerformed(ActionEvent e) {
+    // // newFilter();
+    // }
+    // }
 
     public class ChangeViewAction extends AbstractAction {
         private static final long serialVersionUID = 1L;
@@ -295,7 +301,7 @@ public class BrowserController extends Controller {
             if (activeListIndex != comboIndex) {
                 if (comboIndex == 1) {
                     // NB get the old component's top row before the component
-                    // is replaced!
+                    // is replaced!n
                     int row = list.getTopVisibleRow();
                     browserPanel.setListComponent(table);
                     browserPanel.getInfoLabel().setVisible(false);
@@ -315,16 +321,20 @@ public class BrowserController extends Controller {
         }
     }
 
-    private class LoadDataAction extends AbstractAction {
+    private class ConfigureAction extends AbstractAction {
         private static final long serialVersionUID = 1L;
 
-        private LoadDataAction() {
-            super("Load");
+        private ConfigureAction() {
+            super("Configure");
+            setEnabled(false);
         }
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            loadData();
+
+            // TODO
+
+            // loadData();
         }
     }
 
@@ -348,7 +358,7 @@ public class BrowserController extends Controller {
         private static final long serialVersionUID = 1L;
 
         private AddToUserCollectionAction() {
-            super("Transfer to User Collection");
+            super("Copy to User Collection");
             putValue(SHORT_DESCRIPTION,
                     "Add the selected glyph to the user collection.");
             putValue(MNEMONIC_KEY, Integer.valueOf(KeyEvent.VK_A));
@@ -360,7 +370,7 @@ public class BrowserController extends Controller {
             if (row != -1) {
                 GlyphDefinition selectedModel = filterList.get(row);
                 if (selectedModel != null) {
-                    fireEvent("transferToUserCollection", selectedModel);
+                    fireEvent("copyToUserCollection", selectedModel);
                 }
             }
         }
@@ -387,23 +397,58 @@ public class BrowserController extends Controller {
                             model.getCodePoint() + ": " + model.getCharName());
                 }
 
-                transferAction.setEnabled(enableButtons);
+                copyAction.setEnabled(enableButtons);
                 insertAction.setEnabled(enableButtons);
             }
         }
     }
 
+    public class PreviousFocusHandler extends AbstractAction {
+        private static final long serialVersionUID = 1L;
+
+        public void actionPerformed(ActionEvent evt) {
+            KeyboardFocusManager manager = KeyboardFocusManager
+                    .getCurrentKeyboardFocusManager();
+            manager.focusPreviousComponent();
+        }
+    }
+
+    private class NextFocusHandler extends AbstractAction {
+        private static final long serialVersionUID = 1L;
+
+        public void actionPerformed(ActionEvent evt) {
+            KeyboardFocusManager manager = KeyboardFocusManager
+                    .getCurrentKeyboardFocusManager();
+            manager.focusNextComponent();
+        }
+    }
+
     private void setListeners() {
 
-//        // TODO change to document listener
-//        browserPanel.getPathCombo().getEditor().getEditorComponent()
-//                .addKeyListener(new KeyAdapter() {
-//                    public void keyReleased(KeyEvent e) {
-//                        if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-//                            loadData();
-//                        }
-//                    }
-//                });
+        browserPanel.getDataSourceCombo().addActionListener(
+                new AbstractAction() {
+
+                    private static final long serialVersionUID = 1L;
+
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        if (e.getModifiers() == AWTEvent.MOUSE_EVENT_MASK) {
+                            loadData();
+                        }
+                    }
+                });
+
+        browserPanel.getDataSourceCombo().addKeyListener(new KeyAdapter() {
+            public void keyReleased(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    loadData();
+                }
+            }
+        });
+
+        ActionMap am = table.getActionMap();
+        am.put("selectPreviousColumnCell", new PreviousFocusHandler());
+        am.put("selectNextColumnCell", new NextFocusHandler());
 
         table.addMouseListener(new MouseAdapter() {
             @Override
@@ -438,92 +483,94 @@ public class BrowserController extends Controller {
 
     }
 
-//    private void newFilter() {
-//
-//        // final String rangeValue = browserPanel.getRangeCombo()
-//        // .getSelectedItem().toString();
-//        final String classValue = browserPanel.getClassCombo()
-//                .getSelectedItem().toString();
-//
-//        // RowFilter<SharedListModel, Integer> rangeFilter = new
-//        // RowFilter<SharedListModel, Integer>() {
-//        // public boolean include(
-//        // Entry<? extends SharedListModel, ? extends Integer> entry) {
-//        // GlyphDefinition model = (GlyphDefinition) entry.getValue(0);
-//        // String entryRange = model.getRange();
-//        // if (entryRange != null && entryRange.startsWith(rangeValue)) {
-//        // return true;
-//        // }
-//        // return false;
-//        // }
-//        // };
-//
-////        RowFilter<SharedListModel, Integer> classFilter = new RowFilter<SharedListModel, Integer>() {
-////            public boolean include(
-////                    Entry<? extends SharedListModel, ? extends Integer> entry) {
-////                GlyphDefinition model = (GlyphDefinition) entry.getValue(0);
-////                List<String> entryClasses = model.getClasses();
-////                for (String entryClass : entryClasses) {
-////                    if (entryClass.startsWith(classValue)) {
-////                        return true;
-////                    }
-////                }
-////                return false;
-////            }
-////        };
-//
-//        // if (!rangeValue.equals("") && !classValue.equals("")) {
-//        // List<RowFilter<SharedListModel, Integer>> filters = new
-//        // ArrayList<RowFilter<SharedListModel, Integer>>();
-//        // filters.add(classFilter);
-//        // filters.add(rangeFilter);
-//        // sorter.setRowFilter(RowFilter.andFilter(filters));
-//        // } else if (!rangeValue.equals("")) {
-//        // sorter.setRowFilter(rangeFilter);
-//        // } else
-//        // if (!classValue.equals("")) {
-//        // sorter.setRowFilter(classFilter);
-//        // } else {
-//        // sorter.setRowFilter(null);
-//        // }
-//
-//    }
+    // private void newFilter() {
+    //
+    // // final String rangeValue = browserPanel.getRangeCombo()
+    // // .getSelectedItem().toString();
+    // final String classValue = browserPanel.getClassCombo()
+    // .getSelectedItem().toString();
+    //
+    // // RowFilter<SharedListModel, Integer> rangeFilter = new
+    // // RowFilter<SharedListModel, Integer>() {
+    // // public boolean include(
+    // // Entry<? extends SharedListModel, ? extends Integer> entry) {
+    // // GlyphDefinition model = (GlyphDefinition) entry.getValue(0);
+    // // String entryRange = model.getRange();
+    // // if (entryRange != null && entryRange.startsWith(rangeValue)) {
+    // // return true;
+    // // }
+    // // return false;
+    // // }
+    // // };
+    //
+    // // RowFilter<SharedListModel, Integer> classFilter = new
+    // RowFilter<SharedListModel, Integer>() {
+    // // public boolean include(
+    // // Entry<? extends SharedListModel, ? extends Integer> entry) {
+    // // GlyphDefinition model = (GlyphDefinition) entry.getValue(0);
+    // // List<String> entryClasses = model.getClasses();
+    // // for (String entryClass : entryClasses) {
+    // // if (entryClass.startsWith(classValue)) {
+    // // return true;
+    // // }
+    // // }
+    // // return false;
+    // // }
+    // // };
+    //
+    // // if (!rangeValue.equals("") && !classValue.equals("")) {
+    // // List<RowFilter<SharedListModel, Integer>> filters = new
+    // // ArrayList<RowFilter<SharedListModel, Integer>>();
+    // // filters.add(classFilter);
+    // // filters.add(rangeFilter);
+    // // sorter.setRowFilter(RowFilter.andFilter(filters));
+    // // } else if (!rangeValue.equals("")) {
+    // // sorter.setRowFilter(rangeFilter);
+    // // } else
+    // // if (!classValue.equals("")) {
+    // // sorter.setRowFilter(classFilter);
+    // // } else {
+    // // sorter.setRowFilter(null);
+    // // }
+    //
+    // }
 
-//    @SuppressWarnings("unchecked")
-//    private void updateCombo(AutoCompletionComboBox combo, List<String> data) {
-//        Collections.sort(data);
-//        data.add(0, "");
-//        String[] dataArray = data.toArray(new String[data.size()]);
-//        combo.setModel(new DefaultComboBoxModel<String>(dataArray));
-//    }
+    // @SuppressWarnings("unchecked")
+    // private void updateCombo(AutoCompletionComboBox combo, List<String> data)
+    // {
+    // Collections.sort(data);
+    // data.add(0, "");
+    // String[] dataArray = data.toArray(new String[data.size()]);
+    // combo.setModel(new DefaultComboBoxModel<String>(dataArray));
+    // }
 
     @Override
     public void loadData() {
 
-        final String path;
-        
-        int index = browserPanel.getPathCombo().getSelectedIndex();
-        
-        System.out.println(index);
+        int index = browserPanel.getDataSourceCombo().getSelectedIndex();
+
         if (index == -1) {
             index = 0;
         }
-        
-        DataSource ds = dataSourceList.getDataSourceAt(index);
-        
-        path = (ds != null) ? ds.getPath() : "";
+
+        final DataSource ds = dataSourceList.getDataSourceAt(index);
+
+        if (ds == null) {
+            LOGGER.info("Not loading data, because no data source has been found.");
+            return;
+        }
 
         if (isLoading) {
             LOGGER.info("Skipping data loading.");
             return;
         }
         isLoading = true;
-        // mainPanel.getLoadingMask().start();
+        browserPanel.getOverlayable().setOverlayVisible(true);
 
         SwingWorker<List<GlyphDefinition>, Void> worker = new SwingWorker<List<GlyphDefinition>, Void>() {
             @Override
             public List<GlyphDefinition> doInBackground() {
-                return loader.loadData(path);
+                return loader.loadData(ds);
             }
 
             @Override
@@ -536,20 +583,21 @@ public class BrowserController extends Controller {
                     // first item in the pathComboModel
                     if (data != null) {
                         glyphList.addAll(data);
-                        
-                        int index = browserPanel.getPathCombo().getSelectedIndex();
+
+                        int index = browserPanel.getDataSourceCombo()
+                                .getSelectedIndex();
                         if (index != -1) {
                             dataSourceList.setFirstIndex(index);
                         }
-                        
+
                     }
-                    // mainPanel.getLoadingMask().stop();
                 } catch (InterruptedException e) {
                     LOGGER.error(e);
                 } catch (ExecutionException e) {
                     LOGGER.error(e);
                 } finally {
                     isLoading = false;
+                    browserPanel.getOverlayable().setOverlayVisible(false);
                 }
             }
         };

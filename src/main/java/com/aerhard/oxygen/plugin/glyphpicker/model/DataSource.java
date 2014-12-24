@@ -8,11 +8,11 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "dataSource")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class DataSource {
-    
+
     public static final String DISPLAY_MODE_VECTOR_PROPORTIONAL = "proportional";
     public static final String DISPLAY_MODE_VECTOR_FIT = "fit";
     public static final String DISPLAY_MODE_BITMAP = "bitmap";
-    
+
     @XmlElement(name = "label")
     private String label;
     @XmlElement(name = "path")
@@ -24,12 +24,10 @@ public class DataSource {
     @XmlElement(name = "template")
     private String template;
 
+    public DataSource() {
 
-    public DataSource () {
-        
     }
-    
-    
+
     /**
      * @return the label
      */
@@ -38,12 +36,13 @@ public class DataSource {
     }
 
     /**
-     * @param label the label to set
+     * @param label
+     *            the label to set
      */
     public void setLabel(String label) {
         this.label = label;
     }
-    
+
     /**
      * @return the displayMode
      */
@@ -52,7 +51,8 @@ public class DataSource {
     }
 
     /**
-     * @param displayMode the displayMode to set
+     * @param displayMode
+     *            the displayMode to set
      */
     public void setDisplayMode(String displayMode) {
         this.displayMode = displayMode;
@@ -73,7 +73,6 @@ public class DataSource {
     public void setPath(String path) {
         this.path = path;
     }
-    
 
     /**
      * @return the template
@@ -83,7 +82,8 @@ public class DataSource {
     }
 
     /**
-     * @param template the template to set
+     * @param template
+     *            the template to set
      */
     public void setTemplate(String template) {
         this.template = template;

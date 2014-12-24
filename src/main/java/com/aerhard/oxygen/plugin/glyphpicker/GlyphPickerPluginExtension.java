@@ -93,10 +93,9 @@ public class GlyphPickerPluginExtension implements
 
     }
 
-    private String formatModel(GlyphDefinition model, Boolean setNs) {
+    private String getXmlString(GlyphDefinition model, Boolean setNs) {
         String ns = (setNs) ? " xmlns=\"http://www.tei-c.org/ns/1.0\"" : "";
-        return "<g" + ns + " ref=\"" + model.getBaseUrl() + "#" + model.getId()
-                + "\"/>";
+        return "<g" + ns + " ref=\"" + model.getRefString() + "\"/>";
     }
 
     private void insertFragment(StandalonePluginWorkspace workspace,
@@ -113,7 +112,7 @@ public class GlyphPickerPluginExtension implements
             page.deleteSelection();
             try {
                 page.getDocument().insertString(selectionOffset,
-                        formatModel(model, false),
+                        getXmlString(model, false),
                         javax.swing.text.SimpleAttributeSet.EMPTY);
             } catch (BadLocationException e) {
                 LOGGER.error(e);
@@ -135,8 +134,8 @@ public class GlyphPickerPluginExtension implements
                 }
 
                 authorAccess.getDocumentController()
-                        .insertXMLFragmentSchemaAware(formatModel(model, true),
-                                offset);
+                        .insertXMLFragmentSchemaAware(
+                                getXmlString(model, true), offset);
 
                 int endOffset = endOffsetPos != null ? endOffsetPos.getOffset() - 1
                         : offset;

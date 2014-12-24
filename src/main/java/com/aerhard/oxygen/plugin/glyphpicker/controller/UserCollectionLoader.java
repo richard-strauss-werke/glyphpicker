@@ -14,8 +14,8 @@ import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinitions;
 
 public class UserCollectionLoader {
 
-    private static final Logger LOGGER = Logger.getLogger(UserCollectionLoader.class
-            .getName());
+    private static final Logger LOGGER = Logger
+            .getLogger(UserCollectionLoader.class.getName());
 
     private String pathName;
     private String fileName;

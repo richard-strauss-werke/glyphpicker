@@ -20,7 +20,7 @@ import java.awt.geom.AffineTransform;
 import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinition;
 
 public class GlyphShapeRenderer extends JLabel implements TableCellRenderer,
-ListCellRenderer<Object>{
+        ListCellRenderer<Object> {
 
     private static final long serialVersionUID = 1L;
 
@@ -64,7 +64,7 @@ ListCellRenderer<Object>{
     @Override
     public Component getListCellRendererComponent(JList<?> list, Object value,
             int index, boolean isSelected, boolean cellHasFocus) {
-        
+
         if (value == null) {
             ch = null;
         } else {
@@ -80,7 +80,7 @@ ListCellRenderer<Object>{
         setOpaque(true);
         return this;
     }
-    
+
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -96,8 +96,8 @@ ListCellRenderer<Object>{
     private void drawGlyph(Graphics2D g2, String text, String fontName,
             int padding) {
 
-//        frc = g2.getFontRenderContext();
-        
+        // frc = g2.getFontRenderContext();
+
         float w = getWidth() - (2 * padding);
         float h = getHeight() - (2 * padding);
 
@@ -105,7 +105,7 @@ ListCellRenderer<Object>{
 
         Font font = new Font(fontName, Font.PLAIN, fontSize);
         GlyphVector gv = font.createGlyphVector(frc, text);
-//        Rectangle visualBounds = gv.getVisualBounds().getBounds();
+        // Rectangle visualBounds = gv.getVisualBounds().getBounds();
         Rectangle visualBounds = gv.getPixelBounds(frc, 0, 0);
 
         float scaleFactor = Math.min(w / visualBounds.width, h
@@ -131,6 +131,4 @@ ListCellRenderer<Object>{
 
     }
 
-
-    
 }

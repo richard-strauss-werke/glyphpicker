@@ -50,7 +50,8 @@ public class ConfigLoader {
     public void load() {
         File file = new File(pathName + "/" + fileName);
         if (!file.exists()) {
-            file = new File(UserCollectionLoader.class.getResource("/defaultconfig.xml").getFile());
+            file = new File(UserCollectionLoader.class.getResource(
+                    "/config.xml").getFile());
         }
         config = null;
         try {
@@ -63,16 +64,15 @@ public class ConfigLoader {
             LOGGER.error("Could not unmarshal config file.");
         } else {
             DataSourceList dataSourceList = config.getDataSources();
-            
+
             if (dataSourceList == null) {
                 LOGGER.error("No data source list found in config.");
             }
-            
+
             dataSourceList.init();
         }
-        
-    }
 
+    }
 
     public Config getConfig() {
         return config;

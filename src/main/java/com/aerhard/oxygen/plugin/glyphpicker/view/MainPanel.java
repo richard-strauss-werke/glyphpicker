@@ -1,5 +1,7 @@
 package com.aerhard.oxygen.plugin.glyphpicker.view;
 
+import com.jidesoft.swing.InfiniteProgressPanel;
+
 import java.awt.BorderLayout;
 
 import javax.swing.JComponent;
@@ -22,7 +24,7 @@ public class MainPanel extends JPanel {
         tabbedPane.setBorder(new EmptyBorder(8, 8, 8, 8));
 
         tabbedPane.addTab(null, null, userCollectionPanel, null);
-        tabbedPane.setTabComponentAt(0, new HighlightLabel("Collection"));
+        tabbedPane.setTabComponentAt(0, new HighlightLabel("User Collection"));
 
         tabbedPane.addTab(null, null, browserPanel, null);
         tabbedPane.setTabComponentAt(1, new HighlightLabel("Data Sources"));

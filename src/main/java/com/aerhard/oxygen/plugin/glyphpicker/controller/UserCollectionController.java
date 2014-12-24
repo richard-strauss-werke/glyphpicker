@@ -35,9 +35,8 @@ public class UserCollectionController extends Controller {
     private BasicEventList<GlyphDefinition> userCollectionModel;
     private JList<GlyphDefinition> userCollection;
     protected boolean listInSync = true;
-    
-    private int activeListIndex;
 
+    private int activeListIndex;
 
     @SuppressWarnings("unchecked")
     public UserCollectionController(StandalonePluginWorkspace workspace,
@@ -48,7 +47,7 @@ public class UserCollectionController extends Controller {
         userCollectionModel = new BasicEventList<GlyphDefinition>();
 
         userCollection = userCollectionPanel.getUserCollection();
-        
+
         userCollection.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         GlyphShapeRenderer r = new GlyphShapeRenderer();
         r.setPreferredSize(new Dimension(90, 90));
@@ -56,10 +55,7 @@ public class UserCollectionController extends Controller {
 
         userCollection.setModel(new DefaultEventListModel<GlyphDefinition>(
                 userCollectionModel));
-        
-        
-        
-        
+
         userCollectionPanel.getViewCombo().setAction(new ChangeViewAction());
 
         userCollectionLoader = new UserCollectionLoader(workspace, properties);
@@ -75,7 +71,7 @@ public class UserCollectionController extends Controller {
     private void removeItemFromUserCollection() {
         int index = userCollection.getSelectedIndex();
         if (index != -1) {
-            listInSync=false;
+            listInSync = false;
             userCollectionModel.remove(index);
             index = Math.min(index, userCollectionModel.size() - 1);
             if (index >= 0) {
@@ -91,7 +87,6 @@ public class UserCollectionController extends Controller {
         }
     }
 
-    
     private class ChangeViewAction extends AbstractAction {
         private static final long serialVersionUID = 1L;
 
@@ -113,8 +108,6 @@ public class UserCollectionController extends Controller {
         }
     }
 
-    
-    
     private void setListeners() {
         JButton btn;
         btn = userCollectionPanel.getBtnRemove();
@@ -167,25 +160,28 @@ public class UserCollectionController extends Controller {
                     public void valueChanged(ListSelectionEvent event) {
                         if (!event.getValueIsAdjusting()) {
                             if (userCollection.getSelectedIndex() == -1) {
-                                userCollectionPanel.enableSelectionButtons(false);
+                                userCollectionPanel
+                                        .enableSelectionButtons(false);
                             } else {
-                                userCollectionPanel.enableSelectionButtons(true);
+                                userCollectionPanel
+                                        .enableSelectionButtons(true);
                             }
                         }
                     }
                 });
 
-        userCollectionModel.addListEventListener(new ListEventListener<GlyphDefinition>() {
-            @Override
-            public void listChanged(ListEvent<GlyphDefinition> e) {
-                if (listInSync) {
-                    userCollectionPanel.enableSaveButtons(false);
-                } else {
-                    userCollectionPanel.enableSaveButtons(true);
-                }
-                
-            }
-        });
+        userCollectionModel
+                .addListEventListener(new ListEventListener<GlyphDefinition>() {
+                    @Override
+                    public void listChanged(ListEvent<GlyphDefinition> e) {
+                        if (listInSync) {
+                            userCollectionPanel.enableSaveButtons(false);
+                        } else {
+                            userCollectionPanel.enableSaveButtons(true);
+                        }
+
+                    }
+                });
 
     }
 
@@ -199,12 +195,13 @@ public class UserCollectionController extends Controller {
 
     @Override
     public void loadData() {
-        SwingUtilities.invokeLater(new Runnable(){
+        SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
                 listInSync = true;
                 userCollectionModel.clear();
-                userCollectionModel.addAll(userCollectionLoader.load().getData());    
+                userCollectionModel.addAll(userCollectionLoader.load()
+                        .getData());
             }
         });
     }
@@ -212,13 +209,13 @@ public class UserCollectionController extends Controller {
     @Override
     public void saveData() {
         userCollectionLoader.save(new GlyphDefinitions(userCollectionModel));
-        listInSync=true;
+        listInSync = true;
     }
 
     @Override
     public void eventOccured(String type, GlyphDefinition model) {
-        if ("transferToUserCollection".equals(type)) {
-            listInSync=false;
+        if ("copyToUserCollection".equals(type)) {
+            listInSync = false;
             userCollectionModel.add(model);
         }
 

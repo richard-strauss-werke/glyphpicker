@@ -13,7 +13,7 @@ import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinition;
 import com.aerhard.oxygen.plugin.glyphpicker.view.GlyphComponent;
 
 public class GlyphBitmapRenderer extends JLabel implements TableCellRenderer,
-ListCellRenderer<Object> {
+        ListCellRenderer<Object> {
 
     private static final long serialVersionUID = 1L;
 
@@ -54,7 +54,7 @@ ListCellRenderer<Object> {
     @Override
     public Component getListCellRendererComponent(JList<?> list, Object value,
             int index, boolean isSelected, boolean cellHasFocus) {
-        
+
         JComponent c;
         if (value == null) {
             c = new GlyphComponent();

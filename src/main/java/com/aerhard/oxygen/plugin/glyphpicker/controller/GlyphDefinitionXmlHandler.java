@@ -7,6 +7,7 @@ import java.util.Stack;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
+import com.aerhard.oxygen.plugin.glyphpicker.model.DataSource;
 import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinition;
 import com.icl.saxon.aelfred.DefaultHandler;
 
@@ -20,13 +21,13 @@ public class GlyphDefinitionXmlHandler extends DefaultHandler {
     private GlyphDefinition currentGlyphDefinition;
 
     private String range = "";
-    private String baseUrl;
+    private DataSource dataSource;
     private List<String> classes;
 
     private StringBuffer textContent = new StringBuffer();
 
-    public GlyphDefinitionXmlHandler(String path) {
-        this.baseUrl = path;
+    public GlyphDefinitionXmlHandler(DataSource dataSource) {
+        this.dataSource = dataSource;
     }
 
     public List<GlyphDefinition> getGlyphDefinitions() {
@@ -36,7 +37,7 @@ public class GlyphDefinitionXmlHandler extends DefaultHandler {
     @Override
     public void startElement(String uri, String localName, String qName,
             Attributes attrs) throws SAXException {
-        
+
         if (inChar) {
 
             if ("charName".equals(qName) || "mapping".equals(qName)
@@ -54,7 +55,7 @@ public class GlyphDefinitionXmlHandler extends DefaultHandler {
             currentGlyphDefinition = new GlyphDefinition();
             currentGlyphDefinition.setId(attrs.getValue("xml:id"));
             currentGlyphDefinition.setRange(range);
-            currentGlyphDefinition.setBaseUrl(baseUrl);
+            currentGlyphDefinition.setDataSource(dataSource);
             classes = new ArrayList<String>();
             inChar = true;
         }
