@@ -2,17 +2,16 @@ package com.aerhard.oxygen.plugin.glyphpicker.controller;
 
 import java.awt.AWTEvent;
 import java.awt.Dimension;
-import java.awt.KeyboardFocusManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import javax.swing.AbstractAction;
-import javax.swing.ActionMap;
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
@@ -25,7 +24,7 @@ import org.apache.log4j.Logger;
 import ca.odell.glazedlists.BasicEventList;
 import ca.odell.glazedlists.EventList;
 import ca.odell.glazedlists.FilterList;
-import ca.odell.glazedlists.TextFilterator;
+import ca.odell.glazedlists.SortedList;
 import ca.odell.glazedlists.gui.TableFormat;
 import ca.odell.glazedlists.matchers.MatcherEditor;
 import ca.odell.glazedlists.swing.DefaultEventListModel;
@@ -40,9 +39,9 @@ import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinition;
 import com.aerhard.oxygen.plugin.glyphpicker.view.BrowserPanel;
 import com.aerhard.oxygen.plugin.glyphpicker.view.GlyphGrid;
 import com.aerhard.oxygen.plugin.glyphpicker.view.GlyphTable;
-import com.aerhard.oxygen.plugin.glyphpicker.view.renderer.GlyphRenderer;
+import com.aerhard.oxygen.plugin.glyphpicker.view.renderer.GlyphRendererAdapter;
 
-// TODO actionlistener on data source combo
+// TODO error messages as events
 
 public class BrowserController extends Controller {
 
@@ -50,8 +49,9 @@ public class BrowserController extends Controller {
             .getLogger(BrowserController.class.getName());
 
     private ListSelectionModel selectionModel;
-
+    
     private EventList<GlyphDefinition> glyphList;
+    private SortedList<GlyphDefinition> sortedList;
     private FilterList<GlyphDefinition> filterList;
 
     private BrowserPanel browserPanel;
@@ -61,7 +61,7 @@ public class BrowserController extends Controller {
     private GlyphDefinitionLoader loader;
     private boolean isLoading = false;
 
-    protected AbstractAction copyAction;
+    protected AbstractAction addAction;
     protected AbstractAction insertAction;
 
     private int activeListIndex;
@@ -105,19 +105,17 @@ public class BrowserController extends Controller {
         // }
         // };
 
-        filterList = new FilterList<GlyphDefinition>(glyphList, filter);
+        sortedList = new SortedList<GlyphDefinition>(glyphList,
+                new GlyphComparator());
+
+        filterList = new FilterList<GlyphDefinition>(sortedList, filter);
 
         list = new GlyphGrid(new DefaultEventListModel<GlyphDefinition>(
                 filterList));
 
-        // GlyphTextRenderer r = new GlyphTextRenderer();
-        // GlyphBitmapRenderer r = new GlyphBitmapRenderer();
-//        GlyphShapeRenderer r = new GlyphShapeRenderer();
-        
-        // TODO use the same renderer for list and table!?
-        GlyphRenderer r = new GlyphRenderer();
-        
+        GlyphRendererAdapter r = new GlyphRendererAdapter(list);
         r.setPreferredSize(new Dimension(90, 90));
+        list.setFixedSize(90);
         list.setCellRenderer(r);
 
         TableFormat<GlyphDefinition> tf = new GlyphTableFormat();
@@ -125,10 +123,7 @@ public class BrowserController extends Controller {
                 filterList, tf);
         table = new GlyphTable(tableListModel);
 
-        // table.setTableIconRenderer(new TableIconBitmapRenderer());
-        // table.setTableIconRenderer(new TableIconFontRenderer());
-//        table.setTableIconRenderer(new GlyphShapeRenderer());
-        table.setTableIconRenderer(new GlyphRenderer());
+        table.setTableIconRenderer(new GlyphRendererAdapter(table));
 
         // sorter = new TableRowSorter<GlyphTableModel>(glyphTableModel);
         // sorter = new TableRowSorter<SharedListModel>(sharedListModel);
@@ -159,13 +154,13 @@ public class BrowserController extends Controller {
 
         browserPanel.getBtnConfigure().setAction(new ConfigureAction());
 
-        copyAction = new AddToUserCollectionAction();
+        addAction = new AddToUserCollectionAction();
         insertAction = new InsertXmlAction();
 
-        copyAction.setEnabled(false);
+        addAction.setEnabled(false);
         insertAction.setEnabled(false);
 
-        browserPanel.getBtnAdd().setAction(copyAction);
+        browserPanel.getBtnAdd().setAction(addAction);
         browserPanel.getBtnInsert().setAction(insertAction);
 
         loader = new GlyphDefinitionLoader();
@@ -182,32 +177,15 @@ public class BrowserController extends Controller {
 
     }
 
-    private class GlyphTableFormat implements TableFormat<GlyphDefinition> {
+    public class GlyphComparator implements Comparator<GlyphDefinition> {
+        public int compare(GlyphDefinition glyphA, GlyphDefinition glyphB) {
 
-        public int getColumnCount() {
-            return 2;
+            String aString = glyphA.getCodePoint();
+            String bString = glyphB.getCodePoint();
+
+            return (aString != null && bString != null) ? aString
+                    .compareToIgnoreCase(bString) : -1;
         }
-
-        public String getColumnName(int column) {
-            if (column == 0)
-                return "Glyph";
-            else if (column == 1)
-                return "Description";
-
-            throw new IllegalStateException();
-        }
-
-        public Object getColumnValue(GlyphDefinition baseObject, int column) {
-            GlyphDefinition issue = baseObject;
-
-            if (column == 0)
-                return issue;
-            else if (column == 1)
-                return issue;
-
-            throw new IllegalStateException();
-        }
-
     }
 
     // private class GlyphToRangeList extends
@@ -261,18 +239,6 @@ public class BrowserController extends Controller {
     // return false;
     // }
     // }
-
-    public class GlyphTextFilterator implements TextFilterator<GlyphDefinition> {
-
-        @Override
-        public void getFilterStrings(List<String> baseList,
-                GlyphDefinition element) {
-            baseList.add(element.getId());
-            baseList.add(element.getRange());
-            baseList.add(element.getCharName());
-            baseList.add(element.getCodePoint());
-        }
-    }
 
     public BrowserPanel getPanel() {
         return browserPanel;
@@ -399,32 +365,12 @@ public class BrowserController extends Controller {
                     browserPanel.getInfoLabel().setText(null);
                 } else {
                     browserPanel.getInfoLabel().setText(
-                            model.getCodePoint() + ": " + model.getCharName());
+                            model.getCodePoint() + ": " + model.getCharName().replaceAll("\\s\\s+", " "));
                 }
 
-                copyAction.setEnabled(enableButtons);
+                addAction.setEnabled(enableButtons);
                 insertAction.setEnabled(enableButtons);
             }
-        }
-    }
-
-    public class PreviousFocusHandler extends AbstractAction {
-        private static final long serialVersionUID = 1L;
-
-        public void actionPerformed(ActionEvent evt) {
-            KeyboardFocusManager manager = KeyboardFocusManager
-                    .getCurrentKeyboardFocusManager();
-            manager.focusPreviousComponent();
-        }
-    }
-
-    private class NextFocusHandler extends AbstractAction {
-        private static final long serialVersionUID = 1L;
-
-        public void actionPerformed(ActionEvent evt) {
-            KeyboardFocusManager manager = KeyboardFocusManager
-                    .getCurrentKeyboardFocusManager();
-            manager.focusNextComponent();
         }
     }
 
@@ -450,10 +396,6 @@ public class BrowserController extends Controller {
                 }
             }
         });
-
-        ActionMap am = table.getActionMap();
-        am.put("selectPreviousColumnCell", new PreviousFocusHandler());
-        am.put("selectNextColumnCell", new NextFocusHandler());
 
         table.addMouseListener(new MouseAdapter() {
             @Override

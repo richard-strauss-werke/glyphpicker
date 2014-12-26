@@ -1,6 +1,5 @@
 package com.aerhard.oxygen.plugin.glyphpicker.view;
 
-import com.jidesoft.swing.InfiniteProgressPanel;
 
 import java.awt.BorderLayout;
 

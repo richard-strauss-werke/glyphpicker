@@ -8,16 +8,12 @@ import java.awt.Insets;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.ListSelectionModel;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.MatteBorder;
 
-import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinition;
-import com.aerhard.oxygen.plugin.glyphpicker.view.renderer.ListItemRenderer;
 import java.awt.Component;
 import javax.swing.Box;
 

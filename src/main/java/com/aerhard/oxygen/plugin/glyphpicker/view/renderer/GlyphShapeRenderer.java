@@ -1,11 +1,11 @@
 package com.aerhard.oxygen.plugin.glyphpicker.view.renderer;
 
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JTable;
-import javax.swing.ListCellRenderer;
-import javax.swing.table.TableCellRenderer;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -21,13 +21,17 @@ import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinition;
 
 // TODO add error message if the font is not present
 
-public class GlyphShapeRenderer extends JLabel implements TableCellRenderer,
-        ListCellRenderer<Object> {
+public class GlyphShapeRenderer extends JLabel implements GlyphRenderer {
 
     private static final long serialVersionUID = 1L;
 
     private String fontName = null;
     private int padding = 12;
+
+    private Color containerSelectionBackground;
+    private Color containerSelectionForeground;
+    private Color containerBackground;
+    private Color containerForeground;
 
     public void setPadding(int padding) {
         this.padding = padding;
@@ -37,53 +41,34 @@ public class GlyphShapeRenderer extends JLabel implements TableCellRenderer,
 
     private String ch = null;
 
-    public GlyphShapeRenderer() {
+    public GlyphShapeRenderer(JComponent container) {
         frc = new FontRenderContext(null, true, true);
         setVerticalAlignment(CENTER);
         setHorizontalAlignment(CENTER);
         setText(null);
+        if (container instanceof JList) {
+            containerSelectionBackground = ((JList<?>) container).getSelectionBackground();
+            containerSelectionForeground= ((JList<?>) container).getSelectionForeground();
+        }
+        if (container instanceof JTable) {
+            containerSelectionBackground = ((JTable) container).getSelectionBackground();
+            containerSelectionForeground= ((JTable) container).getSelectionForeground();
+        }
+        containerBackground = container.getBackground();
+        containerForeground = container.getForeground();
     }
 
-    @Override
-    public Component getTableCellRendererComponent(JTable table, Object value,
-            boolean isSelected, boolean hasFocus, int row, int column) {
-        if (value == null) {
-            ch = null;
-            fontName = null;
-        } else {
-            GlyphDefinition gd = ((GlyphDefinition) value); 
-            ch = gd.getCharString();
-            fontName = gd.getDataSource().getFontName();
-        }
-        if (isSelected) {
-            setBackground(table.getSelectionBackground());
-            setForeground(table.getSelectionForeground());
-        } else {
-            setBackground(table.getBackground());
-            setForeground(table.getForeground());
-        }
-        setOpaque(true);
-        return this;
-    }
+    public Component getRendererComponent(GlyphDefinition gd, boolean isSelected) {
 
-    @Override
-    public Component getListCellRendererComponent(JList<?> list, Object value,
-            int index, boolean isSelected, boolean cellHasFocus) {
+        ch = gd.getCharString();
+        fontName = gd.getDataSource().getFontName();
 
-        if (value == null) {
-            ch = null;
-            fontName = null;
-        } else {
-            GlyphDefinition gd = ((GlyphDefinition) value); 
-            ch = gd.getCharString();
-            fontName = gd.getDataSource().getFontName();
-        }
         if (isSelected) {
-            setBackground(list.getSelectionBackground());
-            setForeground(list.getSelectionForeground());
+            setBackground(containerSelectionBackground);
+            setForeground(containerSelectionForeground);
         } else {
-            setBackground(list.getBackground());
-            setForeground(list.getForeground());
+            setBackground(containerBackground);
+            setForeground(containerForeground);
         }
         setOpaque(true);
         return this;
@@ -93,11 +78,11 @@ public class GlyphShapeRenderer extends JLabel implements TableCellRenderer,
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         if (ch != null && fontName != null) {
-                Graphics2D g2 = (Graphics2D) g;
-                                g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-                        RenderingHints.VALUE_ANTIALIAS_ON);
-                drawGlyph(g2, ch, fontName, padding);
-                g2.dispose();                
+            Graphics2D g2 = (Graphics2D) g;
+            g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+                    RenderingHints.VALUE_ANTIALIAS_ON);
+            drawGlyph(g2, ch, fontName, padding);
+            g2.dispose();
         }
     }
 

@@ -155,7 +155,7 @@ public class BrowserPanel extends JPanel {
         JPanel tablePanel = new JPanel();
         add(tablePanel, BorderLayout.CENTER);
         tablePanel.setBorder(new EmptyBorder(11, 8, 7, 8));
-        tablePanel.setLayout(new BorderLayout(0, 12));
+        tablePanel.setLayout(new BorderLayout(0, 6));
 
         jPane = new JScrollPane();
         // jPane.setLayout(new GridLayout(1,1));

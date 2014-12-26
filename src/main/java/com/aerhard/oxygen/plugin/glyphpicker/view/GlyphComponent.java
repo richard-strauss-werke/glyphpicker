@@ -53,8 +53,8 @@ public class GlyphComponent extends JLabel {
 
     private JComponent container = null;
 
-    public void setContainer(JComponent table) {
-        this.container = table;
+    public void setContainer(JComponent container) {
+        this.container = container;
     }
 
     private class IconLoader extends SwingWorker<GlyphIcon, Void> {

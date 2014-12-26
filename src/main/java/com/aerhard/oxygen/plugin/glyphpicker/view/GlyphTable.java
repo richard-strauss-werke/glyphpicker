@@ -1,11 +1,15 @@
 package com.aerhard.oxygen.plugin.glyphpicker.view;
 
 import java.awt.Dimension;
+import java.awt.KeyboardFocusManager;
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.swing.JTable;
 import javax.swing.JViewport;
+import javax.swing.KeyStroke;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableModel;
@@ -30,6 +34,15 @@ public class GlyphTable extends JTable {
 
         setModel(sharedListModel);
 
+        Set forward = new HashSet(
+                getFocusTraversalKeys(KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS));
+        forward.add(KeyStroke.getKeyStroke("TAB"));
+        setFocusTraversalKeys(KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS, forward);
+        Set backward = new HashSet(
+                getFocusTraversalKeys(KeyboardFocusManager.BACKWARD_TRAVERSAL_KEYS));
+        backward.add(KeyStroke.getKeyStroke("shift TAB"));
+        setFocusTraversalKeys(KeyboardFocusManager.BACKWARD_TRAVERSAL_KEYS, backward);
+        
         getColumnModel().getColumn(0).setPreferredWidth(70);
         getColumnModel().getColumn(0).setMinWidth(30);
         getColumnModel().getColumn(1).setPreferredWidth(600);

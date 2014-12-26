@@ -24,8 +24,9 @@ import ca.odell.glazedlists.swing.DefaultEventListModel;
 
 import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinition;
 import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinitions;
+import com.aerhard.oxygen.plugin.glyphpicker.view.GlyphGrid;
 import com.aerhard.oxygen.plugin.glyphpicker.view.UserCollectionPanel;
-import com.aerhard.oxygen.plugin.glyphpicker.view.renderer.GlyphShapeRenderer;
+import com.aerhard.oxygen.plugin.glyphpicker.view.renderer.GlyphRendererAdapter;
 import com.aerhard.oxygen.plugin.glyphpicker.view.renderer.ListItemRenderer;
 
 public class UserCollectionController extends Controller {
@@ -33,7 +34,7 @@ public class UserCollectionController extends Controller {
     private UserCollectionPanel userCollectionPanel;
     private UserCollectionLoader userCollectionLoader;
     private BasicEventList<GlyphDefinition> userCollectionModel;
-    private JList<GlyphDefinition> userCollection;
+    private GlyphGrid list;
     protected boolean listInSync = true;
 
     private int activeListIndex;
@@ -46,14 +47,17 @@ public class UserCollectionController extends Controller {
 
         userCollectionModel = new BasicEventList<GlyphDefinition>();
 
-        userCollection = userCollectionPanel.getUserCollection();
+        list = userCollectionPanel.getUserCollection();
 
-        userCollection.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        GlyphShapeRenderer r = new GlyphShapeRenderer();
+        list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        
+        GlyphRendererAdapter r = new GlyphRendererAdapter(list);
         r.setPreferredSize(new Dimension(90, 90));
-        userCollection.setCellRenderer(r);
-
-        userCollection.setModel(new DefaultEventListModel<GlyphDefinition>(
+        list.setFixedSize(90);
+        list.setCellRenderer(r);
+        
+        
+        list.setModel(new DefaultEventListModel<GlyphDefinition>(
                 userCollectionModel));
 
         userCollectionPanel.getViewCombo().setAction(new ChangeViewAction());
@@ -69,19 +73,19 @@ public class UserCollectionController extends Controller {
     }
 
     private void removeItemFromUserCollection() {
-        int index = userCollection.getSelectedIndex();
+        int index = list.getSelectedIndex();
         if (index != -1) {
             listInSync = false;
             userCollectionModel.remove(index);
             index = Math.min(index, userCollectionModel.size() - 1);
             if (index >= 0) {
-                userCollection.setSelectedIndex(index);
+                list.setSelectedIndex(index);
             }
         }
     }
 
     private void insertGlyphFromUser() {
-        int index = userCollection.getSelectedIndex();
+        int index = list.getSelectedIndex();
         if (index != -1) {
             fireEvent("insert", getListModel().get(index));
         }
@@ -95,13 +99,19 @@ public class UserCollectionController extends Controller {
             int comboIndex = ((JComboBox<?>) e.getSource()).getSelectedIndex();
             if (activeListIndex != comboIndex) {
                 if (comboIndex == 1) {
-                    userCollection.setCellRenderer(new ListItemRenderer());
-                    userCollection.setLayoutOrientation(JList.VERTICAL);
+                    
+                    // TODO make user list view work with glyphrenderer!
+                    
+//                    list.setCellRenderer(new GlyphRenderer());
+                    list.setCellRenderer(new ListItemRenderer());
+                    
+                    list.setLayoutOrientation(JList.VERTICAL);
                 } else {
-                    GlyphShapeRenderer r = new GlyphShapeRenderer();
+                    GlyphRendererAdapter r = new GlyphRendererAdapter(list);
                     r.setPreferredSize(new Dimension(90, 90));
-                    userCollection.setCellRenderer(r);
-                    userCollection.setLayoutOrientation(JList.HORIZONTAL_WRAP);
+                    list.setFixedSize(90);
+                    list.setCellRenderer(r);
+                    list.setLayoutOrientation(JList.HORIZONTAL_WRAP);
                 }
                 activeListIndex = comboIndex;
             }
@@ -144,7 +154,7 @@ public class UserCollectionController extends Controller {
             }
         });
 
-        userCollection.addMouseListener(new MouseAdapter() {
+        list.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (e.getClickCount() == 2) {
@@ -154,12 +164,12 @@ public class UserCollectionController extends Controller {
             }
         });
 
-        userCollection.getSelectionModel().addListSelectionListener(
+        list.getSelectionModel().addListSelectionListener(
                 new ListSelectionListener() {
                     @Override
                     public void valueChanged(ListSelectionEvent event) {
                         if (!event.getValueIsAdjusting()) {
-                            if (userCollection.getSelectedIndex() == -1) {
+                            if (list.getSelectedIndex() == -1) {
                                 userCollectionPanel
                                         .enableSelectionButtons(false);
                             } else {

@@ -4,83 +4,67 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JTable;
-import javax.swing.ListCellRenderer;
-import javax.swing.table.TableCellRenderer;
 
+import java.awt.Color;
 import java.awt.Component;
 
 import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinition;
 import com.aerhard.oxygen.plugin.glyphpicker.view.GlyphComponent;
 
-public class GlyphBitmapRenderer extends JLabel implements TableCellRenderer,
-        ListCellRenderer<Object> {
+public class GlyphBitmapRenderer extends JLabel implements GlyphRenderer {
 
     private static final long serialVersionUID = 1L;
 
-    public GlyphBitmapRenderer() {
-    }
+    private Color containerSelectionBackground;
+    private Color containerSelectionForeground;
+    private Color containerBackground;
+    private Color containerForeground;
 
-    public Component getTableCellRendererComponent(JTable table, Object value,
-            boolean isSelected, boolean hasFocus, int row, int column) {
+    private JComponent container;
 
-        JComponent c;
-        if (value == null) {
-            c = new GlyphComponent();
-        } else {
-            GlyphDefinition model = (GlyphDefinition) value;
-            if (model.getComponent() == null) {
-                GlyphComponent gc = new GlyphComponent(model, false);
-                gc.loadIcon();
-                gc.setContainer(table);
-                model.setComponent(gc);
-                c = gc;
-            } else {
-                c = model.getComponent();
-            }
+    public GlyphBitmapRenderer(JComponent container) {
+        this.container = container;
+        if (container instanceof JList) {
+            containerSelectionBackground = ((JList<?>) container)
+                    .getSelectionBackground();
+            containerSelectionForeground = ((JList<?>) container)
+                    .getSelectionForeground();
         }
-
-        if (isSelected) {
-            c.setBackground(table.getSelectionBackground());
-            c.setForeground(table.getSelectionForeground());
-        } else {
-            c.setBackground(table.getBackground());
-            c.setForeground(table.getForeground());
+        if (container instanceof JTable) {
+            containerSelectionBackground = ((JTable) container)
+                    .getSelectionBackground();
+            containerSelectionForeground = ((JTable) container)
+                    .getSelectionForeground();
         }
-
-        c.setOpaque(true);
-        return c;
+        containerBackground = container.getBackground();
+        containerForeground = container.getForeground();
     }
 
     @Override
-    public Component getListCellRendererComponent(JList<?> list, Object value,
-            int index, boolean isSelected, boolean cellHasFocus) {
-
+    public Component getRendererComponent(GlyphDefinition gd,
+            boolean isSelected) {
         JComponent c;
-        if (value == null) {
-            c = new GlyphComponent();
-            c = new GlyphComponent();
+        if (gd.getComponent() == null) {
+            GlyphComponent gc = new GlyphComponent(gd, false);
+            gc.loadIcon();
+            gc.setContainer(container);
+            gd.setComponent(gc);
+            c = gc;
         } else {
-            GlyphDefinition model = (GlyphDefinition) value;
-            if (model.getComponent() == null) {
-                GlyphComponent gc = new GlyphComponent(model, false);
-                gc.loadIcon();
-                gc.setContainer(list);
-                model.setComponent(gc);
-                c = gc;
-            } else {
-                c = model.getComponent();
-            }
+            c = gd.getComponent();
         }
 
         if (isSelected) {
-            c.setBackground(list.getSelectionBackground());
-            c.setForeground(list.getSelectionForeground());
+            c.setBackground(containerSelectionBackground);
+            c.setForeground(containerSelectionForeground);
         } else {
-            c.setBackground(list.getBackground());
-            c.setForeground(list.getForeground());
+            c.setBackground(containerBackground);
+            c.setForeground(containerForeground);
         }
 
         c.setOpaque(true);
         return c;
     }
+
+
 }
