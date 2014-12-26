@@ -49,7 +49,7 @@ public class BrowserController extends Controller {
             .getLogger(BrowserController.class.getName());
 
     private ListSelectionModel selectionModel;
-    
+
     private EventList<GlyphDefinition> glyphList;
     private SortedList<GlyphDefinition> sortedList;
     private FilterList<GlyphDefinition> filterList;
@@ -168,7 +168,6 @@ public class BrowserController extends Controller {
         selectionModel = new DefaultEventSelectionModel<GlyphDefinition>(
                 filterList);
         list.setSelectionModel(selectionModel);
-
         table.setSelectionModel(selectionModel);
 
         selectionModel.addListSelectionListener(new GlyphSelectionListener());
@@ -364,8 +363,12 @@ public class BrowserController extends Controller {
                 if (model == null) {
                     browserPanel.getInfoLabel().setText(null);
                 } else {
+                    String charName = model.getCharName();
                     browserPanel.getInfoLabel().setText(
-                            model.getCodePoint() + ": " + model.getCharName().replaceAll("\\s\\s+", " "));
+                            model.getCodePoint()
+                                    + (charName == null ? "" : ": "
+                                            + charName.replaceAll("\\s\\s+",
+                                                    " ")));
                 }
 
                 addAction.setEnabled(enableButtons);

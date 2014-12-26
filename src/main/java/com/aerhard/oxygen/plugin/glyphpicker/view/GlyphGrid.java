@@ -91,7 +91,7 @@ public class GlyphGrid extends JList<GlyphDefinition> {
 //            return Math.max(componentWidth / cellWidth, 1);
 //        }
 //        return 1;
-        return (int) Math.floor(getVisibleRect().width / size);
+        return Math.max ((int) Math.floor(getVisibleRect().width / size), 1);
     }
 
 }
