@@ -7,6 +7,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JOptionPane;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
@@ -32,8 +33,6 @@ import com.icl.saxon.aelfred.SAXParserFactoryImpl;
 
 public class GlyphDefinitionLoader {
 
-    // TODO show error messages to user instead of logging all of them
-    
     private static final Logger LOGGER = Logger
             .getLogger(GlyphDefinitionLoader.class.getName());
 
@@ -109,8 +108,9 @@ public class GlyphDefinitionLoader {
             return httpclient.execute(httpGet, new GlyphResponseHandler(
                     dataSource));
         } catch (IOException e) {
-            LOGGER.info("Error loading data from \"" + dataSource.getBasePath()
-                    + "\"", e);
+            JOptionPane.showMessageDialog(null, "Error loading data from \"" + dataSource.getBasePath()
+                    + "\"", "Error", JOptionPane.ERROR_MESSAGE);
+            LOGGER.info(e);
         } finally {
             httpclient.getConnectionManager().shutdown();
         }
@@ -126,9 +126,9 @@ public class GlyphDefinitionLoader {
         try {
             parser.parse(is, handler);
         } catch (SAXException e) {
-            LOGGER.error(e);
+            JOptionPane.showMessageDialog(null, e.toString(), "Error", JOptionPane.ERROR_MESSAGE);
         } catch (IOException e) {
-            LOGGER.error(e);
+            JOptionPane.showMessageDialog(null, e.toString(), "Error", JOptionPane.ERROR_MESSAGE);
         }
 
         return handler.getGlyphDefinitions();
@@ -173,7 +173,7 @@ public class GlyphDefinitionLoader {
                 }
             }
         } catch (Exception e) {
-            LOGGER.info(e);
+            JOptionPane.showMessageDialog(null, e.toString(), "Error", JOptionPane.ERROR_MESSAGE);
         }
         return null;
     }
@@ -195,6 +195,8 @@ public class GlyphDefinitionLoader {
                 inputStream = new FileInputStream(file);
 
             } catch (IOException e) {
+                JOptionPane.showMessageDialog(null, "Error loading data from \"" + fileName
+                        + "\"", "Error", JOptionPane.ERROR_MESSAGE);
                 LOGGER.info(e);
             }
             if (inputStream != null && mimeType != null) {

@@ -1,6 +1,7 @@
 package com.aerhard.oxygen.plugin.glyphpicker;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
@@ -56,6 +57,8 @@ public class UITest {
         JFrame frame = new JFrame("UI Test");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+        frame.setPreferredSize(new Dimension(600, 600));
+        
         mainController = new MainController(workspace);
 
         frame.setLayout(new BorderLayout(0, 0));

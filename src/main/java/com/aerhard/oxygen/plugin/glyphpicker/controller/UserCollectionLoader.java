@@ -3,6 +3,7 @@ package com.aerhard.oxygen.plugin.glyphpicker.controller;
 import java.io.File;
 import java.util.Properties;
 
+import javax.swing.JOptionPane;
 import javax.xml.bind.DataBindingException;
 import javax.xml.bind.JAXB;
 
@@ -39,7 +40,7 @@ public class UserCollectionLoader {
                 LOGGER.error("Error storing config.", e);
             }
         } else {
-            LOGGER.error("Could not create folder " + pathName);
+            JOptionPane.showMessageDialog(null, "Could not create folder " + pathName, "Error storing config", JOptionPane.ERROR_MESSAGE);
         }
     }
 

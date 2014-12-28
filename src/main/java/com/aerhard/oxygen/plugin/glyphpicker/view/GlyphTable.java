@@ -11,7 +11,6 @@ import java.util.Set;
 import javax.swing.JTable;
 import javax.swing.JViewport;
 import javax.swing.KeyStroke;
-import javax.swing.ListSelectionModel;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableModel;
 
@@ -24,17 +23,17 @@ public class GlyphTable extends JTable {
     private TableCellRenderer tableIconRenderer;
     private TableCellRenderer tableDescriptionRenderer;
 
-    public GlyphTable(TableModel sharedListModel) {
+    public GlyphTable(TableModel tableModel) {
         tableDescriptionRenderer = new DescriptionRenderer();
         setRowHeight(90);
+        getTableHeader().setReorderingAllowed(false);
         setShowVerticalLines(false);
         setIntercellSpacing(new Dimension(0, 1));
 
         setFillsViewportHeight(true);
-        setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
-        setModel(sharedListModel);
-
+        setModel(tableModel);
+        
         setDefaultFocusTraversal();
         
         getColumnModel().getColumn(0).setPreferredWidth(70);

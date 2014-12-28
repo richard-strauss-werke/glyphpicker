@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.AbstractAction;
 import javax.swing.JButton;
 import javax.swing.Timer;
 
@@ -12,12 +13,17 @@ public class HighlightButton extends JButton {
     private static final long serialVersionUID = 1L;
     private Color originalForeground = null;
 
+    public HighlightButton() {
+        originalForeground = getForeground();
+    }
+
     public HighlightButton(String text) {
         super(text);
         originalForeground = getForeground();
     }
-
-    public HighlightButton() {
+    
+    public HighlightButton(AbstractAction insertAction) {
+        super(insertAction);
         originalForeground = getForeground();
     }
 

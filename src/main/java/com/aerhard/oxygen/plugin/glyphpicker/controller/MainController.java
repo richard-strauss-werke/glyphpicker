@@ -3,8 +3,6 @@ package com.aerhard.oxygen.plugin.glyphpicker.controller;
 import java.io.IOException;
 import java.util.Properties;
 
-import javax.swing.ComboBoxModel;
-
 import org.apache.log4j.Logger;
 
 import ro.sync.exml.workspace.api.standalone.StandalonePluginWorkspace;
@@ -44,9 +42,11 @@ public class MainController extends Controller {
         userCollectionController.addListener(this);
         addListener(userCollectionController);
 
+        // TODO enable this feature again
+        
         // set same model for viewCombo in brower view and userCollection view
-        ComboBoxModel<String> browserViewComboModel = ((BrowserController)browserController).getPanel().getViewCombo().getModel();
-        ((UserCollectionController)userCollectionController).getPanel().getViewCombo().setModel(browserViewComboModel);
+//        ComboBoxModel<String> browserViewComboModel = ((BrowserController)browserController).getPanel().getViewCombo().getModel();
+//        ((UserCollectionController)userCollectionController).getPanel().getViewCombo().setModel(browserViewComboModel);
         
         
         mainPanel = new MainPanel(browserController.getPanel(),

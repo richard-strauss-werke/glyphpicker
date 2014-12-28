@@ -28,6 +28,11 @@ public class DataSource {
     @XmlElement(name = "mappingAttValue")
     private String mappingAttValue;
 
+    public DataSource() {
+
+    }
+
+    
     /**
      * @return the mappingAttName
      */
@@ -54,10 +59,6 @@ public class DataSource {
      */
     public void setMappingAttValue(String mappingAttValue) {
         this.mappingAttValue = mappingAttValue;
-    }
-
-    public DataSource() {
-
     }
 
     /**
@@ -119,5 +120,21 @@ public class DataSource {
      */
     public void setTemplate(String template) {
         this.template = template;
+    }
+    
+    public String toString() {
+        return label;
+    }
+    
+    public DataSource clone() {
+        DataSource dataSource = new DataSource();
+        dataSource.setBasePath(basePath);
+        dataSource.setDisplayMode(displayMode);
+        dataSource.setFontName(fontName);
+        dataSource.setLabel(label);
+        dataSource.setMappingAttName(mappingAttName);
+        dataSource.setMappingAttValue(mappingAttValue);
+        dataSource.setTemplate(template);
+        return dataSource;
     }
 }
