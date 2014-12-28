@@ -108,7 +108,7 @@ public class GlyphDefinitionLoader {
             return httpclient.execute(httpGet, new GlyphResponseHandler(
                     dataSource));
         } catch (IOException e) {
-            JOptionPane.showMessageDialog(null, "Error loading data from \"" + dataSource.getBasePath()
+            JOptionPane.showMessageDialog(null, "Could not load data from \"" + dataSource.getBasePath()
                     + "\"", "Error", JOptionPane.ERROR_MESSAGE);
             LOGGER.info(e);
         } finally {
@@ -126,9 +126,9 @@ public class GlyphDefinitionLoader {
         try {
             parser.parse(is, handler);
         } catch (SAXException e) {
-            JOptionPane.showMessageDialog(null, e.toString(), "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, e.toString(), "XML parsing error", JOptionPane.ERROR_MESSAGE);
         } catch (IOException e) {
-            JOptionPane.showMessageDialog(null, e.toString(), "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, e.toString(), "XML parsing error", JOptionPane.ERROR_MESSAGE);
         }
 
         return handler.getGlyphDefinitions();
@@ -173,7 +173,7 @@ public class GlyphDefinitionLoader {
                 }
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.toString(), "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, e.toString(), "JSON parsing error", JOptionPane.ERROR_MESSAGE);
         }
         return null;
     }
@@ -195,7 +195,7 @@ public class GlyphDefinitionLoader {
                 inputStream = new FileInputStream(file);
 
             } catch (IOException e) {
-                JOptionPane.showMessageDialog(null, "Error loading data from \"" + fileName
+                JOptionPane.showMessageDialog(null, "Could not load data from \"" + fileName
                         + "\"", "Error", JOptionPane.ERROR_MESSAGE);
                 LOGGER.info(e);
             }
