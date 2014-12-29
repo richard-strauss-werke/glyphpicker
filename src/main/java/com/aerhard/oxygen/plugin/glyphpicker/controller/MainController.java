@@ -23,6 +23,7 @@ public class MainController extends Controller {
 
     public MainController(StandalonePluginWorkspace workspace) {
 
+        
         Properties properties = new Properties();
         try {
             properties.load(ConfigLoader.class
@@ -86,8 +87,9 @@ public class MainController extends Controller {
     }
 
     public void saveData() {
-        // TODO check + ask when data has changed
         getConfigLoader().save();
+        
+        // TODO ask if there are unsaved changes to user collection list
         userCollectionController.saveData();
     }
 

@@ -22,7 +22,7 @@ import javax.swing.text.Position;
 
 import org.apache.log4j.Logger;
 
-import com.aerhard.oxygen.plugin.glyphpicker.controller.GlyphEventListener;
+import com.aerhard.oxygen.plugin.glyphpicker.controller.ControllerEventListener;
 import com.aerhard.oxygen.plugin.glyphpicker.controller.MainController;
 import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinition;
 
@@ -60,7 +60,7 @@ public class GlyphPickerPluginExtension implements
     public void applicationStarted(final StandalonePluginWorkspace workspace) {
 
         mainController = new MainController(workspace);
-        mainController.addListener(new GlyphEventListener() {
+        mainController.addListener(new ControllerEventListener() {
             @Override
             public void eventOccured(String type, GlyphDefinition model) {
                 if ("insert".equals(type)) {
@@ -145,8 +145,7 @@ public class GlyphPickerPluginExtension implements
             }
 
         } else {
-            workspace
-                    .showInformationMessage("No editor pane found to insert the glyph.");
+            workspace.showErrorMessage("No editor pane found to insert the glyph.");
         }
 
     }

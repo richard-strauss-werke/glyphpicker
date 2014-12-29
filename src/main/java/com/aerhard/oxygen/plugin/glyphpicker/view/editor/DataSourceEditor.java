@@ -48,6 +48,7 @@ public class DataSourceEditor extends JPanel {
     private JTextField pathTextField;
     private JTextField fontNameTextField;
     private JComboBox<String> displayModeTextField;
+    private JTextField sizeTextField;
     private JTextField templateTextField;
     private JTextField mappingAttNameTextField;
     private JTextField mappingAttValueTextField;
@@ -115,6 +116,7 @@ public class DataSourceEditor extends JPanel {
         pathTextField = new JTextField();
         fontNameTextField = new JTextField();
         displayModeTextField = new JComboBox<String>();
+        sizeTextField = new JTextField();
         templateTextField = new JTextField();
         mappingAttNameTextField = new JTextField();
         mappingAttValueTextField = new JTextField();
@@ -124,6 +126,8 @@ public class DataSourceEditor extends JPanel {
         editorConfig.add(new EditorConfigItem("Font Name", fontNameTextField));
         editorConfig.add(new EditorConfigItem("Display Mode",
                 displayModeTextField));
+        editorConfig.add(new EditorConfigItem("Glyph Size in %",
+                sizeTextField));
         editorConfig.add(new EditorConfigItem("Template", templateTextField));
         editorConfig.add(new EditorConfigItem("Mapping Attribute Name",
                 mappingAttNameTextField));
@@ -215,6 +219,10 @@ public class DataSourceEditor extends JPanel {
         return displayModeTextField;
     }
 
+    public JTextField getSizeTextField() {
+        return sizeTextField;
+    }
+    
     public JTextField getTemplateTextField() {
         return templateTextField;
     }
@@ -230,5 +238,6 @@ public class DataSourceEditor extends JPanel {
     public JPanel getListButtonPane() {
         return listButtonPane;
     }
+
 
 }

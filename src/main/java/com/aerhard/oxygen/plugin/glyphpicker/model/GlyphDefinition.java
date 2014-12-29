@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.ImageIcon;
-import javax.swing.JComponent;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
@@ -38,8 +37,6 @@ public class GlyphDefinition {
     @XmlElement(name = "dataSource")
     private DataSource dataSource;
 
-    @XmlTransient
-    private JComponent component = null;
     @XmlTransient
     private ImageIcon icon = null;
 
@@ -161,21 +158,6 @@ public class GlyphDefinition {
 
     public ImageIcon getIcon() {
         return icon;
-    }
-
-    /**
-     * @return the component
-     */
-    public JComponent getComponent() {
-        return component;
-    }
-
-    /**
-     * @param c
-     *            the component to set
-     */
-    public void setComponent(JComponent c) {
-        this.component = c;
     }
 
     public String toString() {

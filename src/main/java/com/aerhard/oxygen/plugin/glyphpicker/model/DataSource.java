@@ -21,6 +21,8 @@ public class DataSource {
     private String fontName;
     @XmlElement(name = "displayMode")
     private String displayMode;
+    @XmlElement(name = "sizeFactor")
+    private Float sizeFactor = 0.5f;
     @XmlElement(name = "template")
     private String template;
     @XmlElement(name = "mappingAttName")
@@ -91,6 +93,14 @@ public class DataSource {
         this.displayMode = displayMode;
     }
 
+    public Float getSizeFactor() {
+        return sizeFactor;
+    }
+
+    public void setSizeFactor(Float sizeFactor) {
+        this.sizeFactor = sizeFactor;
+    }
+    
     public String getFontName() {
         return fontName;
     }
@@ -134,6 +144,7 @@ public class DataSource {
         dataSource.setLabel(label);
         dataSource.setMappingAttName(mappingAttName);
         dataSource.setMappingAttValue(mappingAttValue);
+        dataSource.setSizeFactor(sizeFactor);
         dataSource.setTemplate(template);
         return dataSource;
     }

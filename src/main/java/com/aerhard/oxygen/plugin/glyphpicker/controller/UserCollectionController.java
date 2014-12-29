@@ -17,7 +17,6 @@ import ro.sync.exml.workspace.api.standalone.StandalonePluginWorkspace;
 import ca.odell.glazedlists.BasicEventList;
 import ca.odell.glazedlists.event.ListEvent;
 import ca.odell.glazedlists.event.ListEventListener;
-import ca.odell.glazedlists.gui.TableFormat;
 import ca.odell.glazedlists.swing.DefaultEventListModel;
 import ca.odell.glazedlists.swing.DefaultEventSelectionModel;
 import ca.odell.glazedlists.swing.DefaultEventTableModel;
@@ -64,17 +63,15 @@ public class UserCollectionController extends Controller {
 
         list = new GlyphGrid(new DefaultEventListModel<GlyphDefinition>(
                 glyphList));
-
         GlyphRendererAdapter r = new GlyphRendererAdapter(list);
-        r.setPreferredSize(new Dimension(90, 90));
-        list.setFixedSize(90);
+        r.setPreferredSize(new Dimension(40, 40));
+        list.setFixedSize(40);
         list.setCellRenderer(r);
 
-        TableFormat<GlyphDefinition> tf = new GlyphTableFormat();
         DefaultEventTableModel<GlyphDefinition> tableListModel = new DefaultEventTableModel<GlyphDefinition>(
-                glyphList, tf);
+                glyphList,new GlyphTableFormat());
         table = new GlyphTable(tableListModel);
-        
+        table.setRowHeight(90);
         table.setTableIconRenderer(new GlyphRendererAdapter(table));
         
         panel.setListComponent(list);

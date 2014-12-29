@@ -19,7 +19,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import ro.sync.exml.workspace.api.standalone.StandalonePluginWorkspace;
 
-import com.aerhard.oxygen.plugin.glyphpicker.controller.GlyphEventListener;
+import com.aerhard.oxygen.plugin.glyphpicker.controller.ControllerEventListener;
 import com.aerhard.oxygen.plugin.glyphpicker.controller.MainController;
 import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinition;
 
@@ -64,7 +64,7 @@ public class UITest {
         frame.setLayout(new BorderLayout(0, 0));
         frame.getContentPane().add(mainController.getPanel());
 
-        mainController.addListener(new GlyphEventListener() {
+        mainController.addListener(new ControllerEventListener() {
             public void eventOccured(String type, GlyphDefinition model) {
                 if ("insert".equals(type)) {
                     LOGGER.info("Insertion triggered: " + model.getCharName()

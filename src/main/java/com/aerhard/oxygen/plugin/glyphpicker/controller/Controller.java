@@ -7,7 +7,7 @@ import javax.swing.JComponent;
 
 import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinition;
 
-public abstract class Controller implements GlyphEventListener {
+public abstract class Controller implements ControllerEventListener {
 
     public abstract JComponent getPanel();
 
@@ -15,14 +15,14 @@ public abstract class Controller implements GlyphEventListener {
 
     public abstract void saveData();
 
-    private List<GlyphEventListener> listeners = new ArrayList<GlyphEventListener>();
+    private List<ControllerEventListener> listeners = new ArrayList<ControllerEventListener>();
 
-    public void addListener(GlyphEventListener toAdd) {
+    public void addListener(ControllerEventListener toAdd) {
         listeners.add(toAdd);
     }
 
     public void fireEvent(String type, GlyphDefinition model) {
-        for (GlyphEventListener il : listeners) {
+        for (ControllerEventListener il : listeners) {
             il.eventOccured(type, model);
         }
     }

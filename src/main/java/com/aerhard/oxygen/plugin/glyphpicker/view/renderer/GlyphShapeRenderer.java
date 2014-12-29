@@ -1,11 +1,7 @@
 package com.aerhard.oxygen.plugin.glyphpicker.view.renderer;
 
 import javax.swing.JComponent;
-import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.JTable;
 
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -21,41 +17,22 @@ import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinition;
 
 // TODO add error message if the font is not present
 
-public class GlyphShapeRenderer extends JLabel implements GlyphRenderer {
+public class GlyphShapeRenderer extends GlyphRenderer {
 
     private static final long serialVersionUID = 1L;
 
     private String fontName = null;
-    private int padding = 12;
-
-    private Color containerSelectionBackground;
-    private Color containerSelectionForeground;
-    private Color containerBackground;
-    private Color containerForeground;
-
-    public void setPadding(int padding) {
-        this.padding = padding;
-    }
+    
+    private float factor = 66f / 90f;
 
     private FontRenderContext frc;
 
     private String ch = null;
 
     public GlyphShapeRenderer(JComponent container) {
+        super(container);
         frc = new FontRenderContext(null, true, true);
-        setVerticalAlignment(CENTER);
-        setHorizontalAlignment(CENTER);
         setText(null);
-        if (container instanceof JList) {
-            containerSelectionBackground = ((JList<?>) container).getSelectionBackground();
-            containerSelectionForeground= ((JList<?>) container).getSelectionForeground();
-        }
-        if (container instanceof JTable) {
-            containerSelectionBackground = ((JTable) container).getSelectionBackground();
-            containerSelectionForeground= ((JTable) container).getSelectionForeground();
-        }
-        containerBackground = container.getBackground();
-        containerForeground = container.getForeground();
     }
 
     public Component getRendererComponent(GlyphDefinition gd, boolean isSelected) {
@@ -63,14 +40,10 @@ public class GlyphShapeRenderer extends JLabel implements GlyphRenderer {
         ch = gd.getCharString();
         fontName = gd.getDataSource().getFontName();
 
-        if (isSelected) {
-            setBackground(containerSelectionBackground);
-            setForeground(containerSelectionForeground);
-        } else {
-            setBackground(containerBackground);
-            setForeground(containerForeground);
-        }
-        setOpaque(true);
+        factor = gd.getDataSource().getSizeFactor();
+        
+        configureBackground(isSelected);
+        
         return this;
     }
 
@@ -81,22 +54,25 @@ public class GlyphShapeRenderer extends JLabel implements GlyphRenderer {
             Graphics2D g2 = (Graphics2D) g;
             g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
                     RenderingHints.VALUE_ANTIALIAS_ON);
-            drawGlyph(g2, ch, fontName, padding);
+            drawGlyph(g2, ch, fontName);
             g2.dispose();
         }
     }
 
-    private void drawGlyph(Graphics2D g2, String text, String fontName,
-            int padding) {
+    private void drawGlyph(Graphics2D g2, String text, String fontName) {
 
         // frc = g2.getFontRenderContext();
 
-        float w = getWidth() - (2 * padding);
-        float h = getHeight() - (2 * padding);
+//        float w = getWidth() - (2 * padding);
+//        float h = getHeight() - (2 * padding);
 
+        float w = getWidth() * factor;
+        float h = getHeight() * factor;
+        
         int fontSize = Math.round(h);
 
         Font font = new Font(fontName, Font.PLAIN, fontSize);
+        
         GlyphVector gv = font.createGlyphVector(frc, text);
         // Rectangle visualBounds = gv.getVisualBounds().getBounds();
         Rectangle visualBounds = gv.getPixelBounds(frc, 0, 0);

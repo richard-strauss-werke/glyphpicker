@@ -198,6 +198,15 @@ public class DataSourceEditorController {
         int index = displayModes.indexOf(dataSource.getDisplayMode());
         contentPane.getDisplayModeTextField().setSelectedIndex(index);
 
+        Integer sizeFactor = Math.round(dataSource.getSizeFactor() * 100);
+        String sizeFactorString;
+        try {
+            sizeFactorString = sizeFactor.toString(); 
+        } catch (Exception e) {
+            sizeFactorString = null;
+        }
+        
+        contentPane.getSizeTextField().setText(sizeFactorString);
         contentPane.getTemplateTextField().setText(dataSource.getTemplate());
         contentPane.getMappingAttNameTextField().setText(
                 dataSource.getMappingAttName());
@@ -217,6 +226,14 @@ public class DataSourceEditorController {
                     .getText());
             currentDataSource.setDisplayMode(displayModes.get(contentPane
                     .getDisplayModeTextField().getSelectedIndex()));
+            
+            try {
+                float sizeFactor = Float.parseFloat(contentPane.getSizeTextField()
+                        .getText()+"f") / 100f;
+                currentDataSource.setSizeFactor(sizeFactor);
+            } catch (Exception e) {
+            }
+            
             currentDataSource.setTemplate(contentPane.getTemplateTextField()
                     .getText());
             currentDataSource.setMappingAttName(contentPane

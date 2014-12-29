@@ -25,7 +25,6 @@ import ca.odell.glazedlists.BasicEventList;
 import ca.odell.glazedlists.EventList;
 import ca.odell.glazedlists.FilterList;
 import ca.odell.glazedlists.SortedList;
-import ca.odell.glazedlists.gui.TableFormat;
 import ca.odell.glazedlists.matchers.MatcherEditor;
 import ca.odell.glazedlists.swing.DefaultEventListModel;
 import ca.odell.glazedlists.swing.DefaultEventSelectionModel;
@@ -46,9 +45,12 @@ import com.aerhard.oxygen.plugin.glyphpicker.view.HighlightButton;
 import com.aerhard.oxygen.plugin.glyphpicker.view.editor.DataSourceEditor;
 import com.aerhard.oxygen.plugin.glyphpicker.view.renderer.GlyphRendererAdapter;
 
-// TODO error messages as events
+// TODO use accelerators instead of mnemonic keys + add infos in tooltips!
+// + move actions to toolbar?
 
-// TODO use accelerators instead of mnemonic keys!
+// TODO size in prozent angeben in der config!
+
+// grid size vielleicht in voreinstellungen konfigurbar machen!
 
 public class BrowserController extends Controller {
 
@@ -124,17 +126,15 @@ public class BrowserController extends Controller {
 
         list = new GlyphGrid(new DefaultEventListModel<GlyphDefinition>(
                 filterList));
-
         GlyphRendererAdapter r = new GlyphRendererAdapter(list);
-        r.setPreferredSize(new Dimension(90, 90));
-        list.setFixedSize(90);
+        r.setPreferredSize(new Dimension(40, 40));
+        list.setFixedSize(40);
         list.setCellRenderer(r);
 
-        TableFormat<GlyphDefinition> tf = new GlyphTableFormat();
         DefaultEventTableModel<GlyphDefinition> tableListModel = new DefaultEventTableModel<GlyphDefinition>(
-                filterList, tf);
+                filterList, new GlyphTableFormat());
         table = new GlyphTable(tableListModel);
-
+        table.setRowHeight(90);
         table.setTableIconRenderer(new GlyphRendererAdapter(table));
 
         // sorter = new TableRowSorter<GlyphTableModel>(glyphTableModel);
