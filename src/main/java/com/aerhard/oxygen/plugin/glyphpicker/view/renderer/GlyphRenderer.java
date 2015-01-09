@@ -18,8 +18,6 @@ public abstract class GlyphRenderer extends JLabel {
     private Color containerBackground;
     private Color containerForeground;
     
-//    private int size = 0;
-
     public GlyphRenderer(JComponent container) {
         setVerticalAlignment(CENTER);
         setHorizontalAlignment(CENTER);
@@ -42,11 +40,6 @@ public abstract class GlyphRenderer extends JLabel {
         containerForeground = container.getForeground();
     }
 
-//    public void setSize(int size) {
-//        this.size = size;
-//        setPreferredSize(new Dimension(size, size));
-//    }
-    
     public abstract Component getRendererComponent(GlyphDefinition gd,
             boolean isSelected);
 
