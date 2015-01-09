@@ -32,27 +32,29 @@ public class GlyphTable extends JTable {
         setFillsViewportHeight(true);
 
         setModel(tableModel);
-        
+
         setDefaultFocusTraversal();
-        
+
         getColumnModel().getColumn(0).setPreferredWidth(70);
         getColumnModel().getColumn(0).setMinWidth(30);
         getColumnModel().getColumn(1).setPreferredWidth(600);
         getColumnModel().getColumn(1).setMinWidth(10);
 
     }
-    
+
     private void setDefaultFocusTraversal() {
         Set<AWTKeyStroke> forward = new HashSet<AWTKeyStroke>(
                 getFocusTraversalKeys(KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS));
         forward.add(KeyStroke.getKeyStroke("TAB"));
-        setFocusTraversalKeys(KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS, forward);
+        setFocusTraversalKeys(KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS,
+                forward);
         Set<AWTKeyStroke> backward = new HashSet<AWTKeyStroke>(
                 getFocusTraversalKeys(KeyboardFocusManager.BACKWARD_TRAVERSAL_KEYS));
         backward.add(KeyStroke.getKeyStroke("shift TAB"));
-        setFocusTraversalKeys(KeyboardFocusManager.BACKWARD_TRAVERSAL_KEYS, backward);        
+        setFocusTraversalKeys(KeyboardFocusManager.BACKWARD_TRAVERSAL_KEYS,
+                backward);
     }
-    
+
     public int getTopVisibleRow() {
         JViewport viewport = (JViewport) getParent();
         Point pt = viewport.getViewPosition();

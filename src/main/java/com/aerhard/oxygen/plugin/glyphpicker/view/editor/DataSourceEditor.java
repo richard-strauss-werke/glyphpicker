@@ -36,14 +36,15 @@ import java.util.List;
 
 public class DataSourceEditor extends JPanel {
 
+    private static final long serialVersionUID = 1L;
+    
     public static final String EDITING_OCCURRED = "editingOccurred";
 
-    private final static int PREFERRED_WIDTH = 600;
-    private final static int PREFERRED_HEIGHT = 400;
+    private static final int PREFERRED_WIDTH = 600;
+    private static final int PREFERRED_HEIGHT = 400;
 
     private JList<DataSource> list;
 
-    private static final long serialVersionUID = 1L;
     private JTextField labelTextField;
     private JTextField pathTextField;
     private JTextField fontNameTextField;
@@ -52,27 +53,8 @@ public class DataSourceEditor extends JPanel {
     private JTextField templateTextField;
     private JTextField mappingAttNameTextField;
     private JTextField mappingAttValueTextField;
-    private JPanel listPanel;
     private JPanel listButtonPane;
     private JPanel editorPanel;
-
-    private class EditorConfigItem {
-        private JComponent component;
-        String label;
-
-        private EditorConfigItem(String label, JComponent component) {
-            this.component = component;
-            this.label = label;
-        }
-
-        public JComponent getComponent() {
-            return component;
-        }
-
-        public String getLabel() {
-            return label;
-        }
-    }
 
     private List<EditorConfigItem> editorConfig = new ArrayList<EditorConfigItem>();
 
@@ -82,7 +64,7 @@ public class DataSourceEditor extends JPanel {
 
         setLayout(new BorderLayout(8, 0));
 
-        listPanel = new JPanel();
+        JPanel listPanel = new JPanel();
         listPanel.setBorder(new CompoundBorder(new TitledBorder(UIManager
                 .getBorder("TitledBorder.border"), "Data Sources",
                 TitledBorder.LEADING, TitledBorder.TOP, null,
@@ -104,13 +86,13 @@ public class DataSourceEditor extends JPanel {
                 TitledBorder.LEADING, TitledBorder.TOP, null,
                 new Color(0, 0, 0)), new EmptyBorder(8, 8, 8, 8)));
         add(editorPanel);
-        GridBagLayout gbl_panel = new GridBagLayout();
-        gbl_panel.columnWidths = new int[] { 102, 46 };
-        gbl_panel.rowHeights = new int[] { 20, 0, 0, 0, 0, 0, 0, 0 };
-        gbl_panel.columnWeights = new double[] { 0.0, 1.0 };
-        gbl_panel.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+        GridBagLayout gbl = new GridBagLayout();
+        gbl.columnWidths = new int[] { 102, 46 };
+        gbl.rowHeights = new int[] { 20, 0, 0, 0, 0, 0, 0, 0 };
+        gbl.columnWeights = new double[] { 0.0, 1.0 };
+        gbl.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
                 0.0, Double.MIN_VALUE };
-        editorPanel.setLayout(gbl_panel);
+        editorPanel.setLayout(gbl);
 
         labelTextField = new JTextField();
         pathTextField = new JTextField();
@@ -126,8 +108,8 @@ public class DataSourceEditor extends JPanel {
         editorConfig.add(new EditorConfigItem("Font Name", fontNameTextField));
         editorConfig.add(new EditorConfigItem("Display Mode",
                 displayModeTextField));
-        editorConfig.add(new EditorConfigItem("Glyph Size in %",
-                sizeTextField));
+        editorConfig
+                .add(new EditorConfigItem("Glyph Size in %", sizeTextField));
         editorConfig.add(new EditorConfigItem("Template", templateTextField));
         editorConfig.add(new EditorConfigItem("Mapping Attribute Name",
                 mappingAttNameTextField));
@@ -146,7 +128,7 @@ public class DataSourceEditor extends JPanel {
         }
     }
     
-    private DocumentListener textFieldEditingListener = new DocumentListener() {
+    private class TextFieldEditingListener implements DocumentListener {
 
         @Override
         public void removeUpdate(DocumentEvent e) {
@@ -164,39 +146,37 @@ public class DataSourceEditor extends JPanel {
         }
     };
 
-    private ActionListener comboChangeListener = new ActionListener() {
+    private class ComboChangeListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
             firePropertyChange(EDITING_OCCURRED, null, null);
         }
     };
-    
+
     private void addToEditorPanel(int index, EditorConfigItem eci) {
-        JLabel labelLabel = new JLabel(eci.getLabel());
-        GridBagConstraints gbc_label = new GridBagConstraints();
-        gbc_label.anchor = GridBagConstraints.EAST;
-        gbc_label.insets = new Insets(0, 0, 5, 5);
-        gbc_label.gridx = 0;
-        gbc_label.gridy = index;
-        editorPanel.add(labelLabel, gbc_label);
+        JLabel label = new JLabel(eci.getLabel());
+        GridBagConstraints gbcLabel = new GridBagConstraints();
+        gbcLabel.anchor = GridBagConstraints.EAST;
+        gbcLabel.insets = new Insets(0, 0, 5, 5);
+        gbcLabel.gridx = 0;
+        gbcLabel.gridy = index;
+        editorPanel.add(label, gbcLabel);
 
         JComponent component = eci.getComponent();
-
         if (component instanceof JTextField) {
             ((JTextField) component).setColumns(10);
             ((JTextField) component).getDocument().addDocumentListener(
-                    textFieldEditingListener);
+                    new TextFieldEditingListener());
         } else if (component instanceof JComboBox) {
-            ((JComboBox<?>) component).addActionListener(comboChangeListener);
+            ((JComboBox<?>) component).addActionListener(new ComboChangeListener());
         }
-        
-        GridBagConstraints gbc_component = new GridBagConstraints();
-        gbc_component.insets = new Insets(0, 0, 5, 0);
-        gbc_component.fill = GridBagConstraints.HORIZONTAL;
-        gbc_component.anchor = GridBagConstraints.NORTHWEST;
-        gbc_component.gridx = 1;
-        gbc_component.gridy = index;
-        editorPanel.add(component, gbc_component);
+        GridBagConstraints gbcComponent = new GridBagConstraints();
+        gbcComponent.insets = new Insets(0, 0, 5, 0);
+        gbcComponent.fill = GridBagConstraints.HORIZONTAL;
+        gbcComponent.anchor = GridBagConstraints.NORTHWEST;
+        gbcComponent.gridx = 1;
+        gbcComponent.gridy = index;
+        editorPanel.add(component, gbcComponent);
     }
 
     public JList<DataSource> getList() {
@@ -222,7 +202,7 @@ public class DataSourceEditor extends JPanel {
     public JTextField getSizeTextField() {
         return sizeTextField;
     }
-    
+
     public JTextField getTemplateTextField() {
         return templateTextField;
     }
@@ -238,6 +218,5 @@ public class DataSourceEditor extends JPanel {
     public JPanel getListButtonPane() {
         return listButtonPane;
     }
-
 
 }

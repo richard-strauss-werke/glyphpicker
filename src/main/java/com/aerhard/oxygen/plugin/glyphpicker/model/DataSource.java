@@ -7,7 +7,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name = "dataSource")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class DataSource {
+public class DataSource implements Cloneable {
 
     public static final String DISPLAY_MODE_VECTOR_PROPORTIONAL = "proportional";
     public static final String DISPLAY_MODE_VECTOR_FIT = "fit";
@@ -34,7 +34,6 @@ public class DataSource {
 
     }
 
-    
     /**
      * @return the mappingAttName
      */
@@ -43,7 +42,8 @@ public class DataSource {
     }
 
     /**
-     * @param mappingAttName the mappingAttName to set
+     * @param mappingAttName
+     *            the mappingAttName to set
      */
     public void setMappingAttName(String mappingAttName) {
         this.mappingAttName = mappingAttName;
@@ -57,7 +57,8 @@ public class DataSource {
     }
 
     /**
-     * @param mappingAttValue the mappingAttValue to set
+     * @param mappingAttValue
+     *            the mappingAttValue to set
      */
     public void setMappingAttValue(String mappingAttValue) {
         this.mappingAttValue = mappingAttValue;
@@ -100,7 +101,7 @@ public class DataSource {
     public void setSizeFactor(Float sizeFactor) {
         this.sizeFactor = sizeFactor;
     }
-    
+
     public String getFontName() {
         return fontName;
     }
@@ -131,21 +132,14 @@ public class DataSource {
     public void setTemplate(String template) {
         this.template = template;
     }
-    
+
+    @Override
     public String toString() {
         return label;
     }
-    
-    public DataSource clone() {
-        DataSource dataSource = new DataSource();
-        dataSource.setBasePath(basePath);
-        dataSource.setDisplayMode(displayMode);
-        dataSource.setFontName(fontName);
-        dataSource.setLabel(label);
-        dataSource.setMappingAttName(mappingAttName);
-        dataSource.setMappingAttValue(mappingAttValue);
-        dataSource.setSizeFactor(sizeFactor);
-        dataSource.setTemplate(template);
-        return dataSource;
+
+    @Override
+    public DataSource clone() throws CloneNotSupportedException {
+        return (DataSource) super.clone();
     }
 }

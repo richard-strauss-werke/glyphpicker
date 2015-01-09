@@ -18,7 +18,7 @@ public class ChangeViewAction extends AbstractAction {
     private GlyphTable table;
     private GlyphGrid list;
 
-     public ChangeViewAction(ContainerPanel panel, GlyphTable table,
+    public ChangeViewAction(ContainerPanel panel, GlyphTable table,
             GlyphGrid list) {
         super("Switch View");
         this.panel = panel;

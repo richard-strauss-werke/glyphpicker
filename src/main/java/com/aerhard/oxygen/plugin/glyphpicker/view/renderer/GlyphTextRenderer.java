@@ -16,22 +16,21 @@ public class GlyphTextRenderer extends GlyphRenderer {
 
     private String previousFontName = null;
 
-
     public GlyphTextRenderer(JComponent container) {
         super(container);
     }
 
-    
     public Component getRendererComponent(GlyphDefinition gd, boolean isSelected) {
 
         String fontName = gd.getDataSource().getFontName();
 
         if (fontName != null && !fontName.equals(this.previousFontName)) {
-            
+
             float factor = gd.getDataSource().getSizeFactor();
-            
-            setFont(new Font(fontName, Font.PLAIN, Math.round(getPreferredSize().height * factor)));
-            
+
+            setFont(new Font(fontName, Font.PLAIN,
+                    Math.round(getPreferredSize().height * factor)));
+
             this.previousFontName = fontName;
         }
 
@@ -41,7 +40,5 @@ public class GlyphTextRenderer extends GlyphRenderer {
 
         return this;
     }
-    
-    
 
 }

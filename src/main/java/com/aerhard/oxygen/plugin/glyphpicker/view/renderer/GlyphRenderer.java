@@ -2,7 +2,6 @@ package com.aerhard.oxygen.plugin.glyphpicker.view.renderer;
 
 import java.awt.Color;
 import java.awt.Component;
-
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -10,14 +9,16 @@ import javax.swing.JTable;
 
 import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinition;
 
-abstract public class GlyphRenderer extends JLabel {
+public abstract class GlyphRenderer extends JLabel {
 
     private static final long serialVersionUID = 1L;
 
-    protected Color containerSelectionBackground;
-    protected Color containerSelectionForeground;
-    protected Color containerBackground;
-    protected Color containerForeground;
+    private Color containerSelectionBackground;
+    private Color containerSelectionForeground;
+    private Color containerBackground;
+    private Color containerForeground;
+    
+//    private int size = 0;
 
     public GlyphRenderer(JComponent container) {
         setVerticalAlignment(CENTER);
@@ -28,22 +29,26 @@ abstract public class GlyphRenderer extends JLabel {
                     .getSelectionBackground();
             containerSelectionForeground = ((JList<?>) container)
                     .getSelectionForeground();
-        }
-        else if (container instanceof JTable) {
+        } else if (container instanceof JTable) {
             containerSelectionBackground = ((JTable) container)
                     .getSelectionBackground();
             containerSelectionForeground = ((JTable) container)
                     .getSelectionForeground();
-        }
-        else {
-            throw new ExceptionInInitializerError("Expected container to be an instance of JList or JTable");
+        } else {
+            throw new ExceptionInInitializerError(
+                    "Expected container to be an instance of JList or JTable");
         }
         containerBackground = container.getBackground();
         containerForeground = container.getForeground();
     }
+
+//    public void setSize(int size) {
+//        this.size = size;
+//        setPreferredSize(new Dimension(size, size));
+//    }
     
-    
-    abstract public Component getRendererComponent(GlyphDefinition gd, boolean isSelected);
+    public abstract Component getRendererComponent(GlyphDefinition gd,
+            boolean isSelected);
 
     protected void configureBackground(boolean isSelected) {
         if (isSelected) {
@@ -55,5 +60,5 @@ abstract public class GlyphRenderer extends JLabel {
         }
         setOpaque(true);
     }
-    
+
 }

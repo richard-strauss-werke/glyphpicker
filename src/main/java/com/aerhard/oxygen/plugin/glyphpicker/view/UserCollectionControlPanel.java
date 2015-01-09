@@ -20,38 +20,36 @@ public class UserCollectionControlPanel extends JPanel {
     public UserCollectionControlPanel() {
         setBorder(new EmptyBorder(8, 8, 0, 8));
 
-        GridBagLayout gbl_dataSourcePanel = new GridBagLayout();
-        gbl_dataSourcePanel.columnWidths = new int[] { 62, 199, 55, 0 };
-        gbl_dataSourcePanel.rowHeights = new int[] { 0, 0, 0, 0 };
-        gbl_dataSourcePanel.columnWeights = new double[] { 0.0, 1.0, 0.0,
+        GridBagLayout gbl = new GridBagLayout();
+        gbl.columnWidths = new int[] { 62, 199, 55, 0 };
+        gbl.rowHeights = new int[] { 0, 0, 0, 0 };
+        gbl.columnWeights = new double[] { 0.0, 1.0, 0.0,
                 Double.MIN_VALUE };
-        gbl_dataSourcePanel.rowWeights = new double[] { 0.0, Double.MIN_VALUE,
+        gbl.rowWeights = new double[] { 0.0, Double.MIN_VALUE,
                 0.0, 0.0 };
-        setLayout(gbl_dataSourcePanel);
+        setLayout(gbl);
 
-        
         toggleBtn = new JButton();
-        GridBagConstraints gbc_toggleBtn = new GridBagConstraints();
-        gbc_toggleBtn.insets = new Insets(3, 0, 5, 0);
-        gbc_toggleBtn.fill = GridBagConstraints.BOTH;
-        gbc_toggleBtn.anchor = GridBagConstraints.WEST;
-        gbc_toggleBtn.gridx = 2;
-        gbc_toggleBtn.gridy = 0;
-        add(toggleBtn, gbc_toggleBtn);
-        
-        
+        GridBagConstraints gbcToggleBtn = new GridBagConstraints();
+        gbcToggleBtn.insets = new Insets(3, 0, 5, 0);
+        gbcToggleBtn.fill = GridBagConstraints.BOTH;
+        gbcToggleBtn.anchor = GridBagConstraints.WEST;
+        gbcToggleBtn.gridx = 2;
+        gbcToggleBtn.gridy = 0;
+        add(toggleBtn, gbcToggleBtn);
+
         Component horizontalGlue = Box.createHorizontalGlue();
-        GridBagConstraints gbc_horizontalGlue = new GridBagConstraints();
-        gbc_horizontalGlue.fill = GridBagConstraints.BOTH;
-        gbc_horizontalGlue.insets = new Insets(0, 0, 5, 5);
-        gbc_horizontalGlue.gridx = 1;
-        gbc_horizontalGlue.gridy = 0;
-        add(horizontalGlue, gbc_horizontalGlue);
+        GridBagConstraints gbcHorizontalGlue = new GridBagConstraints();
+        gbcHorizontalGlue.fill = GridBagConstraints.BOTH;
+        gbcHorizontalGlue.insets = new Insets(0, 0, 5, 5);
+        gbcHorizontalGlue.gridx = 1;
+        gbcHorizontalGlue.gridy = 0;
+        add(horizontalGlue, gbcHorizontalGlue);
 
     }
 
     public JButton getToggleBtn() {
         return toggleBtn;
     }
-    
+
 }

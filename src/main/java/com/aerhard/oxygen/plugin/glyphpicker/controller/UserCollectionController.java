@@ -34,20 +34,19 @@ import com.aerhard.oxygen.plugin.glyphpicker.view.renderer.GlyphRendererAdapter;
 public class UserCollectionController extends Controller {
 
     private ListSelectionModel selectionModel;
-    
+
     private ContainerPanel panel;
-    private UserCollectionControlPanel controlPanel;
-    
+
     private GlyphTable table;
     private UserCollectionLoader loader;
     private BasicEventList<GlyphDefinition> glyphList;
     private GlyphGrid list;
-    protected boolean listInSync = true;
+    private boolean listInSync = true;
 
-    protected AbstractAction saveAction;
-    protected AbstractAction reloadAction;
-    protected AbstractAction removeAction;
-    protected AbstractAction insertAction;
+    private AbstractAction saveAction;
+    private AbstractAction reloadAction;
+    private AbstractAction removeAction;
+    private AbstractAction insertAction;
 
     private HighlightButton insertBtn;
 
@@ -55,8 +54,8 @@ public class UserCollectionController extends Controller {
     public UserCollectionController(StandalonePluginWorkspace workspace,
             Properties properties) {
 
-        controlPanel = new UserCollectionControlPanel();
-        
+        UserCollectionControlPanel controlPanel = new UserCollectionControlPanel();
+
         panel = new ContainerPanel(controlPanel);
 
         glyphList = new BasicEventList<GlyphDefinition>();
@@ -69,43 +68,46 @@ public class UserCollectionController extends Controller {
         list.setCellRenderer(r);
 
         DefaultEventTableModel<GlyphDefinition> tableListModel = new DefaultEventTableModel<GlyphDefinition>(
-                glyphList,new GlyphTableFormat());
+                glyphList, new GlyphTableFormat());
         table = new GlyphTable(tableListModel);
+        r = new GlyphRendererAdapter(table);
+        r.setPreferredSize(new Dimension(40, 40));
         table.setRowHeight(90);
-        table.setTableIconRenderer(new GlyphRendererAdapter(table));
-        
-        panel.setListComponent(list);
-        
+        table.setTableIconRenderer(r);
 
-        controlPanel.getToggleBtn().setAction(new ChangeViewAction(panel, table, list));
+        panel.setListComponent(list);
+
+        controlPanel.getToggleBtn().setAction(
+                new ChangeViewAction(panel, table, list));
 
         setButtons();
-        
+
         loader = new UserCollectionLoader(workspace, properties);
 
         selectionModel = new DefaultEventSelectionModel<GlyphDefinition>(
                 glyphList);
-        selectionModel.setSelectionMode(DefaultEventSelectionModel.SINGLE_SELECTION);
+        selectionModel
+                .setSelectionMode(DefaultEventSelectionModel.SINGLE_SELECTION);
         list.setSelectionModel(selectionModel);
         table.setSelectionModel(selectionModel);
 
         selectionModel.addListSelectionListener(new GlyphSelectionListener());
-        
+
         setListeners();
 
     }
 
-    private void setButtons(){
-        
+    private void setButtons() {
+
         removeAction = new RemoveFromUserCollectionAction();
         removeAction.setEnabled(false);
         panel.addToButtonPanel(removeAction);
-        
+
         insertAction = new InsertXmlAction();
         insertAction.setEnabled(false);
         insertBtn = new HighlightButton(insertAction);
         panel.addToButtonPanel(insertBtn);
-        
+
         saveAction = new SaveAction();
         saveAction.setEnabled(false);
         panel.addToButtonPanel(saveAction);
@@ -114,7 +116,7 @@ public class UserCollectionController extends Controller {
         reloadAction.setEnabled(false);
         panel.addToButtonPanel(reloadAction);
     }
-    
+
     public ContainerPanel getPanel() {
         return panel;
     }
@@ -141,13 +143,12 @@ public class UserCollectionController extends Controller {
         }
     }
 
-    private class SaveAction extends AbstractAction {
+    private final class SaveAction extends AbstractAction {
         private static final long serialVersionUID = 1L;
 
         private SaveAction() {
             super("Save Collection");
-            putValue(SHORT_DESCRIPTION,
-                    "Save the User Collection.");
+            putValue(SHORT_DESCRIPTION, "Save the User Collection.");
             putValue(MNEMONIC_KEY, Integer.valueOf(KeyEvent.VK_S));
         }
 
@@ -159,13 +160,12 @@ public class UserCollectionController extends Controller {
         }
     }
 
-    private class ReloadAction extends AbstractAction {
+    private final class ReloadAction extends AbstractAction {
         private static final long serialVersionUID = 1L;
 
         private ReloadAction() {
             super("Reload Collection");
-            putValue(SHORT_DESCRIPTION,
-                    "Reload the User Collection.");
+            putValue(SHORT_DESCRIPTION, "Reload the User Collection.");
             putValue(MNEMONIC_KEY, Integer.valueOf(KeyEvent.VK_L));
         }
 
@@ -176,9 +176,8 @@ public class UserCollectionController extends Controller {
             reloadAction.setEnabled(false);
         }
     }
-    
 
-    private class RemoveFromUserCollectionAction extends AbstractAction {
+    private final class RemoveFromUserCollectionAction extends AbstractAction {
         private static final long serialVersionUID = 1L;
 
         private RemoveFromUserCollectionAction() {
@@ -193,7 +192,7 @@ public class UserCollectionController extends Controller {
             removeItemFromUserCollection();
         }
     }
-    
+
     private class InsertXmlAction extends AbstractAction {
         private static final long serialVersionUID = 1L;
 
@@ -209,7 +208,7 @@ public class UserCollectionController extends Controller {
             insertGlyph();
         }
     }
-    
+
     private class GlyphSelectionListener implements ListSelectionListener {
         @Override
         public void valueChanged(ListSelectionEvent event) {
@@ -249,7 +248,7 @@ public class UserCollectionController extends Controller {
             }
         }
     }
-    
+
     private void setListeners() {
 
         MouseAdapter mouseAdapter = new MouseAdapter() {
@@ -261,7 +260,7 @@ public class UserCollectionController extends Controller {
                 }
             }
         };
-        
+
         table.addMouseListener(mouseAdapter);
         list.addMouseListener(mouseAdapter);
 
@@ -297,8 +296,7 @@ public class UserCollectionController extends Controller {
             public void run() {
                 listInSync = true;
                 glyphList.clear();
-                glyphList.addAll(loader.load()
-                        .getData());
+                glyphList.addAll(loader.load().getData());
                 panel.getOverlayable().setOverlayVisible(false);
             }
         });

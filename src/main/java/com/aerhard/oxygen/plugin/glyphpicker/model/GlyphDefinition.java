@@ -14,7 +14,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 @XmlRootElement(name = "char", namespace = "http://www.tei-c.org/ns/1.0")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class GlyphDefinition {
+public class GlyphDefinition implements Cloneable {
 
     @XmlAttribute(name = "id", namespace = "http://www.w3.org/XML/1998/namespace")
     private String id;
@@ -40,18 +40,12 @@ public class GlyphDefinition {
     @XmlTransient
     private ImageIcon icon = null;
 
+    @XmlTransient
+    private boolean iconLoadingLaunched = false;
+
+
     public GlyphDefinition() {
 
-    }
-
-    public GlyphDefinition(GlyphDefinition ch) {
-        this.id = ch.getId();
-        this.charName = ch.getCharName();
-        this.codePoint = ch.getCodePoint();
-        this.range = ch.getRange();
-        this.url = ch.getUrl();
-        this.classes = ch.getClasses();
-        this.dataSource = ch.getDataSource();
     }
 
     public GlyphDefinition(String id, String name, String codepoint,
@@ -160,6 +154,14 @@ public class GlyphDefinition {
         return icon;
     }
 
+    public boolean isIconLoadingLaunched() {
+        return iconLoadingLaunched;
+    }
+
+    public void setIconLoadingLaunched(boolean iconLoadingLaunched) {
+        this.iconLoadingLaunched = iconLoadingLaunched;
+    }
+    
     public String toString() {
         return codePoint + ": " + charName + " (" + range + ")";
     }
@@ -180,19 +182,26 @@ public class GlyphDefinition {
     }
 
     public String getRefString() {
-        
+
         String template = getDataSource().getTemplate();
-        
+
         // if no template is specified, use default template
         if (template == null) {
-            return getDataSource().getBasePath() + "#" + getId(); 
+            return getDataSource().getBasePath() + "#" + getId();
         }
-        
+
         // TODO make template apply
-        
-        return template.replaceAll("\\$\\{basePath\\}", getDataSource().getBasePath()).replaceAll("\\$\\{id\\}", getId());
-        
-//        return getDataSource().getPath() + "#" + getId();
+
+        return template.replaceAll("\\$\\{basePath\\}",
+                getDataSource().getBasePath()).replaceAll("\\$\\{id\\}",
+                getId());
+
+        // return getDataSource().getPath() + "#" + getId();
+    }
+    
+    @Override
+    public GlyphDefinition clone() throws CloneNotSupportedException {
+        return (GlyphDefinition) super.clone();
     }
 
 }

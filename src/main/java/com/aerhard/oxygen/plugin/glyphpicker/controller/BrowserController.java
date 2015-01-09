@@ -7,6 +7,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.Serializable;
 import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -48,8 +49,6 @@ import com.aerhard.oxygen.plugin.glyphpicker.view.renderer.GlyphRendererAdapter;
 // TODO use accelerators instead of mnemonic keys + add infos in tooltips!
 // + move actions to toolbar?
 
-// TODO size in prozent angeben in der config!
-
 // grid size vielleicht in voreinstellungen konfigurbar machen!
 
 public class BrowserController extends Controller {
@@ -70,8 +69,8 @@ public class BrowserController extends Controller {
     private GlyphDefinitionLoader loader;
     private boolean isLoading = false;
 
-    protected AbstractAction addAction;
-    protected AbstractAction insertAction;
+    private AbstractAction addAction;
+    private AbstractAction insertAction;
 
     private BrowserControlPanel controlPanel;
 
@@ -86,7 +85,7 @@ public class BrowserController extends Controller {
 
         glyphList = new BasicEventList<GlyphDefinition>();
 
-        JTextField ftTextField = controlPanel.getFtTextField();
+        JTextField ftTextField = controlPanel.getFulltextTextField();
 
         // EventComboBoxModel<GlyphDefinition> ftComboModel = new
         // EventComboBoxModel<GlyphDefinition>(gList);
@@ -134,8 +133,10 @@ public class BrowserController extends Controller {
         DefaultEventTableModel<GlyphDefinition> tableListModel = new DefaultEventTableModel<GlyphDefinition>(
                 filterList, new GlyphTableFormat());
         table = new GlyphTable(tableListModel);
+        r = new GlyphRendererAdapter(table);
+        r.setPreferredSize(new Dimension(40, 40));
         table.setRowHeight(90);
-        table.setTableIconRenderer(new GlyphRendererAdapter(table));
+        table.setTableIconRenderer(r);
 
         // sorter = new TableRowSorter<GlyphTableModel>(glyphTableModel);
         // sorter = new TableRowSorter<SharedListModel>(sharedListModel);
@@ -173,7 +174,8 @@ public class BrowserController extends Controller {
 
         selectionModel = new DefaultEventSelectionModel<GlyphDefinition>(
                 filterList);
-        selectionModel.setSelectionMode(DefaultEventSelectionModel.SINGLE_SELECTION);
+        selectionModel
+                .setSelectionMode(DefaultEventSelectionModel.SINGLE_SELECTION);
         list.setSelectionModel(selectionModel);
         table.setSelectionModel(selectionModel);
 
@@ -194,7 +196,9 @@ public class BrowserController extends Controller {
         panel.addToButtonPanel(insertBtn);
     }
 
-    public class GlyphComparator implements Comparator<GlyphDefinition> {
+    public static class GlyphComparator implements Comparator<GlyphDefinition>, Serializable {
+        private static final long serialVersionUID = 1L;
+
         public int compare(GlyphDefinition glyphA, GlyphDefinition glyphB) {
 
             String aString = glyphA.getCodePoint();
@@ -280,7 +284,7 @@ public class BrowserController extends Controller {
     // }
     // }
 
-    private class EditAction extends AbstractAction {
+    private final class EditAction extends AbstractAction {
         private static final long serialVersionUID = 1L;
 
         private EditAction() {
@@ -292,17 +296,21 @@ public class BrowserController extends Controller {
         @Override
         public void actionPerformed(ActionEvent e) {
             List<DataSource> result = new DataSourceEditorController(
-                    new DataSourceEditor(), panel).load(dataSourceList.getData());
-            
+                    new DataSourceEditor(), panel).load(dataSourceList
+                    .getData());
+
             if (result != null) {
                 dataSourceList.getData().clear();
                 dataSourceList.getData().addAll(result);
+                if (dataSourceList.getSize() >0) {
+                    dataSourceList.setSelectedItem(dataSourceList.getElementAt(0));
+                }
                 loadData();
             }
         }
     }
 
-    private class AddToUserCollectionAction extends AbstractAction {
+    private final class AddToUserCollectionAction extends AbstractAction {
         private static final long serialVersionUID = 1L;
 
         private AddToUserCollectionAction() {
@@ -339,7 +347,7 @@ public class BrowserController extends Controller {
             insertGlyph();
         }
     }
-    
+
     private class GlyphSelectionListener implements ListSelectionListener {
         @Override
         public void valueChanged(ListSelectionEvent event) {
@@ -498,17 +506,19 @@ public class BrowserController extends Controller {
         if (index == -1) {
             index = 0;
         }
-        
-        if (index > dataSourceList.getSize() -1) {
-            JOptionPane.showMessageDialog(panel, "No data source has been found.");
+
+        if (index > dataSourceList.getSize() - 1) {
+            JOptionPane.showMessageDialog(panel,
+                    "No data source has been found.");
             glyphList.clear();
             return;
         }
 
-        final DataSource ds = dataSourceList.getDataSourceAt(index);
+        DataSource dataSource = dataSourceList.getDataSourceAt(index);
 
-        if (ds == null) {
-            JOptionPane.showMessageDialog(panel, "No data source has been found.");
+        if (dataSource == null) {
+            JOptionPane.showMessageDialog(panel,
+                    "No data source has been found.");
             glyphList.clear();
             return;
         }
@@ -520,40 +530,52 @@ public class BrowserController extends Controller {
         isLoading = true;
         panel.getOverlayable().setOverlayVisible(true);
 
-        SwingWorker<List<GlyphDefinition>, Void> worker = new SwingWorker<List<GlyphDefinition>, Void>() {
-            @Override
-            public List<GlyphDefinition> doInBackground() {
-                return loader.loadData(ds);
-            }
-            
-            @Override
-            public void done() {
-                try {
-                    List<GlyphDefinition> data = get();
-                    glyphList.clear();
-
-                    // when loading was successful, set the loading path as
-                    // first item in the pathComboModel
-                    if (data != null) {
-                        glyphList.addAll(data);
-
-                        int index = controlPanel.getDataSourceCombo()
-                                .getSelectedIndex();
-                        if (index != -1) {
-                            dataSourceList.setFirstIndex(index);
-                        }
-                    }
-                } catch (InterruptedException e) {
-                    LOGGER.error(e);
-                } catch (ExecutionException e) {
-                    LOGGER.error(e);
-                } finally {
-                    isLoading = false;
-                    panel.getOverlayable().setOverlayVisible(false);
-                }
-            }
-        };
+        SwingWorker<List<GlyphDefinition>, Void> worker = new LoadWorker(dataSource);
         worker.execute();
+    }
+    
+    private class LoadWorker extends SwingWorker<List<GlyphDefinition>, Void> {
+
+        private DataSource dataSource;
+        
+        public LoadWorker(DataSource dataSource) {
+           this.dataSource = dataSource;
+        }
+
+        @Override
+        protected List<GlyphDefinition> doInBackground() {
+            return loader.loadData(dataSource);
+        }
+
+        @Override
+        protected void done() {
+            try {
+                processLoadedData(get());
+            } catch (InterruptedException e) {
+                LOGGER.error(e);
+            } catch (ExecutionException e) {
+                LOGGER.error(e);
+            } finally {
+                isLoading = false;
+                panel.getOverlayable().setOverlayVisible(false);
+            }
+        }
+    }
+    
+    private void processLoadedData(List<GlyphDefinition> data) {
+        glyphList.clear();
+
+        // when loading was successful, set the loading path as
+        // first item in the pathComboModel
+        if (data != null) {
+            glyphList.addAll(data);
+
+            int index = controlPanel.getDataSourceCombo()
+                    .getSelectedIndex();
+            if (index != -1) {
+                dataSourceList.setFirstIndex(index);
+            }
+        }
     }
 
     @Override

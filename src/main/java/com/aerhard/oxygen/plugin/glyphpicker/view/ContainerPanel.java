@@ -22,7 +22,7 @@ public class ContainerPanel extends JPanel {
     private static final long serialVersionUID = 1L;
 
     private JPanel buttonPanel;
-    
+
     private JScrollPane jPane;
     private DefaultOverlayable overlayable;
     private JTextField infoLabel;
@@ -31,7 +31,7 @@ public class ContainerPanel extends JPanel {
         setLayout(new BorderLayout(0, 0));
 
         add(controlPanel, BorderLayout.NORTH);
-        
+
         JPanel tablePanel = new JPanel();
         add(tablePanel, BorderLayout.CENTER);
         tablePanel.setBorder(new EmptyBorder(11, 8, 7, 8));
@@ -54,17 +54,16 @@ public class ContainerPanel extends JPanel {
         tablePanel.add(infoLabel, BorderLayout.SOUTH);
 
         buttonPanel = new JPanel();
-        buttonPanel.setBorder(new MatteBorder(1, 0, 0, 0,
-                (Color) Color.GRAY));
+        buttonPanel.setBorder(new MatteBorder(1, 0, 0, 0, (Color) Color.GRAY));
         add(buttonPanel, BorderLayout.SOUTH);
-        
-//        add(browserButtonPanel, BorderLayout.SOUTH);
-//
-//        btnInsert = new HighlightButton();
-//        browserButtonPanel.add(btnInsert);
-//
-//        btnAdd = new JButton();
-//        browserButtonPanel.add(btnAdd);
+
+        // add(browserButtonPanel, BorderLayout.SOUTH);
+        //
+        // btnInsert = new HighlightButton();
+        // browserButtonPanel.add(btnInsert);
+        //
+        // btnAdd = new JButton();
+        // browserButtonPanel.add(btnAdd);
 
     }
 
@@ -77,15 +76,15 @@ public class ContainerPanel extends JPanel {
     public JPanel getButtonPanel() {
         return buttonPanel;
     }
-    
+
     public void addToButtonPanel(JComponent component) {
         buttonPanel.add(component);
     }
-    
+
     public void addToButtonPanel(AbstractAction action) {
         buttonPanel.add(new JButton(action));
     }
-    
+
     public JTextField getInfoLabel() {
         return infoLabel;
     }

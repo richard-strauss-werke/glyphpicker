@@ -20,13 +20,16 @@ public class GlyphRendererAdapter extends JLabel implements TableCellRenderer,
 
     private static final long serialVersionUID = 1L;
 
-    private Map<String, GlyphRenderer> renderers = new HashMap<String, GlyphRenderer> ();
-    
+    private Map<String, GlyphRenderer> renderers = new HashMap<String, GlyphRenderer>();
+
     public GlyphRendererAdapter(JComponent container) {
         setText(null);
-        renderers.put(DataSource.DISPLAY_MODE_VECTOR_FIT, new GlyphShapeRenderer(container));
-        renderers.put(DataSource.DISPLAY_MODE_VECTOR_PROPORTIONAL, new GlyphTextRenderer(container));
-        renderers.put(DataSource.DISPLAY_MODE_BITMAP, new GlyphBitmapRenderer(container));
+        renderers.put(DataSource.DISPLAY_MODE_VECTOR_FIT,
+                new GlyphShapeRenderer(container));
+        renderers.put(DataSource.DISPLAY_MODE_VECTOR_PROPORTIONAL,
+                new GlyphTextRenderer(container));
+        renderers.put(DataSource.DISPLAY_MODE_BITMAP, new GlyphBitmapRenderer(
+                container));
     }
 
     @Override
@@ -40,9 +43,11 @@ public class GlyphRendererAdapter extends JLabel implements TableCellRenderer,
             boolean isSelected, boolean hasFocus, int row, int column) {
         if (value != null) {
             GlyphDefinition glyphDefinition = ((GlyphDefinition) value);
-            GlyphRenderer renderer = renderers.get(glyphDefinition.getDataSource().getDisplayMode());
+            GlyphRenderer renderer = renderers.get(glyphDefinition
+                    .getDataSource().getDisplayMode());
             if (renderer != null) {
-                return renderer.getRendererComponent(glyphDefinition, isSelected);
+                return renderer.getRendererComponent(glyphDefinition,
+                        isSelected);
             }
         }
         return this;
@@ -53,9 +58,11 @@ public class GlyphRendererAdapter extends JLabel implements TableCellRenderer,
             int index, boolean isSelected, boolean cellHasFocus) {
         if (value != null) {
             GlyphDefinition glyphDefinition = ((GlyphDefinition) value);
-            GlyphRenderer renderer = renderers.get(glyphDefinition.getDataSource().getDisplayMode());
+            GlyphRenderer renderer = renderers.get(glyphDefinition
+                    .getDataSource().getDisplayMode());
             if (renderer != null) {
-                return renderer.getRendererComponent(glyphDefinition, isSelected);
+                return renderer.getRendererComponent(glyphDefinition,
+                        isSelected);
             }
         }
         return this;

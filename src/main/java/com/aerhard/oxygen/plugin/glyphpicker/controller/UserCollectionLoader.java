@@ -40,7 +40,9 @@ public class UserCollectionLoader {
                 LOGGER.error("Error storing config.", e);
             }
         } else {
-            JOptionPane.showMessageDialog(null, "Could not create folder " + pathName, "Error storing config", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Could not create folder "
+                    + pathName, "Error storing config",
+                    JOptionPane.ERROR_MESSAGE);
         }
     }
 

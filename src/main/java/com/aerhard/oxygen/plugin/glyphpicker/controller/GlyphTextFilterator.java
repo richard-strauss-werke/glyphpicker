@@ -9,8 +9,7 @@ import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinition;
 public class GlyphTextFilterator implements TextFilterator<GlyphDefinition> {
 
     @Override
-    public void getFilterStrings(List<String> baseList,
-            GlyphDefinition element) {
+    public void getFilterStrings(List<String> baseList, GlyphDefinition element) {
         baseList.add(element.getId());
         baseList.add(element.getRange());
         baseList.add(element.getCharName());

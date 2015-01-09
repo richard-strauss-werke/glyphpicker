@@ -87,7 +87,6 @@ public class GlyphPickerPluginExtension implements
                     // viewInfo.setIcon(Icons
                     // .getIcon(Icons.CMS_MESSAGES_CUSTOM_VIEW_STRING));
                 }
-
             }
         });
 
@@ -145,7 +144,8 @@ public class GlyphPickerPluginExtension implements
             }
 
         } else {
-            workspace.showErrorMessage("No editor pane found to insert the glyph.");
+            workspace
+                    .showErrorMessage("No editor pane found to insert the glyph.");
         }
 
     }

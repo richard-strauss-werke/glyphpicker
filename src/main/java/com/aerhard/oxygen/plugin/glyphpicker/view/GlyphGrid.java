@@ -17,39 +17,25 @@ public class GlyphGrid extends JList<GlyphDefinition> {
     private static final long serialVersionUID = 1L;
 
     private int size = 0;
-    
+
     public GlyphGrid(ListModel<GlyphDefinition> listModel) {
         setLayoutOrientation(JList.HORIZONTAL_WRAP);
-
         setModel(listModel);
-
+        setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         addComponentListener(new ResizeAdapter());
     }
-
+    
     public void setFixedSize(int size) {
         this.size = size;
         setFixedCellWidth(size);
         setFixedCellHeight(size);
     }
-    
+
     private class ResizeAdapter extends ComponentAdapter {
         @Override
         public void componentResized(ComponentEvent e) {
             fixRowCountForVisibleColumns();
         }
-    }
-
-    public GlyphGrid() {
-        setLayoutOrientation(JList.HORIZONTAL_WRAP);
-
-        setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-
-        addComponentListener(new ComponentAdapter() {
-            @Override
-            public void componentResized(ComponentEvent e) {
-                fixRowCountForVisibleColumns();
-            }
-        });
     }
 
     public int getTopVisibleRow() {
@@ -77,11 +63,10 @@ public class GlyphGrid extends JList<GlyphDefinition> {
     }
 
     private int computeVisibleColumnCount() {
-        return Math.max ((int) Math.floor(getVisibleRect().width / size), 1);
+        return Math.max((int) Math.floor(getVisibleRect().width / (double)size), 1);
     }
-    
-    
- // @Override
+
+    // @Override
     // public String getToolTipText(MouseEvent e) {
     // String tip = null;
     // java.awt.Point p = e.getPoint();

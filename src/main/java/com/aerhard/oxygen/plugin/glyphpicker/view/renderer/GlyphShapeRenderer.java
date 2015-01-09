@@ -22,7 +22,7 @@ public class GlyphShapeRenderer extends GlyphRenderer {
     private static final long serialVersionUID = 1L;
 
     private String fontName = null;
-    
+
     private float factor = 66f / 90f;
 
     private FontRenderContext frc;
@@ -41,9 +41,9 @@ public class GlyphShapeRenderer extends GlyphRenderer {
         fontName = gd.getDataSource().getFontName();
 
         factor = gd.getDataSource().getSizeFactor();
-        
+
         configureBackground(isSelected);
-        
+
         return this;
     }
 
@@ -63,16 +63,16 @@ public class GlyphShapeRenderer extends GlyphRenderer {
 
         // frc = g2.getFontRenderContext();
 
-//        float w = getWidth() - (2 * padding);
-//        float h = getHeight() - (2 * padding);
+        // float w = getWidth() - (2 * padding);
+        // float h = getHeight() - (2 * padding);
 
         float w = getWidth() * factor;
         float h = getHeight() * factor;
-        
+
         int fontSize = Math.round(h);
 
         Font font = new Font(fontName, Font.PLAIN, fontSize);
-        
+
         GlyphVector gv = font.createGlyphVector(frc, text);
         // Rectangle visualBounds = gv.getVisualBounds().getBounds();
         Rectangle visualBounds = gv.getPixelBounds(frc, 0, 0);

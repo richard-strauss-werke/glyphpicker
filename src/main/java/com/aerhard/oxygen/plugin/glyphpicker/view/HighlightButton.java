@@ -21,7 +21,7 @@ public class HighlightButton extends JButton {
         super(text);
         originalForeground = getForeground();
     }
-    
+
     public HighlightButton(AbstractAction insertAction) {
         super(insertAction);
         originalForeground = getForeground();

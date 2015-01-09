@@ -16,10 +16,15 @@ import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import org.apache.log4j.Logger;
+
 import com.aerhard.oxygen.plugin.glyphpicker.model.DataSource;
 import com.aerhard.oxygen.plugin.glyphpicker.view.editor.DataSourceEditor;
 
 public class DataSourceEditorController {
+
+    private static final Logger LOGGER = Logger
+            .getLogger(DataSourceEditorController.class.getName());
 
     private DataSourceEditor contentPane;
     private JPanel parentPanel;
@@ -57,7 +62,7 @@ public class DataSourceEditorController {
         contentPane.getDisplayModeTextField().setSelectedItem(null);
     }
 
-    private class NewAction extends AbstractAction {
+    private final class NewAction extends AbstractAction {
         private static final long serialVersionUID = 1L;
 
         private NewAction() {
@@ -80,7 +85,7 @@ public class DataSourceEditorController {
         }
     }
 
-    private class CloneAction extends AbstractAction {
+    private final class CloneAction extends AbstractAction {
         private static final long serialVersionUID = 1L;
 
         private CloneAction() {
@@ -94,18 +99,23 @@ public class DataSourceEditorController {
         public void actionPerformed(ActionEvent e) {
             int index = contentPane.getList().getSelectionModel()
                     .getAnchorSelectionIndex();
-            DataSource dataSource = listModel.get(index).clone();
-            listModel.addElement(dataSource);
-            contentPane
-                    .getList()
-                    .getSelectionModel()
-                    .setSelectionInterval(listModel.size() - 1,
-                            listModel.size() - 1);
-            listEditingOccurred = true;
+            DataSource dataSource;
+            try {
+                dataSource = listModel.get(index).clone();
+                listModel.addElement(dataSource);
+                contentPane
+                        .getList()
+                        .getSelectionModel()
+                        .setSelectionInterval(listModel.size() - 1,
+                                listModel.size() - 1);
+                listEditingOccurred = true;
+            } catch (CloneNotSupportedException e1) {
+                LOGGER.error(e1);
+            }
         }
     }
 
-    private class DeleteAction extends AbstractAction {
+    private final class DeleteAction extends AbstractAction {
         private static final long serialVersionUID = 1L;
 
         private DeleteAction() {
@@ -136,8 +146,12 @@ public class DataSourceEditorController {
 
         listModel = new DefaultListModel<DataSource>();
 
-        for (DataSource dataSource : dataSourceList) {
-            listModel.addElement(dataSource.clone());
+        try {
+            for (DataSource dataSource : dataSourceList) {
+                listModel.addElement(dataSource.clone());
+            }
+        } catch (CloneNotSupportedException e1) {
+            LOGGER.error(e1);
         }
 
         contentPane.getList().setModel(listModel);
@@ -150,24 +164,7 @@ public class DataSourceEditorController {
                     @Override
                     public void valueChanged(ListSelectionEvent e) {
                         if (!e.getValueIsAdjusting()) {
-
-                            if (contentPane.getList().getSelectionModel()
-                                    .isSelectionEmpty()) {
-                                currentDataSource = null;
-                                setFormValues(new DataSource());
-                                contentPane.setFormEnabled(false);
-                                cloneAction.setEnabled(false);
-                                deleteAction.setEnabled(false);
-                            } else {
-                                int index = contentPane.getList()
-                                        .getSelectionModel()
-                                        .getAnchorSelectionIndex();
-                                currentDataSource = listModel.get(index);
-                                setFormValues(currentDataSource);
-                                contentPane.setFormEnabled(true);
-                                cloneAction.setEnabled(true);
-                                deleteAction.setEnabled(true);
-                            }
+                            onListSelection();
                         }
                     }
                 });
@@ -177,13 +174,31 @@ public class DataSourceEditorController {
                 JOptionPane.PLAIN_MESSAGE);
 
         if (result == JOptionPane.OK_OPTION && listEditingOccurred) {
-            dataSourceList = new ArrayList<DataSource>();
+            List<DataSource> resultList = new ArrayList<DataSource>();
             for (int i = 0; i < listModel.getSize(); i++) {
-                dataSourceList.add(listModel.getElementAt(i));
+                resultList.add(listModel.getElementAt(i));
             }
-            return dataSourceList;
+            return resultList;
         } else {
             return null;
+        }
+    }
+
+    private void onListSelection() {
+        if (contentPane.getList().getSelectionModel().isSelectionEmpty()) {
+            currentDataSource = null;
+            setFormValues(new DataSource());
+            contentPane.setFormEnabled(false);
+            cloneAction.setEnabled(false);
+            deleteAction.setEnabled(false);
+        } else {
+            int index = contentPane.getList().getSelectionModel()
+                    .getAnchorSelectionIndex();
+            currentDataSource = listModel.get(index);
+            setFormValues(currentDataSource);
+            contentPane.setFormEnabled(true);
+            cloneAction.setEnabled(true);
+            deleteAction.setEnabled(true);
         }
     }
 
@@ -201,11 +216,11 @@ public class DataSourceEditorController {
         Integer sizeFactor = Math.round(dataSource.getSizeFactor() * 100);
         String sizeFactorString;
         try {
-            sizeFactorString = sizeFactor.toString(); 
+            sizeFactorString = sizeFactor.toString();
         } catch (Exception e) {
             sizeFactorString = null;
         }
-        
+
         contentPane.getSizeTextField().setText(sizeFactorString);
         contentPane.getTemplateTextField().setText(dataSource.getTemplate());
         contentPane.getMappingAttNameTextField().setText(
@@ -226,14 +241,16 @@ public class DataSourceEditorController {
                     .getText());
             currentDataSource.setDisplayMode(displayModes.get(contentPane
                     .getDisplayModeTextField().getSelectedIndex()));
-            
+
             try {
-                float sizeFactor = Float.parseFloat(contentPane.getSizeTextField()
-                        .getText()+"f") / 100f;
+                float sizeFactor = Float.parseFloat(contentPane
+                        .getSizeTextField().getText() + "f") / 100f;
                 currentDataSource.setSizeFactor(sizeFactor);
             } catch (Exception e) {
+                LOGGER.info("Error converting size factor "
+                        + contentPane.getSizeTextField().getText());
             }
-            
+
             currentDataSource.setTemplate(contentPane.getTemplateTextField()
                     .getText());
             currentDataSource.setMappingAttName(contentPane

@@ -23,7 +23,6 @@ public class MainController extends Controller {
 
     public MainController(StandalonePluginWorkspace workspace) {
 
-        
         Properties properties = new Properties();
         try {
             properties.load(ConfigLoader.class
@@ -44,12 +43,12 @@ public class MainController extends Controller {
         addListener(userCollectionController);
 
         // TODO enable this feature again
-        
+
         // set same model for viewCombo in brower view and userCollection view
-//        ComboBoxModel<String> browserViewComboModel = ((BrowserController)browserController).getPanel().getViewCombo().getModel();
-//        ((UserCollectionController)userCollectionController).getPanel().getViewCombo().setModel(browserViewComboModel);
-        
-        
+        // ComboBoxModel<String> browserViewComboModel =
+        // ((BrowserController)browserController).getPanel().getViewCombo().getModel();
+        // ((UserCollectionController)userCollectionController).getPanel().getViewCombo().setModel(browserViewComboModel);
+
         mainPanel = new MainPanel(browserController.getPanel(),
                 userCollectionController.getPanel());
 
@@ -66,18 +65,21 @@ public class MainController extends Controller {
     }
 
     @Override
-    public void eventOccured(String type, GlyphDefinition model) {
+    public void eventOccured(String type, GlyphDefinition glyphDefinition) {
 
         if ("insert".equals(type)) {
-            fireEvent("insert", model);
+            fireEvent("insert", glyphDefinition);
         }
 
         else if ("copyToUserCollection".equals(type)) {
-            GlyphDefinition clone = new GlyphDefinition(model);
-            fireEvent("copyToUserCollection", clone);
-            mainPanel.highlightTabTitle(0);
+            try {
+                GlyphDefinition clone = glyphDefinition.clone();
+                fireEvent("copyToUserCollection", clone);
+                mainPanel.highlightTabTitle(0);
+            } catch (CloneNotSupportedException e) {
+                LOGGER.error(e);
+            }
         }
-
     }
 
     @Override
@@ -88,7 +90,7 @@ public class MainController extends Controller {
 
     public void saveData() {
         getConfigLoader().save();
-        
+
         // TODO ask if there are unsaved changes to user collection list
         userCollectionController.saveData();
     }

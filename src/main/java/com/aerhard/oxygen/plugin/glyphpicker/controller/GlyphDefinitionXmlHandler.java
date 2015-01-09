@@ -45,24 +45,7 @@ public class GlyphDefinitionXmlHandler extends DefaultHandler {
             Attributes attrs) throws SAXException {
 
         if (inChar) {
-
-            if ("charName".equals(qName) || "mapping".equals(qName)
-                    || "item".equals(qName) || "desc".equals(qName)) {
-                textContent.setLength(0);
-            }
-
-            else if ("graphic".equals(qName)) {
-                currentGlyphDefinition.setUrl(attrs.getValue("url"));
-            }
-
-            if ("mapping".equals(qName) && mappingAttValue.equals(attrs.getValue(mappingAttName))) {
-                inMapping = true;
-              }
-            
-//            if ("mapping".equals(qName) && attrs.getValue(mappingAttName).equals(mappingAttValue)) {
-//              System.out.println("matched");
-//            }
-
+            onStartElementInChar(qName, attrs);
         }
 
         else if ("char".equals(qName) || "glyph".equals(qName)) {
@@ -83,6 +66,27 @@ public class GlyphDefinitionXmlHandler extends DefaultHandler {
         }
 
         elementStack.push(qName);
+    }
+
+    private void onStartElementInChar(String qName, Attributes attrs) {
+        if ("charName".equals(qName) || "mapping".equals(qName)
+                || "item".equals(qName) || "desc".equals(qName)) {
+            textContent.setLength(0);
+        }
+
+        else if ("graphic".equals(qName)) {
+            currentGlyphDefinition.setUrl(attrs.getValue("url"));
+        }
+
+        if ("mapping".equals(qName)
+                && mappingAttValue.equals(attrs.getValue(mappingAttName))) {
+            inMapping = true;
+        }
+
+        // if ("mapping".equals(qName) &&
+        // attrs.getValue(mappingAttName).equals(mappingAttValue)) {
+        // System.out.println("matched");
+        // }
     }
 
     @Override

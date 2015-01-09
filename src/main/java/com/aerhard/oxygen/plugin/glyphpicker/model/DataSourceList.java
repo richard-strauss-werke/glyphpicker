@@ -77,6 +77,5 @@ public class DataSourceList extends AbstractListModel<String> implements
     public List<DataSource> getData() {
         return data;
     }
-    
 
 }

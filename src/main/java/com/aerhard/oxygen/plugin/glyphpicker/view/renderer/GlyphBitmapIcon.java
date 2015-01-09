@@ -33,45 +33,46 @@ public class GlyphBitmapIcon extends ImageIcon {
     public int getIconHeight() {
         return size;
     }
-    
-//    @Override
-//    public synchronized void paintIcon(Component component, Graphics g, int x,
-//            int y) {
-//        
-//        Image image = getImage();
-//        
-//        
-//        g.drawImage(scaleToBound(image, 50, 50), x, y, getImageObserver());
-//        
-////        super.paintIcon(component, g, x,y);
-//    }
-//
-//    public Image scaleToBound(Image image, int boundX, int boundY) {
-//
-//        ImageObserver imageObserver = getImageObserver();
-//        
-//        int originalWidth = image.getWidth(imageObserver);
-//        int originalHeight = image.getHeight(imageObserver);
-//
-//        int resultWidth = originalWidth;
-//        int resultHeight = originalHeight;
-//
-//        if (originalWidth > boundX) {
-//            resultWidth = boundX;
-//            resultHeight = (resultWidth * originalHeight) / originalWidth;
-//        }
-//
-//        if (resultHeight > boundY) {
-//            resultHeight = boundY;
-//            resultWidth = (resultHeight * originalWidth) / originalHeight;
-//        }
-//
-//        // set minimum dimension of 1 px
-//        resultWidth = Math.max(resultWidth, 1);
-//        resultHeight = Math.max(resultHeight, 1);
-//
-//        return image.getScaledInstance(resultWidth, resultHeight,
-//                Image.SCALE_AREA_AVERAGING);
-//    }
-    
+
+    // @Override
+    // public synchronized void paintIcon(Component component, Graphics g, int
+    // x,
+    // int y) {
+    //
+    // Image image = getImage();
+    //
+    //
+    // g.drawImage(scaleToBound(image, 50, 50), x, y, getImageObserver());
+    //
+    // // super.paintIcon(component, g, x,y);
+    // }
+    //
+    // public Image scaleToBound(Image image, int boundX, int boundY) {
+    //
+    // ImageObserver imageObserver = getImageObserver();
+    //
+    // int originalWidth = image.getWidth(imageObserver);
+    // int originalHeight = image.getHeight(imageObserver);
+    //
+    // int resultWidth = originalWidth;
+    // int resultHeight = originalHeight;
+    //
+    // if (originalWidth > boundX) {
+    // resultWidth = boundX;
+    // resultHeight = (resultWidth * originalHeight) / originalWidth;
+    // }
+    //
+    // if (resultHeight > boundY) {
+    // resultHeight = boundY;
+    // resultWidth = (resultHeight * originalWidth) / originalHeight;
+    // }
+    //
+    // // set minimum dimension of 1 px
+    // resultWidth = Math.max(resultWidth, 1);
+    // resultHeight = Math.max(resultHeight, 1);
+    //
+    // return image.getScaledInstance(resultWidth, resultHeight,
+    // Image.SCALE_AREA_AVERAGING);
+    // }
+
 }
