@@ -34,6 +34,7 @@ public class GlyphRendererAdapter extends JLabel implements TableCellRenderer,
 
     @Override
     public void setPreferredSize(Dimension d) {
+        super.setPreferredSize(d);
         for (GlyphRenderer renderer : renderers.values()) {
             renderer.setPreferredSize(d);
         }
