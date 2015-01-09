@@ -31,7 +31,7 @@ public class UserCollectionControlPanel extends JPanel {
 
         toggleBtn = new JButton();
         GridBagConstraints gbcToggleBtn = new GridBagConstraints();
-        gbcToggleBtn.insets = new Insets(3, 0, 5, 0);
+        gbcToggleBtn.insets = new Insets(5, 0, 5, 0);
         gbcToggleBtn.fill = GridBagConstraints.BOTH;
         gbcToggleBtn.anchor = GridBagConstraints.WEST;
         gbcToggleBtn.gridx = 2;

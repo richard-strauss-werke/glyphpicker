@@ -3,6 +3,8 @@ package com.aerhard.oxygen.plugin.glyphpicker.controller;
 import java.awt.AWTEvent;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
@@ -118,8 +120,9 @@ public class BrowserController extends Controller {
         // }
         // };
 
-        sortedList = new SortedList<GlyphDefinition>(glyphList,
-                new GlyphComparator());
+        sortedList = new SortedList<GlyphDefinition>(glyphList, null);
+        
+
 
         filterList = new FilterList<GlyphDefinition>(sortedList, filter);
 
@@ -165,7 +168,10 @@ public class BrowserController extends Controller {
 
         // browserPanel.getRangeCombo().setAction(new FilterAction());
         // browserPanel.getClassCombo().setAction(new FilterAction());
-        controlPanel.getToggleBtn().setAction(
+        
+        controlPanel.getSortBtn().setAction(new SortAction());
+        
+        controlPanel.getViewBtn().setAction(
                 new ChangeViewAction(panel, table, list));
 
         setButtons();
@@ -284,6 +290,21 @@ public class BrowserController extends Controller {
     // }
     // }
 
+    private class SortAction extends AbstractAction {
+        private static final long serialVersionUID = 1L;
+
+        SortAction() {
+            super("Sort by Codepoint");
+            putValue(SHORT_DESCRIPTION,
+                    "Sorts the glyphs by code point.");
+            putValue(MNEMONIC_KEY, Integer.valueOf(KeyEvent.VK_O));
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+        }
+    }
+    
     private final class EditAction extends AbstractAction {
         private static final long serialVersionUID = 1L;
 
@@ -390,6 +411,19 @@ public class BrowserController extends Controller {
 
     private void setListeners() {
 
+        controlPanel.getSortBtn().addItemListener(new ItemListener() {
+            
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if(e.getStateChange()==ItemEvent.SELECTED){
+                    sortedList.setComparator(new GlyphComparator());
+                } else if(e.getStateChange()==ItemEvent.DESELECTED){
+                    sortedList.setComparator(null);
+                }
+             }
+          });
+        
+        
         controlPanel.getDataSourceCombo().addActionListener(
                 new AbstractAction() {
 

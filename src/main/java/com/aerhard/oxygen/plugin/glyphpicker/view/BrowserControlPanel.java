@@ -5,10 +5,12 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.JToggleButton;
 import javax.swing.border.EmptyBorder;
 
 public class BrowserControlPanel extends JPanel {
@@ -17,34 +19,43 @@ public class BrowserControlPanel extends JPanel {
     private JComboBox<String> dataSourceCombo;
     private JButton btnLoad;
     private JTextField fulltextTextField;
-    private JButton toggleBtn;
+    private JButton viewBtn;
+    private JToggleButton sortBtn;
 
     public BrowserControlPanel() {
         setBorder(new EmptyBorder(8, 8, 0, 8));
 
         GridBagLayout gridBagLayout = new GridBagLayout();
-        gridBagLayout.columnWidths = new int[] { 62, 199, 55, 0 };
+        gridBagLayout.columnWidths = new int[] {62, 199, 55, 55};
         gridBagLayout.rowHeights = new int[] { 0, 0, 0, 0 };
-        gridBagLayout.columnWeights = new double[] { 0.0, 0.0, 0.0,
-                Double.MIN_VALUE };
+        gridBagLayout.columnWeights = new double[] { 0.0, 1.0, 0.0, 0.0 };
         gridBagLayout.rowWeights = new double[] { 0.0, Double.MIN_VALUE,
                 0.0, 0.0 };
         setLayout(gridBagLayout);
 
-        toggleBtn = new JButton();
-        GridBagConstraints gbcToggleBtn = new GridBagConstraints();
-        gbcToggleBtn.insets = new Insets(3, 0, 5, 0);
-        gbcToggleBtn.fill = GridBagConstraints.BOTH;
-        gbcToggleBtn.anchor = GridBagConstraints.WEST;
-        gbcToggleBtn.gridx = 2;
-        gbcToggleBtn.gridy = 0;
-        add(toggleBtn, gbcToggleBtn);
+        sortBtn = new JCheckBox();
+        GridBagConstraints gbcSortBtn = new GridBagConstraints();
+        gbcSortBtn.insets = new Insets(5, 0, 5, 5);
+        gbcSortBtn.fill = GridBagConstraints.BOTH;
+        gbcSortBtn.anchor = GridBagConstraints.WEST;
+        gbcSortBtn.gridx = 2;
+        gbcSortBtn.gridy = 0;
+        add(sortBtn, gbcSortBtn);
+        
+        viewBtn = new JButton();
+        GridBagConstraints gbcViewBtn = new GridBagConstraints();
+        gbcViewBtn.insets = new Insets(5, 0, 5, 0);
+        gbcViewBtn.fill = GridBagConstraints.BOTH;
+        gbcViewBtn.anchor = GridBagConstraints.WEST;
+        gbcViewBtn.gridx = 3;
+        gbcViewBtn.gridy = 0;
+        add(viewBtn, gbcViewBtn);
 
         JLabel dataSourceLabel = new JLabel("Data source:");
         GridBagConstraints gbcDataSourceLabel = new GridBagConstraints();
         gbcDataSourceLabel.anchor = GridBagConstraints.WEST;
         gbcDataSourceLabel.fill = GridBagConstraints.VERTICAL;
-        gbcDataSourceLabel.insets = new Insets(0, 0, 5, 5);
+        gbcDataSourceLabel.insets = new Insets(5, 0, 5, 5);
         gbcDataSourceLabel.gridx = 0;
         gbcDataSourceLabel.gridy = 1;
         add(dataSourceLabel, gbcDataSourceLabel);
@@ -52,6 +63,7 @@ public class BrowserControlPanel extends JPanel {
         dataSourceCombo = new JComboBox<String>();
         dataSourceCombo.setEditable(false);
         GridBagConstraints gbcPathCombo = new GridBagConstraints();
+        gbcPathCombo.gridwidth = 2;
         gbcPathCombo.weightx = 1.0;
         gbcPathCombo.fill = GridBagConstraints.BOTH;
         gbcPathCombo.insets = new Insets(5, 0, 5, 5);
@@ -64,7 +76,7 @@ public class BrowserControlPanel extends JPanel {
         gbcBrowserButtonLoad.insets = new Insets(3, 0, 5, 0);
         gbcBrowserButtonLoad.fill = GridBagConstraints.BOTH;
         gbcBrowserButtonLoad.anchor = GridBagConstraints.WEST;
-        gbcBrowserButtonLoad.gridx = 2;
+        gbcBrowserButtonLoad.gridx = 3;
         gbcBrowserButtonLoad.gridy = 1;
         add(btnLoad, gbcBrowserButtonLoad);
 
@@ -72,7 +84,7 @@ public class BrowserControlPanel extends JPanel {
         GridBagConstraints gbcFulltextLabel = new GridBagConstraints();
         gbcFulltextLabel.anchor = GridBagConstraints.WEST;
         gbcFulltextLabel.fill = GridBagConstraints.VERTICAL;
-        gbcFulltextLabel.insets = new Insets(0, 0, 5, 5);
+        gbcFulltextLabel.insets = new Insets(5, 0, 5, 5);
         gbcFulltextLabel.gridx = 0;
         gbcFulltextLabel.gridy = 2;
         add(fulltextLabel, gbcFulltextLabel);
@@ -80,6 +92,7 @@ public class BrowserControlPanel extends JPanel {
         fulltextTextField = new JTextField();
         fulltextTextField.setEditable(true);
         GridBagConstraints gbcFulltextTextField = new GridBagConstraints();
+        gbcFulltextTextField.gridwidth = 3;
         gbcFulltextTextField.weightx = 1.0;
         gbcFulltextTextField.fill = GridBagConstraints.BOTH;
         gbcFulltextTextField.insets = new Insets(5, 0, 5, 5);
@@ -140,8 +153,12 @@ public class BrowserControlPanel extends JPanel {
         return fulltextTextField;
     }
 
-    public JButton getToggleBtn() {
-        return toggleBtn;
+    public JToggleButton getSortBtn() {
+        return sortBtn;
+    }
+    
+    public JButton getViewBtn() {
+        return viewBtn;
     }
 
     // public JComboBox<String> getRangeCombo() {
