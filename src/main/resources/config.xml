@@ -5,35 +5,79 @@
             <label>Edirom SMuFL-Browser local</label>
             <basePath>/Users/Ahlse/Desktop/SMuFL-Browser-1.0/data/charDecl.xml</basePath>
             <fontName>BravuraText</fontName>
-            <displayMode>vector</displayMode>
-            <template>${basePath}#{id}</template>
+            <displayMode>fit</displayMode>
+            <sizeFactor>0.7</sizeFactor>
+            <template>${basePath}#${id}</template>
             <mappingAttName>type</mappingAttName>
             <mappingAttValue>smufl</mappingAttValue>
         </dataSource>
         <dataSource>
-            <label>gBank local</label>
+            <label>gBank local proportional</label>
             <basePath>/Users/Ahlse/Desktop/gBankImages/gBank.xml</basePath>
             <fontName>Andron Scriptor Web</fontName>
-            <displayMode>vector</displayMode>
-            <template>${basePath}#${id}</template>
+            <displayMode>proportional</displayMode>
+            <sizeFactor>0.5</sizeFactor>
+            <template>#${id}</template>
             <mappingAttName>subtype</mappingAttName>
             <mappingAttValue>PUA</mappingAttValue>
+        </dataSource>
+        <dataSource>
+            <label>Edirom SMuFL-Browser local proportional</label>
+            <basePath>/Users/Ahlse/Desktop/SMuFL-Browser-1.0/data/charDecl.xml</basePath>
+            <fontName>BravuraText</fontName>
+            <displayMode>proportional</displayMode>
+            <sizeFactor>0.5</sizeFactor>
+            <template>${basePath}#${id}</template>
+            <mappingAttName>type</mappingAttName>
+            <mappingAttValue>smufl</mappingAttValue>
         </dataSource>
         <dataSource>
             <label>Edirom SMuFL-Browser aerhard</label>
             <basePath>http://aerhard.github.io/glyphpicker/testdata/smuflBrowser/data/charDecl.xml</basePath>
             <fontName>BravuraText</fontName>
-            <displayMode>vector</displayMode>
+            <displayMode>fit</displayMode>
+            <sizeFactor>0.5</sizeFactor>
             <template>${basePath}#${id}</template>
             <mappingAttName>type</mappingAttName>
             <mappingAttValue>smufl</mappingAttValue>
         </dataSource>
         <dataSource>
+            <label>Edirom SMuFL-Browser aerhard bmp</label>
+            <basePath>http://aerhard.github.io/glyphpicker/testdata/smuflBrowser/data/charDecl.xml</basePath>
+            <fontName>BravuraText</fontName>
+            <displayMode>bitmap</displayMode>
+            <sizeFactor>0.8</sizeFactor>
+            <template>${basePath}#${id}</template>
+            <mappingAttName>type</mappingAttName>
+            <mappingAttValue>smufl</mappingAttValue>
+        </dataSource>
+        <dataSource>
+            <label>Edirom SMuFL-Browser local bitmap</label>
+            <basePath>/Users/Ahlse/Desktop/SMuFL-Browser-1.0/data/charDecl.xml</basePath>
+            <fontName>BravuraText</fontName>
+            <displayMode>bitmap</displayMode>
+            <sizeFactor>0.7</sizeFactor>
+            <template>${basePath}#${id}</template>
+            <mappingAttName>type</mappingAttName>
+            <mappingAttValue>smufl</mappingAttValue>
+        </dataSource>
+        <dataSource>
+            <label>gBank local bitmap</label>
+            <basePath>/Users/Ahlse/Desktop/gBankImages/gBank.xml</basePath>
+            <fontName>Andron Scriptor Web</fontName>
+            <displayMode>bitmap</displayMode>
+            <sizeFactor>1.0</sizeFactor>
+            <template>#${id}</template>
+            <mappingAttName>subtype</mappingAttName>
+            <mappingAttValue>PUA</mappingAttValue>
+        </dataSource>
+        <dataSource>
             <label>gBank aerhard</label>
             <basePath>http://aerhard.github.io/glyphpicker/testdata/gBankImages/gBank.xml</basePath>
             <fontName>BravuraText</fontName>
-            <displayMode>vector</displayMode>
-            <template>${basePath}#${id}</template>
+            <displayMode>proportional</displayMode>
+            <sizeFactor>0.5</sizeFactor>
+            <template>#${id}</template>
             <mappingAttName>subtype</mappingAttName>
             <mappingAttValue>PUA</mappingAttValue>
         </dataSource>
@@ -41,7 +85,8 @@
             <label>Edirom SMuFL-Browser json</label>
             <basePath>/Users/Ahlse/Desktop/SMuFL-Browser-1.0/data/smufl.json</basePath>
             <fontName>BravuraText</fontName>
-            <displayMode>vector</displayMode>
+            <displayMode>fit</displayMode>
+            <sizeFactor>0.5</sizeFactor>
             <template>${basePath}#${id}</template>
             <mappingAttName>type</mappingAttName>
             <mappingAttValue>smufl</mappingAttValue>
@@ -50,16 +95,18 @@
             <label>Edirom SMuFL-Browser localhost 1</label>
             <basePath>http://localhost:8080/exist/apps/smufl-browser/list/</basePath>
             <fontName>BravuraText</fontName>
-            <displayMode>vector</displayMode>
+            <displayMode>fit</displayMode>
+            <sizeFactor>0.5</sizeFactor>
             <template>${basePath}#${id}</template>
             <mappingAttName>type</mappingAttName>
             <mappingAttValue>smufl</mappingAttValue>
         </dataSource>
         <dataSource>
-            <label>Edirom SMuFL-Browser localhost 2</label>
-            <basePath>http://localhost:8080/exist/apps/smufl-browser/data/charDecl.xml</basePath>
+            <label>Edirom SMuFL-Browser localhost 1</label>
+            <basePath>http://localhost:8080/exist/apps/smufl-browser/list/</basePath>
             <fontName>BravuraText</fontName>
-            <displayMode>vector</displayMode>
+            <displayMode>fit</displayMode>
+            <sizeFactor>0.5</sizeFactor>
             <template>${basePath}#${id}</template>
             <mappingAttName>type</mappingAttName>
             <mappingAttValue>smufl</mappingAttValue>

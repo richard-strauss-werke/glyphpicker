@@ -17,13 +17,13 @@ public abstract class Controller implements ControllerEventListener {
 
     private List<ControllerEventListener> listeners = new ArrayList<ControllerEventListener>();
 
-    public void addListener(ControllerEventListener toAdd) {
-        listeners.add(toAdd);
+    public void addListener(ControllerEventListener listener) {
+        listeners.add(listener);
     }
 
     public void fireEvent(String type, GlyphDefinition model) {
-        for (ControllerEventListener il : listeners) {
-            il.eventOccured(type, model);
+        for (ControllerEventListener listener : listeners) {
+            listener.eventOccured(type, model);
         }
     }
 

@@ -5,7 +5,7 @@ import ca.odell.glazedlists.gui.TableFormat;
 import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinition;
 
 public class GlyphTableFormat implements TableFormat<GlyphDefinition> {
-    
+
     public int getColumnCount() {
         return 2;
     }
@@ -13,8 +13,7 @@ public class GlyphTableFormat implements TableFormat<GlyphDefinition> {
     public String getColumnName(int column) {
         if (column == 0) {
             return "Glyph";
-        }
-        else if (column == 1) {
+        } else if (column == 1) {
             return "Description";
         }
 
@@ -22,11 +21,11 @@ public class GlyphTableFormat implements TableFormat<GlyphDefinition> {
     }
 
     public Object getColumnValue(GlyphDefinition baseObject, int column) {
-        
+
         if (column == 0 || column == 1) {
             return baseObject;
         }
-        
+
         throw new IllegalStateException();
     }
 }

@@ -1,6 +1,7 @@
 package com.aerhard.oxygen.plugin.glyphpicker.controller;
 
 import java.io.File;
+import java.net.URL;
 import java.util.Properties;
 
 import javax.xml.bind.DataBindingException;
@@ -48,16 +49,24 @@ public class ConfigLoader {
     }
 
     public void load() {
-        File file = new File(pathName + "/" + fileName);
-        if (!file.exists()) {
-            file = new File(UserCollectionLoader.class.getResource(
-                    "/config.xml").getFile());
-        }
         config = null;
-        try {
-            config = JAXB.unmarshal(file, Config.class);
-        } catch (DataBindingException e) {
-            LOGGER.error("Error loading config.", e);
+
+        File file = new File(pathName + "/" + fileName);
+
+        if (file.exists()) {
+            try {
+                config = JAXB.unmarshal(file, Config.class);
+            } catch (DataBindingException e) {
+                LOGGER.error("Error loading config.", e);
+            }
+        } else {
+            try {
+                URL resource = UserCollectionLoader.class
+                        .getResource("/config.xml");
+                config = JAXB.unmarshal(resource, Config.class);
+            } catch (DataBindingException e) {
+                LOGGER.error("Error loading config.", e);
+            }
         }
 
         if (config == null) {

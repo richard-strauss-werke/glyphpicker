@@ -49,11 +49,15 @@ public class UserCollectionLoader {
     public GlyphDefinitions load() {
         File file = new File(pathName + "/" + fileName);
         GlyphDefinitions glyphDefinitions = null;
-        try {
-            glyphDefinitions = JAXB.unmarshal(file, GlyphDefinitions.class);
-        } catch (DataBindingException e) {
-            LOGGER.error("Error loading config.", e);
+        
+        if (file.exists()) {
+            try {
+                glyphDefinitions = JAXB.unmarshal(file, GlyphDefinitions.class);
+            } catch (DataBindingException e) {
+                LOGGER.error("Error unmarshalling user data.", e);
+            }            
         }
+
         if (glyphDefinitions == null) {
             glyphDefinitions = new GlyphDefinitions();
         }

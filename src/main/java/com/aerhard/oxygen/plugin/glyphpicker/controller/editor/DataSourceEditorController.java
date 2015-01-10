@@ -150,8 +150,8 @@ public class DataSourceEditorController {
             for (DataSource dataSource : dataSourceList) {
                 listModel.addElement(dataSource.clone());
             }
-        } catch (CloneNotSupportedException e1) {
-            LOGGER.error(e1);
+        } catch (CloneNotSupportedException e) {
+            LOGGER.error(e);
         }
 
         contentPane.getList().setModel(listModel);
@@ -174,6 +174,7 @@ public class DataSourceEditorController {
                 JOptionPane.PLAIN_MESSAGE);
 
         if (result == JOptionPane.OK_OPTION && listEditingOccurred) {
+            LOGGER.info("List editing occurred.");
             List<DataSource> resultList = new ArrayList<DataSource>();
             for (int i = 0; i < listModel.getSize(); i++) {
                 resultList.add(listModel.getElementAt(i));

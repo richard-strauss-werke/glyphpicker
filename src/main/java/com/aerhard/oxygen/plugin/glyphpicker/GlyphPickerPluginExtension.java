@@ -16,12 +16,14 @@
 
 package com.aerhard.oxygen.plugin.glyphpicker;
 
+import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Position;
 
 import org.apache.log4j.Logger;
 
+import com.aerhard.oxygen.plugin.glyphpicker.action.ChangeViewAction;
 import com.aerhard.oxygen.plugin.glyphpicker.controller.ControllerEventListener;
 import com.aerhard.oxygen.plugin.glyphpicker.controller.MainController;
 import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinition;
@@ -83,9 +85,9 @@ public class GlyphPickerPluginExtension implements
                     viewInfo.setComponent(panel);
                     viewInfo.setTitle("GlyphPicker");
 
-                    // TODO add icon
-                    // viewInfo.setIcon(Icons
-                    // .getIcon(Icons.CMS_MESSAGES_CUSTOM_VIEW_STRING));
+                    // TODO use custom icon
+                     viewInfo.setIcon(new ImageIcon(
+                             ChangeViewAction.class.getResource("/images/grid.png")));
                 }
             }
         });

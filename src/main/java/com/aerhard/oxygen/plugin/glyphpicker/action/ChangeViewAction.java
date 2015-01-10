@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 
 import javax.swing.AbstractAction;
+import javax.swing.ImageIcon;
 
 import com.aerhard.oxygen.plugin.glyphpicker.view.ContainerPanel;
 import com.aerhard.oxygen.plugin.glyphpicker.view.GlyphGrid;
@@ -20,12 +21,13 @@ public class ChangeViewAction extends AbstractAction {
 
     public ChangeViewAction(ContainerPanel panel, GlyphTable table,
             GlyphGrid list) {
-        super("Switch View");
+        super("Toggle Grid View", new ImageIcon(
+                ChangeViewAction.class.getResource("/images/grid.png")));
         this.panel = panel;
         this.table = table;
         this.list = list;
-        putValue(SHORT_DESCRIPTION, "Switches the glyph list view style.");
-        putValue(MNEMONIC_KEY, Integer.valueOf(KeyEvent.VK_V));
+        putValue(SHORT_DESCRIPTION, "Toggles between glyph list view styles.");
+        putValue(MNEMONIC_KEY, Integer.valueOf(KeyEvent.VK_T));
     }
 
     @Override

@@ -37,7 +37,7 @@ import java.util.List;
 public class DataSourceEditor extends JPanel {
 
     private static final long serialVersionUID = 1L;
-    
+
     public static final String EDITING_OCCURRED = "editingOccurred";
 
     private static final int PREFERRED_WIDTH = 600;
@@ -88,10 +88,10 @@ public class DataSourceEditor extends JPanel {
         add(editorPanel);
         GridBagLayout gbl = new GridBagLayout();
         gbl.columnWidths = new int[] { 102, 46 };
-        gbl.rowHeights = new int[] { 20, 0, 0, 0, 0, 0, 0, 0 };
+        gbl.rowHeights = new int[] { 20, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
         gbl.columnWeights = new double[] { 0.0, 1.0 };
-        gbl.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
-                0.0, Double.MIN_VALUE };
+        gbl.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+                Double.MIN_VALUE };
         editorPanel.setLayout(gbl);
 
         labelTextField = new JTextField();
@@ -127,7 +127,7 @@ public class DataSourceEditor extends JPanel {
             eci.getComponent().setEnabled(enabled);
         }
     }
-    
+
     private class TextFieldEditingListener implements DocumentListener {
 
         @Override
@@ -168,7 +168,8 @@ public class DataSourceEditor extends JPanel {
             ((JTextField) component).getDocument().addDocumentListener(
                     new TextFieldEditingListener());
         } else if (component instanceof JComboBox) {
-            ((JComboBox<?>) component).addActionListener(new ComboChangeListener());
+            ((JComboBox<?>) component)
+                    .addActionListener(new ComboChangeListener());
         }
         GridBagConstraints gbcComponent = new GridBagConstraints();
         gbcComponent.insets = new Insets(0, 0, 5, 0);

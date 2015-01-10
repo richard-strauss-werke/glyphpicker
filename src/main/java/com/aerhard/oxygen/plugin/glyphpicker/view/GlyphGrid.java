@@ -24,7 +24,7 @@ public class GlyphGrid extends JList<GlyphDefinition> {
         setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         addComponentListener(new ResizeAdapter());
     }
-    
+
     public void setFixedSize(int size) {
         this.size = size;
         setFixedCellWidth(size);
@@ -63,7 +63,8 @@ public class GlyphGrid extends JList<GlyphDefinition> {
     }
 
     private int computeVisibleColumnCount() {
-        return Math.max((int) Math.floor(getVisibleRect().width / (double)size), 1);
+        return Math.max(
+                (int) Math.floor(getVisibleRect().width / (double) size), 1);
     }
 
     // @Override

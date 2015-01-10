@@ -43,7 +43,6 @@ public class GlyphDefinition implements Cloneable {
     @XmlTransient
     private boolean iconLoadingLaunched = false;
 
-
     public GlyphDefinition() {
 
     }
@@ -161,7 +160,7 @@ public class GlyphDefinition implements Cloneable {
     public void setIconLoadingLaunched(boolean iconLoadingLaunched) {
         this.iconLoadingLaunched = iconLoadingLaunched;
     }
-    
+
     public String toString() {
         return codePoint + ": " + charName + " (" + range + ")";
     }
@@ -198,7 +197,7 @@ public class GlyphDefinition implements Cloneable {
 
         // return getDataSource().getPath() + "#" + getId();
     }
-    
+
     @Override
     public GlyphDefinition clone() throws CloneNotSupportedException {
         return (GlyphDefinition) super.clone();

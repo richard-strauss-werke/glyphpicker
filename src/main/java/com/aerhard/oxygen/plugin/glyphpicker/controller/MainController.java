@@ -25,7 +25,7 @@ public class MainController extends Controller {
 
         Properties properties = new Properties();
         try {
-            properties.load(ConfigLoader.class
+            properties.load(MainController.class
                     .getResourceAsStream("/plugin.properties"));
         } catch (IOException e) {
             LOGGER.error("Could not read \"plugin.properties\".");

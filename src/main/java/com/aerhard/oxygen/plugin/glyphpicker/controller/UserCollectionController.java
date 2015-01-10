@@ -2,12 +2,14 @@ package com.aerhard.oxygen.plugin.glyphpicker.controller;
 
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Properties;
 
 import javax.swing.AbstractAction;
+import javax.swing.ImageIcon;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingUtilities;
 import javax.swing.event.ListSelectionEvent;
@@ -93,20 +95,32 @@ public class UserCollectionController extends Controller {
 
         selectionModel.addListSelectionListener(new GlyphSelectionListener());
 
+       glyphList.addListEventListener(new ListEventListener<GlyphDefinition>() {
+            @Override
+            public void listChanged(ListEvent<GlyphDefinition> e) {
+                if (selectionModel.isSelectionEmpty() && glyphList.size() > 0 ) {
+                    selectionModel.setSelectionInterval(0, 0);
+                }
+                
+             // TODO reevaluate list layout
+                
+            }
+        });
+        
         setListeners();
 
     }
 
     private void setButtons() {
 
-        removeAction = new RemoveFromUserCollectionAction();
-        removeAction.setEnabled(false);
-        panel.addToButtonPanel(removeAction);
-
         insertAction = new InsertXmlAction();
         insertAction.setEnabled(false);
         insertBtn = new HighlightButton(insertAction);
         panel.addToButtonPanel(insertBtn);
+
+        removeAction = new RemoveFromUserCollectionAction();
+        removeAction.setEnabled(false);
+        panel.addToButtonPanel(removeAction);
 
         saveAction = new SaveAction();
         saveAction.setEnabled(false);
@@ -147,7 +161,9 @@ public class UserCollectionController extends Controller {
         private static final long serialVersionUID = 1L;
 
         private SaveAction() {
-            super("Save Collection");
+            super("Save Collection", new ImageIcon(
+                    UserCollectionController.class
+                            .getResource("/images/disk.png")));
             putValue(SHORT_DESCRIPTION, "Save the User Collection.");
             putValue(MNEMONIC_KEY, Integer.valueOf(KeyEvent.VK_S));
         }
@@ -164,7 +180,9 @@ public class UserCollectionController extends Controller {
         private static final long serialVersionUID = 1L;
 
         private ReloadAction() {
-            super("Reload Collection");
+            super("Reload Collection", new ImageIcon(
+                    ChangeViewAction.class
+                            .getResource("/images/arrow-circle-225-left.png")));
             putValue(SHORT_DESCRIPTION, "Reload the User Collection.");
             putValue(MNEMONIC_KEY, Integer.valueOf(KeyEvent.VK_L));
         }
@@ -181,7 +199,8 @@ public class UserCollectionController extends Controller {
         private static final long serialVersionUID = 1L;
 
         private RemoveFromUserCollectionAction() {
-            super("Remove from User Collection");
+            super("Remove Item", new ImageIcon(
+                    ChangeViewAction.class.getResource("/images/minus.png")));
             putValue(SHORT_DESCRIPTION,
                     "Remove the selected glyph from the user collection.");
             putValue(MNEMONIC_KEY, Integer.valueOf(KeyEvent.VK_R));
@@ -197,7 +216,9 @@ public class UserCollectionController extends Controller {
         private static final long serialVersionUID = 1L;
 
         InsertXmlAction() {
-            super("Insert XML");
+            super("Insert XML", new ImageIcon(
+                    UserCollectionController.class
+                            .getResource("/images/blue-document-import.png")));
             putValue(SHORT_DESCRIPTION,
                     "Insert the selected glyph to the document.");
             putValue(MNEMONIC_KEY, Integer.valueOf(KeyEvent.VK_I));
@@ -264,6 +285,18 @@ public class UserCollectionController extends Controller {
         table.addMouseListener(mouseAdapter);
         list.addMouseListener(mouseAdapter);
 
+        KeyAdapter enterKeyAdapter = new KeyAdapter() {
+            public void keyReleased(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    insertBtn.highlight();
+                    insertGlyph();
+                }
+            }
+        };
+        
+        table.addKeyListener(enterKeyAdapter);
+        list.addKeyListener(enterKeyAdapter);
+        
         glyphList
                 .addListEventListener(new ListEventListener<GlyphDefinition>() {
                     @Override

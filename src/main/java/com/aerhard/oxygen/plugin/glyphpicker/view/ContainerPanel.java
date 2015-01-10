@@ -16,6 +16,7 @@ import javax.swing.border.EtchedBorder;
 import javax.swing.border.MatteBorder;
 
 import com.jidesoft.swing.DefaultOverlayable;
+import javax.swing.UIManager;
 
 public class ContainerPanel extends JPanel {
 
@@ -44,8 +45,14 @@ public class ContainerPanel extends JPanel {
         jPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         jPane.setBorder(new EtchedBorder());
 
-        overlayable = new DefaultOverlayable(jPane, new JLabel(
-                "Loading data ..."));
+        JPanel overlayPanel = new JPanel();
+        overlayPanel.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
+        JLabel overlayLabel = new JLabel(
+                "Loading data ...");
+        overlayPanel.add(overlayLabel);
+        overlayPanel.setBackground(UIManager.getColor("Panel.background"));
+        
+        overlayable = new DefaultOverlayable(jPane, overlayPanel);
         tablePanel.add(overlayable, BorderLayout.CENTER);
 
         infoLabel = new JTextField(null);

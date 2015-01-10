@@ -14,6 +14,6 @@
         <library name="lib/${project.build.finalName}.jar"/>
     </runtime>
     <extension type="WorkspaceAccess" 
-    class="com.aerhard.oxygen.plugin.glyphpicker.GlyphPickerPluginExtension"/>
+    class="com.aerhard.oxygen.plugin.glyphpicker.GlyphPickerPluginExtension" keyboardShortcut="ctrl shift I"/>
     <view id="GlyphPicker" initialSide="EAST" initialRow="0"/>
 </plugin> 

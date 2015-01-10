@@ -16,7 +16,7 @@ public class GlyphBitmapRenderer extends GlyphRenderer {
         super(container);
         this.container = container;
     }
-    
+
     @Override
     public Component getRendererComponent(GlyphDefinition gd, boolean isSelected) {
 
@@ -34,12 +34,12 @@ public class GlyphBitmapRenderer extends GlyphRenderer {
 
         if (!gd.isIconLoadingLaunched()) {
             gd.setIconLoadingLaunched(true);
-            
+
             float factor = gd.getDataSource().getSizeFactor();
             new GlyphBitmapIconLoader(gd, container,
                     Math.round(getPreferredSize().height * factor)).execute();
-        } 
-        
+        }
+
         // sets either null or the loaded icon
         setIcon(gd.getIcon());
 

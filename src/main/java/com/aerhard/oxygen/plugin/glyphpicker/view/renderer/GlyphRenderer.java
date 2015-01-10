@@ -17,7 +17,7 @@ public abstract class GlyphRenderer extends JLabel {
     private Color containerSelectionForeground;
     private Color containerBackground;
     private Color containerForeground;
-    
+
     public GlyphRenderer(JComponent container) {
         setVerticalAlignment(CENTER);
         setHorizontalAlignment(CENTER);

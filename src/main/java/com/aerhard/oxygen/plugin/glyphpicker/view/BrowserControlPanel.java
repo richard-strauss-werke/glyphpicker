@@ -5,13 +5,15 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.JToggleButton;
 import javax.swing.border.EmptyBorder;
+import javax.swing.JToolBar;
+import java.awt.Component;
+import javax.swing.Box;
 
 public class BrowserControlPanel extends JPanel {
 
@@ -21,35 +23,54 @@ public class BrowserControlPanel extends JPanel {
     private JTextField fulltextTextField;
     private JButton viewBtn;
     private JToggleButton sortBtn;
+    private JToolBar toolBar;
+    private Component horizontalGlue;
 
     public BrowserControlPanel() {
         setBorder(new EmptyBorder(8, 8, 0, 8));
 
         GridBagLayout gridBagLayout = new GridBagLayout();
-        gridBagLayout.columnWidths = new int[] {62, 199, 55, 55};
+        gridBagLayout.columnWidths = new int[] { 62, 199, 55, 55 };
         gridBagLayout.rowHeights = new int[] { 0, 0, 0, 0 };
         gridBagLayout.columnWeights = new double[] { 0.0, 1.0, 0.0, 0.0 };
-        gridBagLayout.rowWeights = new double[] { 0.0, Double.MIN_VALUE,
-                0.0, 0.0 };
+        gridBagLayout.rowWeights = new double[] { 0.0, Double.MIN_VALUE, 0.0,
+                0.0 };
         setLayout(gridBagLayout);
 
-        sortBtn = new JCheckBox();
-        GridBagConstraints gbcSortBtn = new GridBagConstraints();
-        gbcSortBtn.insets = new Insets(5, 0, 5, 5);
-        gbcSortBtn.fill = GridBagConstraints.BOTH;
-        gbcSortBtn.anchor = GridBagConstraints.WEST;
-        gbcSortBtn.gridx = 2;
-        gbcSortBtn.gridy = 0;
-        add(sortBtn, gbcSortBtn);
-        
+        toolBar = new JToolBar();
+        toolBar.setFloatable(false);
+        GridBagConstraints gbc_toolBar = new GridBagConstraints();
+        gbc_toolBar.fill = GridBagConstraints.HORIZONTAL;
+        gbc_toolBar.gridwidth = 4;
+        gbc_toolBar.insets = new Insets(0, 0, 0, 5);
+        gbc_toolBar.gridx = 0;
+        gbc_toolBar.gridy = 0;
+        add(toolBar, gbc_toolBar);
+
+        horizontalGlue = Box.createHorizontalGlue();
+        toolBar.add(horizontalGlue);
+
+        sortBtn = new JToggleButton();
+        toolBar.add(sortBtn);
+        // GridBagConstraints gbcSortBtn = new GridBagConstraints();
+        // gbcSortBtn.insets = new Insets(5, 0, 5, 5);
+        // gbcSortBtn.fill = GridBagConstraints.BOTH;
+        // gbcSortBtn.anchor = GridBagConstraints.WEST;
+        // gbcSortBtn.gridx = 2;
+        // gbcSortBtn.gridy = 0;
+        // add(sortBtn, gbcSortBtn);
+
+        toolBar.addSeparator();
+
         viewBtn = new JButton();
-        GridBagConstraints gbcViewBtn = new GridBagConstraints();
-        gbcViewBtn.insets = new Insets(5, 0, 5, 0);
-        gbcViewBtn.fill = GridBagConstraints.BOTH;
-        gbcViewBtn.anchor = GridBagConstraints.WEST;
-        gbcViewBtn.gridx = 3;
-        gbcViewBtn.gridy = 0;
-        add(viewBtn, gbcViewBtn);
+        toolBar.add(viewBtn);
+        // GridBagConstraints gbcViewBtn = new GridBagConstraints();
+        // gbcViewBtn.insets = new Insets(5, 0, 5, 0);
+        // gbcViewBtn.fill = GridBagConstraints.BOTH;
+        // gbcViewBtn.anchor = GridBagConstraints.WEST;
+        // gbcViewBtn.gridx = 3;
+        // gbcViewBtn.gridy = 0;
+        // add(viewBtn, gbcViewBtn);
 
         JLabel dataSourceLabel = new JLabel("Data source:");
         GridBagConstraints gbcDataSourceLabel = new GridBagConstraints();
@@ -95,7 +116,7 @@ public class BrowserControlPanel extends JPanel {
         gbcFulltextTextField.gridwidth = 3;
         gbcFulltextTextField.weightx = 1.0;
         gbcFulltextTextField.fill = GridBagConstraints.BOTH;
-        gbcFulltextTextField.insets = new Insets(5, 0, 5, 5);
+        gbcFulltextTextField.insets = new Insets(5, 0, 5, 0);
         gbcFulltextTextField.gridx = 1;
         gbcFulltextTextField.gridy = 2;
         add(fulltextTextField, gbcFulltextTextField);
@@ -156,7 +177,7 @@ public class BrowserControlPanel extends JPanel {
     public JToggleButton getSortBtn() {
         return sortBtn;
     }
-    
+
     public JButton getViewBtn() {
         return viewBtn;
     }
