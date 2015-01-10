@@ -1,9 +1,8 @@
-target/*
+/target/*
 
-!target/update
+!/target/update/*
 
 .project
 .classpath
 .settings
 
-/target
