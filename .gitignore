@@ -1,7 +1,8 @@
 
 
-/target
-!/target/update
+!/target
+/target/*
+!/target/update/
 
 .project
 .classpath
