@@ -52,7 +52,7 @@ public class GlyphGrid extends JList<GlyphDefinition> {
         scrollRectToVisible(targetViewRect);
     }
 
-    private void fixRowCountForVisibleColumns() {
+    public void fixRowCountForVisibleColumns() {
         int nCols = computeVisibleColumnCount();
         int nItems = getModel().getSize();
         int nRows = nItems / nCols;

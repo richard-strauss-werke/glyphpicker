@@ -24,7 +24,7 @@ public class DataSource implements Cloneable {
     @XmlElement(name = "sizeFactor")
     private Float sizeFactor = 0.5f;
     @XmlElement(name = "template")
-    private String template;
+    private String template = "";
     @XmlElement(name = "mappingAttName")
     private String mappingAttName;
     @XmlElement(name = "mappingAttValue")

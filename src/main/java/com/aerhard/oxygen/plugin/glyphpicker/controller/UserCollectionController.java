@@ -102,7 +102,10 @@ public class UserCollectionController extends Controller {
                     selectionModel.setSelectionInterval(0, 0);
                 }
                 
-             // TODO reevaluate list layout
+             // reevaluate list layout
+                if (list.isVisible()) {
+                    list.fixRowCountForVisibleColumns();
+                }
                 
             }
         });

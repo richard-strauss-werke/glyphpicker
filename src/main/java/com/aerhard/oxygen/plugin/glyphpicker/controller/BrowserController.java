@@ -2,6 +2,7 @@ package com.aerhard.oxygen.plugin.glyphpicker.controller;
 
 import java.awt.AWTEvent;
 import java.awt.Dimension;
+import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
@@ -81,6 +82,8 @@ public class BrowserController extends Controller {
 
     private HighlightButton insertBtn;
 
+    private JTextField ftTextField;
+
     @SuppressWarnings({ "unchecked" })
     public BrowserController(Config config) {
 
@@ -90,7 +93,7 @@ public class BrowserController extends Controller {
 
         glyphList = new BasicEventList<GlyphDefinition>();
 
-        JTextField ftTextField = controlPanel.getFulltextTextField();
+        ftTextField = controlPanel.getFulltextTextField();
 
         // EventComboBoxModel<GlyphDefinition> ftComboModel = new
         // EventComboBoxModel<GlyphDefinition>(gList);
@@ -196,7 +199,10 @@ public class BrowserController extends Controller {
                     selectionModel.setSelectionInterval(0, 0);
                 }
                 
-                // TODO reevaluate list layout
+                // reevaluate list layout
+                if (list.isVisible()) {
+                    list.fixRowCountForVisibleColumns();
+                }
                 
             }
         });
@@ -489,6 +495,33 @@ public class BrowserController extends Controller {
         table.addKeyListener(enterKeyAdapter);
         list.addKeyListener(enterKeyAdapter);
         
+        KeyAdapter ftKeyAdapter = new KeyAdapter() {
+            public void keyReleased(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    insertBtn.highlight();
+                    insertGlyph();
+                }
+                
+                else if (e.getKeyCode() == KeyEvent.VK_UP) {
+                    int i = selectionModel.getAnchorSelectionIndex();
+                    if (i > 0) {
+                        selectionModel.setSelectionInterval(i-1, i-1);
+                    }
+                }
+                    
+               else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+                    int i = selectionModel.getAnchorSelectionIndex();
+                    int size = filterList.size();
+                    if (i < size - 1) {
+                        selectionModel.setSelectionInterval(i+1, i+1);
+                    }
+                }
+                
+            }
+        };
+        
+        ftTextField.addKeyListener(ftKeyAdapter);
+        
         // sharedListModel.addTableModelListener(new TableModelListener() {
         // @Override
         // public void tableChanged(TableModelEvent e) {
@@ -597,6 +630,9 @@ public class BrowserController extends Controller {
 
         SwingWorker<List<GlyphDefinition>, Void> worker = new LoadWorker(
                 dataSource);
+        
+        // TODO cancel previous worker instead of skipping latest worker
+        
         worker.execute();
     }
 
@@ -629,8 +665,13 @@ public class BrowserController extends Controller {
     }
 
     private void processLoadedData(List<GlyphDefinition> data) {
+        
         glyphList.clear();
 
+        selectionModel.clearSelection();
+        table.scrollRectToVisible(new Rectangle(0, 0));
+        list.scrollRectToVisible(new Rectangle(0, 0));
+        
         // when loading was successful, set the loading path as
         // first item in the pathComboModel
         if (data != null) {
@@ -641,6 +682,7 @@ public class BrowserController extends Controller {
                 dataSourceList.setFirstIndex(index);
             }
         }
+
     }
 
     @Override
