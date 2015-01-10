@@ -17,6 +17,8 @@ import javax.swing.border.MatteBorder;
 
 import com.jidesoft.swing.DefaultOverlayable;
 import javax.swing.UIManager;
+import java.awt.GridBagLayout;
+import java.awt.GridBagConstraints;
 
 public class ContainerPanel extends JPanel {
 
@@ -27,6 +29,9 @@ public class ContainerPanel extends JPanel {
     private JScrollPane jPane;
     private DefaultOverlayable overlayable;
     private JTextField infoLabel;
+
+    private JPanel infoPanel;
+    private JTextField infoLabel2;
 
     public ContainerPanel(JPanel controlPanel) {
         setLayout(new BorderLayout(0, 0));
@@ -54,11 +59,41 @@ public class ContainerPanel extends JPanel {
         
         overlayable = new DefaultOverlayable(jPane, overlayPanel);
         tablePanel.add(overlayable, BorderLayout.CENTER);
-
+        
+        infoPanel = new JPanel();
+        GridBagLayout gbl_infoPanel = new GridBagLayout();
+        gbl_infoPanel.columnWidths = new int[]{210, 14, 0};
+        gbl_infoPanel.rowHeights = new int[] {0, 0};
+        gbl_infoPanel.columnWeights = new double[]{1.0, 0.0, Double.MIN_VALUE};
+        gbl_infoPanel.rowWeights = new double[]{0.0, 0.0};
+        infoPanel.setLayout(gbl_infoPanel);
+        
+        tablePanel.add(infoPanel, BorderLayout.SOUTH);
+        
         infoLabel = new JTextField(null);
         infoLabel.setEditable(false);
         infoLabel.setMargin(new Insets(2, 6, 2, 6));
-        tablePanel.add(infoLabel, BorderLayout.SOUTH);
+        GridBagConstraints gbc_infoLabel = new GridBagConstraints();
+        gbc_infoLabel.insets = new Insets(0, 0, 5, 1);
+        gbc_infoLabel.gridwidth = 2;
+        gbc_infoLabel.weightx = 1.0;
+        gbc_infoLabel.fill = GridBagConstraints.HORIZONTAL;
+        gbc_infoLabel.anchor = GridBagConstraints.NORTHWEST;
+        gbc_infoLabel.gridx = 0;
+        gbc_infoLabel.gridy = 0;
+        infoPanel.add(infoLabel, gbc_infoLabel);
+        
+        infoLabel2 = new JTextField();
+        infoLabel2.setEditable(false);
+        infoLabel2.setMargin(new Insets(2, 6, 2, 6));
+        GridBagConstraints gbc_infoLabel2 = new GridBagConstraints();
+        gbc_infoLabel2.insets = new Insets(0, 0, 7, 1);
+        gbc_infoLabel2.gridwidth = 2;
+        gbc_infoLabel2.fill = GridBagConstraints.HORIZONTAL;
+        gbc_infoLabel2.gridx = 0;
+        gbc_infoLabel2.gridy = 1;
+        infoPanel.add(infoLabel2, gbc_infoLabel2);
+        infoLabel2.setColumns(10);
 
         buttonPanel = new JPanel();
         buttonPanel.setBorder(new MatteBorder(1, 0, 0, 0, (Color) Color.GRAY));
@@ -92,10 +127,18 @@ public class ContainerPanel extends JPanel {
         buttonPanel.add(new JButton(action));
     }
 
+    public JPanel getInfoPanel() {
+        return infoPanel;
+    }
+
     public JTextField getInfoLabel() {
         return infoLabel;
     }
-
+    
+    public JTextField getInfoLabel2() {
+        return infoLabel2;
+    }
+    
     public DefaultOverlayable getOverlayable() {
         return overlayable;
     }

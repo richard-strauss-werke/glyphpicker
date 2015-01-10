@@ -52,11 +52,6 @@ import com.aerhard.oxygen.plugin.glyphpicker.view.HighlightButton;
 import com.aerhard.oxygen.plugin.glyphpicker.view.editor.DataSourceEditor;
 import com.aerhard.oxygen.plugin.glyphpicker.view.renderer.GlyphRendererAdapter;
 
-// TODO use accelerators instead of mnemonic keys + add infos in tooltips!
-// + move actions to toolbar?
-
-// grid size vielleicht in voreinstellungen konfigurbar machen!
-
 public class BrowserController extends Controller {
 
     private static final Logger LOGGER = Logger
@@ -129,7 +124,7 @@ public class BrowserController extends Controller {
         sortedList = new SortedList<GlyphDefinition>(glyphList, null);
 
         filterList = new FilterList<GlyphDefinition>(sortedList, filter);
-        
+
         list = new GlyphGrid(new DefaultEventListModel<GlyphDefinition>(
                 filterList));
         GlyphRendererAdapter r = new GlyphRendererAdapter(list);
@@ -191,22 +186,23 @@ public class BrowserController extends Controller {
 
         selectionModel.addListSelectionListener(new GlyphSelectionListener());
 
+        filterList
+                .addListEventListener(new ListEventListener<GlyphDefinition>() {
+                    @Override
+                    public void listChanged(ListEvent<GlyphDefinition> e) {
+                        if (selectionModel.isSelectionEmpty()
+                                && filterList.size() > 0) {
+                            selectionModel.setSelectionInterval(0, 0);
+                        }
 
-        filterList.addListEventListener(new ListEventListener<GlyphDefinition>() {
-            @Override
-            public void listChanged(ListEvent<GlyphDefinition> e) {
-                if (selectionModel.isSelectionEmpty() && filterList.size() > 0 ) {
-                    selectionModel.setSelectionInterval(0, 0);
-                }
-                
-                // reevaluate list layout
-                if (list.isVisible()) {
-                    list.fixRowCountForVisibleColumns();
-                }
-                
-            }
-        });
-        
+                        // reevaluate list layout
+                        if (list.isVisible()) {
+                            list.fixRowCountForVisibleColumns();
+                        }
+
+                    }
+                });
+
         setListeners();
 
     }
@@ -419,6 +415,7 @@ public class BrowserController extends Controller {
 
                     if (glyphDefinition == null) {
                         panel.getInfoLabel().setText(null);
+                        panel.getInfoLabel2().setText(null);
                     } else {
                         String charName = glyphDefinition.getCharName();
                         panel.getInfoLabel().setText(
@@ -426,7 +423,10 @@ public class BrowserController extends Controller {
                                         + (charName == null ? "" : ": "
                                                 + charName.replaceAll(
                                                         "\\s\\s+", " ")));
+                        panel.getInfoLabel2().setText(
+                                glyphDefinition.getRange());
                     }
+                    
                 }
 
                 addAction.setEnabled(enableButtons);
@@ -482,7 +482,7 @@ public class BrowserController extends Controller {
 
         table.addMouseListener(mouseAdapter);
         list.addMouseListener(mouseAdapter);
-        
+
         KeyAdapter enterKeyAdapter = new KeyAdapter() {
             public void keyReleased(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
@@ -491,37 +491,37 @@ public class BrowserController extends Controller {
                 }
             }
         };
-        
+
         table.addKeyListener(enterKeyAdapter);
         list.addKeyListener(enterKeyAdapter);
-        
+
         KeyAdapter ftKeyAdapter = new KeyAdapter() {
             public void keyReleased(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
                     insertBtn.highlight();
                     insertGlyph();
                 }
-                
+
                 else if (e.getKeyCode() == KeyEvent.VK_UP) {
                     int i = selectionModel.getAnchorSelectionIndex();
                     if (i > 0) {
-                        selectionModel.setSelectionInterval(i-1, i-1);
+                        selectionModel.setSelectionInterval(i - 1, i - 1);
                     }
                 }
-                    
-               else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+
+                else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
                     int i = selectionModel.getAnchorSelectionIndex();
                     int size = filterList.size();
                     if (i < size - 1) {
-                        selectionModel.setSelectionInterval(i+1, i+1);
+                        selectionModel.setSelectionInterval(i + 1, i + 1);
                     }
                 }
-                
+
             }
         };
-        
+
         ftTextField.addKeyListener(ftKeyAdapter);
-        
+
         // sharedListModel.addTableModelListener(new TableModelListener() {
         // @Override
         // public void tableChanged(TableModelEvent e) {
@@ -630,9 +630,9 @@ public class BrowserController extends Controller {
 
         SwingWorker<List<GlyphDefinition>, Void> worker = new LoadWorker(
                 dataSource);
-        
+
         // TODO cancel previous worker instead of skipping latest worker
-        
+
         worker.execute();
     }
 
@@ -665,13 +665,13 @@ public class BrowserController extends Controller {
     }
 
     private void processLoadedData(List<GlyphDefinition> data) {
-        
+
         glyphList.clear();
 
         selectionModel.clearSelection();
         table.scrollRectToVisible(new Rectangle(0, 0));
         list.scrollRectToVisible(new Rectangle(0, 0));
-        
+
         // when loading was successful, set the loading path as
         // first item in the pathComboModel
         if (data != null) {

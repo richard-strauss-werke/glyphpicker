@@ -257,6 +257,7 @@ public class UserCollectionController extends Controller {
 
                     if (glyphDefinition == null) {
                         panel.getInfoLabel().setText(null);
+                        panel.getInfoLabel2().setText(null);
                     } else {
                         String charName = glyphDefinition.getCharName();
                         panel.getInfoLabel().setText(
@@ -264,7 +265,10 @@ public class UserCollectionController extends Controller {
                                         + (charName == null ? "" : ": "
                                                 + charName.replaceAll(
                                                         "\\s\\s+", " ")));
+                        panel.getInfoLabel2().setText(
+                                glyphDefinition.getRange());
                     }
+                    
                 }
 
                 removeAction.setEnabled(enableButtons);
