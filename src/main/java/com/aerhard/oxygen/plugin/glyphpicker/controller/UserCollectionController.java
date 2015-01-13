@@ -52,11 +52,13 @@ public class UserCollectionController extends Controller {
 
     private HighlightButton insertBtn;
 
+    private UserCollectionControlPanel controlPanel;
+
     @SuppressWarnings("unchecked")
     public UserCollectionController(StandalonePluginWorkspace workspace,
             Properties properties) {
 
-        UserCollectionControlPanel controlPanel = new UserCollectionControlPanel();
+         controlPanel = new UserCollectionControlPanel();
 
         panel = new ContainerPanel(controlPanel);
 
@@ -330,14 +332,14 @@ public class UserCollectionController extends Controller {
 
     @Override
     public void loadData() {
-        panel.getOverlayable().setOverlayVisible(true);
+        panel.setMask(true);
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
                 listInSync = true;
                 glyphList.clear();
                 glyphList.addAll(loader.load().getData());
-                panel.getOverlayable().setOverlayVisible(false);
+                panel.setMask(false);
             }
         });
     }

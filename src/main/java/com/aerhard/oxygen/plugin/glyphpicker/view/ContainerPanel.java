@@ -33,6 +33,8 @@ public class ContainerPanel extends JPanel {
     private JPanel infoPanel;
     private JTextField infoLabel2;
 
+    private JPanel overlayPanel;
+
     public ContainerPanel(JPanel controlPanel) {
         setLayout(new BorderLayout(0, 0));
 
@@ -50,7 +52,7 @@ public class ContainerPanel extends JPanel {
         jPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         jPane.setBorder(new EtchedBorder());
 
-        JPanel overlayPanel = new JPanel();
+        overlayPanel = new JPanel();
         overlayPanel.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
         JLabel overlayLabel = new JLabel(
                 "Loading data ...");
@@ -139,8 +141,11 @@ public class ContainerPanel extends JPanel {
         return infoLabel2;
     }
     
-    public DefaultOverlayable getOverlayable() {
-        return overlayable;
+    public void setMask(boolean mask) {
+//        if (mask) {
+//            overlayPanel.setPreferredSize(overlayable.getSize());            
+//        }
+        overlayable.setOverlayVisible(mask);
     }
 
 }

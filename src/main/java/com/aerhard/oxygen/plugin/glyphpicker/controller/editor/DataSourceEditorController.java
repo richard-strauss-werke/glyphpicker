@@ -158,6 +158,11 @@ public class DataSourceEditorController {
         contentPane.getList().setSelectionMode(
                 ListSelectionModel.SINGLE_SELECTION);
 
+        if (listModel.size() > 0) {
+            contentPane.getList().setSelectedIndex(0);
+            onListSelection();
+        }
+        
         contentPane.getList().getSelectionModel()
                 .addListSelectionListener(new ListSelectionListener() {
 

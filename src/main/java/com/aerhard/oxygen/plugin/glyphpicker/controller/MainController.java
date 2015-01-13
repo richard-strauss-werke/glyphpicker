@@ -80,6 +80,7 @@ public class MainController extends Controller {
                 LOGGER.error(e);
             }
         }
+        
     }
 
     @Override

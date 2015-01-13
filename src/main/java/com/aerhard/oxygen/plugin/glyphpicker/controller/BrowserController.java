@@ -54,6 +54,8 @@ import com.aerhard.oxygen.plugin.glyphpicker.view.renderer.GlyphRendererAdapter;
 
 public class BrowserController extends Controller {
 
+    // TODO use progress dialog when loading data
+    
     private static final Logger LOGGER = Logger
             .getLogger(BrowserController.class.getName());
 
@@ -626,8 +628,10 @@ public class BrowserController extends Controller {
             return;
         }
         isLoading = true;
-        panel.getOverlayable().setOverlayVisible(true);
+        panel.setMask(true);
 
+        
+        
         SwingWorker<List<GlyphDefinition>, Void> worker = new LoadWorker(
                 dataSource);
 
@@ -639,13 +643,20 @@ public class BrowserController extends Controller {
     private class LoadWorker extends SwingWorker<List<GlyphDefinition>, Void> {
 
         private DataSource dataSource;
+//        private JDialog dialog;
 
         public LoadWorker(DataSource dataSource) {
             this.dataSource = dataSource;
+//            dialog = new JDialog();
+//            dialog.setLocationRelativeTo(panel);
+//            dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+//
+//            });
         }
 
         @Override
         protected List<GlyphDefinition> doInBackground() {
+//            dialog.setVisible(true);
             return loader.loadData(dataSource);
         }
 
@@ -659,7 +670,8 @@ public class BrowserController extends Controller {
                 LOGGER.error(e);
             } finally {
                 isLoading = false;
-                panel.getOverlayable().setOverlayVisible(false);
+                panel.setMask(false);
+//                dialog.dispose();
             }
         }
     }
