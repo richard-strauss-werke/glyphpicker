@@ -16,17 +16,20 @@
 
 package com.aerhard.oxygen.plugin.glyphpicker;
 
+import java.awt.event.ActionEvent;
+import javax.swing.AbstractAction;
 import javax.swing.ImageIcon;
-import javax.swing.JComponent;
+import javax.swing.JMenuBar;
+import javax.swing.KeyStroke;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Position;
 
 import org.apache.log4j.Logger;
 
-import com.aerhard.oxygen.plugin.glyphpicker.action.ChangeViewAction;
 import com.aerhard.oxygen.plugin.glyphpicker.controller.ControllerEventListener;
 import com.aerhard.oxygen.plugin.glyphpicker.controller.MainController;
 import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinition;
+import com.aerhard.oxygen.plugin.glyphpicker.view.MainPanel;
 
 import ro.sync.ecss.extensions.api.AuthorAccess;
 import ro.sync.ecss.extensions.api.AuthorOperationException;
@@ -35,6 +38,7 @@ import ro.sync.exml.workspace.api.PluginWorkspace;
 import ro.sync.exml.workspace.api.editor.page.WSEditorPage;
 import ro.sync.exml.workspace.api.editor.page.author.WSAuthorEditorPage;
 import ro.sync.exml.workspace.api.editor.page.text.WSTextEditorPage;
+import ro.sync.exml.workspace.api.standalone.MenuBarCustomizer;
 import ro.sync.exml.workspace.api.standalone.StandalonePluginWorkspace;
 import ro.sync.exml.workspace.api.standalone.ViewComponentCustomizer;
 import ro.sync.exml.workspace.api.standalone.ViewInfo;
@@ -49,7 +53,39 @@ public class GlyphPickerPluginExtension implements
     private static final Logger LOGGER = Logger
             .getLogger(GlyphPickerPluginExtension.class.getName());
 
+    private static final String PLUGIN_ICON = "/images/grid.png";
+    private static final String VIEW_ID = "GlyphPicker";
+
     private MainController mainController;
+
+    private MainPanel mainPanel;
+
+    private class TogglePickerWindowAction extends AbstractAction {
+        private static final long serialVersionUID = 1L;
+
+        private StandalonePluginWorkspace workspace;
+        
+        TogglePickerWindowAction(StandalonePluginWorkspace workspace) {
+            super("GyphPicker", new ImageIcon(
+                    GlyphPickerPluginExtension.class.getResource(PLUGIN_ICON)));
+
+            this.workspace = workspace;
+            
+            putValue(SHORT_DESCRIPTION, "Shows / hides the GlyphPicker window");
+
+         // TODO make compatible with osx
+            putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke("control P"));
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            if (workspace.isViewShowing(VIEW_ID)) {
+                workspace.hideView(VIEW_ID);
+            } else {
+                workspace.showView(VIEW_ID, true);                
+            };
+        }
+    }
 
     /*
      * (non-Javadoc)
@@ -71,24 +107,32 @@ public class GlyphPickerPluginExtension implements
             }
         });
 
+        mainPanel = mainController.getPanel();
+        mainController.loadData();
+
         workspace.addViewComponentCustomizer(new ViewComponentCustomizer() {
             /**
              * @see ro.sync.exml.workspace.api.standalone.ViewComponentCustomizer#customizeView(ro.sync.exml.workspace.api.standalone.ViewInfo)
              */
             @Override
             public void customizeView(ViewInfo viewInfo) {
-                if ("GlyphPicker".equals(viewInfo.getViewID())) {
+                if (VIEW_ID.equals(viewInfo.getViewID())) {
 
-                    JComponent panel = mainController.getPanel();
-                    mainController.loadData();
-
-                    viewInfo.setComponent(panel);
+                    viewInfo.setComponent(mainPanel);
                     viewInfo.setTitle("GlyphPicker");
 
                     // TODO use custom icon
-                     viewInfo.setIcon(new ImageIcon(
-                             ChangeViewAction.class.getResource("/images/grid.png")));
+                    viewInfo.setIcon(new ImageIcon(GlyphPickerPluginExtension.class
+                            .getResource(PLUGIN_ICON)));
                 }
+            }
+        });
+        
+        workspace.addMenuBarCustomizer(new MenuBarCustomizer() {
+            @Override
+            public void customizeMainMenu(JMenuBar mainMenu) {
+                mainMenu.getMenu(1).addSeparator();
+                mainMenu.getMenu(1).add(new TogglePickerWindowAction(workspace));
             }
         });
 
