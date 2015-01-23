@@ -59,24 +59,14 @@ public class GlyphDefinition implements Cloneable {
         this.classes = classes;
     }
 
-    /**
-     * @return the label
-     */
     public String getCharName() {
         return charName;
     }
 
-    /**
-     * @param label
-     *            the label to set
-     */
     public void setCharName(String label) {
         this.charName = label;
     }
 
-    /**
-     * @return the codePoint
-     */
     public String getCodePoint() {
         return codePoint;
     }
@@ -91,40 +81,22 @@ public class GlyphDefinition implements Cloneable {
         }
     }
 
-    /**
-     * @param codePoint
-     *            the codePoint to set
-     */
     public void setCodePoint(String codePoint) {
         this.codePoint = codePoint;
     }
 
-    /**
-     * @return the range
-     */
     public String getRange() {
         return range;
     }
 
-    /**
-     * @param range
-     *            the range to set
-     */
     public void setRange(String range) {
         this.range = range;
     }
 
-    /**
-     * @return the classes
-     */
     public List<String> getClasses() {
         return classes;
     }
 
-    /**
-     * @param classes
-     *            the classes to set
-     */
     public void setClasses(List<String> classes) {
         this.classes = classes;
     }
@@ -161,21 +133,11 @@ public class GlyphDefinition implements Cloneable {
         this.iconLoadingLaunched = iconLoadingLaunched;
     }
 
-    public String toString() {
-        return codePoint + ": " + charName + " (" + range + ")";
-    }
 
-    /**
-     * @return the dataSource
-     */
     public DataSource getDataSource() {
         return dataSource;
     }
 
-    /**
-     * @param dataSource
-     *            the dataSource to set
-     */
     public void setDataSource(DataSource dataSource) {
         this.dataSource = dataSource;
     }
@@ -194,13 +156,16 @@ public class GlyphDefinition implements Cloneable {
         return template.replaceAll("\\$\\{basePath\\}",
                 getDataSource().getBasePath()).replaceAll("\\$\\{id\\}",
                 getId());
-
-        // return getDataSource().getPath() + "#" + getId();
     }
 
     @Override
     public GlyphDefinition clone() throws CloneNotSupportedException {
         return (GlyphDefinition) super.clone();
+    }
+    
+    @Override
+    public String toString() {
+        return codePoint + ": " + charName + " (" + range + ")";
     }
 
 }

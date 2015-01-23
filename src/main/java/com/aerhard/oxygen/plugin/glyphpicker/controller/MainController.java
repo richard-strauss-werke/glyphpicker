@@ -42,13 +42,6 @@ public class MainController extends Controller {
         userCollectionController.addListener(this);
         addListener(userCollectionController);
 
-        // TODO enable this feature again
-
-        // set same model for viewCombo in brower view and userCollection view
-        // ComboBoxModel<String> browserViewComboModel =
-        // ((BrowserController)browserController).getPanel().getViewCombo().getModel();
-        // ((UserCollectionController)userCollectionController).getPanel().getViewCombo().setModel(browserViewComboModel);
-
         mainPanel = new MainPanel(browserController.getPanel(),
                 userCollectionController.getPanel());
 
@@ -91,8 +84,6 @@ public class MainController extends Controller {
 
     public void saveData() {
         getConfigLoader().save();
-
-        // TODO ask if there are unsaved changes to user collection list
         userCollectionController.saveData();
     }
 

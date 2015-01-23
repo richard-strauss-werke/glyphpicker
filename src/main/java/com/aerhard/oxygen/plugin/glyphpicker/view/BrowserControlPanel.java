@@ -12,7 +12,9 @@ import javax.swing.JTextField;
 import javax.swing.JToggleButton;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JToolBar;
+
 import java.awt.Component;
+
 import javax.swing.Box;
 
 public class BrowserControlPanel extends JPanel {
@@ -25,6 +27,8 @@ public class BrowserControlPanel extends JPanel {
     private JToggleButton sortBtn;
     private JToolBar toolBar;
     private Component horizontalGlue;
+    private JComboBox<String> autoCompleteCombo;
+    private JComboBox<String> autoCompleteScopeCombo;
 
     public BrowserControlPanel() {
         setBorder(new EmptyBorder(8, 8, 0, 8));
@@ -121,6 +125,28 @@ public class BrowserControlPanel extends JPanel {
         gbcFulltextTextField.gridy = 2;
         add(fulltextTextField, gbcFulltextTextField);
 
+        
+        autoCompleteScopeCombo = new JComboBox<String>();
+        GridBagConstraints gbcAutoCompleteScopeCombo = new GridBagConstraints();
+        gbcAutoCompleteScopeCombo.anchor = GridBagConstraints.WEST;
+        gbcAutoCompleteScopeCombo.fill = GridBagConstraints.VERTICAL;
+        gbcAutoCompleteScopeCombo.insets = new Insets(5, 0, 5, 5);
+        gbcAutoCompleteScopeCombo.gridx = 0;
+        gbcAutoCompleteScopeCombo.gridy = 3;
+        add(autoCompleteScopeCombo, gbcAutoCompleteScopeCombo);
+
+        autoCompleteCombo = new JComboBox<String>();
+        autoCompleteCombo.setEditable(true);
+        GridBagConstraints gbcAutoCompleteCombo = new GridBagConstraints();
+        gbcAutoCompleteCombo.gridwidth = 3;
+        gbcAutoCompleteCombo.weightx = 1.0;
+        gbcAutoCompleteCombo.fill = GridBagConstraints.BOTH;
+        gbcAutoCompleteCombo.insets = new Insets(5, 0, 5, 0);
+        gbcAutoCompleteCombo.gridx = 1;
+        gbcAutoCompleteCombo.gridy = 3;
+        add(autoCompleteCombo, gbcAutoCompleteCombo);
+        
+        
         // JLabel rangeLabel = new JLabel("Range:");
         // GridBagConstraints gbc_rangeLabel = new GridBagConstraints();
         // gbc_rangeLabel.anchor = GridBagConstraints.WEST;
@@ -174,6 +200,14 @@ public class BrowserControlPanel extends JPanel {
         return fulltextTextField;
     }
 
+    public JComboBox<String> getAutoCompleteScopeCombo() {
+        return autoCompleteScopeCombo;
+    }
+    
+    public JComboBox<String> getAutoCompleteCombo() {
+        return autoCompleteCombo;
+    }
+    
     public JToggleButton getSortBtn() {
         return sortBtn;
     }

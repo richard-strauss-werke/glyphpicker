@@ -12,14 +12,18 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.Serializable;
 import java.util.Comparator;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 import javax.swing.AbstractAction;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
+import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -30,13 +34,14 @@ import ca.odell.glazedlists.BasicEventList;
 import ca.odell.glazedlists.EventList;
 import ca.odell.glazedlists.FilterList;
 import ca.odell.glazedlists.SortedList;
+import ca.odell.glazedlists.UniqueList;
 import ca.odell.glazedlists.event.ListEvent;
 import ca.odell.glazedlists.event.ListEventListener;
-import ca.odell.glazedlists.matchers.MatcherEditor;
+import ca.odell.glazedlists.matchers.TextMatcherEditor;
+import ca.odell.glazedlists.swing.AutoCompleteSupport;
 import ca.odell.glazedlists.swing.DefaultEventListModel;
 import ca.odell.glazedlists.swing.DefaultEventSelectionModel;
 import ca.odell.glazedlists.swing.DefaultEventTableModel;
-import ca.odell.glazedlists.swing.TextComponentMatcherEditor;
 
 import com.aerhard.oxygen.plugin.glyphpicker.action.ChangeViewAction;
 import com.aerhard.oxygen.plugin.glyphpicker.controller.editor.DataSourceEditorController;
@@ -44,6 +49,13 @@ import com.aerhard.oxygen.plugin.glyphpicker.model.Config;
 import com.aerhard.oxygen.plugin.glyphpicker.model.DataSource;
 import com.aerhard.oxygen.plugin.glyphpicker.model.DataSourceList;
 import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinition;
+import com.aerhard.oxygen.plugin.glyphpicker.model.trans.AllSelector;
+import com.aerhard.oxygen.plugin.glyphpicker.model.trans.CharNameSelector;
+import com.aerhard.oxygen.plugin.glyphpicker.model.trans.CodePointSelector;
+import com.aerhard.oxygen.plugin.glyphpicker.model.trans.IdSelector;
+import com.aerhard.oxygen.plugin.glyphpicker.model.trans.PropertySelector;
+import com.aerhard.oxygen.plugin.glyphpicker.model.trans.RangeSelector;
+import com.aerhard.oxygen.plugin.glyphpicker.model.trans.TransformedGlyphList;
 import com.aerhard.oxygen.plugin.glyphpicker.view.BrowserControlPanel;
 import com.aerhard.oxygen.plugin.glyphpicker.view.ContainerPanel;
 import com.aerhard.oxygen.plugin.glyphpicker.view.GlyphGrid;
@@ -55,7 +67,7 @@ import com.aerhard.oxygen.plugin.glyphpicker.view.renderer.GlyphRendererAdapter;
 public class BrowserController extends Controller {
 
     // TODO use progress dialog when loading data
-    
+
     private static final Logger LOGGER = Logger
             .getLogger(BrowserController.class.getName());
 
@@ -81,6 +93,8 @@ public class BrowserController extends Controller {
 
     private JTextField ftTextField;
 
+    private AutoCompleteSupport<String> autoCompleteSupport = null;
+
     @SuppressWarnings({ "unchecked" })
     public BrowserController(Config config) {
 
@@ -92,40 +106,66 @@ public class BrowserController extends Controller {
 
         ftTextField = controlPanel.getFulltextTextField();
 
-        // EventComboBoxModel<GlyphDefinition> ftComboModel = new
-        // EventComboBoxModel<GlyphDefinition>(gList);
-        // final JComboBox ftTextField = browserPanel.getFtTextField();
-        // ftTextField.setModel(ftComboModel);
-        //
-        // AutoCompleteSupport<GlyphDefinition> autocomplete;
-        //
-        // javax.swing.SwingUtilities.invokeLater(new Runnable() {
-        // @Override
-        // public void run() {
-        // AutoCompleteSupport<GlyphDefinition> autocomplete =
-        // AutoCompleteSupport.install(ftTextField, gList, new
-        // GlyphTextFilterator());
-        // // Try without the filterator to see the difference.
-        // //AutoCompleteSupport autocomplete =
-        // AutoCompleteSupport.install(stationsComboBox, stations);
-        // autocomplete.setFilterMode(TextMatcherEditor.CONTAINS);
-        //
-        // }
-        // });
-
-        MatcherEditor<GlyphDefinition> filter = new TextComponentMatcherEditor<GlyphDefinition>(
-                ftTextField, new GlyphTextFilterator());
-
-        // Matcher<GlyphDefinition> glyphFilter = new Matcher<GlyphDefinition>()
-        // {
-        // public boolean matches(GlyphDefinition d) {
-        // return d.getRange().startsWith("A");
-        // }
-        // };
-
         sortedList = new SortedList<GlyphDefinition>(glyphList, null);
 
-        filterList = new FilterList<GlyphDefinition>(sortedList, filter);
+        // filterList = new FilterList<GlyphDefinition>(sortedList, filter);
+
+        // MatcherEditor<GlyphDefinition> filter = new
+        // TextMatcherEditor<GlyphDefinition>(new GlyphTextFilterator());
+
+        final Map<String, PropertySelector> autoCompleteScope = new LinkedHashMap<String, PropertySelector>();
+        autoCompleteScope.put("Range", new RangeSelector());
+        autoCompleteScope.put("Char Name", new CharNameSelector());
+        autoCompleteScope.put("xml:id", new IdSelector());
+        autoCompleteScope.put("Codepoint", new CodePointSelector());
+        autoCompleteScope.put("ALL FIELDS", new AllSelector());
+
+        // TODO add entity field
+
+        PropertySelector initialPropertySelector = autoCompleteScope
+                .get("Range");
+
+        final GlyphSelect glyphSelect = new GlyphSelect(initialPropertySelector, (JTextField) controlPanel.getAutoCompleteCombo().getEditor()
+                .getEditorComponent());
+        filterList = new FilterList<GlyphDefinition>(sortedList, glyphSelect);
+
+        ((JTextField) controlPanel.getAutoCompleteCombo().getEditor()
+                .getEditorComponent()).getDocument().addDocumentListener(
+                glyphSelect);
+
+        setAutoCompleteSupport(initialPropertySelector);
+
+        DefaultComboBoxModel<String> autoCompleteScopeModel = new DefaultComboBoxModel<String>();
+
+        // TODO change autocomplete selection behaviour
+
+        // TODO make autocomplete and table matchers identical
+
+        for (String property : autoCompleteScope.keySet()) {
+            autoCompleteScopeModel.addElement(property);
+        }
+
+        controlPanel.getAutoCompleteScopeCombo().setModel(
+                autoCompleteScopeModel);
+
+        controlPanel.getAutoCompleteScopeCombo().addItemListener(
+                new ItemListener() {
+
+                    @Override
+                    public void itemStateChanged(ItemEvent e) {
+                        if (e.getStateChange() == ItemEvent.SELECTED) {
+                            String item = (String) e.getItem();
+                            PropertySelector selector = autoCompleteScope
+                                    .get(item);
+                            if (selector != null) {
+                                setAutoCompleteSupport(selector);
+                                glyphSelect.setPropertySelector(selector);
+                            } else {
+                                LOGGER.error("Item not found");
+                            }
+                        }
+                    }
+                });
 
         list = new GlyphGrid(new DefaultEventListModel<GlyphDefinition>(
                 filterList));
@@ -148,27 +188,10 @@ public class BrowserController extends Controller {
 
         panel.setListComponent(list);
 
-        // EventList<String> rangesNonUnique = new GlyphToRangeList(filterList);
-        // UniqueList<String> rangesEventList = new UniqueList<String>(
-        // rangesNonUnique);
-        // browserPanel.getRangeCombo().setModel(
-        // new DefaultEventComboBoxModel<String>(rangesEventList));
-
-        // EventList<List<String>> classesNonUnique = new
-        // GlyphToClassList(filterList);
-        // UniqueList<String> classesEventList = new
-        // UniqueList<String>(classesNonUnique);
-        // DefaultEventComboBoxModel<String> classComboModel = new
-        // DefaultEventComboBoxModel<String>(classesEventList);
-        // browserPanel.getRangeCombo().setModel(rangeComboModel);
-
         dataSourceList = config.getDataSources();
         controlPanel.getDataSourceCombo().setModel(dataSourceList);
 
         controlPanel.getBtnConfigure().setAction(new EditAction());
-
-        // browserPanel.getRangeCombo().setAction(new FilterAction());
-        // browserPanel.getClassCombo().setAction(new FilterAction());
 
         controlPanel.getSortBtn().setAction(new SortAction());
 
@@ -220,6 +243,24 @@ public class BrowserController extends Controller {
         panel.addToButtonPanel(addAction);
     }
 
+    private void setAutoCompleteSupport(final PropertySelector propertySelector) {
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                TransformedGlyphList propertyList = new TransformedGlyphList(
+                        sortedList, propertySelector);
+                UniqueList<String> uniquePropertyList = new UniqueList<String>(
+                        propertyList);
+                if (autoCompleteSupport != null) {
+                    autoCompleteSupport.uninstall();
+                }
+                autoCompleteSupport = AutoCompleteSupport.install(
+                        controlPanel.getAutoCompleteCombo(), uniquePropertyList);
+                autoCompleteSupport.setFilterMode(TextMatcherEditor.CONTAINS);
+            }
+        });
+    }
+
     public static class GlyphComparator implements Comparator<GlyphDefinition>,
             Serializable {
         private static final long serialVersionUID = 1L;
@@ -234,58 +275,6 @@ public class BrowserController extends Controller {
         }
     }
 
-    // private class GlyphToRangeList extends
-    // TransformedList<GlyphDefinition, String> {
-    //
-    // public GlyphToRangeList(EventList<GlyphDefinition> source) {
-    // super(source);
-    // source.addListEventListener(this);
-    // }
-    //
-    // public String get(int index) {
-    // return source.get(index).getRange();
-    // }
-    //
-    // /**
-    // * When the source issues list changes, propogate the exact same changes
-    // * for the users list.
-    // */
-    // public void listChanged(ListEvent<GlyphDefinition> listChanges) {
-    // updates.forwardEvent(listChanges);
-    // }
-    //
-    // /** {@inheritDoc} */
-    // protected boolean isWritable() {
-    // return false;
-    // }
-    // }
-    //
-    // private class GlyphToClassList extends
-    // TransformedList<GlyphDefinition, List<String>> {
-    //
-    // public GlyphToClassList(EventList<GlyphDefinition> source) {
-    // super(source);
-    // source.addListEventListener(this);
-    // }
-    //
-    // public List<String> get(int index) {
-    // return source.get(index).getClasses();
-    // }
-    //
-    // /**
-    // * When the source issues list changes, propogate the exact same changes
-    // * for the users list.
-    // */
-    // public void listChanged(ListEvent<GlyphDefinition> listChanges) {
-    // updates.forwardEvent(listChanges);
-    // }
-    //
-    // /** {@inheritDoc} */
-    // protected boolean isWritable() {
-    // return false;
-    // }
-    // }
-
     public ContainerPanel getPanel() {
         return panel;
     }
@@ -299,15 +288,6 @@ public class BrowserController extends Controller {
             }
         }
     }
-
-    // private class FilterAction extends AbstractAction {
-    // private static final long serialVersionUID = 1L;
-    //
-    // @Override
-    // public void actionPerformed(ActionEvent e) {
-    // // newFilter();
-    // }
-    // }
 
     private class SortAction extends AbstractAction {
         private static final long serialVersionUID = 1L;
@@ -428,7 +408,7 @@ public class BrowserController extends Controller {
                         panel.getInfoLabel2().setText(
                                 glyphDefinition.getRange());
                     }
-                    
+
                 }
 
                 addAction.setEnabled(enableButtons);
@@ -630,8 +610,6 @@ public class BrowserController extends Controller {
         isLoading = true;
         panel.setMask(true);
 
-        
-        
         SwingWorker<List<GlyphDefinition>, Void> worker = new LoadWorker(
                 dataSource);
 
@@ -643,27 +621,28 @@ public class BrowserController extends Controller {
     private class LoadWorker extends SwingWorker<List<GlyphDefinition>, Void> {
 
         private DataSource dataSource;
-//        private JDialog dialog;
+
+        // private JDialog dialog;
 
         public LoadWorker(DataSource dataSource) {
             this.dataSource = dataSource;
-//            dialog = new JDialog();
-//            dialog.setLocationRelativeTo(panel);
-//            dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-//
-//            });
+            // dialog = new JDialog();
+            // dialog.setLocationRelativeTo(panel);
+            // dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+            //
+            // });
         }
 
         @Override
         protected List<GlyphDefinition> doInBackground() {
-//            dialog.setVisible(true);
+            // dialog.setVisible(true);
             return loader.loadData(dataSource);
         }
 
         @Override
         protected void done() {
             try {
-                processLoadedData(get());
+                onDataLoaded(get());
             } catch (InterruptedException e) {
                 LOGGER.error(e);
             } catch (ExecutionException e) {
@@ -671,12 +650,12 @@ public class BrowserController extends Controller {
             } finally {
                 isLoading = false;
                 panel.setMask(false);
-//                dialog.dispose();
+                // dialog.dispose();
             }
         }
     }
 
-    private void processLoadedData(List<GlyphDefinition> data) {
+    private void onDataLoaded(List<GlyphDefinition> data) {
 
         glyphList.clear();
 
