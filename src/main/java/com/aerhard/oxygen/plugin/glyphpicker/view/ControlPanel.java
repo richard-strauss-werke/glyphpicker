@@ -6,10 +6,10 @@ import java.awt.Insets;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JToggleButton;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.TitledBorder;
 import javax.swing.JToolBar;
 
 import java.awt.Component;
@@ -27,6 +27,8 @@ public class ControlPanel extends JPanel {
     private Component horizontalGlue;
     private JComboBox<String> autoCompleteCombo;
     private JComboBox<String> autoCompleteScopeCombo;
+    private JPanel dataSourcePanel;
+    private JPanel searchPanel;
 
     public ControlPanel(boolean setDataSourceCombo) {
         setBorder(new EmptyBorder(8, 8, 0, 8));
@@ -66,56 +68,78 @@ public class ControlPanel extends JPanel {
             
             row++;
             
-            JLabel dataSourceLabel = new JLabel("Data source:");
-            GridBagConstraints gbcDataSourceLabel = new GridBagConstraints();
-            gbcDataSourceLabel.anchor = GridBagConstraints.WEST;
-            gbcDataSourceLabel.fill = GridBagConstraints.VERTICAL;
-            gbcDataSourceLabel.insets = new Insets(5, 0, 5, 5);
-            gbcDataSourceLabel.gridx = 0;
-            gbcDataSourceLabel.gridy = row;
-            add(dataSourceLabel, gbcDataSourceLabel);
+            dataSourcePanel = new JPanel();
+            
+            dataSourcePanel.setBorder(new TitledBorder(null, "Data source", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+
+            GridBagConstraints gbcDataSourcePanel = new GridBagConstraints();
+            gbcDataSourcePanel.anchor = GridBagConstraints.WEST;
+            gbcDataSourcePanel.fill = GridBagConstraints.HORIZONTAL;
+            gbcDataSourcePanel.gridwidth = 4;
+            gbcDataSourcePanel.insets = new Insets(0, 0, 5, 0);
+            gbcDataSourcePanel.gridx = 0;
+            gbcDataSourcePanel.gridy = row;
+            add(dataSourcePanel, gbcDataSourcePanel);
+            
+            
+            GridBagLayout panelLayout = new GridBagLayout();
+            panelLayout.columnWidths = new int[] { 311, 55 };
+            panelLayout.rowHeights = new int[] { 0 };
+            panelLayout.columnWeights = new double[] {1.0, 0.0 };
+            panelLayout.rowWeights = new double[] { 0.0 };
+            dataSourcePanel.setLayout(panelLayout);
 
             dataSourceCombo = new JComboBox<String>();
             dataSourceCombo.setEditable(false);
             GridBagConstraints gbcPathCombo = new GridBagConstraints();
-            gbcPathCombo.gridwidth = 2;
             gbcPathCombo.weightx = 1.0;
             gbcPathCombo.fill = GridBagConstraints.BOTH;
-            gbcPathCombo.insets = new Insets(5, 0, 5, 5);
-            gbcPathCombo.gridx = 1;
-            gbcPathCombo.gridy = row;
-            add(dataSourceCombo, gbcPathCombo);
+            gbcPathCombo.insets = new Insets(5, 5, 5, 3);
+            gbcPathCombo.gridx = 0;
+            gbcPathCombo.gridy = 0;
+            dataSourcePanel.add(dataSourceCombo, gbcPathCombo);
 
             btnLoad = new JButton();
             GridBagConstraints gbcBrowserButtonLoad = new GridBagConstraints();
-            gbcBrowserButtonLoad.insets = new Insets(3, 0, 5, 0);
+            gbcBrowserButtonLoad.insets = new Insets(4, 5, 4, 5);
             gbcBrowserButtonLoad.fill = GridBagConstraints.BOTH;
-            gbcBrowserButtonLoad.anchor = GridBagConstraints.WEST;
-            gbcBrowserButtonLoad.gridx = 3;
-            gbcBrowserButtonLoad.gridy = row;
-            add(btnLoad, gbcBrowserButtonLoad);
+            gbcBrowserButtonLoad.gridx = 1;
+            gbcBrowserButtonLoad.gridy = 0;
+            dataSourcePanel.add(btnLoad, gbcBrowserButtonLoad);
         }
 
-
-//        JLabel fulltextLabel = new JLabel("Search:");
-//        GridBagConstraints gbcFulltextLabel = new GridBagConstraints();
-//        gbcFulltextLabel.anchor = GridBagConstraints.WEST;
-//        gbcFulltextLabel.fill = GridBagConstraints.VERTICAL;
-//        gbcFulltextLabel.insets = new Insets(5, 0, 5, 5);
-//        gbcFulltextLabel.gridx = 0;
-//        gbcFulltextLabel.gridy = 2;
-//        add(fulltextLabel, gbcFulltextLabel);
         
         row++;
+        
+        searchPanel = new JPanel();
+        
+        searchPanel.setBorder(new TitledBorder(null, "Search", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+        
+        GridBagConstraints gbcSearchPanel = new GridBagConstraints();
+        gbcSearchPanel.anchor = GridBagConstraints.WEST;
+        gbcSearchPanel.fill = GridBagConstraints.HORIZONTAL;
+        gbcSearchPanel.gridwidth = 4;
+        gbcSearchPanel.insets = new Insets(0,0,0, 0);
+        gbcSearchPanel.gridx = 0;
+        gbcSearchPanel.gridy = row;
+        add(searchPanel, gbcSearchPanel);
+        
+        
+        GridBagLayout panelLayout = new GridBagLayout();
+        panelLayout.columnWidths = new int[] { 55,311 };
+        panelLayout.rowHeights = new int[] { 0 };
+        panelLayout.columnWeights = new double[] {0.0, 1.0 };
+        panelLayout.rowWeights = new double[] { 0.0 };
+        searchPanel.setLayout(panelLayout);
         
         autoCompleteScopeCombo = new JComboBox<String>();
         GridBagConstraints gbcAutoCompleteScopeCombo = new GridBagConstraints();
         gbcAutoCompleteScopeCombo.anchor = GridBagConstraints.WEST;
-        gbcAutoCompleteScopeCombo.fill = GridBagConstraints.VERTICAL;
-        gbcAutoCompleteScopeCombo.insets = new Insets(5, 0, 5, 5);
+        gbcAutoCompleteScopeCombo.fill = GridBagConstraints.BOTH;
+        gbcAutoCompleteScopeCombo.insets = new Insets(5,5,5,5);
         gbcAutoCompleteScopeCombo.gridx = 0;
         gbcAutoCompleteScopeCombo.gridy = row;
-        add(autoCompleteScopeCombo, gbcAutoCompleteScopeCombo);
+        searchPanel.add(autoCompleteScopeCombo, gbcAutoCompleteScopeCombo);
 
         autoCompleteCombo = new JComboBox<String>();
         autoCompleteCombo.setEditable(true);
@@ -123,10 +147,10 @@ public class ControlPanel extends JPanel {
         gbcAutoCompleteCombo.gridwidth = 3;
         gbcAutoCompleteCombo.weightx = 1.0;
         gbcAutoCompleteCombo.fill = GridBagConstraints.BOTH;
-        gbcAutoCompleteCombo.insets = new Insets(5, 0, 5, 0);
+        gbcAutoCompleteCombo.insets = new Insets(5, 3,5,5);
         gbcAutoCompleteCombo.gridx = 1;
         gbcAutoCompleteCombo.gridy = row;
-        add(autoCompleteCombo, gbcAutoCompleteCombo);
+        searchPanel.add(autoCompleteCombo, gbcAutoCompleteCombo);
 
     }
 

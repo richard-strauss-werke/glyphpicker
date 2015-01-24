@@ -22,10 +22,10 @@ public class MainPanel extends JPanel {
         tabbedPane.setBorder(new EmptyBorder(8, 8, 8, 8));
 
         tabbedPane.addTab(null, null, userCollectionPanel, null);
-        tabbedPane.setTabComponentAt(0, new HighlightLabel("User Collection"));
+        tabbedPane.setTabComponentAt(0, new HighlightLabel("1 - User Collection"));
 
         tabbedPane.addTab(null, null, browserPanel, null);
-        tabbedPane.setTabComponentAt(1, new HighlightLabel("Data Sources"));
+        tabbedPane.setTabComponentAt(1, new HighlightLabel("2 - Data Sources"));
 
         add(tabbedPane, BorderLayout.CENTER);
         setMinimumSize(new Dimension(200, 200));

@@ -1,5 +1,6 @@
 package com.aerhard.oxygen.plugin.glyphpicker.controller;
 
+import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.util.Properties;
 
@@ -46,6 +47,9 @@ public class MainController extends Controller {
                 userCollectionController.getPanel());
 
         mainPanel.getTabbedPane().setSelectedIndex(1);
+        
+        mainPanel.getTabbedPane().setMnemonicAt(0, KeyEvent.VK_1);
+        mainPanel.getTabbedPane().setMnemonicAt(1, KeyEvent.VK_2);
     }
 
     public ConfigLoader getConfigLoader() {
