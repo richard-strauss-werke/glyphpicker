@@ -6,24 +6,11 @@ import javax.swing.event.DocumentListener;
 import javax.swing.text.BadLocationException;
 
 import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinition;
-import com.aerhard.oxygen.plugin.glyphpicker.model.trans.PropertySelector;
 
-import ca.odell.glazedlists.matchers.AbstractMatcherEditor;
-import ca.odell.glazedlists.matchers.Matcher;
+import ca.odell.glazedlists.matchers.TextMatcherEditor;
 
-public class GlyphSelect extends AbstractMatcherEditor<GlyphDefinition>
+public class GlyphSelect extends TextMatcherEditor<GlyphDefinition>
         implements DocumentListener {
-
-    private PropertySelector propertySelector;
-
-    public GlyphSelect(PropertySelector propertySelector) {
-        this.propertySelector = propertySelector;
-
-    }
-
-    public void setPropertySelector(PropertySelector propertySelector) {
-        this.propertySelector = propertySelector;
-    }
 
     public void performUpdate(final DocumentEvent e) {
 
@@ -37,12 +24,9 @@ public class GlyphSelect extends AbstractMatcherEditor<GlyphDefinition>
         final String query = q;
 
         SwingUtilities.invokeLater(new Runnable() {
-
             @Override
             public void run() {
-                Matcher<GlyphDefinition> newMatcher = new GlyphMatcher(
-                        propertySelector, query);
-                fireChanged(newMatcher);
+                setFilterText(new String[] {query});
             }
         });
 

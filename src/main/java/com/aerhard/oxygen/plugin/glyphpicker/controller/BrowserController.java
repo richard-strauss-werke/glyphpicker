@@ -38,7 +38,6 @@ import ca.odell.glazedlists.UniqueList;
 import ca.odell.glazedlists.event.ListEvent;
 import ca.odell.glazedlists.event.ListEventListener;
 import ca.odell.glazedlists.matchers.TextMatcherEditor;
-import ca.odell.glazedlists.swing.AutoCompleteSupport;
 import ca.odell.glazedlists.swing.DefaultEventListModel;
 import ca.odell.glazedlists.swing.DefaultEventSelectionModel;
 import ca.odell.glazedlists.swing.DefaultEventTableModel;
@@ -91,7 +90,7 @@ public class BrowserController extends Controller {
 
     private HighlightButton insertBtn;
 
-    private AutoCompleteSupport<String> autoCompleteSupport = null;
+    private CustomAutoCompleteSupport<String> autoCompleteSupport = null;
 
     @SuppressWarnings({ "unchecked" })
     public BrowserController(Config config) {
@@ -116,7 +115,10 @@ public class BrowserController extends Controller {
         PropertySelector initialPropertySelector = autoCompleteScope
                 .get("Range");
 
-        final GlyphSelect glyphSelect = new GlyphSelect(initialPropertySelector);
+        final GlyphSelect glyphSelect = new GlyphSelect();
+        glyphSelect.setFilterator(new GlyphTextFilterator(initialPropertySelector));
+        glyphSelect.setMode(TextMatcherEditor.CONTAINS);
+        
         filterList = new FilterList<GlyphDefinition>(sortedList, glyphSelect);
 
         ((JTextField) controlPanel.getAutoCompleteCombo().getEditor()
@@ -126,8 +128,6 @@ public class BrowserController extends Controller {
         setAutoCompleteSupport(initialPropertySelector);
 
         DefaultComboBoxModel<String> autoCompleteScopeModel = new DefaultComboBoxModel<String>();
-
-        // TODO make autocomplete and table matchers identical
 
         for (String property : autoCompleteScope.keySet()) {
             autoCompleteScopeModel.addElement(property);
@@ -147,7 +147,7 @@ public class BrowserController extends Controller {
                                     .get(item);
                             if (selector != null) {
                                 setAutoCompleteSupport(selector);
-                                glyphSelect.setPropertySelector(selector);
+                                glyphSelect.setFilterator(new GlyphTextFilterator(selector));
                             } else {
                                 LOGGER.error("Item not found");
                             }
@@ -169,10 +169,6 @@ public class BrowserController extends Controller {
         r.setPreferredSize(new Dimension(40, 40));
         table.setRowHeight(90);
         table.setTableIconRenderer(r);
-
-        // sorter = new TableRowSorter<GlyphTableModel>(glyphTableModel);
-        // sorter = new TableRowSorter<SharedListModel>(sharedListModel);
-        // table.setRowSorter(sorter);
 
         panel.setListComponent(list);
 
@@ -242,7 +238,7 @@ public class BrowserController extends Controller {
                 if (autoCompleteSupport != null) {
                     autoCompleteSupport.uninstall();
                 }
-                autoCompleteSupport = AutoCompleteSupport.install(
+                autoCompleteSupport = CustomAutoCompleteSupport.install(
                         controlPanel.getAutoCompleteCombo(), uniquePropertyList);
                 autoCompleteSupport.setFilterMode(TextMatcherEditor.CONTAINS);
             }
