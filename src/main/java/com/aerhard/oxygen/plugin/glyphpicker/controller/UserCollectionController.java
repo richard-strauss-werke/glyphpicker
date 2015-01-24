@@ -228,15 +228,19 @@ public class UserCollectionController extends Controller {
         return panel;
     }
 
-    // TODO adjust to filter and sorting!!
     private void removeItemFromUserCollection() {
         int index = list.getSelectedIndex();
         if (index != -1) {
             listInSync = false;
-            glyphList.remove(index);
-            index = Math.min(index, glyphList.size() - 1);
-            if (index >= 0) {
-                list.setSelectedIndex(index);
+            GlyphDefinition item = filterList.get(index);
+            
+            boolean itemRemoved = glyphList.remove(item);
+            
+            if (itemRemoved) {
+                index = Math.min(index, glyphList.size() - 1);
+                if (index >= 0) {
+                    list.setSelectedIndex(index);
+                }                
             }
         }
     }
