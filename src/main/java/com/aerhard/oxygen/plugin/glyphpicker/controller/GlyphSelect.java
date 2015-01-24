@@ -1,6 +1,5 @@
 package com.aerhard.oxygen.plugin.glyphpicker.controller;
 
-import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -16,11 +15,9 @@ public class GlyphSelect extends AbstractMatcherEditor<GlyphDefinition>
         implements DocumentListener {
 
     private PropertySelector propertySelector;
-    private JTextField textField;
 
-    public GlyphSelect(PropertySelector propertySelector, JTextField textField) {
+    public GlyphSelect(PropertySelector propertySelector) {
         this.propertySelector = propertySelector;
-        this.textField = textField;
 
     }
 
@@ -29,33 +26,20 @@ public class GlyphSelect extends AbstractMatcherEditor<GlyphDefinition>
     }
 
     public void performUpdate(final DocumentEvent e) {
- 
+
         String q;
         try {
             q = e.getDocument().getText(0, e.getDocument().getLength());
-
-
-            
-            
-//            q = q.substring(0, textField.getSelectionStart())
-//                    + q.substring(textField.getSelectionEnd());
-
-//            System.out.println(textField.getSelectionStart());
-
         } catch (BadLocationException e1) {
             q = "";
         }
 
         final String query = q;
-        
 
         SwingUtilities.invokeLater(new Runnable() {
 
             @Override
             public void run() {
-                
-
-                
                 Matcher<GlyphDefinition> newMatcher = new GlyphMatcher(
                         propertySelector, query);
                 fireChanged(newMatcher);

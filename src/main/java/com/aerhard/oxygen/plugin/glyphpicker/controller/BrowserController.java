@@ -91,8 +91,6 @@ public class BrowserController extends Controller {
 
     private HighlightButton insertBtn;
 
-    private JTextField ftTextField;
-
     private AutoCompleteSupport<String> autoCompleteSupport = null;
 
     @SuppressWarnings({ "unchecked" })
@@ -104,14 +102,7 @@ public class BrowserController extends Controller {
 
         glyphList = new BasicEventList<GlyphDefinition>();
 
-        ftTextField = controlPanel.getFulltextTextField();
-
         sortedList = new SortedList<GlyphDefinition>(glyphList, null);
-
-        // filterList = new FilterList<GlyphDefinition>(sortedList, filter);
-
-        // MatcherEditor<GlyphDefinition> filter = new
-        // TextMatcherEditor<GlyphDefinition>(new GlyphTextFilterator());
 
         final Map<String, PropertySelector> autoCompleteScope = new LinkedHashMap<String, PropertySelector>();
         autoCompleteScope.put("Range", new RangeSelector());
@@ -125,8 +116,7 @@ public class BrowserController extends Controller {
         PropertySelector initialPropertySelector = autoCompleteScope
                 .get("Range");
 
-        final GlyphSelect glyphSelect = new GlyphSelect(initialPropertySelector, (JTextField) controlPanel.getAutoCompleteCombo().getEditor()
-                .getEditorComponent());
+        final GlyphSelect glyphSelect = new GlyphSelect(initialPropertySelector);
         filterList = new FilterList<GlyphDefinition>(sortedList, glyphSelect);
 
         ((JTextField) controlPanel.getAutoCompleteCombo().getEditor()
@@ -136,8 +126,6 @@ public class BrowserController extends Controller {
         setAutoCompleteSupport(initialPropertySelector);
 
         DefaultComboBoxModel<String> autoCompleteScopeModel = new DefaultComboBoxModel<String>();
-
-        // TODO change autocomplete selection behaviour
 
         // TODO make autocomplete and table matchers identical
 
@@ -476,107 +464,11 @@ public class BrowserController extends Controller {
 
         table.addKeyListener(enterKeyAdapter);
         list.addKeyListener(enterKeyAdapter);
-
-        KeyAdapter ftKeyAdapter = new KeyAdapter() {
-            public void keyReleased(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                    insertBtn.highlight();
-                    insertGlyph();
-                }
-
-                else if (e.getKeyCode() == KeyEvent.VK_UP) {
-                    int i = selectionModel.getAnchorSelectionIndex();
-                    if (i > 0) {
-                        selectionModel.setSelectionInterval(i - 1, i - 1);
-                    }
-                }
-
-                else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-                    int i = selectionModel.getAnchorSelectionIndex();
-                    int size = filterList.size();
-                    if (i < size - 1) {
-                        selectionModel.setSelectionInterval(i + 1, i + 1);
-                    }
-                }
-
-            }
-        };
-
-        ftTextField.addKeyListener(ftKeyAdapter);
-
-        // sharedListModel.addTableModelListener(new TableModelListener() {
-        // @Override
-        // public void tableChanged(TableModelEvent e) {
-        // // updateCombo(browserPanel.getRangeCombo(),
-        // // sharedListModel.getUniqueRanges());
-        // updateCombo(browserPanel.getClassCombo(),
-        // sharedListModel.getUniqueClasses());
-        // newFilter();
-        // }
-        // });
+        ((JTextField) controlPanel.getAutoCompleteCombo().getEditor()
+                .getEditorComponent()).addKeyListener(enterKeyAdapter);
 
     }
 
-    // private void newFilter() {
-    //
-    // // final String rangeValue = browserPanel.getRangeCombo()
-    // // .getSelectedItem().toString();
-    // final String classValue = browserPanel.getClassCombo()
-    // .getSelectedItem().toString();
-    //
-    // // RowFilter<SharedListModel, Integer> rangeFilter = new
-    // // RowFilter<SharedListModel, Integer>() {
-    // // public boolean include(
-    // // Entry<? extends SharedListModel, ? extends Integer> entry) {
-    // // GlyphDefinition model = (GlyphDefinition) entry.getValue(0);
-    // // String entryRange = model.getRange();
-    // // if (entryRange != null && entryRange.startsWith(rangeValue)) {
-    // // return true;
-    // // }
-    // // return false;
-    // // }
-    // // };
-    //
-    // // RowFilter<SharedListModel, Integer> classFilter = new
-    // RowFilter<SharedListModel, Integer>() {
-    // // public boolean include(
-    // // Entry<? extends SharedListModel, ? extends Integer> entry) {
-    // // GlyphDefinition model = (GlyphDefinition) entry.getValue(0);
-    // // List<String> entryClasses = model.getClasses();
-    // // for (String entryClass : entryClasses) {
-    // // if (entryClass.startsWith(classValue)) {
-    // // return true;
-    // // }
-    // // }
-    // // return false;
-    // // }
-    // // };
-    //
-    // // if (!rangeValue.equals("") && !classValue.equals("")) {
-    // // List<RowFilter<SharedListModel, Integer>> filters = new
-    // // ArrayList<RowFilter<SharedListModel, Integer>>();
-    // // filters.add(classFilter);
-    // // filters.add(rangeFilter);
-    // // sorter.setRowFilter(RowFilter.andFilter(filters));
-    // // } else if (!rangeValue.equals("")) {
-    // // sorter.setRowFilter(rangeFilter);
-    // // } else
-    // // if (!classValue.equals("")) {
-    // // sorter.setRowFilter(classFilter);
-    // // } else {
-    // // sorter.setRowFilter(null);
-    // // }
-    //
-    // }
-
-    // @SuppressWarnings("unchecked")
-    // private void updateCombo(AutoCompletionComboBox combo, List<String> data)
-    // {
-    // Collections.sort(data);
-    // data.add(0, "");
-    // String[] dataArray = data.toArray(new String[data.size()]);
-    // combo.setModel(new DefaultComboBoxModel<String>(dataArray));
-    // }
 
     @Override
     public void loadData() {

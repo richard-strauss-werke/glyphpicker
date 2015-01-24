@@ -8,7 +8,6 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 import javax.swing.JToggleButton;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JToolBar;
@@ -22,7 +21,6 @@ public class BrowserControlPanel extends JPanel {
     private static final long serialVersionUID = 1L;
     private JComboBox<String> dataSourceCombo;
     private JButton btnLoad;
-    private JTextField fulltextTextField;
     private JButton viewBtn;
     private JToggleButton sortBtn;
     private JToolBar toolBar;
@@ -56,25 +54,11 @@ public class BrowserControlPanel extends JPanel {
 
         sortBtn = new JToggleButton();
         toolBar.add(sortBtn);
-        // GridBagConstraints gbcSortBtn = new GridBagConstraints();
-        // gbcSortBtn.insets = new Insets(5, 0, 5, 5);
-        // gbcSortBtn.fill = GridBagConstraints.BOTH;
-        // gbcSortBtn.anchor = GridBagConstraints.WEST;
-        // gbcSortBtn.gridx = 2;
-        // gbcSortBtn.gridy = 0;
-        // add(sortBtn, gbcSortBtn);
 
         toolBar.addSeparator();
 
         viewBtn = new JButton();
         toolBar.add(viewBtn);
-        // GridBagConstraints gbcViewBtn = new GridBagConstraints();
-        // gbcViewBtn.insets = new Insets(5, 0, 5, 0);
-        // gbcViewBtn.fill = GridBagConstraints.BOTH;
-        // gbcViewBtn.anchor = GridBagConstraints.WEST;
-        // gbcViewBtn.gridx = 3;
-        // gbcViewBtn.gridy = 0;
-        // add(viewBtn, gbcViewBtn);
 
         JLabel dataSourceLabel = new JLabel("Data source:");
         GridBagConstraints gbcDataSourceLabel = new GridBagConstraints();
@@ -105,26 +89,14 @@ public class BrowserControlPanel extends JPanel {
         gbcBrowserButtonLoad.gridy = 1;
         add(btnLoad, gbcBrowserButtonLoad);
 
-        JLabel fulltextLabel = new JLabel("Search:");
-        GridBagConstraints gbcFulltextLabel = new GridBagConstraints();
-        gbcFulltextLabel.anchor = GridBagConstraints.WEST;
-        gbcFulltextLabel.fill = GridBagConstraints.VERTICAL;
-        gbcFulltextLabel.insets = new Insets(5, 0, 5, 5);
-        gbcFulltextLabel.gridx = 0;
-        gbcFulltextLabel.gridy = 2;
-        add(fulltextLabel, gbcFulltextLabel);
-
-        fulltextTextField = new JTextField();
-        fulltextTextField.setEditable(true);
-        GridBagConstraints gbcFulltextTextField = new GridBagConstraints();
-        gbcFulltextTextField.gridwidth = 3;
-        gbcFulltextTextField.weightx = 1.0;
-        gbcFulltextTextField.fill = GridBagConstraints.BOTH;
-        gbcFulltextTextField.insets = new Insets(5, 0, 5, 0);
-        gbcFulltextTextField.gridx = 1;
-        gbcFulltextTextField.gridy = 2;
-        add(fulltextTextField, gbcFulltextTextField);
-
+//        JLabel fulltextLabel = new JLabel("Search:");
+//        GridBagConstraints gbcFulltextLabel = new GridBagConstraints();
+//        gbcFulltextLabel.anchor = GridBagConstraints.WEST;
+//        gbcFulltextLabel.fill = GridBagConstraints.VERTICAL;
+//        gbcFulltextLabel.insets = new Insets(5, 0, 5, 5);
+//        gbcFulltextLabel.gridx = 0;
+//        gbcFulltextLabel.gridy = 2;
+//        add(fulltextLabel, gbcFulltextLabel);
         
         autoCompleteScopeCombo = new JComboBox<String>();
         GridBagConstraints gbcAutoCompleteScopeCombo = new GridBagConstraints();
@@ -132,7 +104,7 @@ public class BrowserControlPanel extends JPanel {
         gbcAutoCompleteScopeCombo.fill = GridBagConstraints.VERTICAL;
         gbcAutoCompleteScopeCombo.insets = new Insets(5, 0, 5, 5);
         gbcAutoCompleteScopeCombo.gridx = 0;
-        gbcAutoCompleteScopeCombo.gridy = 3;
+        gbcAutoCompleteScopeCombo.gridy = 2;
         add(autoCompleteScopeCombo, gbcAutoCompleteScopeCombo);
 
         autoCompleteCombo = new JComboBox<String>();
@@ -143,48 +115,8 @@ public class BrowserControlPanel extends JPanel {
         gbcAutoCompleteCombo.fill = GridBagConstraints.BOTH;
         gbcAutoCompleteCombo.insets = new Insets(5, 0, 5, 0);
         gbcAutoCompleteCombo.gridx = 1;
-        gbcAutoCompleteCombo.gridy = 3;
+        gbcAutoCompleteCombo.gridy = 2;
         add(autoCompleteCombo, gbcAutoCompleteCombo);
-        
-        
-        // JLabel rangeLabel = new JLabel("Range:");
-        // GridBagConstraints gbc_rangeLabel = new GridBagConstraints();
-        // gbc_rangeLabel.anchor = GridBagConstraints.WEST;
-        // gbc_rangeLabel.fill = GridBagConstraints.VERTICAL;
-        // gbc_rangeLabel.insets = new Insets(0, 0, 5, 5);
-        // gbc_rangeLabel.gridx = 0;
-        // gbc_rangeLabel.gridy = 3;
-        // dataSourcePanel.add(rangeLabel, gbc_rangeLabel);
-        //
-        // rangeCombo = new JComboBox<String>();
-        // rangeCombo.setEditable(true);
-        // // rangeCombo.setStrict(false);
-        // GridBagConstraints gbc_rangeCombo = new GridBagConstraints();
-        // gbc_rangeCombo.insets = new Insets(5, 0, 5, 5);
-        // gbc_rangeCombo.anchor = GridBagConstraints.NORTH;
-        // gbc_rangeCombo.fill = GridBagConstraints.HORIZONTAL;
-        // gbc_rangeCombo.gridx = 1;
-        // gbc_rangeCombo.gridy = 3;
-        // dataSourcePanel.add(rangeCombo, gbc_rangeCombo);
-        //
-        // JLabel classLabel = new JLabel("Class:");
-        // GridBagConstraints gbc_classLabel = new GridBagConstraints();
-        // gbc_classLabel.anchor = GridBagConstraints.WEST;
-        // gbc_classLabel.fill = GridBagConstraints.VERTICAL;
-        // gbc_classLabel.insets = new Insets(0, 0, 0, 5);
-        // gbc_classLabel.gridx = 0;
-        // gbc_classLabel.gridy = 4;
-        // dataSourcePanel.add(classLabel, gbc_classLabel);
-        //
-        // classCombo = new AutoCompletionComboBox();
-        // classCombo.setStrict(false);
-        // GridBagConstraints gbc_classCombo = new GridBagConstraints();
-        // gbc_classCombo.insets = new Insets(5, 0, 0, 5);
-        // gbc_classCombo.anchor = GridBagConstraints.NORTH;
-        // gbc_classCombo.fill = GridBagConstraints.HORIZONTAL;
-        // gbc_classCombo.gridx = 1;
-        // gbc_classCombo.gridy = 4;
-        // dataSourcePanel.add(classCombo, gbc_classCombo);
 
     }
 
@@ -194,10 +126,6 @@ public class BrowserControlPanel extends JPanel {
 
     public JComboBox<String> getDataSourceCombo() {
         return dataSourceCombo;
-    }
-
-    public JTextField getFulltextTextField() {
-        return fulltextTextField;
     }
 
     public JComboBox<String> getAutoCompleteScopeCombo() {
@@ -215,13 +143,5 @@ public class BrowserControlPanel extends JPanel {
     public JButton getViewBtn() {
         return viewBtn;
     }
-
-    // public JComboBox<String> getRangeCombo() {
-    // return rangeCombo;
-    // }
-    //
-    // public AutoCompletionComboBox getClassCombo() {
-    // return classCombo;
-    // }
 
 }
