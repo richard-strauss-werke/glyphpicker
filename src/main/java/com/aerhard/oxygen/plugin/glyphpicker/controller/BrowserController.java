@@ -55,7 +55,7 @@ import com.aerhard.oxygen.plugin.glyphpicker.model.trans.IdSelector;
 import com.aerhard.oxygen.plugin.glyphpicker.model.trans.PropertySelector;
 import com.aerhard.oxygen.plugin.glyphpicker.model.trans.RangeSelector;
 import com.aerhard.oxygen.plugin.glyphpicker.model.trans.TransformedGlyphList;
-import com.aerhard.oxygen.plugin.glyphpicker.view.BrowserControlPanel;
+import com.aerhard.oxygen.plugin.glyphpicker.view.ControlPanel;
 import com.aerhard.oxygen.plugin.glyphpicker.view.ContainerPanel;
 import com.aerhard.oxygen.plugin.glyphpicker.view.GlyphGrid;
 import com.aerhard.oxygen.plugin.glyphpicker.view.GlyphTable;
@@ -86,16 +86,16 @@ public class BrowserController extends Controller {
     private AbstractAction addAction;
     private AbstractAction insertAction;
 
-    private BrowserControlPanel controlPanel;
+    private ControlPanel controlPanel;
 
     private HighlightButton insertBtn;
 
     private CustomAutoCompleteSupport<String> autoCompleteSupport = null;
 
-    @SuppressWarnings({ "unchecked" })
+    @SuppressWarnings("unchecked")
     public BrowserController(Config config) {
 
-        controlPanel = new BrowserControlPanel();
+        controlPanel = new ControlPanel(true);
 
         panel = new ContainerPanel(controlPanel);
 
@@ -192,25 +192,6 @@ public class BrowserController extends Controller {
                 .setSelectionMode(DefaultEventSelectionModel.SINGLE_SELECTION);
         list.setSelectionModel(selectionModel);
         table.setSelectionModel(selectionModel);
-
-        selectionModel.addListSelectionListener(new GlyphSelectionListener());
-
-        filterList
-                .addListEventListener(new ListEventListener<GlyphDefinition>() {
-                    @Override
-                    public void listChanged(ListEvent<GlyphDefinition> e) {
-                        if (selectionModel.isSelectionEmpty()
-                                && filterList.size() > 0) {
-                            selectionModel.setSelectionInterval(0, 0);
-                        }
-
-                        // reevaluate list layout
-                        if (list.isVisible()) {
-                            list.fixRowCountForVisibleColumns();
-                        }
-
-                    }
-                });
 
         setListeners();
 
@@ -403,6 +384,25 @@ public class BrowserController extends Controller {
 
     private void setListeners() {
 
+        selectionModel.addListSelectionListener(new GlyphSelectionListener());
+
+        filterList
+                .addListEventListener(new ListEventListener<GlyphDefinition>() {
+                    @Override
+                    public void listChanged(ListEvent<GlyphDefinition> e) {
+                        if (selectionModel.isSelectionEmpty()
+                                && filterList.size() > 0) {
+                            selectionModel.setSelectionInterval(0, 0);
+                        }
+
+                        // reevaluate list layout
+                        if (list.isVisible()) {
+                            list.fixRowCountForVisibleColumns();
+                        }
+
+                    }
+                });
+        
         controlPanel.getSortBtn().addItemListener(new ItemListener() {
 
             @Override
