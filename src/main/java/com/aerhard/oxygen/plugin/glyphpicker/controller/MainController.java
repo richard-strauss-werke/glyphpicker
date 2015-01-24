@@ -48,8 +48,9 @@ public class MainController extends Controller {
 
         mainPanel.getTabbedPane().setSelectedIndex(1);
         
-        mainPanel.getTabbedPane().setMnemonicAt(0, KeyEvent.VK_1);
-        mainPanel.getTabbedPane().setMnemonicAt(1, KeyEvent.VK_2);
+        mainPanel.getTabbedPane().setMnemonicAt(0, KeyEvent.VK_U);
+        mainPanel.getTabbedPane().setMnemonicAt(1, KeyEvent.VK_D);
+//        mainPanel.getTabbedPane().setDisplayedMnemonicIndexAt(0, 0);
     }
 
     public ConfigLoader getConfigLoader() {
