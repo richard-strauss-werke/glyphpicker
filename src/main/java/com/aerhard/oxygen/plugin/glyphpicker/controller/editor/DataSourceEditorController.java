@@ -20,6 +20,7 @@ import org.apache.log4j.Logger;
 
 import com.aerhard.oxygen.plugin.glyphpicker.model.DataSource;
 import com.aerhard.oxygen.plugin.glyphpicker.view.editor.DataSourceEditor;
+import com.jidesoft.swing.JideButton;
 
 public class DataSourceEditorController {
 
@@ -46,9 +47,9 @@ public class DataSourceEditorController {
         this.contentPane = contentPane;
         this.parentPanel = parentPanel;
 
-        contentPane.getListButtonPane().add(new JButton(newAction));
-        contentPane.getListButtonPane().add(new JButton(cloneAction));
-        contentPane.getListButtonPane().add(new JButton(deleteAction));
+        contentPane.getListButtonPane().add(new JideButton(newAction));
+        contentPane.getListButtonPane().add(new JideButton(cloneAction));
+        contentPane.getListButtonPane().add(new JideButton(deleteAction));
 
         displayModes.add(DataSource.DISPLAY_MODE_VECTOR_PROPORTIONAL);
         displayModes.add(DataSource.DISPLAY_MODE_VECTOR_FIT);

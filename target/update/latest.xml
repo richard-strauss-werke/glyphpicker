@@ -1,7 +1,7 @@
 <xt:extensions xmlns:xt="http://www.oxygenxml.com/ns/extension" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.oxygenxml.com/ns/extension http://www.oxygenxml.com/ns/extension/extensions.xsd">
 	<xt:extension id="com.aerhard.oxygen.plugin.glyphpicker">
-		<xt:location href="https://raw.githubusercontent.com/aerhard/glyphpicker/master/target/update/glyphpicker-0.4.1-plugin.jar"/>
-		<xt:version>0.4.1</xt:version>
+		<xt:location href="https://raw.githubusercontent.com/aerhard/glyphpicker/master/target/update/glyphpicker-0.5.0-plugin.jar"/>
+		<xt:version>0.5.0</xt:version>
 		<xt:oxy_version>15.0+</xt:oxy_version>
 		<xt:type>plugin</xt:type>
 		<xt:author>Alexander Erhard</xt:author>

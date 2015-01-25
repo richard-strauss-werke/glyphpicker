@@ -177,8 +177,10 @@ import javax.swing.text.*;
  *
  * @author James Lemieux
  */
+@SuppressWarnings("deprecation")
 public final class CustomAutoCompleteSupport<E> {
     private static final ParsePosition PARSE_POSITION = new ParsePosition(0);
+    @SuppressWarnings("rawtypes")
     private static final Class[] VALUE_OF_SIGNATURE = { String.class };
     /** Marker object for indicating "not found". */
     private static final Object NOT_FOUND = new Object();
@@ -220,6 +222,7 @@ public final class CustomAutoCompleteSupport<E> {
     // These are member variables for convenience
     //
     /** The comboBox being decorated with autocomplete functionality. */
+    @SuppressWarnings("rawtypes")
     private JComboBox comboBox;
     /** The popup menu of the decorated comboBox. */
     private JPopupMenu popupMenu;
@@ -233,6 +236,7 @@ public final class CustomAutoCompleteSupport<E> {
      * The custom renderer installed on the comboBox or <code>null</code> if one
      * is not required.
      */
+    @SuppressWarnings("rawtypes")
     private final ListCellRenderer renderer;
     /** The EventList which holds the items present in the comboBoxModel. */
     private final EventList<E> items;
@@ -395,8 +399,10 @@ public final class CustomAutoCompleteSupport<E> {
     /** The original setting of the editable field on the comboBox. */
     private final boolean originalComboBoxEditable;
     /** The original model installed on the comboBox. */
+    @SuppressWarnings("rawtypes")
     private ComboBoxModel originalModel;
     /** The original ListCellRenderer installed on the comboBox. */
+    @SuppressWarnings("rawtypes")
     private ListCellRenderer originalRenderer;
     //
     // Values present before {@link #decorateCurrentUI} executes - and are
@@ -429,6 +435,7 @@ public final class CustomAutoCompleteSupport<E> {
      * @param format
      *            converts combobox elements into strings and vice versa
      */
+    @SuppressWarnings({ "rawtypes", "unchecked" })
     private CustomAutoCompleteSupport(JComboBox comboBox, EventList<E> items,
             TextFilterator<? super E> filterator, Format format) {
         this.comboBox = comboBox;
@@ -507,6 +514,7 @@ public final class CustomAutoCompleteSupport<E> {
      * This method is the logical inverse of {@link #registerAllActionListeners}
      * .
      */
+    @SuppressWarnings("rawtypes")
     private static ActionListener[] unregisterAllActionListeners(
             JComboBox comboBox) {
         final ActionListener[] listeners = comboBox.getActionListeners();
@@ -522,6 +530,7 @@ public final class CustomAutoCompleteSupport<E> {
      * This method is the logical inverse of
      * {@link #unregisterAllActionListeners}.
      */
+    @SuppressWarnings("rawtypes")
     private static void registerAllActionListeners(JComboBox comboBox,
             ActionListener[] listeners) {
         for (int i = 0; i < listeners.length; i++)
@@ -532,6 +541,7 @@ public final class CustomAutoCompleteSupport<E> {
      * A convenience method to search through the given JComboBox for the
      * JButton which toggles the popup up open and closed.
      */
+    @SuppressWarnings("rawtypes")
     private static JButton findArrowButton(JComboBox c) {
         for (int i = 0, n = c.getComponentCount(); i < n; i++) {
             final Component comp = c.getComponent(i);
@@ -546,6 +556,7 @@ public final class CustomAutoCompleteSupport<E> {
      * support. This method is called in the constructor and when the comboBox's
      * UI delegate is changed.
      */
+    @SuppressWarnings("unchecked")
     private void decorateCurrentUI() {
         // record some original settings of comboBox
         this.originalRenderer = comboBox.getRenderer();
@@ -621,6 +632,7 @@ public final class CustomAutoCompleteSupport<E> {
      * order to uninstall autocompletion support. This method is invoked after
      * the comboBox's UI delegate is changed.
      */
+    @SuppressWarnings("unchecked")
     private void undecorateOriginalUI() {
         // if an arrow button was found, remove our custom MouseListener and
         // reinstall the normal popup MouseListener
@@ -704,6 +716,7 @@ public final class CustomAutoCompleteSupport<E> {
      *             if this method is called from any Thread other than the Swing
      *             Event Dispatch Thread
      */
+    @SuppressWarnings("rawtypes")
     public static <E> CustomAutoCompleteSupport<E> install(JComboBox comboBox,
             EventList<E> items) {
         return install(comboBox, items, null);
@@ -748,6 +761,7 @@ public final class CustomAutoCompleteSupport<E> {
      *             if this method is called from any Thread other than the Swing
      *             Event Dispatch Thread
      */
+    @SuppressWarnings("rawtypes")
     public static <E> CustomAutoCompleteSupport<E> install(JComboBox comboBox,
             EventList<E> items, TextFilterator<? super E> filterator) {
         return install(comboBox, items, filterator, null);
@@ -819,6 +833,7 @@ public final class CustomAutoCompleteSupport<E> {
      *             if this method is called from any Thread other than the Swing
      *             Event Dispatch Thread
      */
+    @SuppressWarnings("rawtypes")
     public static <E> CustomAutoCompleteSupport<E> install(JComboBox comboBox,
             EventList<E> items, TextFilterator<? super E> filterator,
             Format format) {
@@ -878,6 +893,7 @@ public final class CustomAutoCompleteSupport<E> {
      * Returns the autocompleting {@link JComboBox} or <code>null</code> if
      * {@link CustomAutoCompleteSupport} has been {@link #uninstall}ed.
      */
+    @SuppressWarnings("rawtypes")
     public JComboBox getComboBox() {
         return this.comboBox;
     }
@@ -1245,6 +1261,7 @@ public final class CustomAutoCompleteSupport<E> {
      *             if this method is called from any Thread other than the Swing
      *             Event Dispatch Thread
      */
+    @SuppressWarnings("unchecked")
     public void uninstall() {
         checkAccessThread();
         if (this.comboBox == null)
@@ -1310,6 +1327,7 @@ public final class CustomAutoCompleteSupport<E> {
      * This method updates the {@link #prefix} to be the current value in the
      * ComboBoxEditor.
      */
+    @SuppressWarnings("rawtypes")
     private void updateFilter() {
         prefix = comboBoxEditorComponent.getText();
         if (prefix.length() == 0)
@@ -1347,6 +1365,7 @@ public final class CustomAutoCompleteSupport<E> {
      * If no exact or partial match can be located, <code>null</code> is
      * returned.
      */
+    @SuppressWarnings("rawtypes")
     private Object findAutoCompleteTerm(String value) {
         // determine if our value is empty
         final boolean prefixIsEmpty = "".equals(value);
@@ -1517,6 +1536,7 @@ public final class CustomAutoCompleteSupport<E> {
          * <li>try to show the popup, if possible
          * </ol>
          */
+        @SuppressWarnings("unused")
         private void postProcessDocumentChange(FilterBypass filterBypass,
                 AttributeSet attributeSet, String valueBeforeEdit,
                 int selectionStart, int selectionEnd,
@@ -1569,6 +1589,7 @@ public final class CustomAutoCompleteSupport<E> {
          * JComboBox is not a Table Cell Editor, an ActionEvent will be
          * broadcast from the combo box.
          */
+        @SuppressWarnings("unused")
         private void selectAutoCompleteTerm(FilterBypass filterBypass,
                 AttributeSet attributeSet, Object selectedItemBeforeEdit,
                 boolean allowPartialAutoCompletionTerm)
@@ -1764,6 +1785,7 @@ public final class CustomAutoCompleteSupport<E> {
     /**
      * The action invoked by hitting the up or down arrow key.
      */
+    @SuppressWarnings("serial")
     private class MoveAction extends AbstractAction {
         private final int offset;
 
@@ -1934,6 +1956,7 @@ public final class CustomAutoCompleteSupport<E> {
             }
         }
 
+        @SuppressWarnings({ "rawtypes", "unchecked" })
         private Dimension getPrototypeSize(Object prototypeValue) {
             // get the renderer responsible for drawing the prototype value
             ListCellRenderer renderer = comboBox.getRenderer();
@@ -2215,7 +2238,9 @@ public final class CustomAutoCompleteSupport<E> {
      * A custom renderer which honours the custom Format given by the user when
      * they invoked the install method.
      */
+    @SuppressWarnings("serial")
     private class StringFunctionRenderer extends DefaultListCellRenderer {
+        @SuppressWarnings("rawtypes")
         @Override
         public Component getListCellRendererComponent(JList list, Object value,
                 int index, boolean isSelected, boolean cellHasFocus) {
@@ -2343,6 +2368,7 @@ public final class CustomAutoCompleteSupport<E> {
      * the AutoCompleteSupport object that is providing autocompletion
      * capabilities to the JComboBox.
      */
+    @SuppressWarnings("serial")
     public static class AutoCompleteCellEditor<E> extends DefaultCellEditor {
         private final CustomAutoCompleteSupport<E> autoCompleteSupport;
 
@@ -2451,6 +2477,7 @@ public final class CustomAutoCompleteSupport<E> {
      *         combobox whose contents remain consistent with the data in the
      *         table column at the given <code>columnIndex</code>
      */
+    @SuppressWarnings({ "rawtypes", "unchecked" })
     public static <E> AutoCompleteCellEditor<E> createTableCellEditor(
             Comparator uniqueComparator, TableFormat<E> tableFormat,
             EventList<E> tableData, int columnIndex) {
@@ -2483,6 +2510,7 @@ public final class CustomAutoCompleteSupport<E> {
      *         combobox whose model contents are determined by the given
      *         <code>source</code>
      */
+    @SuppressWarnings("rawtypes")
     public static <E> AutoCompleteCellEditor<E> createTableCellEditor(
             EventList<E> source) {
         // build a special JComboBox used only in Table Cell Editors
@@ -2513,6 +2541,7 @@ public final class CustomAutoCompleteSupport<E> {
      * editing stops
      * </ul>
      */
+    @SuppressWarnings({ "serial", "rawtypes" })
     private static final class TableCellComboBox extends JComboBox implements
             FocusListener {
         public TableCellComboBox() {

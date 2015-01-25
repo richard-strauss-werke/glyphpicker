@@ -16,6 +16,8 @@ import java.awt.Component;
 
 import javax.swing.Box;
 
+import com.jidesoft.swing.JideButton;
+
 public class ControlPanel extends JPanel {
 
     private static final long serialVersionUID = 1L;
@@ -61,7 +63,7 @@ public class ControlPanel extends JPanel {
 
         toolBar.addSeparator();
 
-        viewBtn = new JButton();
+        viewBtn = new JideButton();
         toolBar.add(viewBtn);
 
         if (setDataSourceCombo) {
@@ -99,7 +101,7 @@ public class ControlPanel extends JPanel {
             gbcPathCombo.gridy = 0;
             dataSourcePanel.add(dataSourceCombo, gbcPathCombo);
 
-            btnLoad = new JButton();
+            btnLoad = new JideButton();
             GridBagConstraints gbcBrowserButtonLoad = new GridBagConstraints();
             gbcBrowserButtonLoad.insets = new Insets(4, 5, 4, 5);
             gbcBrowserButtonLoad.fill = GridBagConstraints.BOTH;

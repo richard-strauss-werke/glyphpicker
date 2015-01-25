@@ -5,7 +5,6 @@ import java.awt.Color;
 import java.awt.Insets;
 
 import javax.swing.AbstractAction;
-import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -16,7 +15,10 @@ import javax.swing.border.EtchedBorder;
 import javax.swing.border.MatteBorder;
 
 import com.jidesoft.swing.DefaultOverlayable;
+import com.jidesoft.swing.JideButton;
+
 import javax.swing.UIManager;
+
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 
@@ -101,20 +103,10 @@ public class ContainerPanel extends JPanel {
         buttonPanel.setBorder(new MatteBorder(1, 0, 0, 0, (Color) Color.GRAY));
         add(buttonPanel, BorderLayout.SOUTH);
 
-        // add(browserButtonPanel, BorderLayout.SOUTH);
-        //
-        // btnInsert = new HighlightButton();
-        // browserButtonPanel.add(btnInsert);
-        //
-        // btnAdd = new JButton();
-        // browserButtonPanel.add(btnAdd);
-
     }
 
     public void setListComponent(JComponent component) {
         jPane.setViewportView(component);
-        // jPane.getViewport().removeAll();
-        // jPane.getViewport().add(component);
     }
 
     public JPanel getButtonPanel() {
@@ -126,7 +118,7 @@ public class ContainerPanel extends JPanel {
     }
 
     public void addToButtonPanel(AbstractAction action) {
-        buttonPanel.add(new JButton(action));
+        buttonPanel.add(new JideButton(action));
     }
 
     public JPanel getInfoPanel() {

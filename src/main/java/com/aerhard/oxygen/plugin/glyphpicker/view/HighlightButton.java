@@ -5,10 +5,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.AbstractAction;
-import javax.swing.JButton;
 import javax.swing.Timer;
 
-public class HighlightButton extends JButton {
+import com.jidesoft.swing.JideButton;
+
+public class HighlightButton extends JideButton {
 
     private static final long serialVersionUID = 1L;
     private Color originalForeground = null;
