@@ -4,6 +4,8 @@ import java.awt.AWTEvent;
 import java.awt.Dimension;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.KeyAdapter;
@@ -383,7 +385,7 @@ public class BrowserController extends Controller {
     }
 
     private void setListeners() {
-
+        
         selectionModel.addListSelectionListener(new GlyphSelectionListener());
 
         filterList
@@ -544,7 +546,6 @@ public class BrowserController extends Controller {
     }
 
     private void onDataLoaded(List<GlyphDefinition> data) {
-
         glyphList.clear();
 
         selectionModel.clearSelection();

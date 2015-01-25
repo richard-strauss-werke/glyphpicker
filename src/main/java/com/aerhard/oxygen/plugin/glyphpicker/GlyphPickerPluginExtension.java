@@ -16,7 +16,10 @@
 
 package com.aerhard.oxygen.plugin.glyphpicker;
 
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
+
 import javax.swing.AbstractAction;
 import javax.swing.ImageIcon;
 import javax.swing.JMenuBar;
@@ -64,17 +67,17 @@ public class GlyphPickerPluginExtension implements
         private static final long serialVersionUID = 1L;
 
         private StandalonePluginWorkspace workspace;
-        
+
         TogglePickerWindowAction(StandalonePluginWorkspace workspace) {
             super("GyphPicker", new ImageIcon(
                     GlyphPickerPluginExtension.class.getResource(PLUGIN_ICON)));
 
             this.workspace = workspace;
-            
+
             putValue(SHORT_DESCRIPTION, "Shows / hides the GlyphPicker window");
 
-         // TODO make compatible with osx
-            putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke("control P"));
+            putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_P,
+                    Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
         }
 
         @Override
@@ -82,8 +85,9 @@ public class GlyphPickerPluginExtension implements
             if (workspace.isViewShowing(VIEW_ID)) {
                 workspace.hideView(VIEW_ID);
             } else {
-                workspace.showView(VIEW_ID, true);                
-            };
+                workspace.showView(VIEW_ID, true);
+            }
+            ;
         }
     }
 
@@ -122,17 +126,19 @@ public class GlyphPickerPluginExtension implements
                     viewInfo.setTitle("GlyphPicker");
 
                     // TODO use custom icon
-                    viewInfo.setIcon(new ImageIcon(GlyphPickerPluginExtension.class
-                            .getResource(PLUGIN_ICON)));
+                    viewInfo.setIcon(new ImageIcon(
+                            GlyphPickerPluginExtension.class
+                                    .getResource(PLUGIN_ICON)));
                 }
             }
         });
-        
+
         workspace.addMenuBarCustomizer(new MenuBarCustomizer() {
             @Override
             public void customizeMainMenu(JMenuBar mainMenu) {
                 mainMenu.getMenu(1).addSeparator();
-                mainMenu.getMenu(1).add(new TogglePickerWindowAction(workspace));
+                mainMenu.getMenu(1)
+                        .add(new TogglePickerWindowAction(workspace));
             }
         });
 
