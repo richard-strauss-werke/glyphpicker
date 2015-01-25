@@ -38,7 +38,6 @@ public class ChangeViewAction extends AbstractAction {
             int row = list.getTopVisibleRow();
             panel.setListComponent(table);
             panel.getInfoLabel().setVisible(false);
-            panel.getInfoLabel2().setVisible(false);
             panel.revalidate();
             table.setTopVisibleRow(row);
             activeListIndex = 1;
@@ -48,7 +47,6 @@ public class ChangeViewAction extends AbstractAction {
             int row = table.getTopVisibleRow();
             panel.setListComponent(list);
             panel.getInfoLabel().setVisible(true);
-            panel.getInfoLabel2().setVisible(true);
             panel.revalidate();
             list.setTopVisibleRow(row);
             activeListIndex = 0;

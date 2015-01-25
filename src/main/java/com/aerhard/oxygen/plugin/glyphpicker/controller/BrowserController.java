@@ -373,16 +373,8 @@ public class BrowserController extends Controller {
 
                     if (glyphDefinition == null) {
                         panel.getInfoLabel().setText(null);
-                        panel.getInfoLabel2().setText(null);
                     } else {
-                        String charName = glyphDefinition.getCharName();
-                        panel.getInfoLabel().setText(
-                                glyphDefinition.getCodePoint()
-                                        + (charName == null ? "" : ": "
-                                                + charName.replaceAll(
-                                                        "\\s\\s+", " ")));
-                        panel.getInfoLabel2().setText(
-                                glyphDefinition.getRange());
+                        panel.getInfoLabel().setText(glyphDefinition.getHTML());
                     }
 
                 }
