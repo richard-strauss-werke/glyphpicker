@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.aerhard.oxygen.plugin.glyphpicker</groupId>
 	<packaging>jar</packaging>
-	<version>0.5.0</version>
+	<version>0.5.2</version>
 	<url>https://github.com/aerhard/glyphpicker</url>
 	<description>oXygen XML Editor plugin for glyph reference insertion in TEI documents</description>
 	<properties>
