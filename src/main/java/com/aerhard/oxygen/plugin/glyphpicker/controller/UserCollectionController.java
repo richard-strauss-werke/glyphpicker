@@ -372,20 +372,15 @@ public class UserCollectionController extends Controller {
                 if (model.isSelectionEmpty()) {
                     enableButtons = false;
                 } else {
-
-                    int index = model.getAnchorSelectionIndex();
-
-                    enableButtons = (index != -1);
-
-                    GlyphDefinition glyphDefinition = (index == -1) ? null
-                            : filterList.get(index);
+                    GlyphDefinition glyphDefinition = model.getSelected().get(0);
 
                     if (glyphDefinition == null) {
                         panel.getInfoLabel().setText(null);
+                        enableButtons = false;
                     } else {
                         panel.getInfoLabel().setText(glyphDefinition.getHTML());
+                        enableButtons = true;
                     }
-
                 }
 
                 removeAction.setEnabled(enableButtons);
@@ -402,8 +397,12 @@ public class UserCollectionController extends Controller {
                 .addListEventListener(new ListEventListener<GlyphDefinition>() {
                     @Override
                     public void listChanged(ListEvent<GlyphDefinition> e) {
-                        if (selectionModel.isSelectionEmpty()
-                                && filterList.size() > 0) {
+                        
+                        if (filterList.size() == 0) {
+                            panel.getInfoLabel().setText(null);
+                        }
+                        
+                        else if (selectionModel.isSelectionEmpty()) {
                             selectionModel.setSelectionInterval(0, 0);
                         }
 
