@@ -5,7 +5,6 @@ import javax.swing.JTable;
 import javax.swing.table.TableCellRenderer;
 
 import java.awt.Component;
-import java.util.List;
 
 import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinition;
 
@@ -48,7 +47,6 @@ public class DescriptionRenderer extends JLabel implements TableCellRenderer {
     }
 
     public static String formatText(GlyphDefinition model) {
-        List<String> classes = model.getClasses();
         StringBuilder sb = new StringBuilder();
 
         sb.append("<html>");
@@ -71,17 +69,18 @@ public class DescriptionRenderer extends JLabel implements TableCellRenderer {
             sb.append("</nobr></p>");
         }
 
-        if (model.getClasses().size() > 0) {
-            sb.append("<p><nobr>Classes: ");
-            for (String cl : classes) {
-                sb.append(cl);
-                sb.append(" ");
-            }
-            sb.append("</nobr></p>");
-        }
+//      List<String> classes = model.getClasses();
+//        if (model.getClasses().size() > 0) {
+//            sb.append("<p><nobr>Classes: ");
+//            for (String cl : classes) {
+//                sb.append(cl);
+//                sb.append(" ");
+//            }
+//            sb.append("</nobr></p>");
+//        }
 
         if (model.getId() != null) {
-            sb.append("<p><nobr><em>");
+            sb.append("<p><nobr>xml:id: <em>");
             sb.append(model.getId());
             sb.append("</em></nobr></p>");
         }
@@ -91,31 +90,5 @@ public class DescriptionRenderer extends JLabel implements TableCellRenderer {
         return sb.toString();
 
     }
-
-    // private void adjustRowHeight(JTable table, int row, int column) {
-    //
-    // int cWidth = table.getTableHeader().getColumnModel().getColumn(column)
-    // .getWidth();
-    // setSize(new Dimension(cWidth, 1000));
-    // int prefH = getPreferredSize().height;
-    // while (rowColHeight.size() <= row) {
-    // rowColHeight.add(new ArrayList<Integer>(column));
-    // }
-    // List<Integer> colHeights = rowColHeight.get(row);
-    // while (colHeights.size() <= column) {
-    // colHeights.add(0);
-    // }
-    // colHeights.set(column, prefH);
-    // int maxH = prefH;
-    // for (Integer colHeight : colHeights) {
-    // if (colHeight > maxH) {
-    // maxH = colHeight;
-    // }
-    // }
-    // maxH+=padding;
-    // if (table.getRowHeight(row) != maxH) {
-    // table.setRowHeight(row, maxH);
-    // }
-    // }
 
 }
