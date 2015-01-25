@@ -7,7 +7,6 @@ import java.awt.Insets;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
-import javax.swing.JToggleButton;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.JToolBar;
@@ -17,6 +16,7 @@ import java.awt.Component;
 import javax.swing.Box;
 
 import com.jidesoft.swing.JideButton;
+import com.jidesoft.swing.JideToggleButton;
 
 public class ControlPanel extends JPanel {
 
@@ -24,7 +24,7 @@ public class ControlPanel extends JPanel {
     private JComboBox<String> dataSourceCombo;
     private JButton btnLoad;
     private JButton viewBtn;
-    private JToggleButton sortBtn;
+    private JideToggleButton sortBtn;
     private JToolBar toolBar;
     private Component horizontalGlue;
     private JComboBox<String> autoCompleteCombo;
@@ -58,10 +58,10 @@ public class ControlPanel extends JPanel {
         horizontalGlue = Box.createHorizontalGlue();
         toolBar.add(horizontalGlue);
 
-        sortBtn = new JToggleButton();
+        sortBtn = new JideToggleButton();
         toolBar.add(sortBtn);
 
-        toolBar.addSeparator();
+//        toolBar.addSeparator();
 
         viewBtn = new JideButton();
         toolBar.add(viewBtn);
@@ -172,7 +172,7 @@ public class ControlPanel extends JPanel {
         return autoCompleteCombo;
     }
     
-    public JToggleButton getSortBtn() {
+    public JideToggleButton getSortBtn() {
         return sortBtn;
     }
 
