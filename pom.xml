@@ -152,8 +152,18 @@
 				<includes>
 					<include>**/*.*</include>
 				</includes>
+				<excludes>
+                    <exclude>**/*.xml</exclude>
+                </excludes>
 				<filtering>true</filtering>
 			</resource>
+			<resource>
+                <directory>src/main/resources</directory>
+                <includes>
+                    <include>**/*.xml</include>
+                </includes>
+                <filtering>false</filtering>
+            </resource>
 			<resource>
 				<directory>src/test/resources</directory>
 				<excludes>
