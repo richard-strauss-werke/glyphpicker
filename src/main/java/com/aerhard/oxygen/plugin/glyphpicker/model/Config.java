@@ -9,20 +9,46 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Config {
 
+    @XmlElement
+    private int tabIndex = 1;
+    
+    @XmlElement
+    private int userSearchFieldScopeIndex = 0;
+    
+    @XmlElement
+    private int browserSearchFieldScopeIndex = 0;
+    
     @XmlElement(name = "dataSources")
     private DataSourceList dataSources = null;
 
-    /**
-     * @return the dataSources
-     */
+    public int getTabIndex() {
+        return tabIndex;
+    }
+
+    public void setTabIndex(int tabIndex) {
+        this.tabIndex = tabIndex;
+    }
+    
+    public int getUserSearchFieldScopeIndex() {
+        return userSearchFieldScopeIndex;
+    }
+
+    public void setUserSearchFieldScopeIndex(int userSearchFieldScopeIndex) {
+        this.userSearchFieldScopeIndex = userSearchFieldScopeIndex;
+    }
+
+    public int getBrowserSearchFieldScopeIndex() {
+        return browserSearchFieldScopeIndex;
+    }
+
+    public void setBrowserSearchFieldScopeIndex(int browserSearchFieldScopeIndex) {
+        this.browserSearchFieldScopeIndex = browserSearchFieldScopeIndex;
+    }
+    
     public DataSourceList getDataSources() {
         return dataSources;
     }
 
-    /**
-     * @param dataSources
-     *            the dataSources to set
-     */
     public void setDataSources(DataSourceList dataSources) {
         this.dataSources = dataSources;
     }

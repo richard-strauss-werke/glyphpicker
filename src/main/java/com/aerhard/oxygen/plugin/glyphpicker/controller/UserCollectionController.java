@@ -8,7 +8,9 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
@@ -37,6 +39,7 @@ import ca.odell.glazedlists.swing.DefaultEventTableModel;
 
 import com.aerhard.oxygen.plugin.glyphpicker.action.ChangeViewAction;
 import com.aerhard.oxygen.plugin.glyphpicker.controller.BrowserController.GlyphComparator;
+import com.aerhard.oxygen.plugin.glyphpicker.model.Config;
 import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinition;
 import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinitions;
 import com.aerhard.oxygen.plugin.glyphpicker.model.trans.AllSelector;
@@ -57,18 +60,18 @@ public class UserCollectionController extends Controller {
 
     private static final Logger LOGGER = Logger
             .getLogger(UserCollectionController.class.getName());
-    
+
     private ListSelectionModel selectionModel;
 
     private ContainerPanel panel;
 
     private GlyphTable table;
     private UserCollectionLoader loader;
-    
+
     private BasicEventList<GlyphDefinition> glyphList;
     private SortedList<GlyphDefinition> sortedList;
     private FilterList<GlyphDefinition> filterList;
-    
+
     private GlyphGrid list;
     private boolean listInSync = true;
 
@@ -84,17 +87,17 @@ public class UserCollectionController extends Controller {
     private CustomAutoCompleteSupport<String> autoCompleteSupport = null;
 
     @SuppressWarnings("unchecked")
-    public UserCollectionController(StandalonePluginWorkspace workspace,
-            Properties properties) {
+    public UserCollectionController(Config config, Properties properties,
+            StandalonePluginWorkspace workspace) {
 
-         controlPanel = new ControlPanel(false);
+        controlPanel = new ControlPanel(false);
 
         panel = new ContainerPanel(controlPanel);
 
         glyphList = new BasicEventList<GlyphDefinition>();
-        
+
         sortedList = new SortedList<GlyphDefinition>(glyphList, null);
-        
+
         final Map<String, PropertySelector> autoCompleteScope = new LinkedHashMap<String, PropertySelector>();
         autoCompleteScope.put("Range", new RangeSelector());
         autoCompleteScope.put("Char Name", new CharNameSelector());
@@ -104,19 +107,24 @@ public class UserCollectionController extends Controller {
 
         // TODO add entity field
 
-        PropertySelector initialPropertySelector = autoCompleteScope
-                .get("Range");
+        int scopeIndex = config.getUserSearchFieldScopeIndex();
+
+        List<String> l = new ArrayList<String>(autoCompleteScope.keySet());
+
+        PropertySelector initialPropertySelector = autoCompleteScope.get(l
+                .get(scopeIndex));
 
         final GlyphSelect glyphSelect = new GlyphSelect();
-        glyphSelect.setFilterator(new GlyphTextFilterator(initialPropertySelector));
+        glyphSelect.setFilterator(new GlyphTextFilterator(
+                initialPropertySelector));
         glyphSelect.setMode(TextMatcherEditor.CONTAINS);
-        
+
         filterList = new FilterList<GlyphDefinition>(sortedList, glyphSelect);
 
         ((JTextField) controlPanel.getAutoCompleteCombo().getEditor()
                 .getEditorComponent()).getDocument().addDocumentListener(
                 glyphSelect);
-        
+
         setAutoCompleteSupport(initialPropertySelector);
 
         DefaultComboBoxModel<String> autoCompleteScopeModel = new DefaultComboBoxModel<String>();
@@ -127,6 +135,8 @@ public class UserCollectionController extends Controller {
 
         controlPanel.getAutoCompleteScopeCombo().setModel(
                 autoCompleteScopeModel);
+
+        controlPanel.getAutoCompleteScopeCombo().setSelectedIndex(scopeIndex);
 
         controlPanel.getAutoCompleteScopeCombo().addItemListener(
                 new ItemListener() {
@@ -139,14 +149,15 @@ public class UserCollectionController extends Controller {
                                     .get(item);
                             if (selector != null) {
                                 setAutoCompleteSupport(selector);
-                                glyphSelect.setFilterator(new GlyphTextFilterator(selector));
+                                glyphSelect
+                                        .setFilterator(new GlyphTextFilterator(
+                                                selector));
                             } else {
                                 LOGGER.error("Item not found");
                             }
                         }
                     }
                 });
-        
 
         list = new GlyphGrid(new DefaultEventListModel<GlyphDefinition>(
                 filterList));
@@ -166,7 +177,7 @@ public class UserCollectionController extends Controller {
         panel.setListComponent(list);
 
         controlPanel.getSortBtn().setAction(new SortAction());
-        
+
         controlPanel.getViewBtn().setAction(
                 new ChangeViewAction(panel, table, list));
 
@@ -204,7 +215,7 @@ public class UserCollectionController extends Controller {
         reloadAction.setEnabled(false);
         panel.addToButtonPanel(reloadAction);
     }
-    
+
     private void setAutoCompleteSupport(final PropertySelector propertySelector) {
         SwingUtilities.invokeLater(new Runnable() {
 
@@ -227,20 +238,24 @@ public class UserCollectionController extends Controller {
     public ContainerPanel getPanel() {
         return panel;
     }
+    
+    public ControlPanel getControlPanel() {
+        return controlPanel;
+    }
 
     private void removeItemFromUserCollection() {
         int index = list.getSelectedIndex();
         if (index != -1) {
             listInSync = false;
             GlyphDefinition item = filterList.get(index);
-            
+
             boolean itemRemoved = glyphList.remove(item);
-            
+
             if (itemRemoved) {
                 index = Math.min(index, glyphList.size() - 1);
                 if (index >= 0) {
                     list.setSelectedIndex(index);
-                }                
+                }
             }
         }
     }
@@ -269,7 +284,7 @@ public class UserCollectionController extends Controller {
         public void actionPerformed(ActionEvent e) {
         }
     }
-    
+
     private final class SaveAction extends AbstractAction {
         private static final long serialVersionUID = 1L;
 
@@ -378,7 +393,7 @@ public class UserCollectionController extends Controller {
                         panel.getInfoLabel2().setText(
                                 glyphDefinition.getRange());
                     }
-                    
+
                 }
 
                 removeAction.setEnabled(enableButtons);
@@ -391,35 +406,35 @@ public class UserCollectionController extends Controller {
 
         selectionModel.addListSelectionListener(new GlyphSelectionListener());
 
-        filterList.addListEventListener(new ListEventListener<GlyphDefinition>() {
+        filterList
+                .addListEventListener(new ListEventListener<GlyphDefinition>() {
+                    @Override
+                    public void listChanged(ListEvent<GlyphDefinition> e) {
+                        if (selectionModel.isSelectionEmpty()
+                                && filterList.size() > 0) {
+                            selectionModel.setSelectionInterval(0, 0);
+                        }
+
+                        // reevaluate list layout
+                        if (list.isVisible()) {
+                            list.fixRowCountForVisibleColumns();
+                        }
+
+                    }
+                });
+
+        controlPanel.getSortBtn().addItemListener(new ItemListener() {
+
             @Override
-            public void listChanged(ListEvent<GlyphDefinition> e) {
-                if (selectionModel.isSelectionEmpty() && filterList.size() > 0 ) {
-                    selectionModel.setSelectionInterval(0, 0);
+            public void itemStateChanged(ItemEvent e) {
+                if (e.getStateChange() == ItemEvent.SELECTED) {
+                    sortedList.setComparator(new GlyphComparator());
+                } else if (e.getStateChange() == ItemEvent.DESELECTED) {
+                    sortedList.setComparator(null);
                 }
-                
-             // reevaluate list layout
-                if (list.isVisible()) {
-                    list.fixRowCountForVisibleColumns();
-                }
-                
             }
         });
-        
-       
-       controlPanel.getSortBtn().addItemListener(new ItemListener() {
 
-           @Override
-           public void itemStateChanged(ItemEvent e) {
-               if (e.getStateChange() == ItemEvent.SELECTED) {
-                   sortedList.setComparator(new GlyphComparator());
-               } else if (e.getStateChange() == ItemEvent.DESELECTED) {
-                   sortedList.setComparator(null);
-               }
-           }
-       });
-       
-       
         MouseAdapter mouseAdapter = new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -441,12 +456,12 @@ public class UserCollectionController extends Controller {
                 }
             }
         };
-        
+
         table.addKeyListener(enterKeyAdapter);
         list.addKeyListener(enterKeyAdapter);
         ((JTextField) controlPanel.getAutoCompleteCombo().getEditor()
                 .getEditorComponent()).addKeyListener(enterKeyAdapter);
-        
+
         glyphList
                 .addListEventListener(new ListEventListener<GlyphDefinition>() {
                     @Override
@@ -462,7 +477,6 @@ public class UserCollectionController extends Controller {
                 });
 
     }
-
 
     @Override
     public void loadData() {

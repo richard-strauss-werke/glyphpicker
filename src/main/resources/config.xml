@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <config>
+    <tabIndex>1</tabIndex>
+    <userSearchFieldScopeIndex>0</userSearchFieldScopeIndex>
+    <browserSearchFieldScopeIndex>0</browserSearchFieldScopeIndex>
     <dataSources>
         <dataSource>
             <label>Edirom SMuFL-Browser local</label>

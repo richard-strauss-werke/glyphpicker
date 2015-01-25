@@ -4,8 +4,6 @@ import java.awt.AWTEvent;
 import java.awt.Dimension;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.KeyAdapter;
@@ -13,6 +11,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -114,8 +113,12 @@ public class BrowserController extends Controller {
 
         // TODO add entity field
 
+        int scopeIndex = config.getBrowserSearchFieldScopeIndex();
+        
+        List<String> l = new ArrayList<String>(autoCompleteScope.keySet());
+        
         PropertySelector initialPropertySelector = autoCompleteScope
-                .get("Range");
+                .get(l.get(scopeIndex));
 
         final GlyphSelect glyphSelect = new GlyphSelect();
         glyphSelect.setFilterator(new GlyphTextFilterator(initialPropertySelector));
@@ -138,6 +141,8 @@ public class BrowserController extends Controller {
         controlPanel.getAutoCompleteScopeCombo().setModel(
                 autoCompleteScopeModel);
 
+        controlPanel.getAutoCompleteScopeCombo().setSelectedIndex(scopeIndex);
+        
         controlPanel.getAutoCompleteScopeCombo().addItemListener(
                 new ItemListener() {
 
@@ -244,6 +249,10 @@ public class BrowserController extends Controller {
 
     public ContainerPanel getPanel() {
         return panel;
+    }
+    
+    public ControlPanel getControlPanel() {
+        return controlPanel;
     }
 
     protected void insertGlyph() {

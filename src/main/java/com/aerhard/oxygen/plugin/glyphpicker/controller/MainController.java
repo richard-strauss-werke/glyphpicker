@@ -8,6 +8,7 @@ import org.apache.log4j.Logger;
 
 import ro.sync.exml.workspace.api.standalone.StandalonePluginWorkspace;
 
+import com.aerhard.oxygen.plugin.glyphpicker.model.Config;
 import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinition;
 import com.aerhard.oxygen.plugin.glyphpicker.view.MainPanel;
 
@@ -19,8 +20,8 @@ public class MainController extends Controller {
 
     private ConfigLoader configLoader;
 
-    private Controller browserController;
-    private Controller userCollectionController;
+    private BrowserController browserController;
+    private UserCollectionController userCollectionController;
 
     public MainController(StandalonePluginWorkspace workspace) {
 
@@ -35,22 +36,27 @@ public class MainController extends Controller {
         configLoader = new ConfigLoader(workspace, properties);
         configLoader.load();
 
-        browserController = new BrowserController(configLoader.getConfig());
+        Config config = configLoader.getConfig();
+
+        browserController = new BrowserController(config);
         browserController.addListener(this);
 
-        userCollectionController = new UserCollectionController(workspace,
-                properties);
+        userCollectionController = new UserCollectionController(config,
+                properties, workspace);
         userCollectionController.addListener(this);
         addListener(userCollectionController);
 
         mainPanel = new MainPanel(browserController.getPanel(),
                 userCollectionController.getPanel());
 
-        mainPanel.getTabbedPane().setSelectedIndex(1);
-        
+        mainPanel.getTabbedPane().setSelectedIndex(config.getTabIndex());
+
         mainPanel.getTabbedPane().setMnemonicAt(0, KeyEvent.VK_U);
         mainPanel.getTabbedPane().setMnemonicAt(1, KeyEvent.VK_D);
-//        mainPanel.getTabbedPane().setDisplayedMnemonicIndexAt(0, 0);
+        // mainPanel.getTabbedPane().setDisplayedMnemonicIndexAt(0, 0);
+
+        new TabFocusHandler(mainPanel.getTabbedPane());
+
     }
 
     public ConfigLoader getConfigLoader() {
@@ -78,7 +84,7 @@ public class MainController extends Controller {
                 LOGGER.error(e);
             }
         }
-        
+
     }
 
     @Override
@@ -88,6 +94,15 @@ public class MainController extends Controller {
     }
 
     public void saveData() {
+        Config config = getConfigLoader().getConfig();
+        config.setTabIndex(mainPanel.getTabbedPane().getSelectedIndex());
+        config.setBrowserSearchFieldScopeIndex(browserController
+                .getControlPanel().getAutoCompleteScopeCombo()
+                .getSelectedIndex());
+        config.setUserSearchFieldScopeIndex(userCollectionController
+                .getControlPanel().getAutoCompleteScopeCombo()
+                .getSelectedIndex());
+
         getConfigLoader().save();
         userCollectionController.saveData();
     }
