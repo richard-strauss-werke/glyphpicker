@@ -10,25 +10,21 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Comparator;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ExecutionException;
 
 import javax.swing.AbstractAction;
+import javax.swing.Action;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
-import javax.swing.ListSelectionModel;
 import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-
 import org.apache.log4j.Logger;
 
 import ca.odell.glazedlists.BasicEventList;
@@ -43,8 +39,6 @@ import ca.odell.glazedlists.swing.DefaultEventListModel;
 import ca.odell.glazedlists.swing.DefaultEventSelectionModel;
 import ca.odell.glazedlists.swing.DefaultEventTableModel;
 
-import com.aerhard.oxygen.plugin.glyphpicker.action.ChangeViewAction;
-import com.aerhard.oxygen.plugin.glyphpicker.controller.editor.DataSourceEditorController;
 import com.aerhard.oxygen.plugin.glyphpicker.model.Config;
 import com.aerhard.oxygen.plugin.glyphpicker.model.DataSource;
 import com.aerhard.oxygen.plugin.glyphpicker.model.DataSourceList;
@@ -61,7 +55,6 @@ import com.aerhard.oxygen.plugin.glyphpicker.view.ContainerPanel;
 import com.aerhard.oxygen.plugin.glyphpicker.view.GlyphGrid;
 import com.aerhard.oxygen.plugin.glyphpicker.view.GlyphTable;
 import com.aerhard.oxygen.plugin.glyphpicker.view.HighlightButton;
-import com.aerhard.oxygen.plugin.glyphpicker.view.editor.DataSourceEditor;
 import com.aerhard.oxygen.plugin.glyphpicker.view.renderer.GlyphRendererAdapter;
 
 public class BrowserController extends Controller {
@@ -71,11 +64,16 @@ public class BrowserController extends Controller {
     private static final Logger LOGGER = Logger
             .getLogger(BrowserController.class.getName());
 
-    private ListSelectionModel selectionModel;
+    private EventList<GlyphDefinition> glyphList = new BasicEventList<GlyphDefinition>();
+    private SortedList<GlyphDefinition> sortedList = new SortedList<GlyphDefinition>(
+            glyphList, null);
 
-    private EventList<GlyphDefinition> glyphList;
-    private SortedList<GlyphDefinition> sortedList;
-    private FilterList<GlyphDefinition> filterList;
+    private final GlyphSelect glyphSelect = new GlyphSelect();
+    private FilterList<GlyphDefinition> filterList = new FilterList<GlyphDefinition>(
+            sortedList, glyphSelect);
+
+    private DefaultEventSelectionModel<GlyphDefinition> selectionModel = new DefaultEventSelectionModel<GlyphDefinition>(
+            filterList);
 
     private ContainerPanel panel;
     private GlyphTable table;
@@ -94,15 +92,11 @@ public class BrowserController extends Controller {
     private CustomAutoCompleteSupport<String> autoCompleteSupport = null;
 
     @SuppressWarnings("unchecked")
-    public BrowserController(Config config) {
+    public BrowserController(ContainerPanel panel, Config config) {
 
-        controlPanel = new ControlPanel(true);
+        this.panel = panel;
 
-        panel = new ContainerPanel(controlPanel);
-
-        glyphList = new BasicEventList<GlyphDefinition>();
-
-        sortedList = new SortedList<GlyphDefinition>(glyphList, null);
+        controlPanel = panel.getControlPanel();
 
         final Map<String, PropertySelector> autoCompleteScope = new LinkedHashMap<String, PropertySelector>();
         autoCompleteScope.put("Range", new RangeSelector());
@@ -114,17 +108,14 @@ public class BrowserController extends Controller {
         // TODO add entity field
 
         int scopeIndex = config.getBrowserSearchFieldScopeIndex();
-        
-        List<String> l = new ArrayList<String>(autoCompleteScope.keySet());
-        
-        PropertySelector initialPropertySelector = autoCompleteScope
-                .get(l.get(scopeIndex));
 
-        final GlyphSelect glyphSelect = new GlyphSelect();
-        glyphSelect.setFilterator(new GlyphTextFilterator(initialPropertySelector));
-        glyphSelect.setMode(TextMatcherEditor.CONTAINS);
-        
-        filterList = new FilterList<GlyphDefinition>(sortedList, glyphSelect);
+        List<String> l = new ArrayList<String>(autoCompleteScope.keySet());
+
+        PropertySelector initialPropertySelector = autoCompleteScope.get(l
+                .get(scopeIndex));
+
+        glyphSelect.setFilterator(new GlyphTextFilterator(
+                initialPropertySelector));
 
         ((JTextField) controlPanel.getAutoCompleteCombo().getEditor()
                 .getEditorComponent()).getDocument().addDocumentListener(
@@ -142,7 +133,7 @@ public class BrowserController extends Controller {
                 autoCompleteScopeModel);
 
         controlPanel.getAutoCompleteScopeCombo().setSelectedIndex(scopeIndex);
-        
+
         controlPanel.getAutoCompleteScopeCombo().addItemListener(
                 new ItemListener() {
 
@@ -154,7 +145,9 @@ public class BrowserController extends Controller {
                                     .get(item);
                             if (selector != null) {
                                 setAutoCompleteSupport(selector);
-                                glyphSelect.setFilterator(new GlyphTextFilterator(selector));
+                                glyphSelect
+                                        .setFilterator(new GlyphTextFilterator(
+                                                selector));
                             } else {
                                 LOGGER.error("Item not found");
                             }
@@ -182,37 +175,36 @@ public class BrowserController extends Controller {
         dataSourceList = config.getDataSources();
         controlPanel.getDataSourceCombo().setModel(dataSourceList);
 
-        controlPanel.getBtnConfigure().setAction(new EditAction());
+        controlPanel.getBtnConfigure().setAction(
+                new EditAction(this, panel, dataSourceList));
 
         controlPanel.getSortBtn().setAction(new SortAction());
 
         controlPanel.getViewBtn().setAction(
                 new ChangeViewAction(panel, table, list));
 
-        setButtons();
-
         loader = new GlyphDefinitionLoader();
 
-        selectionModel = new DefaultEventSelectionModel<GlyphDefinition>(
-                filterList);
         selectionModel
                 .setSelectionMode(DefaultEventSelectionModel.SINGLE_SELECTION);
         list.setSelectionModel(selectionModel);
         table.setSelectionModel(selectionModel);
 
+        setActions();
+
         setListeners();
 
     }
 
-    private void setButtons() {
-        insertAction = new InsertXmlAction();
+    private void setActions() {
+        insertAction = new InsertXmlAction(this, selectionModel);
         insertAction.setEnabled(false);
         insertBtn = new HighlightButton(insertAction);
-        panel.addToButtonPanel(insertBtn);
+        controlPanel.addToToolbar(insertBtn, 0);
 
-        addAction = new AddToUserCollectionAction();
+        addAction = new AddToUserCollectionAction(this, selectionModel);
         addAction.setEnabled(false);
-        panel.addToButtonPanel(addAction);
+        controlPanel.addToToolbar(addAction, 1);
     }
 
     private void setAutoCompleteSupport(final PropertySelector propertySelector) {
@@ -233,166 +225,25 @@ public class BrowserController extends Controller {
         });
     }
 
-    public static class GlyphComparator implements Comparator<GlyphDefinition>,
-            Serializable {
-        private static final long serialVersionUID = 1L;
-
-        public int compare(GlyphDefinition glyphA, GlyphDefinition glyphB) {
-
-            String aString = glyphA.getCodePoint();
-            String bString = glyphB.getCodePoint();
-
-            return (aString != null && bString != null) ? aString
-                    .compareToIgnoreCase(bString) : -1;
-        }
-    }
-
-    public ContainerPanel getPanel() {
-        return panel;
-    }
-    
-    public ControlPanel getControlPanel() {
-        return controlPanel;
-    }
-
-    protected void insertGlyph() {
-        int row = selectionModel.getAnchorSelectionIndex();
-        if (row != -1) {
-            GlyphDefinition selectedModel = filterList.get(row);
-            if (selectedModel != null) {
-                fireEvent("insert", selectedModel);
-            }
-        }
-    }
-
-    private class SortAction extends AbstractAction {
-        private static final long serialVersionUID = 1L;
-
-        SortAction() {
-            super("Sort by Codepoint", new ImageIcon(
-                    BrowserController.class.getResource("/images/sort.png")));
-            putValue(SHORT_DESCRIPTION, "Sorts the glyphs by code point.");
-            putValue(MNEMONIC_KEY, Integer.valueOf(KeyEvent.VK_O));
-        }
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-        }
-    }
-
-    private final class EditAction extends AbstractAction {
-        private static final long serialVersionUID = 1L;
-
-        private EditAction() {
-            super("Edit", new ImageIcon(
-                    BrowserController.class.getResource("/images/gear.png")));
-            putValue(SHORT_DESCRIPTION, "Edit data sources.");
-            putValue(MNEMONIC_KEY, Integer.valueOf(KeyEvent.VK_E));
-        }
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            List<DataSource> result = new DataSourceEditorController(
-                    new DataSourceEditor(), panel).load(dataSourceList
-                    .getData());
-
-            if (result != null) {
-                dataSourceList.getData().clear();
-                dataSourceList.getData().addAll(result);
-                if (dataSourceList.getSize() > 0) {
-                    dataSourceList.setSelectedItem(dataSourceList
-                            .getElementAt(0));
-                }
-                loadData();
-            }
-        }
-    }
-
-    private final class AddToUserCollectionAction extends AbstractAction {
-        private static final long serialVersionUID = 1L;
-
-        private AddToUserCollectionAction() {
-            super("Add to User Collection", new ImageIcon(
-                    ChangeViewAction.class.getResource("/images/plus.png")));
-            putValue(SHORT_DESCRIPTION,
-                    "Add the selected glyph to the user collection.");
-            putValue(MNEMONIC_KEY, Integer.valueOf(KeyEvent.VK_C));
-        }
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            int row = selectionModel.getAnchorSelectionIndex();
-            if (row != -1) {
-                GlyphDefinition selectedModel = filterList.get(row);
-                if (selectedModel != null) {
-                    fireEvent("copyToUserCollection", selectedModel);
-                }
-            }
-        }
-    }
-
-    private class InsertXmlAction extends AbstractAction {
-        private static final long serialVersionUID = 1L;
-
-        InsertXmlAction() {
-            super("Insert XML", new ImageIcon(
-                    BrowserController.class
-                            .getResource("/images/blue-document-import.png")));
-            putValue(SHORT_DESCRIPTION,
-                    "Insert the selected glyph to the document.");
-            putValue(MNEMONIC_KEY, Integer.valueOf(KeyEvent.VK_I));
-        }
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            insertGlyph();
-        }
-    }
-
-    private class GlyphSelectionListener implements ListSelectionListener {
-        @Override
-        public void valueChanged(ListSelectionEvent event) {
-            
-            if (!event.getValueIsAdjusting()) {
-                Boolean enableButtons;
-
-                @SuppressWarnings("unchecked")
-                DefaultEventSelectionModel<GlyphDefinition> model = ((DefaultEventSelectionModel<GlyphDefinition>) event
-                        .getSource());
-
-                if (model.isSelectionEmpty()) {
-                    enableButtons = false;
-                } else {
-                    GlyphDefinition glyphDefinition = model.getSelected().get(0);
-
-                    if (glyphDefinition == null) {
-                        panel.getInfoLabel().setText(null);
-                        enableButtons = false;
-                    } else {
-                        panel.getInfoLabel().setText(glyphDefinition.getHTML());
-                        enableButtons = true;
-                    }
-                }
-
-                addAction.setEnabled(enableButtons);
-                insertAction.setEnabled(enableButtons);
-            }
-        }
-    }
-
     private void setListeners() {
-        
-        selectionModel.addListSelectionListener(new GlyphSelectionListener());
+
+        Set<Action> actions = new HashSet<Action>();
+        actions.add(addAction);
+        actions.add(insertAction);
+
+        selectionModel
+                .addListSelectionListener(new GlyphSelectionChangeHandler(panel
+                        .getInfoLabel(), sortedList, filterList, actions));
 
         filterList
                 .addListEventListener(new ListEventListener<GlyphDefinition>() {
                     @Override
                     public void listChanged(ListEvent<GlyphDefinition> e) {
-                        
+
                         if (filterList.size() == 0) {
                             panel.getInfoLabel().setText(null);
                         }
-                        
+
                         else if (selectionModel.isSelectionEmpty()) {
                             selectionModel.setSelectionInterval(0, 0);
                         }
@@ -404,14 +255,16 @@ public class BrowserController extends Controller {
 
                     }
                 });
-        
+
         controlPanel.getSortBtn().addItemListener(new ItemListener() {
 
             @Override
             public void itemStateChanged(ItemEvent e) {
                 if (e.getStateChange() == ItemEvent.SELECTED) {
-                    sortedList.setComparator(new GlyphComparator());
-                } else if (e.getStateChange() == ItemEvent.DESELECTED) {
+                    sortedList.setComparator(new CodePointComparator());
+                }
+
+                else if (e.getStateChange() == ItemEvent.DESELECTED) {
                     sortedList.setComparator(null);
                 }
             }
@@ -443,7 +296,7 @@ public class BrowserController extends Controller {
             public void mouseClicked(MouseEvent e) {
                 if (e.getClickCount() == 2) {
                     insertBtn.highlight();
-                    insertGlyph();
+                    insertAction.actionPerformed(null);
                 }
             }
         };
@@ -455,7 +308,7 @@ public class BrowserController extends Controller {
             public void keyReleased(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
                     insertBtn.highlight();
-                    insertGlyph();
+                    insertAction.actionPerformed(null);
                 }
             }
         };
@@ -466,7 +319,6 @@ public class BrowserController extends Controller {
                 .getEditorComponent()).addKeyListener(enterKeyAdapter);
 
     }
-
 
     @Override
     public void loadData() {

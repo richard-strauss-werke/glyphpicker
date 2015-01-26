@@ -16,14 +16,8 @@
 
 package com.aerhard.oxygen.plugin.glyphpicker;
 
-import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
-import java.awt.event.KeyEvent;
-
-import javax.swing.AbstractAction;
 import javax.swing.ImageIcon;
 import javax.swing.JMenuBar;
-import javax.swing.KeyStroke;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Position;
 
@@ -62,34 +56,6 @@ public class GlyphPickerPluginExtension implements
     private MainController mainController;
 
     private MainPanel mainPanel;
-
-    private class TogglePickerWindowAction extends AbstractAction {
-        private static final long serialVersionUID = 1L;
-
-        private StandalonePluginWorkspace workspace;
-
-        TogglePickerWindowAction(StandalonePluginWorkspace workspace) {
-            super("GyphPicker", new ImageIcon(
-                    GlyphPickerPluginExtension.class.getResource(PLUGIN_ICON)));
-
-            this.workspace = workspace;
-
-            putValue(SHORT_DESCRIPTION, "Shows / hides the GlyphPicker window");
-
-            putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_P,
-                    Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
-        }
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            if (workspace.isViewShowing(VIEW_ID)) {
-                workspace.hideView(VIEW_ID);
-            } else {
-                workspace.showView(VIEW_ID, true);
-            }
-            ;
-        }
-    }
 
     /*
      * (non-Javadoc)
@@ -138,7 +104,7 @@ public class GlyphPickerPluginExtension implements
             public void customizeMainMenu(JMenuBar mainMenu) {
                 mainMenu.getMenu(1).addSeparator();
                 mainMenu.getMenu(1)
-                        .add(new TogglePickerWindowAction(workspace));
+                        .add(new TogglePickerWindowAction(workspace, PLUGIN_ICON, VIEW_ID));
             }
         });
 

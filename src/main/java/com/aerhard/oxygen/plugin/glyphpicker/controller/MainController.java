@@ -10,6 +10,8 @@ import ro.sync.exml.workspace.api.standalone.StandalonePluginWorkspace;
 
 import com.aerhard.oxygen.plugin.glyphpicker.model.Config;
 import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinition;
+import com.aerhard.oxygen.plugin.glyphpicker.view.ContainerPanel;
+import com.aerhard.oxygen.plugin.glyphpicker.view.ControlPanel;
 import com.aerhard.oxygen.plugin.glyphpicker.view.MainPanel;
 
 public class MainController extends Controller {
@@ -22,6 +24,9 @@ public class MainController extends Controller {
 
     private BrowserController browserController;
     private UserCollectionController userCollectionController;
+    
+    private ContainerPanel browserPanel;
+    private ContainerPanel userCollectionPanel;
 
     public MainController(StandalonePluginWorkspace workspace) {
 
@@ -38,16 +43,17 @@ public class MainController extends Controller {
 
         Config config = configLoader.getConfig();
 
-        browserController = new BrowserController(config);
+        browserPanel = new ContainerPanel(new ControlPanel(true));
+        browserController = new BrowserController(browserPanel, config);
         browserController.addListener(this);
 
-        userCollectionController = new UserCollectionController(config,
+        userCollectionPanel = new ContainerPanel(new ControlPanel(false));
+        userCollectionController = new UserCollectionController(userCollectionPanel, config,
                 properties, workspace);
         userCollectionController.addListener(this);
         addListener(userCollectionController);
 
-        mainPanel = new MainPanel(browserController.getPanel(),
-                userCollectionController.getPanel());
+        mainPanel = new MainPanel(userCollectionPanel, browserPanel);
 
         mainPanel.getTabbedPane().setSelectedIndex(config.getTabIndex());
 
@@ -63,7 +69,6 @@ public class MainController extends Controller {
         return configLoader;
     }
 
-    @Override
     public MainPanel getPanel() {
         return mainPanel;
     }
@@ -96,10 +101,10 @@ public class MainController extends Controller {
     public void saveData() {
         Config config = getConfigLoader().getConfig();
         config.setTabIndex(mainPanel.getTabbedPane().getSelectedIndex());
-        config.setBrowserSearchFieldScopeIndex(browserController
+        config.setBrowserSearchFieldScopeIndex(browserPanel
                 .getControlPanel().getAutoCompleteScopeCombo()
                 .getSelectedIndex());
-        config.setUserSearchFieldScopeIndex(userCollectionController
+        config.setUserSearchFieldScopeIndex(userCollectionPanel
                 .getControlPanel().getAutoCompleteScopeCombo()
                 .getSelectedIndex());
 

@@ -12,6 +12,10 @@ import ca.odell.glazedlists.matchers.TextMatcherEditor;
 public class GlyphSelect extends TextMatcherEditor<GlyphDefinition>
         implements DocumentListener {
 
+    public GlyphSelect () {
+        setMode(TextMatcherEditor.CONTAINS);
+    }
+    
     public void performUpdate(final DocumentEvent e) {
 
         String q;

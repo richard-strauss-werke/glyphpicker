@@ -14,7 +14,7 @@ public class MainPanel extends JPanel {
     private static final long serialVersionUID = 1L;
     private JTabbedPane tabbedPane;
 
-    public MainPanel(JComponent browserPanel, JComponent userCollectionPanel) {
+    public MainPanel(JComponent userCollectionPanel, JComponent browserPanel) {
 
         setLayout(new BorderLayout(0, 0));
 

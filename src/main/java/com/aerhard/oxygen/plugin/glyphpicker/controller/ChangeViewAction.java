@@ -1,10 +1,10 @@
-package com.aerhard.oxygen.plugin.glyphpicker.action;
+package com.aerhard.oxygen.plugin.glyphpicker.controller;
 
 import java.awt.event.ActionEvent;
-import java.awt.event.KeyEvent;
 
 import javax.swing.AbstractAction;
 import javax.swing.ImageIcon;
+import javax.swing.KeyStroke;
 
 import com.aerhard.oxygen.plugin.glyphpicker.view.ContainerPanel;
 import com.aerhard.oxygen.plugin.glyphpicker.view.GlyphGrid;
@@ -21,13 +21,16 @@ public class ChangeViewAction extends AbstractAction {
 
     public ChangeViewAction(ContainerPanel panel, GlyphTable table,
             GlyphGrid list) {
-        super("Toggle Grid View", new ImageIcon(
+        super(null, new ImageIcon(
                 ChangeViewAction.class.getResource("/images/grid.png")));
         this.panel = panel;
         this.table = table;
         this.list = list;
-        putValue(SHORT_DESCRIPTION, "Toggles between glyph list view styles.");
-        putValue(MNEMONIC_KEY, Integer.valueOf(KeyEvent.VK_T));
+        
+        String mnemonic = "T";
+        
+        putValue(SHORT_DESCRIPTION, "Toggles between glyph list view styles (Alt+"+mnemonic+")");
+        putValue(MNEMONIC_KEY, KeyStroke.getKeyStroke(mnemonic).getKeyCode());
     }
 
     @Override

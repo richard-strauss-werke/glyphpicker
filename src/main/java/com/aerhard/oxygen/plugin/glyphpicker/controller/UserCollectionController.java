@@ -1,7 +1,6 @@
 package com.aerhard.oxygen.plugin.glyphpicker.controller;
 
 import java.awt.Dimension;
-import java.awt.event.ActionEvent;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.KeyAdapter;
@@ -9,24 +8,23 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.Set;
 
 import javax.swing.AbstractAction;
+import javax.swing.Action;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.ImageIcon;
 import javax.swing.JTextField;
-import javax.swing.ListSelectionModel;
 import javax.swing.SwingUtilities;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-
 import org.apache.log4j.Logger;
 
 import ro.sync.exml.workspace.api.standalone.StandalonePluginWorkspace;
 import ca.odell.glazedlists.BasicEventList;
+import ca.odell.glazedlists.EventList;
 import ca.odell.glazedlists.FilterList;
 import ca.odell.glazedlists.SortedList;
 import ca.odell.glazedlists.UniqueList;
@@ -37,8 +35,6 @@ import ca.odell.glazedlists.swing.DefaultEventListModel;
 import ca.odell.glazedlists.swing.DefaultEventSelectionModel;
 import ca.odell.glazedlists.swing.DefaultEventTableModel;
 
-import com.aerhard.oxygen.plugin.glyphpicker.action.ChangeViewAction;
-import com.aerhard.oxygen.plugin.glyphpicker.controller.BrowserController.GlyphComparator;
 import com.aerhard.oxygen.plugin.glyphpicker.model.Config;
 import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinition;
 import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinitions;
@@ -61,16 +57,21 @@ public class UserCollectionController extends Controller {
     private static final Logger LOGGER = Logger
             .getLogger(UserCollectionController.class.getName());
 
-    private ListSelectionModel selectionModel;
+    private EventList<GlyphDefinition> glyphList = new BasicEventList<GlyphDefinition>();
+    private SortedList<GlyphDefinition> sortedList = new SortedList<GlyphDefinition>(
+            glyphList, null);
+
+    private final GlyphSelect glyphSelect = new GlyphSelect();
+    private FilterList<GlyphDefinition> filterList = new FilterList<GlyphDefinition>(
+            sortedList, glyphSelect);
+
+    private DefaultEventSelectionModel<GlyphDefinition> selectionModel = new DefaultEventSelectionModel<GlyphDefinition>(
+            filterList);
 
     private ContainerPanel panel;
 
     private GlyphTable table;
     private UserCollectionLoader loader;
-
-    private BasicEventList<GlyphDefinition> glyphList;
-    private SortedList<GlyphDefinition> sortedList;
-    private FilterList<GlyphDefinition> filterList;
 
     private GlyphGrid list;
     private boolean listInSync = true;
@@ -86,17 +87,17 @@ public class UserCollectionController extends Controller {
 
     private CustomAutoCompleteSupport<String> autoCompleteSupport = null;
 
+    private MoveUpAction moveUpAction;
+
+    private MoveDownAction moveDownAction;
+
     @SuppressWarnings("unchecked")
-    public UserCollectionController(Config config, Properties properties,
-            StandalonePluginWorkspace workspace) {
+    public UserCollectionController(ContainerPanel panel, Config config,
+            Properties properties, StandalonePluginWorkspace workspace) {
 
-        controlPanel = new ControlPanel(false);
+        this.panel = panel;
 
-        panel = new ContainerPanel(controlPanel);
-
-        glyphList = new BasicEventList<GlyphDefinition>();
-
-        sortedList = new SortedList<GlyphDefinition>(glyphList, null);
+        controlPanel = panel.getControlPanel();
 
         final Map<String, PropertySelector> autoCompleteScope = new LinkedHashMap<String, PropertySelector>();
         autoCompleteScope.put("Range", new RangeSelector());
@@ -114,12 +115,8 @@ public class UserCollectionController extends Controller {
         PropertySelector initialPropertySelector = autoCompleteScope.get(l
                 .get(scopeIndex));
 
-        final GlyphSelect glyphSelect = new GlyphSelect();
         glyphSelect.setFilterator(new GlyphTextFilterator(
                 initialPropertySelector));
-        glyphSelect.setMode(TextMatcherEditor.CONTAINS);
-
-        filterList = new FilterList<GlyphDefinition>(sortedList, glyphSelect);
 
         ((JTextField) controlPanel.getAutoCompleteCombo().getEditor()
                 .getEditorComponent()).getDocument().addDocumentListener(
@@ -181,39 +178,55 @@ public class UserCollectionController extends Controller {
         controlPanel.getViewBtn().setAction(
                 new ChangeViewAction(panel, table, list));
 
-        setButtons();
-
         loader = new UserCollectionLoader(workspace, properties);
 
-        selectionModel = new DefaultEventSelectionModel<GlyphDefinition>(
-                filterList);
         selectionModel
                 .setSelectionMode(DefaultEventSelectionModel.SINGLE_SELECTION);
         list.setSelectionModel(selectionModel);
         table.setSelectionModel(selectionModel);
 
+        setActions();
+
         setListeners();
 
     }
 
-    private void setButtons() {
+    private void setActions() {
 
-        insertAction = new InsertXmlAction();
+        insertAction = new InsertXmlAction(this, selectionModel);
         insertAction.setEnabled(false);
         insertBtn = new HighlightButton(insertAction);
-        panel.addToButtonPanel(insertBtn);
+        controlPanel.addToToolbar(insertBtn, 0);
 
-        removeAction = new RemoveFromUserCollectionAction();
+        removeAction = new RemoveFromUserCollectionAction(this, glyphList,
+                filterList, list);
         removeAction.setEnabled(false);
-        panel.addToButtonPanel(removeAction);
+        controlPanel.addToToolbar(removeAction, 1);
 
-        saveAction = new SaveAction();
+        moveUpAction = new MoveUpAction(this, glyphList, list);
+        moveUpAction.setEnabled(false);
+        controlPanel.addToToolbar(moveUpAction, 2);
+
+        moveDownAction = new MoveDownAction(this, glyphList, list);
+        moveDownAction.setEnabled(false);
+        controlPanel.addToToolbar(moveDownAction, 3);
+
+        Set<Action> actions = new HashSet<Action>();
+
+        saveAction = new SaveAction(this, actions);
         saveAction.setEnabled(false);
-        panel.addToButtonPanel(saveAction);
+        controlPanel.addToToolbar(saveAction, 4);
 
-        reloadAction = new ReloadAction();
+        reloadAction = new ReloadAction(this, actions);
         reloadAction.setEnabled(false);
-        panel.addToButtonPanel(reloadAction);
+        controlPanel.addToToolbar(reloadAction, 5);
+
+        actions.add(saveAction);
+        actions.add(reloadAction);
+    }
+
+    public void setListInSync(boolean listInSync) {
+        this.listInSync = listInSync;
     }
 
     private void setAutoCompleteSupport(final PropertySelector propertySelector) {
@@ -235,173 +248,27 @@ public class UserCollectionController extends Controller {
         });
     }
 
-    public ContainerPanel getPanel() {
-        return panel;
-    }
-    
-    public ControlPanel getControlPanel() {
-        return controlPanel;
-    }
-
-    private void removeItemFromUserCollection() {
-        int index = list.getSelectedIndex();
-        if (index != -1) {
-            listInSync = false;
-            GlyphDefinition item = filterList.get(index);
-
-            boolean itemRemoved = glyphList.remove(item);
-
-            if (itemRemoved) {
-                index = Math.min(index, glyphList.size() - 1);
-                if (index >= 0) {
-                    list.setSelectedIndex(index);
-                }
-            }
-        }
-    }
-
-    protected void insertGlyph() {
-        int row = selectionModel.getAnchorSelectionIndex();
-        if (row != -1) {
-            GlyphDefinition selectedModel = filterList.get(row);
-            if (selectedModel != null) {
-                fireEvent("insert", selectedModel);
-            }
-        }
-    }
-
-    private class SortAction extends AbstractAction {
-        private static final long serialVersionUID = 1L;
-
-        SortAction() {
-            super("Sort by Codepoint", new ImageIcon(
-                    BrowserController.class.getResource("/images/sort.png")));
-            putValue(SHORT_DESCRIPTION, "Sorts the glyphs by code point.");
-            putValue(MNEMONIC_KEY, Integer.valueOf(KeyEvent.VK_O));
-        }
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-        }
-    }
-
-    private final class SaveAction extends AbstractAction {
-        private static final long serialVersionUID = 1L;
-
-        private SaveAction() {
-            super("Save Collection", new ImageIcon(
-                    UserCollectionController.class
-                            .getResource("/images/disk.png")));
-            putValue(SHORT_DESCRIPTION, "Save the User Collection.");
-            putValue(MNEMONIC_KEY, Integer.valueOf(KeyEvent.VK_S));
-        }
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            saveData();
-            saveAction.setEnabled(false);
-            reloadAction.setEnabled(false);
-        }
-    }
-
-    private final class ReloadAction extends AbstractAction {
-        private static final long serialVersionUID = 1L;
-
-        private ReloadAction() {
-            super("Reload Collection", new ImageIcon(
-                    ChangeViewAction.class
-                            .getResource("/images/arrow-circle-225-left.png")));
-            putValue(SHORT_DESCRIPTION, "Reload the User Collection.");
-            putValue(MNEMONIC_KEY, Integer.valueOf(KeyEvent.VK_L));
-        }
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            loadData();
-            saveAction.setEnabled(false);
-            reloadAction.setEnabled(false);
-        }
-    }
-
-    private final class RemoveFromUserCollectionAction extends AbstractAction {
-        private static final long serialVersionUID = 1L;
-
-        private RemoveFromUserCollectionAction() {
-            super("Remove Item", new ImageIcon(
-                    ChangeViewAction.class.getResource("/images/minus.png")));
-            putValue(SHORT_DESCRIPTION,
-                    "Remove the selected glyph from the user collection.");
-            putValue(MNEMONIC_KEY, Integer.valueOf(KeyEvent.VK_R));
-        }
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            removeItemFromUserCollection();
-        }
-    }
-
-    private class InsertXmlAction extends AbstractAction {
-        private static final long serialVersionUID = 1L;
-
-        InsertXmlAction() {
-            super("Insert XML", new ImageIcon(
-                    UserCollectionController.class
-                            .getResource("/images/blue-document-import.png")));
-            putValue(SHORT_DESCRIPTION,
-                    "Insert the selected glyph to the document.");
-            putValue(MNEMONIC_KEY, Integer.valueOf(KeyEvent.VK_I));
-        }
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            insertGlyph();
-        }
-    }
-
-    private class GlyphSelectionListener implements ListSelectionListener {
-        @Override
-        public void valueChanged(ListSelectionEvent event) {
-            if (!event.getValueIsAdjusting()) {
-
-                Boolean enableButtons;
-
-                @SuppressWarnings("unchecked")
-                DefaultEventSelectionModel<GlyphDefinition> model = ((DefaultEventSelectionModel<GlyphDefinition>) event
-                        .getSource());
-
-                if (model.isSelectionEmpty()) {
-                    enableButtons = false;
-                } else {
-                    GlyphDefinition glyphDefinition = model.getSelected().get(0);
-
-                    if (glyphDefinition == null) {
-                        panel.getInfoLabel().setText(null);
-                        enableButtons = false;
-                    } else {
-                        panel.getInfoLabel().setText(glyphDefinition.getHTML());
-                        enableButtons = true;
-                    }
-                }
-
-                removeAction.setEnabled(enableButtons);
-                insertAction.setEnabled(enableButtons);
-            }
-        }
-    }
-
     private void setListeners() {
 
-        selectionModel.addListSelectionListener(new GlyphSelectionListener());
+        Set<Action> actions = new HashSet<Action>();
+        actions.add(removeAction);
+        actions.add(insertAction);
+        actions.add(moveUpAction);
+        actions.add(moveDownAction);
+
+        selectionModel
+                .addListSelectionListener(new GlyphSelectionChangeHandler(panel
+                        .getInfoLabel(), sortedList, filterList, actions));
 
         filterList
                 .addListEventListener(new ListEventListener<GlyphDefinition>() {
                     @Override
                     public void listChanged(ListEvent<GlyphDefinition> e) {
-                        
+
                         if (filterList.size() == 0) {
                             panel.getInfoLabel().setText(null);
                         }
-                        
+
                         else if (selectionModel.isSelectionEmpty()) {
                             selectionModel.setSelectionInterval(0, 0);
                         }
@@ -419,7 +286,7 @@ public class UserCollectionController extends Controller {
             @Override
             public void itemStateChanged(ItemEvent e) {
                 if (e.getStateChange() == ItemEvent.SELECTED) {
-                    sortedList.setComparator(new GlyphComparator());
+                    sortedList.setComparator(new CodePointComparator());
                 } else if (e.getStateChange() == ItemEvent.DESELECTED) {
                     sortedList.setComparator(null);
                 }
@@ -431,7 +298,7 @@ public class UserCollectionController extends Controller {
             public void mouseClicked(MouseEvent e) {
                 if (e.getClickCount() == 2) {
                     insertBtn.highlight();
-                    insertGlyph();
+                    insertAction.actionPerformed(null);
                 }
             }
         };
@@ -443,7 +310,7 @@ public class UserCollectionController extends Controller {
             public void keyReleased(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
                     insertBtn.highlight();
-                    insertGlyph();
+                    insertAction.actionPerformed(null);
                 }
             }
         };

@@ -8,13 +8,11 @@ import javax.swing.event.*;
 
 public class TabFocusHandler implements ChangeListener, PropertyChangeListener {
 
-    private HashMap<Component, Component> tabFocus = new HashMap<Component, Component>();
+    private Map<Component, Component> tabFocus = new HashMap<Component, Component>();
     private JTabbedPane tabbedPane;
 
     public TabFocusHandler(JTabbedPane tabbedPane) {
-
         this.tabbedPane = tabbedPane;
-
         tabbedPane.addChangeListener(this);
         KeyboardFocusManager focusManager = KeyboardFocusManager
                 .getCurrentKeyboardFocusManager();
@@ -24,17 +22,14 @@ public class TabFocusHandler implements ChangeListener, PropertyChangeListener {
     public void stateChanged(ChangeEvent e) {
         Component key = tabbedPane
                 .getComponentAt(tabbedPane.getSelectedIndex());
-
-        if (key == null)
-            return;
-
-        Component value = tabFocus.get(key);
-
-        if (value == null) {
-            key.transferFocus();
-            tabFocus.put(key, value);
-        } else {
-            value.requestFocusInWindow();
+        if (key != null) {
+            Component value = tabFocus.get(key);
+            if (value == null) {
+                key.transferFocus();
+                tabFocus.put(key, value);
+            } else {
+                value.requestFocusInWindow();
+            }    
         }
     }
 

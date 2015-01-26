@@ -1,11 +1,9 @@
 package com.aerhard.oxygen.plugin.glyphpicker.view;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Insets;
 
-import javax.swing.AbstractAction;
 import javax.swing.JComponent;
 import javax.swing.JEditorPane;
 import javax.swing.JLabel;
@@ -14,11 +12,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
-import javax.swing.border.MatteBorder;
-
 import com.jidesoft.swing.DefaultOverlayable;
-import com.jidesoft.swing.JideButton;
-
 import javax.swing.UIManager;
 
 import java.awt.GridBagLayout;
@@ -28,8 +22,6 @@ public class ContainerPanel extends JPanel {
 
     private static final long serialVersionUID = 1L;
 
-    private JPanel buttonPanel;
-
     private JScrollPane jPane;
     private DefaultOverlayable overlayable;
     private JTextPane infoLabel;
@@ -38,7 +30,11 @@ public class ContainerPanel extends JPanel {
 
     private JPanel overlayPanel;
 
-    public ContainerPanel(JPanel controlPanel) {
+    private ControlPanel controlPanel;
+
+    public ContainerPanel(ControlPanel controlPanel) {
+        this.controlPanel = controlPanel;
+        
         setLayout(new BorderLayout(0, 0));
 
         add(controlPanel, BorderLayout.NORTH);
@@ -92,28 +88,16 @@ public class ContainerPanel extends JPanel {
         gbc_infoLabel.gridy = 0;
         infoPanel.add(infoLabel, gbc_infoLabel);
         
-
-        buttonPanel = new JPanel();
-        buttonPanel.setBorder(new MatteBorder(1, 0, 0, 0, (Color) Color.GRAY));
-        add(buttonPanel, BorderLayout.SOUTH);
-
     }
-
+    
     public void setListComponent(JComponent component) {
         jPane.setViewportView(component);
     }
 
-    public JPanel getButtonPanel() {
-        return buttonPanel;
+    public ControlPanel getControlPanel() {
+        return controlPanel;
     }
 
-    public void addToButtonPanel(JComponent component) {
-        buttonPanel.add(component);
-    }
-
-    public void addToButtonPanel(AbstractAction action) {
-        buttonPanel.add(new JideButton(action));
-    }
 
     public JPanel getInfoPanel() {
         return infoPanel;
