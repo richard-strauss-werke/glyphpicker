@@ -1,7 +1,7 @@
 /* Glazed Lists (c) 2003-2006 */
 /* http://publicobject.com/glazedlists/ publicobject.com,*/
 /* O'Dell Engineering Ltd.*/
-package com.aerhard.oxygen.plugin.glyphpicker.controller;
+package com.aerhard.oxygen.plugin.glyphpicker.controller.autocomplete;
 
 import ca.odell.glazedlists.*;
 import ca.odell.glazedlists.event.ListEvent;

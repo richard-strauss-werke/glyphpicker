@@ -1,4 +1,4 @@
-package com.aerhard.oxygen.plugin.glyphpicker.controller;
+package com.aerhard.oxygen.plugin.glyphpicker.controller.autocomplete;
 
 import javax.swing.SwingUtilities;
 import javax.swing.event.DocumentEvent;

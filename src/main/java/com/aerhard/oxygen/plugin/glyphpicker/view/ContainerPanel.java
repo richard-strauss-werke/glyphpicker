@@ -115,10 +115,20 @@ public class ContainerPanel extends JPanel {
     }
     
     public void setMask(boolean mask) {
-//        if (mask) {
-//            overlayPanel.setPreferredSize(overlayable.getSize());            
-//        }
         overlayable.setOverlayVisible(mask);
+    }
+    
+    public void redrawIconInList(int index) {
+        Component listComponent = getListComponent();
+        if (index != -1) {
+            if (listComponent instanceof GlyphGrid) {
+                ((GlyphGrid)listComponent).repaint(((GlyphGrid)listComponent).getCellBounds(index, index));
+            }
+            
+            else if (listComponent instanceof GlyphTable) {
+                ((GlyphTable)listComponent).repaint(((GlyphTable)listComponent).getCellRect(index, 0, true));
+            }
+        }
     }
 
 }

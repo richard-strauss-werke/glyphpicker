@@ -26,7 +26,7 @@ public class TabFocusHandler implements ChangeListener, PropertyChangeListener {
             Component value = tabFocus.get(key);
             if (value == null) {
                 key.transferFocus();
-                tabFocus.put(key, value);
+                tabFocus.put(key, null);
             } else {
                 value.requestFocusInWindow();
             }    

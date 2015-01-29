@@ -1,4 +1,4 @@
-package com.aerhard.oxygen.plugin.glyphpicker.controller;
+package com.aerhard.oxygen.plugin.glyphpicker.controller.bitmap;
 
 import java.awt.Image;
 import java.awt.image.BufferedImage;

@@ -1,4 +1,4 @@
-package com.aerhard.oxygen.plugin.glyphpicker.controller;
+package com.aerhard.oxygen.plugin.glyphpicker.controller.autocomplete;
 
 import java.util.List;
 
