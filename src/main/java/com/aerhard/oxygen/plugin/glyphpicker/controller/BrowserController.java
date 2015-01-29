@@ -67,7 +67,7 @@ public class BrowserController extends Controller {
             .getLogger(BrowserController.class.getName());
 
     private static final int LIST_ITEM_SIZE = 40;
-    
+
     private EventList<GlyphDefinition> glyphList = new BasicEventList<GlyphDefinition>();
     private SortedList<GlyphDefinition> sortedList = new SortedList<GlyphDefinition>(
             glyphList, null);
@@ -83,7 +83,7 @@ public class BrowserController extends Controller {
     private GlyphTable table;
     private GlyphGrid list;
     private DataSourceList dataSourceList;
-    private boolean isLoading = false;
+    private boolean isLoadingGlyphData = false;
 
     private AbstractAction addAction;
     private AbstractAction insertAction;
@@ -95,7 +95,7 @@ public class BrowserController extends Controller {
     private CustomAutoCompleteSupport<String> autoCompleteSupport = null;
 
     private GlyphBitmapBulkLoader bmpLoader = null;
-    
+
     @SuppressWarnings("unchecked")
     public BrowserController(ContainerPanel panel, Config config) {
 
@@ -348,68 +348,68 @@ public class BrowserController extends Controller {
             return;
         }
 
-        if (isLoading) {
+        if (isLoadingGlyphData) {
             LOGGER.info("Skipping data loading.");
             return;
         }
-        isLoading = true;
+        isLoadingGlyphData = true;
         panel.setMask(true);
 
         if (bmpLoader != null) {
             bmpLoader.cancel(true);
         }
-        
+
         final GlyphDefinitionLoadWorker glyphDefinitionLoadWorker = new GlyphDefinitionLoadWorker(
                 dataSource);
 
         // TODO cancel previous worker instead of skipping latest worker
 
         // TODO listen for cancel action
-        
-        glyphDefinitionLoadWorker.addPropertyChangeListener(new PropertyChangeListener() {
-            @Override
-            public void propertyChange(PropertyChangeEvent e) {
-                if ("state".equals(e.getPropertyName().toString()) 
-                        && "DONE".equals(e.getNewValue().toString())) {
-                    onDataLoaded(glyphDefinitionLoadWorker.getResult());
-                }
-            }
-        });
-        
+
+        glyphDefinitionLoadWorker
+                .addPropertyChangeListener(new PropertyChangeListener() {
+                    @Override
+                    public void propertyChange(PropertyChangeEvent e) {
+                        if ("state".equals(e.getPropertyName().toString())
+                                && "DONE".equals(e.getNewValue().toString())) {
+                            isLoadingGlyphData = false;
+                            displayLoadedData(glyphDefinitionLoadWorker
+                                    .getResult());
+                        }
+                    }
+                });
+
         glyphDefinitionLoadWorker.execute();
-        
+
     }
 
-    private void onDataLoaded(List<GlyphDefinition> data) {
- 
+    private void displayLoadedData(List<GlyphDefinition> data) {
+
         glyphList.clear();
-        
+        selectionModel.clearSelection();
+        table.scrollRectToVisible(new Rectangle(0, 0));
+        list.scrollRectToVisible(new Rectangle(0, 0));
+
+        panel.setMask(false);
+
         if (data != null) {
-            
+
             startBitmapLoadWorker(data);
 
-            selectionModel.clearSelection();
-            table.scrollRectToVisible(new Rectangle(0, 0));
-            list.scrollRectToVisible(new Rectangle(0, 0));
-            
             glyphList.addAll(data);
 
-            // when loading was successful, set the loading path as
-            // first item in the pathComboModel
+            // set the loading path as first item in the pathComboModel
             int index = controlPanel.getDataSourceCombo().getSelectedIndex();
             if (index != -1) {
                 dataSourceList.setFirstIndex(index);
             }
         }
-        
-        isLoading = false;
-        panel.setMask(false);
 
     }
 
     private void startBitmapLoadWorker(List<GlyphDefinition> data) {
         bmpLoader = new GlyphBitmapBulkLoader(data, LIST_ITEM_SIZE);
-        
+
         bmpLoader.addPropertyChangeListener(new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent e) {
@@ -420,7 +420,7 @@ public class BrowserController extends Controller {
         });
         bmpLoader.execute();
     }
-    
+
     private void redrawIcon(GlyphDefinition d) {
         int index = filterList.indexOf(d);
         Component listComponent = panel.getListComponent();
@@ -428,13 +428,13 @@ public class BrowserController extends Controller {
             if (listComponent instanceof GlyphGrid) {
                 list.repaint(list.getCellBounds(index, index));
             }
-            
+
             else if (listComponent instanceof GlyphTable) {
                 table.repaint(table.getCellRect(index, 0, true));
             }
         }
     }
-    
+
     @Override
     public void saveData() {
     }
