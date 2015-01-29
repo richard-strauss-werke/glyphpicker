@@ -1,4 +1,4 @@
-package com.aerhard.oxygen.plugin.glyphpicker.view.renderer;
+package com.aerhard.oxygen.plugin.glyphpicker.controller;
 
 import java.awt.Image;
 import java.awt.image.BufferedImage;
@@ -9,7 +9,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import javax.imageio.ImageIO;
-import javax.swing.JComponent;
 import javax.swing.SwingWorker;
 
 import org.apache.http.HttpEntity;
@@ -23,25 +22,28 @@ import org.apache.http.util.EntityUtils;
 import org.apache.log4j.Logger;
 
 import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinition;
+import com.aerhard.oxygen.plugin.glyphpicker.view.renderer.GlyphBitmapIcon;
 
 public class GlyphBitmapIconLoader extends SwingWorker<GlyphBitmapIcon, Void> {
 
     private static final Logger LOGGER = Logger
             .getLogger(GlyphBitmapIconLoader.class.getName());
 
+    private SwingWorker<?,?> worker;
     private GlyphDefinition glyphDefinition;
-    private JComponent container;
     private int size;
 
-    public GlyphBitmapIconLoader(GlyphDefinition glyphDefinition,
-            JComponent container, int size) {
+    public GlyphBitmapIconLoader(GlyphBitmapBulkLoader worker,
+            GlyphDefinition glyphDefinition, int size) {
+        this.worker = worker;
         this.glyphDefinition = glyphDefinition;
-        this.container = container;
         this.size = size;
     }
 
+
     @Override
     public GlyphBitmapIcon doInBackground() throws IOException {
+
         BufferedImage bi = loadImage(glyphDefinition.getDataSource()
                 .getBasePath(), glyphDefinition.getUrl());
         if (bi != null) {
@@ -52,16 +54,16 @@ public class GlyphBitmapIconLoader extends SwingWorker<GlyphBitmapIcon, Void> {
 
     @Override
     public void done() {
-        try {
-            GlyphBitmapIcon icon = get();
-            if (icon != null) {
-                glyphDefinition.setIcon(icon);
-                if (container != null) {
-                    container.repaint();
+        if (!worker.isCancelled()) {
+            try {
+                GlyphBitmapIcon icon = get();
+                if (icon != null) {
+                    glyphDefinition.setIcon(icon);
+                    worker.firePropertyChange("iconLoaded", null, glyphDefinition);
                 }
-            }
-        } catch (Exception e) {
-            LOGGER.warn(e);
+            } catch (Exception e) {
+                LOGGER.warn(e);
+            }   
         }
     }
 
@@ -156,6 +158,6 @@ public class GlyphBitmapIconLoader extends SwingWorker<GlyphBitmapIcon, Void> {
             httpclient.getConnectionManager().shutdown();
         }
         return image;
-    };
+    }
 
 }

@@ -1,6 +1,7 @@
 package com.aerhard.oxygen.plugin.glyphpicker.controller;
 
 import java.awt.AWTEvent;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
@@ -10,13 +11,14 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.ExecutionException;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -24,7 +26,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
-import javax.swing.SwingWorker;
+
 import org.apache.log4j.Logger;
 
 import ca.odell.glazedlists.BasicEventList;
@@ -64,6 +66,8 @@ public class BrowserController extends Controller {
     private static final Logger LOGGER = Logger
             .getLogger(BrowserController.class.getName());
 
+    private static final int LIST_ITEM_SIZE = 40;
+    
     private EventList<GlyphDefinition> glyphList = new BasicEventList<GlyphDefinition>();
     private SortedList<GlyphDefinition> sortedList = new SortedList<GlyphDefinition>(
             glyphList, null);
@@ -79,7 +83,6 @@ public class BrowserController extends Controller {
     private GlyphTable table;
     private GlyphGrid list;
     private DataSourceList dataSourceList;
-    private GlyphDefinitionLoader loader;
     private boolean isLoading = false;
 
     private AbstractAction addAction;
@@ -91,6 +94,8 @@ public class BrowserController extends Controller {
 
     private CustomAutoCompleteSupport<String> autoCompleteSupport = null;
 
+    private GlyphBitmapBulkLoader bmpLoader = null;
+    
     @SuppressWarnings("unchecked")
     public BrowserController(ContainerPanel panel, Config config) {
 
@@ -158,15 +163,15 @@ public class BrowserController extends Controller {
         list = new GlyphGrid(new DefaultEventListModel<GlyphDefinition>(
                 filterList));
         GlyphRendererAdapter r = new GlyphRendererAdapter(list);
-        r.setPreferredSize(new Dimension(40, 40));
-        list.setFixedSize(40);
+        r.setPreferredSize(new Dimension(LIST_ITEM_SIZE, LIST_ITEM_SIZE));
+        list.setFixedSize(LIST_ITEM_SIZE);
         list.setCellRenderer(r);
 
         DefaultEventTableModel<GlyphDefinition> tableListModel = new DefaultEventTableModel<GlyphDefinition>(
                 filterList, new GlyphTableFormat());
         table = new GlyphTable(tableListModel);
         r = new GlyphRendererAdapter(table);
-        r.setPreferredSize(new Dimension(40, 40));
+        r.setPreferredSize(new Dimension(LIST_ITEM_SIZE, LIST_ITEM_SIZE));
         table.setRowHeight(90);
         table.setTableIconRenderer(r);
 
@@ -182,8 +187,6 @@ public class BrowserController extends Controller {
 
         controlPanel.getViewBtn().setAction(
                 new ChangeViewAction(panel, table, list));
-
-        loader = new GlyphDefinitionLoader();
 
         selectionModel
                 .setSelectionMode(DefaultEventSelectionModel.SINGLE_SELECTION);
@@ -352,71 +355,86 @@ public class BrowserController extends Controller {
         isLoading = true;
         panel.setMask(true);
 
-        SwingWorker<List<GlyphDefinition>, Void> worker = new LoadWorker(
+        if (bmpLoader != null) {
+            bmpLoader.cancel(true);
+        }
+        
+        final GlyphDefinitionLoadWorker glyphDefinitionLoadWorker = new GlyphDefinitionLoadWorker(
                 dataSource);
 
         // TODO cancel previous worker instead of skipping latest worker
 
-        worker.execute();
-    }
-
-    private class LoadWorker extends SwingWorker<List<GlyphDefinition>, Void> {
-
-        private DataSource dataSource;
-
-        // private JDialog dialog;
-
-        public LoadWorker(DataSource dataSource) {
-            this.dataSource = dataSource;
-            // dialog = new JDialog();
-            // dialog.setLocationRelativeTo(panel);
-            // dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-            //
-            // });
-        }
-
-        @Override
-        protected List<GlyphDefinition> doInBackground() {
-            // dialog.setVisible(true);
-            return loader.loadData(dataSource);
-        }
-
-        @Override
-        protected void done() {
-            try {
-                onDataLoaded(get());
-            } catch (InterruptedException e) {
-                LOGGER.error(e);
-            } catch (ExecutionException e) {
-                LOGGER.error(e);
-            } finally {
-                isLoading = false;
-                panel.setMask(false);
-                // dialog.dispose();
+        // TODO listen for cancel action
+        
+        glyphDefinitionLoadWorker.addPropertyChangeListener(new PropertyChangeListener() {
+            @Override
+            public void propertyChange(PropertyChangeEvent e) {
+                if ("state".equals(e.getPropertyName().toString()) 
+                        && "DONE".equals(e.getNewValue().toString())) {
+                    onDataLoaded(glyphDefinitionLoadWorker.getResult());
+                }
             }
-        }
+        });
+        
+        glyphDefinitionLoadWorker.execute();
+        
     }
 
     private void onDataLoaded(List<GlyphDefinition> data) {
+ 
         glyphList.clear();
-
-        selectionModel.clearSelection();
-        table.scrollRectToVisible(new Rectangle(0, 0));
-        list.scrollRectToVisible(new Rectangle(0, 0));
-
-        // when loading was successful, set the loading path as
-        // first item in the pathComboModel
+        
         if (data != null) {
+            
+            startBitmapLoadWorker(data);
+
+            selectionModel.clearSelection();
+            table.scrollRectToVisible(new Rectangle(0, 0));
+            list.scrollRectToVisible(new Rectangle(0, 0));
+            
             glyphList.addAll(data);
 
+            // when loading was successful, set the loading path as
+            // first item in the pathComboModel
             int index = controlPanel.getDataSourceCombo().getSelectedIndex();
             if (index != -1) {
                 dataSourceList.setFirstIndex(index);
             }
         }
+        
+        isLoading = false;
+        panel.setMask(false);
 
     }
 
+    private void startBitmapLoadWorker(List<GlyphDefinition> data) {
+        bmpLoader = new GlyphBitmapBulkLoader(data, LIST_ITEM_SIZE);
+        
+        bmpLoader.addPropertyChangeListener(new PropertyChangeListener() {
+            @Override
+            public void propertyChange(PropertyChangeEvent e) {
+                if ("iconLoaded".equals(e.getPropertyName())) {
+                    redrawIcon((GlyphDefinition) e.getNewValue());
+                }
+            }
+        });
+        bmpLoader.execute();
+    }
+    
+    private void redrawIcon(GlyphDefinition d) {
+        int index = filterList.indexOf(d);
+        Component listComponent = panel.getListComponent();
+        if (index != -1) {
+            if (listComponent instanceof GlyphGrid) {
+                list.repaint(list.getCellBounds(index, index));
+            }
+            
+            else if (listComponent instanceof GlyphTable) {
+                table.repaint(table.getCellRect(index, 0, true));
+            }
+        }
+    }
+    
     @Override
     public void saveData() {
     }

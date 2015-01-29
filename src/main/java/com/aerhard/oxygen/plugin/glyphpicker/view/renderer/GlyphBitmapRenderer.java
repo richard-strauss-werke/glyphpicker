@@ -10,11 +10,8 @@ public class GlyphBitmapRenderer extends GlyphRenderer {
 
     private static final long serialVersionUID = 1L;
 
-    private JComponent container;
-
     public GlyphBitmapRenderer(JComponent container) {
         super(container);
-        this.container = container;
     }
 
     @Override
@@ -32,15 +29,7 @@ public class GlyphBitmapRenderer extends GlyphRenderer {
         // e.printStackTrace();
         // }
 
-        if (!gd.isIconLoadingLaunched()) {
-            gd.setIconLoadingLaunched(true);
-
-            float factor = gd.getDataSource().getSizeFactor();
-            new GlyphBitmapIconLoader(gd, container,
-                    Math.round(getPreferredSize().height * factor)).execute();
-        }
-
-        // sets either null or the loaded icon
+        // sets either the initial value null or the loaded icon
         setIcon(gd.getIcon());
 
         configureBackground(isSelected);

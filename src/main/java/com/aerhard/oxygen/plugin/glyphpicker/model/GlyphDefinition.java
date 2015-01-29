@@ -40,9 +40,6 @@ public class GlyphDefinition implements Cloneable {
     @XmlTransient
     private ImageIcon icon = null;
 
-    @XmlTransient
-    private boolean iconLoadingLaunched = false;
-
     public GlyphDefinition() {
 
     }
@@ -124,15 +121,6 @@ public class GlyphDefinition implements Cloneable {
     public ImageIcon getIcon() {
         return icon;
     }
-
-    public boolean isIconLoadingLaunched() {
-        return iconLoadingLaunched;
-    }
-
-    public void setIconLoadingLaunched(boolean iconLoadingLaunched) {
-        this.iconLoadingLaunched = iconLoadingLaunched;
-    }
-
 
     public DataSource getDataSource() {
         return dataSource;

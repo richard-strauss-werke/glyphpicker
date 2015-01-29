@@ -1,5 +1,6 @@
 package com.aerhard.oxygen.plugin.glyphpicker.controller;
 
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
@@ -7,6 +8,8 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
@@ -20,6 +23,7 @@ import javax.swing.Action;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
+
 import org.apache.log4j.Logger;
 
 import ro.sync.exml.workspace.api.standalone.StandalonePluginWorkspace;
@@ -57,6 +61,8 @@ public class UserCollectionController extends Controller {
     private static final Logger LOGGER = Logger
             .getLogger(UserCollectionController.class.getName());
 
+    private static final int LIST_ITEM_SIZE = 40;
+
     private EventList<GlyphDefinition> glyphList = new BasicEventList<GlyphDefinition>();
     private SortedList<GlyphDefinition> sortedList = new SortedList<GlyphDefinition>(
             glyphList, null);
@@ -80,6 +86,8 @@ public class UserCollectionController extends Controller {
     private AbstractAction reloadAction;
     private AbstractAction removeAction;
     private AbstractAction insertAction;
+    private MoveUpAction moveUpAction;
+    private MoveDownAction moveDownAction;
 
     private HighlightButton insertBtn;
 
@@ -87,9 +95,7 @@ public class UserCollectionController extends Controller {
 
     private CustomAutoCompleteSupport<String> autoCompleteSupport = null;
 
-    private MoveUpAction moveUpAction;
-
-    private MoveDownAction moveDownAction;
+    private GlyphBitmapBulkLoader bmpLoader = null;
 
     @SuppressWarnings("unchecked")
     public UserCollectionController(ContainerPanel panel, Config config,
@@ -159,15 +165,15 @@ public class UserCollectionController extends Controller {
         list = new GlyphGrid(new DefaultEventListModel<GlyphDefinition>(
                 filterList));
         GlyphRendererAdapter r = new GlyphRendererAdapter(list);
-        r.setPreferredSize(new Dimension(40, 40));
-        list.setFixedSize(40);
+        r.setPreferredSize(new Dimension(LIST_ITEM_SIZE, LIST_ITEM_SIZE));
+        list.setFixedSize(LIST_ITEM_SIZE);
         list.setCellRenderer(r);
 
         DefaultEventTableModel<GlyphDefinition> tableListModel = new DefaultEventTableModel<GlyphDefinition>(
                 filterList, new GlyphTableFormat());
         table = new GlyphTable(tableListModel);
         r = new GlyphRendererAdapter(table);
-        r.setPreferredSize(new Dimension(40, 40));
+        r.setPreferredSize(new Dimension(LIST_ITEM_SIZE, LIST_ITEM_SIZE));
         table.setRowHeight(90);
         table.setTableIconRenderer(r);
 
@@ -342,12 +348,46 @@ public class UserCollectionController extends Controller {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
+
+                List<GlyphDefinition> data = loader.load().getData();
+
                 listInSync = true;
                 glyphList.clear();
-                glyphList.addAll(loader.load().getData());
+                
+                startBitmapLoadWorker(data);
+
+                glyphList.addAll(data);
                 panel.setMask(false);
             }
         });
+    }
+    
+    private void startBitmapLoadWorker(List<GlyphDefinition> data) {
+        bmpLoader = new GlyphBitmapBulkLoader(data, LIST_ITEM_SIZE);
+        
+        bmpLoader.addPropertyChangeListener(new PropertyChangeListener() {
+            @Override
+            public void propertyChange(PropertyChangeEvent e) {
+                if ("iconLoaded".equals(e.getPropertyName())) {
+                    redrawIcon((GlyphDefinition) e.getNewValue());
+                }
+            }
+        });
+        bmpLoader.execute();
+    }
+    
+    private void redrawIcon(GlyphDefinition d) {
+        int index = filterList.indexOf(d);
+        Component listComponent = panel.getListComponent();
+        if (index != -1) {
+            if (listComponent instanceof GlyphGrid) {
+                list.repaint(list.getCellBounds(index, index));
+            }
+            
+            else if (listComponent instanceof GlyphTable) {
+                table.repaint(table.getCellRect(index, 0, true));
+            }
+        }
     }
 
     @Override

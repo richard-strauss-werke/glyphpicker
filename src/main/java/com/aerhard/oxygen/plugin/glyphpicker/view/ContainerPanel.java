@@ -1,6 +1,7 @@
 package com.aerhard.oxygen.plugin.glyphpicker.view;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Insets;
 
@@ -12,7 +13,9 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
+
 import com.jidesoft.swing.DefaultOverlayable;
+
 import javax.swing.UIManager;
 
 import java.awt.GridBagLayout;
@@ -92,6 +95,10 @@ public class ContainerPanel extends JPanel {
     
     public void setListComponent(JComponent component) {
         jPane.setViewportView(component);
+    }
+    
+    public Component getListComponent() {
+        return jPane.getViewport().getComponent(0);
     }
 
     public ControlPanel getControlPanel() {

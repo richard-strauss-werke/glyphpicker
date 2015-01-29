@@ -46,6 +46,7 @@ public class GlyphRendererAdapter extends JLabel implements TableCellRenderer,
             GlyphDefinition glyphDefinition = ((GlyphDefinition) value);
             GlyphRenderer renderer = renderers.get(glyphDefinition
                     .getDataSource().getDisplayMode());
+            
             if (renderer != null) {
                 return renderer.getRendererComponent(glyphDefinition,
                         isSelected);
@@ -61,6 +62,7 @@ public class GlyphRendererAdapter extends JLabel implements TableCellRenderer,
             GlyphDefinition glyphDefinition = ((GlyphDefinition) value);
             GlyphRenderer renderer = renderers.get(glyphDefinition
                     .getDataSource().getDisplayMode());
+            
             if (renderer != null) {
                 return renderer.getRendererComponent(glyphDefinition,
                         isSelected);
