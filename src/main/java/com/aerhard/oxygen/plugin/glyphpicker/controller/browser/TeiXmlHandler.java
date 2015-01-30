@@ -62,7 +62,7 @@ public class TeiXmlHandler extends DefaultHandler {
 
     public class MappingTypeMatcher implements MappingMatcher {
         public boolean matches(Attributes attrs) {
-            return mappingSubTypeValue.equals(attrs.getValue("type"));
+            return mappingTypeValue.equals(attrs.getValue("type"));
         }
     }
 
@@ -74,7 +74,7 @@ public class TeiXmlHandler extends DefaultHandler {
     
     public class MappingBothMatcher implements MappingMatcher {
         public boolean matches(Attributes attrs) {
-            return mappingSubTypeValue.equals(attrs.getValue("type"))
+            return mappingTypeValue.equals(attrs.getValue("type"))
                     && mappingSubTypeValue.equals(attrs.getValue("subtype"));
         }
     }
