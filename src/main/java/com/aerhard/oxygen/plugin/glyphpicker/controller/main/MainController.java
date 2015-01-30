@@ -1,6 +1,5 @@
 package com.aerhard.oxygen.plugin.glyphpicker.controller.main;
 
-import java.awt.event.KeyEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;

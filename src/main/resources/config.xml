@@ -13,8 +13,7 @@
             <displayMode>bitmap</displayMode>
             <sizeFactor>0.8</sizeFactor>
             <template>${basePath}#${id}</template>
-            <mappingAttName>type</mappingAttName>
-            <mappingAttValue>smufl</mappingAttValue>
+            <mappingTypeValue>smufl</mappingTypeValue>
         </dataSource>
         <dataSource>
             <label>Edirom SMuFL Browser (web, glyph)</label>
@@ -23,8 +22,7 @@
             <displayMode>fit</displayMode>
             <sizeFactor>0.7</sizeFactor>
             <template>${basePath}#${id}</template>
-            <mappingAttName>type</mappingAttName>
-            <mappingAttValue>smufl</mappingAttValue>
+            <mappingTypeValue>smufl</mappingTypeValue>
         </dataSource>
     
         <dataSource>
@@ -34,8 +32,7 @@
             <displayMode>bitmap</displayMode>
             <sizeFactor>1.0</sizeFactor>
             <template>#${id}</template>
-            <mappingAttName>subtype</mappingAttName>
-            <mappingAttValue>PUA</mappingAttValue>
+            <mappingSubTypeValue>PUA</mappingSubTypeValue>
         </dataSource>
         <dataSource>
             <label>gBank (web, glyph)</label>
@@ -44,8 +41,7 @@
             <displayMode>proportional</displayMode>
             <sizeFactor>0.5</sizeFactor>
             <template>#${id}</template>
-            <mappingAttName>subtype</mappingAttName>
-            <mappingAttValue>PUA</mappingAttValue>
+            <mappingSubTypeValue>PUA</mappingSubTypeValue>
         </dataSource>
 
         <dataSource>
@@ -55,8 +51,7 @@
             <displayMode>bitmap</displayMode>
             <sizeFactor>0.7</sizeFactor>
             <template>${basePath}#${id}</template>
-            <mappingAttName>type</mappingAttName>
-            <mappingAttValue>smufl</mappingAttValue>
+            <mappingTypeValue>smufl</mappingTypeValue>
         </dataSource>
         <dataSource>
             <label>Edirom SMuFL Browser (local, glyph)</label>
@@ -65,8 +60,7 @@
             <displayMode>fit</displayMode>
             <sizeFactor>0.7</sizeFactor>
             <template>${basePath}#${id}</template>
-            <mappingAttName>type</mappingAttName>
-            <mappingAttValue>smufl</mappingAttValue>
+            <mappingTypeValue>smufl</mappingTypeValue>
         </dataSource>
 
         <dataSource>
@@ -76,8 +70,7 @@
             <displayMode>bitmap</displayMode>
             <sizeFactor>1.0</sizeFactor>
             <template>#${id}</template>
-            <mappingAttName>subtype</mappingAttName>
-            <mappingAttValue>PUA</mappingAttValue>
+            <mappingSubTypeValue>PUA</mappingSubTypeValue>
         </dataSource>
         <dataSource>
             <label>gBank (local, glyph)</label>
@@ -86,8 +79,7 @@
             <displayMode>proportional</displayMode>
             <sizeFactor>0.5</sizeFactor>
             <template>#${id}</template>
-            <mappingAttName>subtype</mappingAttName>
-            <mappingAttValue>PUA</mappingAttValue>
+            <mappingSubTypeValue>PUA</mappingSubTypeValue>
         </dataSource>
 
         <dataSource>
@@ -97,8 +89,7 @@
             <displayMode>fit</displayMode>
             <sizeFactor>0.7</sizeFactor>
             <template>${basePath}#${id}</template>
-            <mappingAttName>type</mappingAttName>
-            <mappingAttValue>smufl</mappingAttValue>
+            <mappingTypeValue>smufl</mappingTypeValue>
         </dataSource>
         <dataSource>
             <label>Edirom SMuFL Browser (localhost, glyph)</label>
@@ -107,8 +98,7 @@
             <displayMode>fit</displayMode>
             <sizeFactor>0.5</sizeFactor>
             <template>${basePath}#${id}</template>
-            <mappingAttName>type</mappingAttName>
-            <mappingAttValue>smufl</mappingAttValue>
+            <mappingTypeValue>smufl</mappingTypeValue>
         </dataSource>
     </dataSources>
 </config>

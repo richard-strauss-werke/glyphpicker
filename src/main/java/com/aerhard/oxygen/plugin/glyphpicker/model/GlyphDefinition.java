@@ -126,41 +126,6 @@ public class GlyphDefinition implements Cloneable {
                 getId());
     }
 
-    public String getHTML() {
-        StringBuilder sb = new StringBuilder();
-
-        sb.append("<html><p>");
-
-        if (getCharName() != null) {
-            sb.append("<nobr><b>");
-            sb.append(getCharName());
-            sb.append("</b></nobr><br>");
-        }
-
-        if (getCodePoint() != null) {
-            sb.append("<nobr>Codepoint: ");
-            sb.append(getCodePoint());
-            sb.append("</nobr><br>");
-        }
-
-        if (getRange() != null) {
-            sb.append("<nobr>Range: ");
-            sb.append(getRange());
-            sb.append("</nobr><br>");
-        }
-
-        if (getId() != null) {
-            sb.append("<nobr>xml:id: <em>");
-            sb.append(getId());
-            sb.append("</em></nobr><br>");
-        }
-
-        sb.append("</p></html>");
-
-        return sb.toString();
-
-    }
-
     @Override
     public GlyphDefinition clone() throws CloneNotSupportedException {
         return (GlyphDefinition) super.clone();

@@ -7,6 +7,7 @@ import java.awt.event.WindowEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.IOException;
+import java.util.Locale;
 import java.util.Properties;
 
 import javax.swing.JFrame;
@@ -41,6 +42,8 @@ public class UITest {
 
     private static void runTest() {
         setSystemLookAndFeel();
+        
+        Locale.setDefault(Locale.ENGLISH);
 
         Properties properties = new Properties();
         try {
@@ -82,27 +85,6 @@ public class UITest {
                 mainController.saveData();
             }
         });
-
-        // ArrayList<DataSource> ds =
-        // mainController.getConfigLoader().getConfig().getDataSources();
-        // DataSource s;
-        // PathComboModel pcm =
-        // mainController.getConfigLoader().getConfig().getPaths();
-        // for (int i=0; i< pcm.getSize();i++) {
-        // System.out.println(pcm.getElementAt(i));
-        // s = new DataSource();
-        //
-        // s.setLabel("Edirom SMuFL-Browser");
-        // s.setPath(pcm.getElementAt(i));
-        // s.setFontName("BravuraText");
-        // s.setDisplayMode("fit");
-        // s.setTemplate("${baseUrl}#${id}");
-        //
-        // ds.add(s);
-        // }
-
-        // mainController.getConfigLoader().getConfig().setDataSources_(new
-        // DataSourceList(mainController.getConfigLoader().getConfig().getDataSources()));
 
         mainController.loadData();
 

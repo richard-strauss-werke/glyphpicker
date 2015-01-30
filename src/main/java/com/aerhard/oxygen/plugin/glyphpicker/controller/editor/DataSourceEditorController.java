@@ -256,9 +256,9 @@ public class DataSourceEditorController {
         contentPane.getSizeTextField().setText(sizeFactorString);
         contentPane.getTemplateTextField().setText(dataSource.getTemplate());
         contentPane.getMappingAttNameTextField().setText(
-                dataSource.getMappingAttName());
+                dataSource.getMappingTypeValue());
         contentPane.getMappingAttValueTextField().setText(
-                dataSource.getMappingAttValue());
+                dataSource.getMappingSubTypeValue());
 
         contentPane.addPropertyChangeListener(formListener);
     }
@@ -285,9 +285,9 @@ public class DataSourceEditorController {
 
             currentDataSource.setTemplate(contentPane.getTemplateTextField()
                     .getText());
-            currentDataSource.setMappingAttName(contentPane
+            currentDataSource.setMappingTypeValue(contentPane
                     .getMappingAttNameTextField().getText());
-            currentDataSource.setMappingAttValue(contentPane
+            currentDataSource.setMappingSubTypeValue(contentPane
                     .getMappingAttValueTextField().getText());
         }
     }

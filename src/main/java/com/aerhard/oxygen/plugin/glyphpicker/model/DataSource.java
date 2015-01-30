@@ -25,71 +25,42 @@ public class DataSource implements Cloneable {
     private Float sizeFactor = 0.5f;
     @XmlElement(name = "template")
     private String template = "";
-    @XmlElement(name = "mappingAttName")
-    private String mappingAttName;
-    @XmlElement(name = "mappingAttValue")
-    private String mappingAttValue;
+    @XmlElement(name = "mappingTypeValue")
+    private String mappingTypeValue = null;
+    @XmlElement(name = "mappingSubTypeValue")
+    private String mappingSubTypeValue = null;
 
     public DataSource() {
-
     }
 
-    /**
-     * @return the mappingAttName
-     */
-    public String getMappingAttName() {
-        return mappingAttName;
+    public String getMappingTypeValue() {
+        return mappingTypeValue;
     }
 
-    /**
-     * @param mappingAttName
-     *            the mappingAttName to set
-     */
-    public void setMappingAttName(String mappingAttName) {
-        this.mappingAttName = mappingAttName;
+    public void setMappingTypeValue(String mappingAttName) {
+        this.mappingTypeValue = mappingAttName;
     }
 
-    /**
-     * @return the mappingAttValue
-     */
-    public String getMappingAttValue() {
-        return mappingAttValue;
+    public String getMappingSubTypeValue() {
+        return mappingSubTypeValue;
     }
 
-    /**
-     * @param mappingAttValue
-     *            the mappingAttValue to set
-     */
-    public void setMappingAttValue(String mappingAttValue) {
-        this.mappingAttValue = mappingAttValue;
+    public void setMappingSubTypeValue(String mappingAttValue) {
+        this.mappingSubTypeValue = mappingAttValue;
     }
 
-    /**
-     * @return the label
-     */
     public String getLabel() {
         return label;
     }
 
-    /**
-     * @param label
-     *            the label to set
-     */
     public void setLabel(String label) {
         this.label = label;
     }
 
-    /**
-     * @return the displayMode
-     */
     public String getDisplayMode() {
         return displayMode;
     }
 
-    /**
-     * @param displayMode
-     *            the displayMode to set
-     */
     public void setDisplayMode(String displayMode) {
         this.displayMode = displayMode;
     }
@@ -118,17 +89,10 @@ public class DataSource implements Cloneable {
         this.basePath = path;
     }
 
-    /**
-     * @return the template
-     */
     public String getTemplate() {
         return template;
     }
 
-    /**
-     * @param template
-     *            the template to set
-     */
     public void setTemplate(String template) {
         this.template = template;
     }

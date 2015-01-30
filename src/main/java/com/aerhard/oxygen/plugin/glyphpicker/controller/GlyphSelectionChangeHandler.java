@@ -14,6 +14,7 @@ import ca.odell.glazedlists.swing.DefaultEventSelectionModel;
 import com.aerhard.oxygen.plugin.glyphpicker.action.MoveDownAction;
 import com.aerhard.oxygen.plugin.glyphpicker.action.MoveUpAction;
 import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinition;
+import com.aerhard.oxygen.plugin.glyphpicker.view.renderer.DescriptionRenderer;
 
 public class GlyphSelectionChangeHandler implements ListSelectionListener {
 
@@ -44,13 +45,13 @@ public class GlyphSelectionChangeHandler implements ListSelectionListener {
             if (model.isSelectionEmpty()) {
                 enableButtons = false;
             } else {
-                GlyphDefinition glyphDefinition = model.getSelected().get(0);
+                GlyphDefinition d = model.getSelected().get(0);
 
-                if (glyphDefinition == null) {
+                if (d == null) {
                     infoLabel.setText(null);
                     enableButtons = false;
                 } else {
-                    infoLabel.setText(glyphDefinition.getHTML());
+                    infoLabel.setText(DescriptionRenderer.getHTML(d));
                     enableButtons = true;
                 }
             }

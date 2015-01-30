@@ -24,15 +24,65 @@ public class TeiXmlHandler extends DefaultHandler {
     private String range = "";
     private DataSource dataSource;
 
-    private String mappingAttName;
-    private String mappingAttValue;
+    private String mappingTypeValue;
+    private String mappingSubTypeValue;
 
     private StringBuffer textContent = new StringBuffer();
+    
+    private MappingMatcher mappingMatcher;
 
     public TeiXmlHandler(DataSource dataSource) {
         this.dataSource = dataSource;
-        this.mappingAttName = dataSource.getMappingAttName();
-        this.mappingAttValue = dataSource.getMappingAttValue();
+        mappingTypeValue = dataSource.getMappingTypeValue();
+        if (mappingTypeValue == null) {
+            mappingTypeValue = "";
+        }
+        mappingSubTypeValue = dataSource.getMappingSubTypeValue();
+        if (mappingSubTypeValue == null) {
+            mappingSubTypeValue = "";
+        }
+        
+        if (!mappingTypeValue.isEmpty()) {
+            if (!mappingTypeValue.isEmpty()) {
+                mappingMatcher = new MappingBothMatcher();
+            } else {
+                mappingMatcher = new MappingTypeMatcher();
+            }
+        } else if (!mappingTypeValue.isEmpty()) {
+            mappingMatcher = new MappingSubTypeMatcher();
+        } else {
+            mappingMatcher = new MappingAllMatcher();
+        }
+        
+    }
+
+    public interface MappingMatcher {
+        boolean matches(Attributes attrs);
+    }
+
+    public class MappingTypeMatcher implements MappingMatcher {
+        public boolean matches(Attributes attrs) {
+            return mappingSubTypeValue.equals(attrs.getValue("type"));
+        }
+    }
+
+    public class MappingSubTypeMatcher implements MappingMatcher {
+        public boolean matches(Attributes attrs) {
+            return mappingSubTypeValue.equals(attrs.getValue("subtype"));
+        }
+    }
+    
+    public class MappingBothMatcher implements MappingMatcher {
+        public boolean matches(Attributes attrs) {
+            return mappingSubTypeValue.equals(attrs.getValue("type"))
+                    && mappingSubTypeValue.equals(attrs.getValue("subtype"));
+        }
+    }
+
+    public class MappingAllMatcher implements MappingMatcher {
+        public boolean matches(Attributes attrs) {
+            return true;
+        }
     }
 
     public List<GlyphDefinition> getGlyphDefinitions() {
@@ -77,7 +127,7 @@ public class TeiXmlHandler extends DefaultHandler {
         }
 
         if ("mapping".equals(qName)
-                && mappingAttValue.equals(attrs.getValue(mappingAttName))) {
+                && mappingMatcher.matches(attrs)) {
             inMapping = true;
         }
 
