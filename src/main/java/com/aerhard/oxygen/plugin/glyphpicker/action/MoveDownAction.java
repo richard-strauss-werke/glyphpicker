@@ -9,7 +9,6 @@ import javax.swing.ImageIcon;
 
 import ca.odell.glazedlists.EventList;
 
-import com.aerhard.oxygen.plugin.glyphpicker.controller.BrowserController;
 import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinition;
 import com.aerhard.oxygen.plugin.glyphpicker.view.GlyphGrid;
 
@@ -21,13 +20,13 @@ public class MoveDownAction extends AbstractAction {
     public MoveDownAction(PropertyChangeListener listener,
             EventList<GlyphDefinition> glyphList, GlyphGrid list) {
         super(null, new ImageIcon(
-                BrowserController.class.getResource("/images/arrow-270.png")));
+                MoveDownAction.class.getResource("/images/arrow-270.png")));
 
         this.addPropertyChangeListener(listener);
         this.glyphList = glyphList;
         this.list = list;
 
-        putValue(SHORT_DESCRIPTION, "Sorts the glyphs by code point (Alt+Arrow Down)");
+        putValue(SHORT_DESCRIPTION, "Move the selected glyph down (Alt+Arrow Down)");
         putValue(MNEMONIC_KEY, KeyEvent.VK_DOWN);
     }
 

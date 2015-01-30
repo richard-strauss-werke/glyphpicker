@@ -27,7 +27,7 @@ public class ChangeViewAction extends AbstractAction {
         
         String mnemonic = "T";
         
-        putValue(SHORT_DESCRIPTION, "Toggles between glyph list view styles (Alt+"+mnemonic+")");
+        putValue(SHORT_DESCRIPTION, "Toggle between grid and table view (Alt+"+mnemonic+")");
         putValue(MNEMONIC_KEY, KeyStroke.getKeyStroke(mnemonic).getKeyCode());
     }
 

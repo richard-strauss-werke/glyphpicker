@@ -1,4 +1,4 @@
-package com.aerhard.oxygen.plugin.glyphpicker.controller;
+package com.aerhard.oxygen.plugin.glyphpicker.controller.browser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +11,7 @@ import com.aerhard.oxygen.plugin.glyphpicker.model.DataSource;
 import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinition;
 import com.icl.saxon.aelfred.DefaultHandler;
 
-public class GlyphDefinitionXmlHandler extends DefaultHandler {
+public class TeiXmlHandler extends DefaultHandler {
 
     private Boolean inChar = false;
     private Boolean inMapping = false;
@@ -30,7 +30,7 @@ public class GlyphDefinitionXmlHandler extends DefaultHandler {
 
     private StringBuffer textContent = new StringBuffer();
 
-    public GlyphDefinitionXmlHandler(DataSource dataSource) {
+    public TeiXmlHandler(DataSource dataSource) {
         this.dataSource = dataSource;
         this.mappingAttName = dataSource.getMappingAttName();
         this.mappingAttValue = dataSource.getMappingAttValue();

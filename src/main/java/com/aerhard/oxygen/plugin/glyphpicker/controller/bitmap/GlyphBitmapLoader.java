@@ -9,7 +9,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import javax.imageio.ImageIO;
-import javax.swing.SwingWorker;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -24,16 +23,16 @@ import org.apache.log4j.Logger;
 import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinition;
 import com.aerhard.oxygen.plugin.glyphpicker.view.renderer.GlyphBitmapIcon;
 
-public class GlyphBitmapIconLoader extends SwingWorker<GlyphBitmapIcon, Void> {
+public class GlyphBitmapLoader implements Runnable {
 
     private static final Logger LOGGER = Logger
-            .getLogger(GlyphBitmapIconLoader.class.getName());
+            .getLogger(GlyphBitmapLoader.class.getName());
 
-    private SwingWorker<?,?> worker;
+    private GlyphBitmapLoadWorker worker;
     private GlyphDefinition glyphDefinition;
     private int size;
 
-    public GlyphBitmapIconLoader(GlyphBitmapBulkLoader worker,
+    public GlyphBitmapLoader(GlyphBitmapLoadWorker worker,
             GlyphDefinition glyphDefinition, int size) {
         this.worker = worker;
         this.glyphDefinition = glyphDefinition;
@@ -42,28 +41,25 @@ public class GlyphBitmapIconLoader extends SwingWorker<GlyphBitmapIcon, Void> {
 
 
     @Override
-    public GlyphBitmapIcon doInBackground() throws IOException {
-
-        BufferedImage bi = loadImage(glyphDefinition.getDataSource()
-                .getBasePath(), glyphDefinition.getUrl());
-        if (bi != null) {
-            return new GlyphBitmapIcon(scaleToBound(bi, size, size), size);
-        }
-        return null;
-    }
-
-    @Override
-    public void done() {
+    public void run() {
         if (!worker.isCancelled()) {
             try {
-                GlyphBitmapIcon icon = get();
+                GlyphBitmapIcon icon = null;
+                
+                BufferedImage bi = loadImage(glyphDefinition.getDataSource()
+                        .getBasePath(), glyphDefinition.getUrl());
+                if (bi != null) {
+                    icon= new GlyphBitmapIcon(scaleToBound(bi, size, size), size);
+                }
+                
                 if (icon != null) {
                     glyphDefinition.setIcon(icon);
-                    worker.firePropertyChange("iconLoaded", null, glyphDefinition);
+                    worker.firePropertyChange("iconLoaded", null,
+                            glyphDefinition);
                 }
             } catch (Exception e) {
                 LOGGER.warn(e);
-            }   
+            }
         }
     }
 

@@ -1,4 +1,4 @@
-package com.aerhard.oxygen.plugin.glyphpicker.controller.config;
+package com.aerhard.oxygen.plugin.glyphpicker.controller.main;
 
 import java.io.File;
 import java.net.URL;
@@ -11,7 +11,7 @@ import org.apache.log4j.Logger;
 
 import ro.sync.exml.workspace.api.standalone.StandalonePluginWorkspace;
 
-import com.aerhard.oxygen.plugin.glyphpicker.controller.UserCollectionLoader;
+import com.aerhard.oxygen.plugin.glyphpicker.controller.user.UserCollectionLoader;
 import com.aerhard.oxygen.plugin.glyphpicker.model.Config;
 import com.aerhard.oxygen.plugin.glyphpicker.model.DataSourceList;
 

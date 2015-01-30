@@ -26,7 +26,7 @@ import javax.swing.text.Position;
 
 import org.apache.log4j.Logger;
 
-import com.aerhard.oxygen.plugin.glyphpicker.controller.MainController;
+import com.aerhard.oxygen.plugin.glyphpicker.controller.main.MainController;
 import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinition;
 import com.aerhard.oxygen.plugin.glyphpicker.view.MainPanel;
 

@@ -1,4 +1,4 @@
-package com.aerhard.oxygen.plugin.glyphpicker.controller;
+package com.aerhard.oxygen.plugin.glyphpicker.controller.browser;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -6,8 +6,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import javax.swing.JOptionPane;
+import javax.swing.SwingWorker;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
@@ -31,25 +33,49 @@ import com.aerhard.oxygen.plugin.glyphpicker.model.DataSource;
 import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinition;
 import com.icl.saxon.aelfred.SAXParserFactoryImpl;
 
-public class GlyphDefinitionLoader {
+public class TeiLoadWorker extends SwingWorker<List<GlyphDefinition>, Void> {
 
     private static final Logger LOGGER = Logger
-            .getLogger(GlyphDefinitionLoader.class.getName());
-
+            .getLogger(TeiLoadWorker.class.getName());
+    
+    private DataSource dataSource;
+    
+    private List<GlyphDefinition> result = null;
+    
+    public List<GlyphDefinition> getResult() {
+        return result;
+    }
+    
     private SAXParser parser;
 
-    public GlyphDefinitionLoader() {
-
+    public TeiLoadWorker(DataSource dataSource) {
+        this.dataSource = dataSource;
+        
         SAXParserFactory parserFactory = SAXParserFactoryImpl.newInstance();
         try {
             parser = parserFactory.newSAXParser();
         } catch (ParserConfigurationException | SAXException e) {
             LOGGER.error(e);
         }
-
     }
 
-    public static Boolean isLocalFile(String path) {
+    @Override
+    protected List<GlyphDefinition> doInBackground() {
+        return loadData(dataSource);
+    }
+
+    @Override
+    protected void done() {
+        try {
+            result = get();
+        } catch (InterruptedException e) {
+            LOGGER.error(e);
+        } catch (ExecutionException e) {
+            LOGGER.error(e);
+        } 
+    }
+    
+    private Boolean isLocalFile(String path) {
         return (!path.matches("^\\w+:\\/\\/.*"));
     }
 
@@ -122,7 +148,7 @@ public class GlyphDefinitionLoader {
     public List<GlyphDefinition> parseXmlSax(InputStream is,
             DataSource dataSource) {
 
-        GlyphDefinitionXmlHandler handler = new GlyphDefinitionXmlHandler(
+        TeiXmlHandler handler = new TeiXmlHandler(
                 dataSource);
         try {
             parser.parse(is, handler);

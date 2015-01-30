@@ -21,7 +21,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import ro.sync.exml.workspace.api.standalone.StandalonePluginWorkspace;
 
-import com.aerhard.oxygen.plugin.glyphpicker.controller.MainController;
+import com.aerhard.oxygen.plugin.glyphpicker.controller.main.MainController;
 import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinition;
 
 import static org.mockito.Mockito.*;

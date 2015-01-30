@@ -1,7 +1,9 @@
-package com.aerhard.oxygen.plugin.glyphpicker.controller;
+package com.aerhard.oxygen.plugin.glyphpicker.controller.main;
 
 import java.awt.event.KeyEvent;
 import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.io.IOException;
 import java.util.Properties;
 
@@ -9,17 +11,29 @@ import org.apache.log4j.Logger;
 
 import ro.sync.exml.workspace.api.standalone.StandalonePluginWorkspace;
 
-import com.aerhard.oxygen.plugin.glyphpicker.controller.config.ConfigLoader;
+import com.aerhard.oxygen.plugin.glyphpicker.controller.browser.BrowserController;
+import com.aerhard.oxygen.plugin.glyphpicker.controller.user.UserCollectionController;
 import com.aerhard.oxygen.plugin.glyphpicker.model.Config;
 import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinition;
 import com.aerhard.oxygen.plugin.glyphpicker.view.ContainerPanel;
 import com.aerhard.oxygen.plugin.glyphpicker.view.ControlPanel;
 import com.aerhard.oxygen.plugin.glyphpicker.view.MainPanel;
 
-public class MainController extends Controller {
+public class MainController implements PropertyChangeListener {
 
     private static final Logger LOGGER = Logger.getLogger(MainController.class
             .getName());
+
+    protected PropertyChangeSupport pcs = new PropertyChangeSupport(this);
+
+    public void addPropertyChangeListener(PropertyChangeListener l) {
+        pcs.addPropertyChangeListener(l);
+    }
+
+    public void removePropertyChangeListener(PropertyChangeListener l) {
+        pcs.removePropertyChangeListener(l);
+    }
+    
     private MainPanel mainPanel;
 
     private ConfigLoader configLoader;

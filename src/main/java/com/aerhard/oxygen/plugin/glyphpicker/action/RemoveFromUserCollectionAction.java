@@ -33,7 +33,7 @@ public class RemoveFromUserCollectionAction extends AbstractAction {
         String mnemonic = "R";
 
         putValue(SHORT_DESCRIPTION,
-                "Remove the selected glyph from the user collection (Alt+"+mnemonic+")");
+                "Remove the selected glyph (Alt+"+mnemonic+")");
         putValue(MNEMONIC_KEY, KeyStroke.getKeyStroke(mnemonic).getKeyCode());
     }
 

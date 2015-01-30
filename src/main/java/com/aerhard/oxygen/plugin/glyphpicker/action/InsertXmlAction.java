@@ -9,7 +9,6 @@ import javax.swing.KeyStroke;
 
 import ca.odell.glazedlists.swing.DefaultEventSelectionModel;
 
-import com.aerhard.oxygen.plugin.glyphpicker.controller.BrowserController;
 import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinition;
 
 public class InsertXmlAction extends AbstractAction {
@@ -19,7 +18,7 @@ public class InsertXmlAction extends AbstractAction {
     public InsertXmlAction(PropertyChangeListener listener,
             DefaultEventSelectionModel<GlyphDefinition> selectionModel) {
         super(null, new ImageIcon(
-                BrowserController.class
+                InsertXmlAction.class
                         .getResource("/images/blue-document-import.png")));
         
         addPropertyChangeListener(listener);

@@ -9,15 +9,13 @@ import javax.swing.Action;
 import javax.swing.ImageIcon;
 import javax.swing.KeyStroke;
 
-import com.aerhard.oxygen.plugin.glyphpicker.controller.UserCollectionController;
-
 public class SaveAction extends AbstractAction {
     private static final long serialVersionUID = 1L;
     private Set<Action> actions;
 
     public SaveAction(PropertyChangeListener listener, Set<Action> actions) {
         super(null, new ImageIcon(
-                UserCollectionController.class
+                SaveAction.class
                         .getResource("/images/disk.png")));
         
         this.addPropertyChangeListener(listener);
