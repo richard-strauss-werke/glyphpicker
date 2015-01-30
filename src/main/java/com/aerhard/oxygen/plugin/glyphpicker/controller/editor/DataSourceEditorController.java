@@ -300,7 +300,6 @@ public class DataSourceEditorController {
         public void propertyChange(PropertyChangeEvent e) {
             if (e.getPropertyName() == DataSourceEditor.EDITING_OCCURRED) {
                 updateCurrentModelFromForm();
-                System.out.println("editing occurred");
                 listEditingOccurred = true;
             }
         }
