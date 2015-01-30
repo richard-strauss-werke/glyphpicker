@@ -8,6 +8,7 @@ import com.aerhard.oxygen.plugin.glyphpicker.model.DataSource;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JList;
@@ -54,6 +55,7 @@ public class DataSourceEditor extends JPanel {
     private JTextField templateTextField;
     private JTextField mappingTypeTextField;
     private JTextField mappingSubTypeTextField;
+    private JCheckBox mappingAsCharStringCheckBox;
     private JPanel listButtonPane;
     private JPanel editorPanel;
 
@@ -92,9 +94,9 @@ public class DataSourceEditor extends JPanel {
         add(editorPanel);
         GridBagLayout gbl = new GridBagLayout();
         gbl.columnWidths = new int[] { 102, 46 };
-        gbl.rowHeights = new int[] { 20, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+        gbl.rowHeights = new int[] { 20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
         gbl.columnWeights = new double[] { 0.0, 1.0 };
-        gbl.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+        gbl.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
                 Double.MIN_VALUE };
         editorPanel.setLayout(gbl);
 
@@ -106,6 +108,8 @@ public class DataSourceEditor extends JPanel {
         templateTextField = new JTextField();
         mappingTypeTextField = new JTextField();
         mappingSubTypeTextField = new JTextField();
+        mappingAsCharStringCheckBox = new JCheckBox();
+        
 
         editorConfig.add(new EditorConfigItem(i18n.getString(className + ".label"), labelTextField));
         editorConfig.add(new EditorConfigItem(i18n.getString(className + ".path"), pathTextField));
@@ -119,6 +123,8 @@ public class DataSourceEditor extends JPanel {
                 mappingTypeTextField));
         editorConfig.add(new EditorConfigItem(i18n.getString(className + ".subTypeAttributeValue"),
                 mappingSubTypeTextField));
+        editorConfig.add(new EditorConfigItem(i18n.getString(className + ".mappingAsCharString"),
+                mappingAsCharStringCheckBox));
 
         for (int i = 0; i < editorConfig.size(); i++) {
             addToEditorPanel(i, editorConfig.get(i));
@@ -171,10 +177,18 @@ public class DataSourceEditor extends JPanel {
             ((JTextField) component).setColumns(10);
             ((JTextField) component).getDocument().addDocumentListener(
                     new TextFieldEditingListener());
-        } else if (component instanceof JComboBox) {
+        } 
+        
+        else if (component instanceof JComboBox) {
             ((JComboBox<?>) component)
                     .addActionListener(new ComboChangeListener());
         }
+        
+        else if (component instanceof JCheckBox) {
+            ((JCheckBox) component)
+                    .addActionListener(new ComboChangeListener());
+        }
+        
         GridBagConstraints gbcComponent = new GridBagConstraints();
         gbcComponent.insets = new Insets(0, 0, 5, 0);
         gbcComponent.fill = GridBagConstraints.HORIZONTAL;
@@ -220,6 +234,10 @@ public class DataSourceEditor extends JPanel {
         return mappingSubTypeTextField;
     }
 
+    public JCheckBox getMappingAsCharStringCheckBox() {
+        return mappingAsCharStringCheckBox;
+    }
+    
     public JPanel getListButtonPane() {
         return listButtonPane;
     }

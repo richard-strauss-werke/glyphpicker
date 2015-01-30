@@ -30,6 +30,7 @@ public class TeiXmlHandler extends DefaultHandler {
     private StringBuffer textContent = new StringBuffer();
     
     private MappingMatcher mappingMatcher;
+    private MappingParser mappingParser;
 
     public TeiXmlHandler(DataSource dataSource) {
         this.dataSource = dataSource;
@@ -43,36 +44,45 @@ public class TeiXmlHandler extends DefaultHandler {
         }
         
         if (!mappingTypeValue.isEmpty()) {
-            if (!mappingTypeValue.isEmpty()) {
+            if (!mappingSubTypeValue.isEmpty()) {
                 mappingMatcher = new MappingBothMatcher();
             } else {
                 mappingMatcher = new MappingTypeMatcher();
             }
-        } else if (!mappingTypeValue.isEmpty()) {
+        } else if (!mappingSubTypeValue.isEmpty()) {
             mappingMatcher = new MappingSubTypeMatcher();
         } else {
             mappingMatcher = new MappingAllMatcher();
         }
         
+        if (dataSource.getMappingAsCharString()) {
+            mappingParser = new MappingUPlusParser();
+        } else {
+            mappingParser = new MappingNoParser();
+        }
+        
     }
-
+    
     public interface MappingMatcher {
         boolean matches(Attributes attrs);
     }
 
     public class MappingTypeMatcher implements MappingMatcher {
+        @Override
         public boolean matches(Attributes attrs) {
             return mappingTypeValue.equals(attrs.getValue("type"));
         }
     }
 
     public class MappingSubTypeMatcher implements MappingMatcher {
+        @Override
         public boolean matches(Attributes attrs) {
             return mappingSubTypeValue.equals(attrs.getValue("subtype"));
         }
     }
     
     public class MappingBothMatcher implements MappingMatcher {
+        @Override
         public boolean matches(Attributes attrs) {
             return mappingTypeValue.equals(attrs.getValue("type"))
                     && mappingSubTypeValue.equals(attrs.getValue("subtype"));
@@ -80,11 +90,40 @@ public class TeiXmlHandler extends DefaultHandler {
     }
 
     public class MappingAllMatcher implements MappingMatcher {
+        @Override
         public boolean matches(Attributes attrs) {
             return true;
         }
     }
+    
+    public interface MappingParser {
+        String parse(String str);
+    }
 
+    public class MappingUPlusParser implements MappingParser {
+        @Override
+        public String parse(String str) {
+            if (str == null) {
+                return null;
+            }
+            try {
+                String cp = str.substring(2);
+                int c = Integer.parseInt(cp, 16);
+                return Character.toString((char) c);
+            } catch (Exception e) {
+                return null;
+            }
+        }
+    }
+
+    public class MappingNoParser implements MappingParser {
+        @Override
+        public String parse(String str) {
+            return str;
+        }
+    }
+    
+    
     public List<GlyphDefinition> getGlyphDefinitions() {
         return glyphDefinitions;
     }
@@ -162,7 +201,7 @@ public class TeiXmlHandler extends DefaultHandler {
             }
 
             else if (inMapping) {
-                currentGlyphDefinition.setCodePoint(textContent.toString());
+                currentGlyphDefinition.setCodePoint(mappingParser.parse(textContent.toString()));
                 inMapping = false;
             }
 

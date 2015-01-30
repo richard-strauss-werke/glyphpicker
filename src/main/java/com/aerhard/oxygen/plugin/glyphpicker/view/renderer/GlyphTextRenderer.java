@@ -30,7 +30,7 @@ public class GlyphTextRenderer extends GlyphRenderer {
             this.previousFontName = fontName;
         }
 
-        setText(gd.getCharString());
+        setText(gd.getCodePoint());
 
         configureBackground(isSelected);
 

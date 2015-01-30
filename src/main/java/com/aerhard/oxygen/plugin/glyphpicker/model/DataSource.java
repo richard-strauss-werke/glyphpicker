@@ -29,6 +29,8 @@ public class DataSource implements Cloneable {
     private String mappingTypeValue = null;
     @XmlElement(name = "mappingSubTypeValue")
     private String mappingSubTypeValue = null;
+    @XmlElement(name = "mappingAsCharString")
+    private boolean mappingAsCharString = false;
 
     public DataSource() {
     }
@@ -47,6 +49,14 @@ public class DataSource implements Cloneable {
 
     public void setMappingSubTypeValue(String mappingAttValue) {
         this.mappingSubTypeValue = mappingAttValue;
+    }
+    
+    public boolean getMappingAsCharString() {
+        return mappingAsCharString;
+    }
+
+    public void setMappingAsCharString(boolean mappingAsCharString) {
+        this.mappingAsCharString = mappingAsCharString;
     }
 
     public String getLabel() {

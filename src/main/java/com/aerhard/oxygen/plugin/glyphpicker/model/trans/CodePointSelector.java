@@ -6,7 +6,7 @@ public class CodePointSelector implements PropertySelector {
 
     @Override
     public String get(GlyphDefinition d) {
-        return d.getCodePoint();
+        return d.getCodePointString();
     }
 
     

@@ -37,7 +37,7 @@ public class GlyphShapeRenderer extends GlyphRenderer {
 
     public Component getRendererComponent(GlyphDefinition gd, boolean isSelected) {
 
-        ch = gd.getCharString();
+        ch = gd.getCodePoint();
         fontName = gd.getDataSource().getFontName();
 
         factor = gd.getDataSource().getSizeFactor();

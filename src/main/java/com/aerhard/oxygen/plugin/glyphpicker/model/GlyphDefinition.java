@@ -58,14 +58,19 @@ public class GlyphDefinition implements Cloneable {
         return codePoint;
     }
 
-    public String getCharString() {
-        try {
-            String cp = codePoint.substring(2);
-            int c = Integer.parseInt(cp, 16);
-            return Character.toString((char) c);
-        } catch (Exception e) {
-            return null;
+    public String getCodePointString() {
+        
+        if (codePoint != null) {
+            StringBuilder sb = new StringBuilder();
+            for (Character c : codePoint.toCharArray()) {
+                sb.append("U+");
+                sb.append(String.format("%X", (int) c));
+                sb.append(" ");
+            }
+            return sb.toString();
         }
+        return null;
+
     }
 
     public void setCodePoint(String codePoint) {
@@ -133,7 +138,7 @@ public class GlyphDefinition implements Cloneable {
 
     @Override
     public String toString() {
-        return codePoint + ": " + charName + " (" + range + ")";
+        return getCodePointString() + ": " + charName + " (" + range + ")";
     }
 
 }

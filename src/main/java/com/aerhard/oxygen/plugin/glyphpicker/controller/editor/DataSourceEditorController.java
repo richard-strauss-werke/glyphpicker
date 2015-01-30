@@ -259,6 +259,7 @@ public class DataSourceEditorController {
                 dataSource.getMappingTypeValue());
         contentPane.getMappingAttValueTextField().setText(
                 dataSource.getMappingSubTypeValue());
+        contentPane.getMappingAsCharStringCheckBox().setSelected(dataSource.getMappingAsCharString());
 
         contentPane.addPropertyChangeListener(formListener);
     }
@@ -289,6 +290,7 @@ public class DataSourceEditorController {
                     .getMappingAttNameTextField().getText());
             currentDataSource.setMappingSubTypeValue(contentPane
                     .getMappingAttValueTextField().getText());
+            currentDataSource.setMappingAsCharString(contentPane.getMappingAsCharStringCheckBox().isSelected());
         }
     }
 
@@ -298,6 +300,7 @@ public class DataSourceEditorController {
         public void propertyChange(PropertyChangeEvent e) {
             if (e.getPropertyName() == DataSourceEditor.EDITING_OCCURRED) {
                 updateCurrentModelFromForm();
+                System.out.println("editing occurred");
                 listEditingOccurred = true;
             }
         }
