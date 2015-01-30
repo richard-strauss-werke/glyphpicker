@@ -95,17 +95,6 @@
             <mappingAsCharString>true</mappingAsCharString>
         </dataSource>
         <dataSource>
-            <label>Edirom SMuFL Browser (web-json, glyph)</label>
-            <basePath>/Users/Ahlse/Desktop/SMuFL-Browser-1.0/data/smufl.json</basePath>
-            <fontName>BravuraText</fontName>
-            <displayMode>fit</displayMode>
-            <sizeFactor>0.7</sizeFactor>
-            <template>${basePath}#${id}</template>
-            <mappingTypeValue>smufl</mappingTypeValue>
-            <mappingSubTypeValue></mappingSubTypeValue>
-            <mappingAsCharString>true</mappingAsCharString>
-        </dataSource>
-        <dataSource>
             <label>Edirom SMuFL Browser (localhost, glyph)</label>
             <basePath>http://localhost:8080/exist/apps/smufl-browser/list/</basePath>
             <fontName>BravuraText</fontName>

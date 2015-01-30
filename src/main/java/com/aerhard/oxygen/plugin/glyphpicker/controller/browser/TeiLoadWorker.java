@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.concurrent.ExecutionException;
@@ -26,8 +25,6 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.auth.BasicScheme;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.log4j.Logger;
-import org.json.JSONArray;
-import org.json.JSONObject;
 import org.xml.sax.SAXException;
 
 import com.aerhard.oxygen.plugin.glyphpicker.model.DataSource;
@@ -116,14 +113,7 @@ public class TeiLoadWorker extends SwingWorker<List<GlyphDefinition>, Void> {
 
             InputStream inputStream = entity.getContent();
 
-            String contentType = response.getFirstHeader("Content-Type")
-                    .getValue();
-
-            if (contentType.indexOf("xml") > -1) {
-                return parseXmlSax(inputStream, dataSource);
-            } else {
-                return parseJson(inputStream, dataSource);
-            }
+            return parseXmlSax(inputStream, dataSource);
         }
 
     }
@@ -178,45 +168,6 @@ public class TeiLoadWorker extends SwingWorker<List<GlyphDefinition>, Void> {
         return handler.getGlyphDefinitions();
     }
 
-    public List<GlyphDefinition> parseJson(InputStream inputStream,
-            DataSource dataSource) {
-
-        List<GlyphDefinition> glyphList = new ArrayList<GlyphDefinition>();
-        StringBuilder builder = new StringBuilder();
-
-        try {
-            int ch;
-            while ((ch = inputStream.read()) != -1) {
-                builder.append((char) ch);
-            }
-
-            String input = builder.toString();
-            JSONObject responseJSON = new JSONObject(input);
-            JSONArray dataArray = responseJSON.getJSONArray("data");
-            if (dataArray != null) {
-                int rows = dataArray.length();
-                if (rows > 0) {
-                    for (int i = 0; i < rows; i++) {
-                        JSONObject obj = dataArray.getJSONObject(i);
-                        glyphList.add(new GlyphDefinition(obj.getString("id"),
-                                obj.getString("name"), obj
-                                        .getString("codepoint"), obj
-                                        .getString("range"), obj
-                                        .getString("url"), dataSource));
-                    }
-                    return glyphList;
-                }
-            }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(
-                    null,
-                    e.toString(),
-                    i18n.getString(this.getClass().getSimpleName()
-                            + ".jsonParsingError"), JOptionPane.ERROR_MESSAGE);
-        }
-        return null;
-    }
-
     public List<GlyphDefinition> loadDataFromFile(DataSource dataSource) {
 
         List<GlyphDefinition> glyphList = null;
@@ -226,13 +177,9 @@ public class TeiLoadWorker extends SwingWorker<List<GlyphDefinition>, Void> {
         if (fileName != null) {
             File file = new File(fileName);
             InputStream inputStream = null;
-            String mimeType = null;
 
             try {
-                mimeType = file.toURI().toURL().openConnection()
-                        .getContentType();
                 inputStream = new FileInputStream(file);
-
             } catch (IOException e) {
                 JOptionPane.showMessageDialog(
                         null,
@@ -243,10 +190,8 @@ public class TeiLoadWorker extends SwingWorker<List<GlyphDefinition>, Void> {
                                 + ".error"), JOptionPane.ERROR_MESSAGE);
                 LOGGER.info(e);
             }
-            if (inputStream != null && mimeType != null) {
-                glyphList = (mimeType.indexOf("xml") > -1) ? parseXmlSax(
-                        inputStream, dataSource) : parseJson(inputStream,
-                        dataSource);
+            if (inputStream != null) {
+                glyphList = parseXmlSax(inputStream, dataSource);
             }
         }
         return glyphList;
