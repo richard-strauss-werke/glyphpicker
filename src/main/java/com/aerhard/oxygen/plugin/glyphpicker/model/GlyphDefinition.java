@@ -1,10 +1,13 @@
 package com.aerhard.oxygen.plugin.glyphpicker.model;
 
+import java.util.List;
+
 import javax.swing.ImageIcon;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -26,6 +29,10 @@ public class GlyphDefinition implements Cloneable {
 
     @XmlElement(name = "range")
     private String range;
+
+    @XmlElement(name = "g", namespace = "http://www.tei-c.org/ns/1.0")
+    @XmlElementWrapper(name = "glyphRefs", namespace = "http://www.tei-c.org/ns/1.0")
+    private List<GlyphRef> glyphRefs = null; 
 
     @XmlElement(name = "dataSource")
     private DataSource dataSource;
@@ -84,7 +91,15 @@ public class GlyphDefinition implements Cloneable {
     public void setRange(String range) {
         this.range = range;
     }
+    
+    public List<GlyphRef> getGlyphRefs() {
+        return glyphRefs;
+    }
 
+    public void setGlyphRefs(List<GlyphRef> glyphRefs) {
+        this.glyphRefs = glyphRefs;
+    }
+    
     public String getId() {
         return id;
     }

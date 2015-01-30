@@ -1,6 +1,7 @@
 package com.aerhard.oxygen.plugin.glyphpicker.controller.browser;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Stack;
 
@@ -9,6 +10,7 @@ import org.xml.sax.SAXException;
 
 import com.aerhard.oxygen.plugin.glyphpicker.model.DataSource;
 import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinition;
+import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphRef;
 import com.icl.saxon.aelfred.DefaultHandler;
 
 public class TeiXmlHandler extends DefaultHandler {
@@ -19,6 +21,9 @@ public class TeiXmlHandler extends DefaultHandler {
     private List<GlyphDefinition> glyphDefinitions = new ArrayList<GlyphDefinition>();
     private Stack<String> elementStack = new Stack<String>();
 
+    private List<GlyphRef> currentGlyphRefs = new ArrayList<GlyphRef>();
+    private List<GlyphDefinition> referencingGlyphDefinitions = new ArrayList<GlyphDefinition>();
+
     private GlyphDefinition currentGlyphDefinition;
 
     private String range = "";
@@ -28,7 +33,7 @@ public class TeiXmlHandler extends DefaultHandler {
     private String mappingSubTypeValue;
 
     private StringBuffer textContent = new StringBuffer();
-    
+
     private MappingMatcher mappingMatcher;
     private MappingParser mappingParser;
 
@@ -42,7 +47,7 @@ public class TeiXmlHandler extends DefaultHandler {
         if (mappingSubTypeValue == null) {
             mappingSubTypeValue = "";
         }
-        
+
         if (!mappingTypeValue.isEmpty()) {
             if (!mappingSubTypeValue.isEmpty()) {
                 mappingMatcher = new MappingBothMatcher();
@@ -54,15 +59,15 @@ public class TeiXmlHandler extends DefaultHandler {
         } else {
             mappingMatcher = new MappingAllMatcher();
         }
-        
+
         if (dataSource.getMappingAsCharString()) {
             mappingParser = new MappingUPlusParser();
         } else {
             mappingParser = new MappingNoParser();
         }
-        
+
     }
-    
+
     public interface MappingMatcher {
         boolean matches(Attributes attrs);
     }
@@ -80,7 +85,7 @@ public class TeiXmlHandler extends DefaultHandler {
             return mappingSubTypeValue.equals(attrs.getValue("subtype"));
         }
     }
-    
+
     public class MappingBothMatcher implements MappingMatcher {
         @Override
         public boolean matches(Attributes attrs) {
@@ -95,7 +100,7 @@ public class TeiXmlHandler extends DefaultHandler {
             return true;
         }
     }
-    
+
     public interface MappingParser {
         String parse(String str);
     }
@@ -122,8 +127,7 @@ public class TeiXmlHandler extends DefaultHandler {
             return str;
         }
     }
-    
-    
+
     public List<GlyphDefinition> getGlyphDefinitions() {
         return glyphDefinitions;
     }
@@ -159,15 +163,20 @@ public class TeiXmlHandler extends DefaultHandler {
         if ("charName".equals(qName) || "mapping".equals(qName)
                 || "desc".equals(qName)) {
             textContent.setLength(0);
+
+            if ("mapping".equals(qName) && mappingMatcher.matches(attrs)) {
+                inMapping = true;
+            }
         }
 
         else if ("graphic".equals(qName)) {
             currentGlyphDefinition.setUrl(attrs.getValue("url"));
         }
 
-        if ("mapping".equals(qName)
-                && mappingMatcher.matches(attrs)) {
-            inMapping = true;
+        else if ("g".equals(qName) && inMapping) {
+            String targetId = attrs.getValue("ref");
+            currentGlyphRefs.add(new GlyphRef(textContent.length(), targetId
+                    .substring(1)));
         }
 
     }
@@ -178,14 +187,18 @@ public class TeiXmlHandler extends DefaultHandler {
         textContent.append(ch, start, length);
     }
 
+    private boolean isParent(String qName) {
+        return qName.equals(elementStack.get(elementStack.size() - 2));
+    }
+
     @Override
     public void endElement(String uri, String localName, String qName)
             throws SAXException {
 
         if ("desc".equals(qName)) {
-            if ("charDecl".equals(elementStack.get(elementStack.size() - 2))) {
+            if (isParent("charDecl")) {
                 range = textContent.toString();
-            } else if ("char".equals(elementStack.get(elementStack.size() - 2))) {
+            } else if (isParent("char")) {
                 currentGlyphDefinition.setCharName(textContent.toString());
             }
         }
@@ -200,8 +213,16 @@ public class TeiXmlHandler extends DefaultHandler {
                 currentGlyphDefinition.setCharName(textContent.toString());
             }
 
-            else if (inMapping) {
-                currentGlyphDefinition.setCodePoint(mappingParser.parse(textContent.toString()));
+            else if (inMapping && "mapping".equals(qName)) {
+                currentGlyphDefinition.setCodePoint(mappingParser
+                        .parse(textContent.toString()));
+
+                if (!currentGlyphRefs.isEmpty()) {
+                    currentGlyphDefinition.setGlyphRefs(currentGlyphRefs);
+                    currentGlyphRefs = new ArrayList<GlyphRef>();
+                    referencingGlyphDefinitions.add(currentGlyphDefinition);
+                }
+
                 inMapping = false;
             }
 
@@ -209,4 +230,61 @@ public class TeiXmlHandler extends DefaultHandler {
 
         elementStack.pop();
     }
+
+    public void endDocument() throws SAXException {
+
+        if (!referencingGlyphDefinitions.isEmpty()) {
+
+            setReferencedTargets(createIdHashMap());
+
+            // TODO recurse glyphdefinitions in order to include references of references
+
+            for (GlyphDefinition r : referencingGlyphDefinitions) {
+                int offset = 0;
+
+                StringBuilder sb = new StringBuilder(r.getCodePoint());
+
+                for (GlyphRef ref : r.getGlyphRefs()) {
+                    GlyphDefinition target = ref.getTarget();
+                    if (target != null) {
+                        
+                        String additionalString = target.getCodePoint();
+                        
+                        ref.incrementIndex(offset);
+                        
+                        sb.insert(ref.getIndex(), additionalString);
+                        
+                        offset += additionalString.length();
+
+                    }
+                }
+                
+                r.setCodePoint(sb.toString());
+                System.out.println(r.getCodePoint());
+
+            }
+
+        }
+
+    }
+
+    private HashMap<String, GlyphDefinition> createIdHashMap() {
+        HashMap<String, GlyphDefinition> ids = new HashMap<String, GlyphDefinition>();
+        for (GlyphDefinition d : glyphDefinitions) {
+            ids.put(d.getId(), d);
+        }
+        return ids;
+    }
+
+    private void setReferencedTargets(HashMap<String, GlyphDefinition> ids) {
+        for (GlyphDefinition r : referencingGlyphDefinitions) {
+            for (GlyphRef ref : r.getGlyphRefs()) {
+                GlyphDefinition target = ids.get(ref.getTargetId());
+                if (target != null) {
+                    ref.setTarget(target);
+                }
+            }
+        }
+    }
+
 }
