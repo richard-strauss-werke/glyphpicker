@@ -52,8 +52,8 @@ public class DataSourceEditor extends JPanel {
     private JComboBox<String> displayModeTextField;
     private JTextField sizeTextField;
     private JTextField templateTextField;
-    private JTextField mappingAttNameTextField;
-    private JTextField mappingAttValueTextField;
+    private JTextField mappingTypeTextField;
+    private JTextField mappingSubTypeTextField;
     private JPanel listButtonPane;
     private JPanel editorPanel;
 
@@ -104,8 +104,8 @@ public class DataSourceEditor extends JPanel {
         displayModeTextField = new JComboBox<String>();
         sizeTextField = new JTextField();
         templateTextField = new JTextField();
-        mappingAttNameTextField = new JTextField();
-        mappingAttValueTextField = new JTextField();
+        mappingTypeTextField = new JTextField();
+        mappingSubTypeTextField = new JTextField();
 
         editorConfig.add(new EditorConfigItem(i18n.getString(className + ".label"), labelTextField));
         editorConfig.add(new EditorConfigItem(i18n.getString(className + ".path"), pathTextField));
@@ -115,10 +115,10 @@ public class DataSourceEditor extends JPanel {
         editorConfig
                 .add(new EditorConfigItem(i18n.getString(className + ".glyphSize"), sizeTextField));
         editorConfig.add(new EditorConfigItem(i18n.getString(className + ".template"), templateTextField));
-        editorConfig.add(new EditorConfigItem(i18n.getString(className + ".attributeName"),
-                mappingAttNameTextField));
-        editorConfig.add(new EditorConfigItem(i18n.getString(className + ".attributeValue"),
-                mappingAttValueTextField));
+        editorConfig.add(new EditorConfigItem(i18n.getString(className + ".typeAttributeValue"),
+                mappingTypeTextField));
+        editorConfig.add(new EditorConfigItem(i18n.getString(className + ".subTypeAttributeValue"),
+                mappingSubTypeTextField));
 
         for (int i = 0; i < editorConfig.size(); i++) {
             addToEditorPanel(i, editorConfig.get(i));
@@ -213,11 +213,11 @@ public class DataSourceEditor extends JPanel {
     }
 
     public JTextField getMappingAttNameTextField() {
-        return mappingAttNameTextField;
+        return mappingTypeTextField;
     }
 
     public JTextField getMappingAttValueTextField() {
-        return mappingAttValueTextField;
+        return mappingSubTypeTextField;
     }
 
     public JPanel getListButtonPane() {
