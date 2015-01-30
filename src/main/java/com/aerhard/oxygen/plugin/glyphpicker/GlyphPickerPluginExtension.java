@@ -16,6 +16,9 @@
 
 package com.aerhard.oxygen.plugin.glyphpicker;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+
 import javax.swing.ImageIcon;
 import javax.swing.JMenuBar;
 import javax.swing.text.BadLocationException;
@@ -23,7 +26,6 @@ import javax.swing.text.Position;
 
 import org.apache.log4j.Logger;
 
-import com.aerhard.oxygen.plugin.glyphpicker.controller.ControllerEventListener;
 import com.aerhard.oxygen.plugin.glyphpicker.controller.MainController;
 import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinition;
 import com.aerhard.oxygen.plugin.glyphpicker.view.MainPanel;
@@ -68,11 +70,11 @@ public class GlyphPickerPluginExtension implements
     public void applicationStarted(final StandalonePluginWorkspace workspace) {
 
         mainController = new MainController(workspace);
-        mainController.addListener(new ControllerEventListener() {
+        mainController.addPropertyChangeListener(new PropertyChangeListener() {
             @Override
-            public void eventOccured(String type, GlyphDefinition model) {
-                if ("insert".equals(type)) {
-                    insertFragment(workspace, model);
+            public void propertyChange(PropertyChangeEvent e) {
+                if ("insert".equals(e.getPropertyName())) {
+                    insertFragment(workspace, (GlyphDefinition) e.getNewValue());
                 }
             }
         });
@@ -180,6 +182,7 @@ public class GlyphPickerPluginExtension implements
         mainController.saveData();
 
         return true;
-    };
+    }
+
 
 }

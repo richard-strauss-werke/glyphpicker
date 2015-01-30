@@ -1,6 +1,7 @@
-package com.aerhard.oxygen.plugin.glyphpicker.controller;
+package com.aerhard.oxygen.plugin.glyphpicker.action;
 
 import java.awt.event.ActionEvent;
+import java.beans.PropertyChangeListener;
 
 import javax.swing.AbstractAction;
 import javax.swing.ImageIcon;
@@ -14,18 +15,17 @@ import com.aerhard.oxygen.plugin.glyphpicker.view.GlyphGrid;
 
 public class RemoveFromUserCollectionAction extends AbstractAction {
     private static final long serialVersionUID = 1L;
-    private UserCollectionController controller;
     private EventList<GlyphDefinition> glyphList;
     private FilterList<GlyphDefinition> filterList;
     private GlyphGrid list;
 
-    public RemoveFromUserCollectionAction(UserCollectionController controller,
+    public RemoveFromUserCollectionAction(PropertyChangeListener listener,
             EventList<GlyphDefinition> glyphList,
             FilterList<GlyphDefinition> filterList, GlyphGrid list) {
         super(null, new ImageIcon(
                 ChangeViewAction.class.getResource("/images/minus.png")));
 
-        this.controller = controller;
+        this.addPropertyChangeListener(listener);
         this.glyphList = glyphList;
         this.filterList = filterList;
         this.list = list;
@@ -42,7 +42,7 @@ public class RemoveFromUserCollectionAction extends AbstractAction {
 
         int index = list.getSelectedIndex();
         if (index != -1) {
-            controller.setListInSync(false);
+            firePropertyChange("listInSync", null, false);
             GlyphDefinition item = filterList.get(index);
 
             boolean itemRemoved = glyphList.remove(item);

@@ -33,6 +33,11 @@ import ca.odell.glazedlists.swing.DefaultEventListModel;
 import ca.odell.glazedlists.swing.DefaultEventSelectionModel;
 import ca.odell.glazedlists.swing.DefaultEventTableModel;
 
+import com.aerhard.oxygen.plugin.glyphpicker.action.AddToUserCollectionAction;
+import com.aerhard.oxygen.plugin.glyphpicker.action.ChangeViewAction;
+import com.aerhard.oxygen.plugin.glyphpicker.action.EditAction;
+import com.aerhard.oxygen.plugin.glyphpicker.action.InsertXmlAction;
+import com.aerhard.oxygen.plugin.glyphpicker.action.SortAction;
 import com.aerhard.oxygen.plugin.glyphpicker.controller.autocomplete.AutoCompleteController;
 import com.aerhard.oxygen.plugin.glyphpicker.controller.bitmap.GlyphBitmapBulkLoader;
 import com.aerhard.oxygen.plugin.glyphpicker.model.Config;
@@ -43,6 +48,7 @@ import com.aerhard.oxygen.plugin.glyphpicker.view.ControlPanel;
 import com.aerhard.oxygen.plugin.glyphpicker.view.ContainerPanel;
 import com.aerhard.oxygen.plugin.glyphpicker.view.GlyphGrid;
 import com.aerhard.oxygen.plugin.glyphpicker.view.GlyphTable;
+import com.aerhard.oxygen.plugin.glyphpicker.view.GlyphTableFormat;
 import com.aerhard.oxygen.plugin.glyphpicker.view.HighlightButton;
 import com.aerhard.oxygen.plugin.glyphpicker.view.renderer.GlyphRendererAdapter;
 
@@ -87,16 +93,17 @@ public class BrowserController extends Controller {
 
         controlPanel = panel.getControlPanel();
 
-        autoCompleteController = new AutoCompleteController(config.getBrowserSearchFieldScopeIndex(),
+        autoCompleteController = new AutoCompleteController(
+                config.getBrowserSearchFieldScopeIndex(),
                 controlPanel.getAutoCompleteCombo(),
                 controlPanel.getAutoCompleteScopeCombo(), sortedList);
 
-        filterList = new FilterList<GlyphDefinition>(
-                sortedList, autoCompleteController.getGlyphSelect());
-        
+        filterList = new FilterList<GlyphDefinition>(sortedList,
+                autoCompleteController.getGlyphSelect());
+
         selectionModel = new DefaultEventSelectionModel<GlyphDefinition>(
                 filterList);
-        
+
         list = new GlyphGrid(new DefaultEventListModel<GlyphDefinition>(
                 filterList));
         GlyphRendererAdapter r = new GlyphRendererAdapter(list);
@@ -242,7 +249,6 @@ public class BrowserController extends Controller {
 
     }
 
-    @Override
     public void loadData() {
 
         int index = controlPanel.getDataSourceCombo().getSelectedIndex();
@@ -332,7 +338,8 @@ public class BrowserController extends Controller {
             @Override
             public void propertyChange(PropertyChangeEvent e) {
                 if ("iconLoaded".equals(e.getPropertyName())) {
-                    panel.redrawIconInList(filterList.indexOf((GlyphDefinition) e.getNewValue()));
+                    panel.redrawIconInList(filterList
+                            .indexOf((GlyphDefinition) e.getNewValue()));
                 }
             }
         });
@@ -340,11 +347,16 @@ public class BrowserController extends Controller {
     }
 
     @Override
-    public void saveData() {
-    }
+    public void propertyChange(PropertyChangeEvent e) {
+        if ("copyToUserCollection".equals(e.getPropertyName())
+                || "insert".equals(e.getPropertyName())) {
+            pcs.firePropertyChange(e);
+        }
 
-    @Override
-    public void eventOccured(String type, GlyphDefinition model) {
+        else if ("editChanges".equals(e.getPropertyName())) {
+            loadData();
+        }
+
     }
 
 }

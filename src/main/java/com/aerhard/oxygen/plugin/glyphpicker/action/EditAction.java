@@ -1,6 +1,7 @@
-package com.aerhard.oxygen.plugin.glyphpicker.controller;
+package com.aerhard.oxygen.plugin.glyphpicker.action;
 
 import java.awt.event.ActionEvent;
+import java.beans.PropertyChangeListener;
 import java.util.List;
 
 import javax.swing.AbstractAction;
@@ -8,6 +9,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 
+import com.aerhard.oxygen.plugin.glyphpicker.controller.BrowserController;
 import com.aerhard.oxygen.plugin.glyphpicker.controller.editor.DataSourceEditorController;
 import com.aerhard.oxygen.plugin.glyphpicker.model.DataSource;
 import com.aerhard.oxygen.plugin.glyphpicker.model.DataSourceList;
@@ -15,15 +17,14 @@ import com.aerhard.oxygen.plugin.glyphpicker.view.editor.DataSourceEditor;
 
 public class EditAction extends AbstractAction {
     private static final long serialVersionUID = 1L;
-    private Controller controller;
     private JPanel panel;
     private DataSourceList dataSourceList;
 
-    public EditAction(Controller controller, JPanel panel, DataSourceList dataSourceList) {
+    public EditAction(PropertyChangeListener listener, JPanel panel, DataSourceList dataSourceList) {
         super(null, new ImageIcon(
                 BrowserController.class.getResource("/images/gear.png")));
         
-        this.controller = controller;
+        addPropertyChangeListener(listener);
         this.panel = panel;
         this.dataSourceList = dataSourceList;
         
@@ -46,7 +47,7 @@ public class EditAction extends AbstractAction {
                 dataSourceList.setSelectedItem(dataSourceList
                         .getElementAt(0));
             }
-            controller.loadData();
+            firePropertyChange("editChanges", null, null);
         }
     }
 }

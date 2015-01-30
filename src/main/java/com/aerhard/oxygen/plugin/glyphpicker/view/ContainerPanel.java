@@ -48,9 +48,6 @@ public class ContainerPanel extends JPanel {
         tablePanel.setLayout(new BorderLayout(0, 6));
 
         jPane = new JScrollPane();
-        // jPane.setLayout(new GridLayout(1,1));
-        // jpane.setHorizontalScrollBarPolicy(JideScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        // jpane.setVerticalScrollBarPolicy(JideScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         jPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         jPane.setBorder(new EtchedBorder());
 

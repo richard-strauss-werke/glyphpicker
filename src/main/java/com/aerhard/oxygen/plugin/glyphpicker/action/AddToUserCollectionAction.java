@@ -1,6 +1,7 @@
-package com.aerhard.oxygen.plugin.glyphpicker.controller;
+package com.aerhard.oxygen.plugin.glyphpicker.action;
 
 import java.awt.event.ActionEvent;
+import java.beans.PropertyChangeListener;
 
 import javax.swing.AbstractAction;
 import javax.swing.ImageIcon;
@@ -10,35 +11,33 @@ import ca.odell.glazedlists.swing.DefaultEventSelectionModel;
 
 import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinition;
 
-public class InsertXmlAction extends AbstractAction {
+public class AddToUserCollectionAction extends AbstractAction {
     private static final long serialVersionUID = 1L;
-    private Controller controller;
     private DefaultEventSelectionModel<GlyphDefinition> selectionModel;
 
-    public InsertXmlAction(Controller controller,
+    public AddToUserCollectionAction(PropertyChangeListener listener,
             DefaultEventSelectionModel<GlyphDefinition> selectionModel) {
         super(null, new ImageIcon(
-                BrowserController.class
-                        .getResource("/images/blue-document-import.png")));
-        
-        this.controller = controller;
+                ChangeViewAction.class.getResource("/images/plus.png")));
+
+        addPropertyChangeListener(listener);
         this.selectionModel = selectionModel;
-        
-        String mnemonic = "I";
+
+        String mnemonic = "C";
         
         putValue(SHORT_DESCRIPTION,
-                "Insert the selected glyph to the document (Alt+"+mnemonic+")");
+                "Add the selected glyph to the user collection (Alt+"+mnemonic+")");
         putValue(MNEMONIC_KEY, KeyStroke.getKeyStroke(mnemonic).getKeyCode());
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
+
         if (!selectionModel.isSelectionEmpty()) {
             GlyphDefinition d = selectionModel.getSelected().get(0);
             if (d != null) {
-                controller.fireEvent("insert", d);
+                firePropertyChange("copyToUserCollection", null, d);
             }
         }
     }
-    
 }

@@ -4,6 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.io.IOException;
 import java.util.Properties;
 
@@ -19,7 +21,6 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import ro.sync.exml.workspace.api.standalone.StandalonePluginWorkspace;
 
-import com.aerhard.oxygen.plugin.glyphpicker.controller.ControllerEventListener;
 import com.aerhard.oxygen.plugin.glyphpicker.controller.MainController;
 import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinition;
 
@@ -64,15 +65,17 @@ public class UITest {
         frame.setLayout(new BorderLayout(0, 0));
         frame.getContentPane().add(mainController.getPanel());
 
-        mainController.addListener(new ControllerEventListener() {
-            public void eventOccured(String type, GlyphDefinition model) {
-                if ("insert".equals(type)) {
+        mainController.addPropertyChangeListener(new PropertyChangeListener() {
+            @Override
+            public void propertyChange(PropertyChangeEvent e) {
+                if ("insert".equals(e.getPropertyName())) {
+                    GlyphDefinition model = (GlyphDefinition) e.getNewValue();
                     LOGGER.info("Insertion triggered: " + model.getCharName()
                             + "\nrefString: " + model.getRefString());
                 }
             }
         });
-
+        
         frame.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {

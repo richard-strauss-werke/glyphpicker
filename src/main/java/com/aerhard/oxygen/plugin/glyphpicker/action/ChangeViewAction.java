@@ -1,4 +1,4 @@
-package com.aerhard.oxygen.plugin.glyphpicker.controller;
+package com.aerhard.oxygen.plugin.glyphpicker.action;
 
 import java.awt.event.ActionEvent;
 
@@ -12,8 +12,6 @@ import com.aerhard.oxygen.plugin.glyphpicker.view.GlyphTable;
 
 public class ChangeViewAction extends AbstractAction {
     private static final long serialVersionUID = 1L;
-
-    private int activeListIndex = 0;
 
     private ContainerPanel panel;
     private GlyphTable table;
@@ -35,24 +33,22 @@ public class ChangeViewAction extends AbstractAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (activeListIndex == 0) {
+        if (panel.getListComponent() instanceof GlyphGrid) {
             // NB get the old component's top row before the component
             // is replaced!
             int row = list.getTopVisibleRow();
             panel.setListComponent(table);
-            panel.getInfoLabel().setVisible(false);
+            panel.getInfoPanel().setVisible(false);
             panel.revalidate();
             table.setTopVisibleRow(row);
-            activeListIndex = 1;
         } else {
             // NB get the old component's top row before the component
             // is replaced!
             int row = table.getTopVisibleRow();
             panel.setListComponent(list);
-            panel.getInfoLabel().setVisible(true);
+            panel.getInfoPanel().setVisible(true);
             panel.revalidate();
             list.setTopVisibleRow(row);
-            activeListIndex = 0;
         }
     }
 

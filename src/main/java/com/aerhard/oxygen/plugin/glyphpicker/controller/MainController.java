@@ -1,6 +1,7 @@
 package com.aerhard.oxygen.plugin.glyphpicker.controller;
 
 import java.awt.event.KeyEvent;
+import java.beans.PropertyChangeEvent;
 import java.io.IOException;
 import java.util.Properties;
 
@@ -8,6 +9,7 @@ import org.apache.log4j.Logger;
 
 import ro.sync.exml.workspace.api.standalone.StandalonePluginWorkspace;
 
+import com.aerhard.oxygen.plugin.glyphpicker.controller.config.ConfigLoader;
 import com.aerhard.oxygen.plugin.glyphpicker.model.Config;
 import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinition;
 import com.aerhard.oxygen.plugin.glyphpicker.view.ContainerPanel;
@@ -45,13 +47,12 @@ public class MainController extends Controller {
 
         browserPanel = new ContainerPanel(new ControlPanel(true));
         browserController = new BrowserController(browserPanel, config);
-        browserController.addListener(this);
+        browserController.addPropertyChangeListener(this);
 
         userCollectionPanel = new ContainerPanel(new ControlPanel(false));
         userCollectionController = new UserCollectionController(userCollectionPanel, config,
                 properties, workspace);
-        userCollectionController.addListener(this);
-        addListener(userCollectionController);
+        userCollectionController.addPropertyChangeListener(this);
 
         mainPanel = new MainPanel(userCollectionPanel, browserPanel);
 
@@ -73,26 +74,6 @@ public class MainController extends Controller {
         return mainPanel;
     }
 
-    @Override
-    public void eventOccured(String type, GlyphDefinition glyphDefinition) {
-
-        if ("insert".equals(type)) {
-            fireEvent("insert", glyphDefinition);
-        }
-
-        else if ("copyToUserCollection".equals(type)) {
-            try {
-                GlyphDefinition clone = glyphDefinition.clone();
-                fireEvent("copyToUserCollection", clone);
-                mainPanel.highlightTabTitle(0);
-            } catch (CloneNotSupportedException e) {
-                LOGGER.error(e);
-            }
-        }
-
-    }
-
-    @Override
     public void loadData() {
         userCollectionController.loadData();
         browserController.loadData();
@@ -110,6 +91,24 @@ public class MainController extends Controller {
 
         getConfigLoader().save();
         userCollectionController.saveData();
+    }
+
+    
+    @Override
+    public void propertyChange(PropertyChangeEvent e) {
+        if ("insert".equals(e.getPropertyName())) {
+            pcs.firePropertyChange(e);
+        }
+
+        else if ("copyToUserCollection".equals(e.getPropertyName())) {
+            try {
+                GlyphDefinition clone = ((GlyphDefinition) e.getNewValue()).clone();
+                userCollectionController.addGlyphDefinition(clone);
+                mainPanel.highlightTabTitle(0);
+            } catch (CloneNotSupportedException e1) {
+                LOGGER.error(e1);
+            }
+        }
     }
 
 }

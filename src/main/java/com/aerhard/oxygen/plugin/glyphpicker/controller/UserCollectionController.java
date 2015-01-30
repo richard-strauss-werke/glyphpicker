@@ -30,6 +30,14 @@ import ca.odell.glazedlists.swing.DefaultEventListModel;
 import ca.odell.glazedlists.swing.DefaultEventSelectionModel;
 import ca.odell.glazedlists.swing.DefaultEventTableModel;
 
+import com.aerhard.oxygen.plugin.glyphpicker.action.ChangeViewAction;
+import com.aerhard.oxygen.plugin.glyphpicker.action.InsertXmlAction;
+import com.aerhard.oxygen.plugin.glyphpicker.action.MoveDownAction;
+import com.aerhard.oxygen.plugin.glyphpicker.action.MoveUpAction;
+import com.aerhard.oxygen.plugin.glyphpicker.action.ReloadAction;
+import com.aerhard.oxygen.plugin.glyphpicker.action.RemoveFromUserCollectionAction;
+import com.aerhard.oxygen.plugin.glyphpicker.action.SaveAction;
+import com.aerhard.oxygen.plugin.glyphpicker.action.SortAction;
 import com.aerhard.oxygen.plugin.glyphpicker.controller.autocomplete.AutoCompleteController;
 import com.aerhard.oxygen.plugin.glyphpicker.controller.bitmap.GlyphBitmapBulkLoader;
 import com.aerhard.oxygen.plugin.glyphpicker.model.Config;
@@ -39,6 +47,7 @@ import com.aerhard.oxygen.plugin.glyphpicker.view.ContainerPanel;
 import com.aerhard.oxygen.plugin.glyphpicker.view.ControlPanel;
 import com.aerhard.oxygen.plugin.glyphpicker.view.GlyphGrid;
 import com.aerhard.oxygen.plugin.glyphpicker.view.GlyphTable;
+import com.aerhard.oxygen.plugin.glyphpicker.view.GlyphTableFormat;
 import com.aerhard.oxygen.plugin.glyphpicker.view.HighlightButton;
 import com.aerhard.oxygen.plugin.glyphpicker.view.renderer.GlyphRendererAdapter;
 
@@ -256,7 +265,6 @@ public class UserCollectionController extends Controller {
 
     }
 
-    @Override
     public void loadData() {
         panel.setMask(true);
         SwingUtilities.invokeLater(new Runnable() {
@@ -289,19 +297,36 @@ public class UserCollectionController extends Controller {
         bmpLoader.execute();
     }
     
-    @Override
     public void saveData() {
         loader.save(new GlyphDefinitions(glyphList));
         listInSync = true;
     }
 
+    public void addGlyphDefinition(GlyphDefinition d) {
+        setListInSync(false);
+        glyphList.add(d);
+    }
+    
+
     @Override
-    public void eventOccured(String type, GlyphDefinition model) {
-        if ("copyToUserCollection".equals(type)) {
-            listInSync = false;
-            glyphList.add(model);
+    public void propertyChange(PropertyChangeEvent e) {
+        
+        if ("insert".equals(e.getPropertyName())) {
+            pcs.firePropertyChange(e);
+        }
+        
+        else if ("reload".equals(e.getPropertyName())) {
+            loadData();
+        }
+        
+        else if ("saveData".equals(e.getPropertyName())) {
+            saveData();
         }
 
+        else if ("listInSync".equals(e.getPropertyName())) {
+            setListInSync((boolean) e.getNewValue());
+        }
+        
     }
 
 }

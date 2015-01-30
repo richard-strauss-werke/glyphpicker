@@ -23,13 +23,16 @@ public class GlyphBitmapBulkLoader extends
     protected List<GlyphDefinition> doInBackground() throws Exception {
 
         for (GlyphDefinition gd : glyphDefinitions) {
+            
+            if (isCancelled()) {
+                return null;
+            }
+            
             if (DataSource.DISPLAY_MODE_BITMAP.equals(gd.getDataSource()
                     .getDisplayMode())) {
                 float factor = gd.getDataSource().getSizeFactor();
                 new GlyphBitmapIconLoader(this, gd, Math.round(size
                         * factor)).execute();
-            } else if (isCancelled()) {
-                return null;
             }
         }
 
