@@ -67,7 +67,7 @@ public abstract class TabController implements PropertyChangeListener {
 
     @SuppressWarnings("unchecked")
     public TabController(final ContainerPanel panel,
-            int userSearchFieldScopeIndex) {
+            int userSearchFieldScopeIndex, int listViewIndex) {
 
         this.panel = panel;
 
@@ -98,7 +98,12 @@ public abstract class TabController implements PropertyChangeListener {
         table.setRowHeight(90);
         table.setTableIconRenderer(r);
 
-        panel.setListComponent(list);
+        if (listViewIndex == 0) {
+            panel.setListComponent(list);
+        } else {
+            panel.setListComponent(table);
+            panel.getInfoPanel().setVisible(false);
+        }
 
         selectionModel
                 .setSelectionMode(DefaultEventSelectionModel.SINGLE_SELECTION);

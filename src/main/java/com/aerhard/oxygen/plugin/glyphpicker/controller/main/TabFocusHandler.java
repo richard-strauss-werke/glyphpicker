@@ -10,7 +10,7 @@ public class TabFocusHandler implements ChangeListener, PropertyChangeListener {
 
     private Map<Component, Component> tabFocus = new HashMap<Component, Component>();
     private JTabbedPane tabbedPane;
-
+    
     public TabFocusHandler(JTabbedPane tabbedPane) {
         this.tabbedPane = tabbedPane;
         tabbedPane.addChangeListener(this);
@@ -18,30 +18,31 @@ public class TabFocusHandler implements ChangeListener, PropertyChangeListener {
                 .getCurrentKeyboardFocusManager();
         focusManager.addPropertyChangeListener("permanentFocusOwner", this);
     }
-
+    
+    // request focus on tab change
     public void stateChanged(ChangeEvent e) {
-        Component key = tabbedPane
+        Component container = tabbedPane
                 .getComponentAt(tabbedPane.getSelectedIndex());
-        if (key != null) {
-            Component value = tabFocus.get(key);
-            if (value == null) {
-                key.transferFocus();
-                tabFocus.put(key, null);
+        if (container != null) {
+            Component component = tabFocus.get(container);
+            if (component == null) {
+                container.transferFocus();
+                tabFocus.put(container, null);
             } else {
-                value.requestFocusInWindow();
+                component.requestFocusInWindow();
             }    
         }
     }
 
     public void propertyChange(PropertyChangeEvent e) {
 
-        Component key = tabbedPane
+        Component container = tabbedPane
                 .getComponentAt(tabbedPane.getSelectedIndex());
 
-        Component value = (Component) e.getNewValue();
+        Component component = (Component) e.getNewValue();
 
-        if (value != null && SwingUtilities.isDescendingFrom(value, key)) {
-            tabFocus.put(key, value);
+        if (component != null && SwingUtilities.isDescendingFrom(component, container)) {
+            tabFocus.put(container, component);
         }
     }
 }

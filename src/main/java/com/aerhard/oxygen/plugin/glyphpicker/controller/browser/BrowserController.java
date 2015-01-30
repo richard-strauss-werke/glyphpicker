@@ -36,7 +36,7 @@ public class BrowserController extends TabController {
 
     public BrowserController(ContainerPanel panel, Config config) {
 
-        super(panel, config.getBrowserSearchFieldScopeIndex());
+        super(panel, config.getBrowserSearchFieldScopeIndex(), config.getBrowserViewIndex());
 
         dataSourceList = config.getDataSources();
         controlPanel.getDataSourceCombo().setModel(dataSourceList);

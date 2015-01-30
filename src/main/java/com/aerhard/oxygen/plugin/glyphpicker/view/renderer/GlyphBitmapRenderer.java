@@ -1,7 +1,10 @@
 package com.aerhard.oxygen.plugin.glyphpicker.view.renderer;
 
+import javax.swing.ImageIcon;
 import javax.swing.JComponent;
+import javax.swing.UIManager;
 
+import java.awt.Color;
 import java.awt.Component;
 
 import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinition;
@@ -9,7 +12,9 @@ import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinition;
 public class GlyphBitmapRenderer extends GlyphRenderer {
 
     private static final long serialVersionUID = 1L;
-
+    
+    public Color inactiveColor = UIManager.getColor("TextField.inactiveBackground");
+    
     public GlyphBitmapRenderer(JComponent container) {
         super(container);
     }
@@ -17,22 +22,15 @@ public class GlyphBitmapRenderer extends GlyphRenderer {
     @Override
     public Component getRendererComponent(GlyphDefinition gd, boolean isSelected) {
 
-        // File a = new File(gd.getDataSource().getBasePath());
-        // File parentFolder = new File(a.getParent());
-        // File b = new File(parentFolder, gd.getUrl());
-        // try {
-        // ImageIcon icon = new GlyphBitmapIcon(50, b.toURL());
-        // icon.setImageObserver(container);
-        // setIcon(icon);
-        // } catch (MalformedURLException e) {
-        // // TODO Auto-generated catch block
-        // e.printStackTrace();
-        // }
-
-        // sets either the initial value null or the loaded icon
+        ImageIcon icon = gd.getIcon();
+        
         setIcon(gd.getIcon());
 
-        configureBackground(isSelected);
+        if (icon == null) {
+            setBackground(inactiveColor);
+        } else {
+            configureBackground(isSelected);           
+        }
 
         return this;
     }

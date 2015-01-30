@@ -23,7 +23,6 @@ public class TeiXmlHandler extends DefaultHandler {
 
     private String range = "";
     private DataSource dataSource;
-    private List<String> classes;
 
     private String mappingAttName;
     private String mappingAttValue;
@@ -53,7 +52,6 @@ public class TeiXmlHandler extends DefaultHandler {
             currentGlyphDefinition.setId(attrs.getValue("xml:id"));
             currentGlyphDefinition.setRange(range);
             currentGlyphDefinition.setDataSource(dataSource);
-            classes = new ArrayList<String>();
             inChar = true;
         }
 
@@ -70,7 +68,7 @@ public class TeiXmlHandler extends DefaultHandler {
 
     private void onStartElementInChar(String qName, Attributes attrs) {
         if ("charName".equals(qName) || "mapping".equals(qName)
-                || "item".equals(qName) || "desc".equals(qName)) {
+                || "desc".equals(qName)) {
             textContent.setLength(0);
         }
 
@@ -83,10 +81,6 @@ public class TeiXmlHandler extends DefaultHandler {
             inMapping = true;
         }
 
-        // if ("mapping".equals(qName) &&
-        // attrs.getValue(mappingAttName).equals(mappingAttValue)) {
-        // System.out.println("matched");
-        // }
     }
 
     @Override
@@ -108,7 +102,6 @@ public class TeiXmlHandler extends DefaultHandler {
         }
 
         else if ("char".equals(qName) || "glyph".equals(qName)) {
-            currentGlyphDefinition.setClasses(classes);
             glyphDefinitions.add(currentGlyphDefinition);
             inChar = false;
         }
@@ -123,9 +116,6 @@ public class TeiXmlHandler extends DefaultHandler {
                 inMapping = false;
             }
 
-            else if ("item".equals(qName)) {
-                classes.add(textContent.toString());
-            }
         }
 
         elementStack.pop();

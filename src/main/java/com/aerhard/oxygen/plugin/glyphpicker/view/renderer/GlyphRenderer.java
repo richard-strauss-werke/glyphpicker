@@ -2,6 +2,7 @@ package com.aerhard.oxygen.plugin.glyphpicker.view.renderer;
 
 import java.awt.Color;
 import java.awt.Component;
+
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JList;

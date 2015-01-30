@@ -1,14 +1,10 @@
 package com.aerhard.oxygen.plugin.glyphpicker.model;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.swing.ImageIcon;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -25,9 +21,6 @@ public class GlyphDefinition implements Cloneable {
     @XmlElement(name = "mapping", namespace = "http://www.tei-c.org/ns/1.0")
     private String codePoint;
 
-    @XmlElementWrapper(name = "list", namespace = "http://www.tei-c.org/ns/1.0")
-    private List<String> classes = new ArrayList<String>();
-
     @XmlElement(name = "graphic", namespace = "http://www.tei-c.org/ns/1.0")
     private String url;
 
@@ -41,19 +34,16 @@ public class GlyphDefinition implements Cloneable {
     private ImageIcon icon = null;
 
     public GlyphDefinition() {
-
     }
 
     public GlyphDefinition(String id, String name, String codepoint,
-            String range, String url, DataSource dataSource,
-            List<String> classes) {
+            String range, String url, DataSource dataSource) {
         this.id = id;
         this.charName = name;
         this.codePoint = codepoint;
         this.range = range;
         this.url = url;
         this.dataSource = dataSource;
-        this.classes = classes;
     }
 
     public String getCharName() {
@@ -88,14 +78,6 @@ public class GlyphDefinition implements Cloneable {
 
     public void setRange(String range) {
         this.range = range;
-    }
-
-    public List<String> getClasses() {
-        return classes;
-    }
-
-    public void setClasses(List<String> classes) {
-        this.classes = classes;
     }
 
     public String getId() {
@@ -167,16 +149,6 @@ public class GlyphDefinition implements Cloneable {
             sb.append("</nobr><br>");
         }
 
-//      List<String> classes = model.getClasses();
-//        if (model.getClasses().size() > 0) {
-//            sb.append("<p><nobr>Classes: ");
-//            for (String cl : classes) {
-//                sb.append(cl);
-//                sb.append(" ");
-//            }
-//            sb.append("</nobr></p>");
-//        }
-
         if (getId() != null) {
             sb.append("<nobr>xml:id: <em>");
             sb.append(getId());
@@ -188,12 +160,12 @@ public class GlyphDefinition implements Cloneable {
         return sb.toString();
 
     }
-    
+
     @Override
     public GlyphDefinition clone() throws CloneNotSupportedException {
         return (GlyphDefinition) super.clone();
     }
-    
+
     @Override
     public String toString() {
         return codePoint + ": " + charName + " (" + range + ")";

@@ -183,20 +183,12 @@ public class TeiLoadWorker extends SwingWorker<List<GlyphDefinition>, Void> {
                 if (rows > 0) {
                     for (int i = 0; i < rows; i++) {
                         JSONObject obj = dataArray.getJSONObject(i);
-                        List<String> classes = new ArrayList<String>();
-                        JSONArray classesArray = obj.getJSONArray("classes");
-                        if (classesArray != null) {
-                            for (int j = 0; j < classesArray.length(); j++) {
-                                classes.add(classesArray.get(j).toString());
-                            }
-                        }
                         glyphList
                                 .add(new GlyphDefinition(obj.getString("id"),
                                         obj.getString("name"), obj
                                                 .getString("codepoint"), obj
                                                 .getString("range"), obj
-                                                .getString("url"), dataSource,
-                                        classes));
+                                                .getString("url"), dataSource));
                     }
                     return glyphList;
                 }

@@ -40,7 +40,7 @@ public class UserCollectionController extends TabController {
     public UserCollectionController(ContainerPanel panel, Config config,
             Properties properties, StandalonePluginWorkspace workspace) {
 
-        super(panel, config.getUserSearchFieldScopeIndex());
+        super(panel, config.getUserSearchFieldScopeIndex(), config.getUserViewIndex());
         
         loader = new UserCollectionLoader(workspace, properties);
 

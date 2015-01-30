@@ -102,7 +102,6 @@ public class ContainerPanel extends JPanel {
         return controlPanel;
     }
 
-
     public JPanel getInfoPanel() {
         return infoPanel;
     }

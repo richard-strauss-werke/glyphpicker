@@ -17,6 +17,7 @@ import com.aerhard.oxygen.plugin.glyphpicker.model.Config;
 import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinition;
 import com.aerhard.oxygen.plugin.glyphpicker.view.ContainerPanel;
 import com.aerhard.oxygen.plugin.glyphpicker.view.ControlPanel;
+import com.aerhard.oxygen.plugin.glyphpicker.view.GlyphGrid;
 import com.aerhard.oxygen.plugin.glyphpicker.view.MainPanel;
 
 public class MainController implements PropertyChangeListener {
@@ -74,10 +75,8 @@ public class MainController implements PropertyChangeListener {
 
         mainPanel.getTabbedPane().setMnemonicAt(0, KeyEvent.VK_U);
         mainPanel.getTabbedPane().setMnemonicAt(1, KeyEvent.VK_D);
-        // mainPanel.getTabbedPane().setDisplayedMnemonicIndexAt(0, 0);
 
         new TabFocusHandler(mainPanel.getTabbedPane());
-
     }
 
     public ConfigLoader getConfigLoader() {
@@ -103,6 +102,9 @@ public class MainController implements PropertyChangeListener {
                 .getControlPanel().getAutoCompleteScopeCombo()
                 .getSelectedIndex());
 
+        config.setBrowserViewIndex((browserPanel.getListComponent() instanceof GlyphGrid) ? 0:1);
+        config.setUserViewIndex((userCollectionPanel.getListComponent() instanceof GlyphGrid) ? 0:1);        
+        
         getConfigLoader().save();
         userCollectionController.saveData();
     }
