@@ -16,16 +16,17 @@ public class AddToUserCollectionAction extends AbstractAction {
     private static final long serialVersionUID = 1L;
     private DefaultEventSelectionModel<GlyphDefinition> selectionModel;
 
+    private static ResourceBundle i18n = ResourceBundle.getBundle("GlyphPicker");
+    private static String className = AddToUserCollectionAction.class.getSimpleName();
+    
     public AddToUserCollectionAction(PropertyChangeListener listener,
             DefaultEventSelectionModel<GlyphDefinition> selectionModel) {
-        super(null, new ImageIcon(
+        super(i18n.getString(className + ".label"), new ImageIcon(
                 ChangeViewAction.class.getResource("/images/plus.png")));
 
         addPropertyChangeListener(listener);
         this.selectionModel = selectionModel;
 
-        ResourceBundle i18n = ResourceBundle.getBundle("GlyphPicker");
-        String className = this.getClass().getSimpleName();
         String description = i18n.getString(className + ".description");
         String mnemonic = i18n.getString(className + ".mnemonic");
         

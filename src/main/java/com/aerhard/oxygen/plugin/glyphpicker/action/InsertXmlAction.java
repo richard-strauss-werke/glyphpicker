@@ -16,17 +16,18 @@ public class InsertXmlAction extends AbstractAction {
     private static final long serialVersionUID = 1L;
     private DefaultEventSelectionModel<GlyphDefinition> selectionModel;
 
+    private static ResourceBundle i18n = ResourceBundle.getBundle("GlyphPicker");
+    private static String className = InsertXmlAction.class.getSimpleName();
+    
     public InsertXmlAction(PropertyChangeListener listener,
             DefaultEventSelectionModel<GlyphDefinition> selectionModel) {
-        super(null, new ImageIcon(
+        super(i18n.getString(className + ".label"), new ImageIcon(
                 InsertXmlAction.class
-                        .getResource("/images/blue-document-import.png")));
+                        .getResource("/images/tick.png")));
         
         addPropertyChangeListener(listener);
         this.selectionModel = selectionModel;
         
-        ResourceBundle i18n = ResourceBundle.getBundle("GlyphPicker");
-        String className = this.getClass().getSimpleName();
         String description = i18n.getString(className + ".description");
         String mnemonic = i18n.getString(className + ".mnemonic");
         

@@ -18,17 +18,18 @@ public class MoveDownAction extends AbstractAction {
     private EventList<GlyphDefinition> glyphList;
     private GlyphGrid list;
 
+    private static ResourceBundle i18n = ResourceBundle.getBundle("GlyphPicker");
+    private static String className = MoveDownAction.class.getSimpleName();
+    
     public MoveDownAction(PropertyChangeListener listener,
             EventList<GlyphDefinition> glyphList, GlyphGrid list) {
-        super(null, new ImageIcon(
+        super(i18n.getString(className + ".label"), new ImageIcon(
                 MoveDownAction.class.getResource("/images/arrow-270.png")));
 
         this.addPropertyChangeListener(listener);
         this.glyphList = glyphList;
         this.list = list;
         
-        ResourceBundle i18n = ResourceBundle.getBundle("GlyphPicker");
-        String className = this.getClass().getSimpleName();
         String description = i18n.getString(className + ".description");
         
         putValue(SHORT_DESCRIPTION, description + " (Alt+↓)");

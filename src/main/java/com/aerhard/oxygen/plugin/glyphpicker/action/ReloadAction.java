@@ -14,16 +14,17 @@ public class ReloadAction extends AbstractAction {
     private static final long serialVersionUID = 1L;
     private Set<Action> actions;
 
+    private static ResourceBundle i18n = ResourceBundle.getBundle("GlyphPicker");
+    private static String className = ReloadAction.class.getSimpleName();
+    
     public ReloadAction(PropertyChangeListener listener, Set<Action> actions) {
-        super(null, new ImageIcon(
+        super(i18n.getString(className + ".label"), new ImageIcon(
                 ChangeViewAction.class
                         .getResource("/images/arrow-circle-225-left.png")));
         
         addPropertyChangeListener(listener);
         this.actions = actions;
         
-        ResourceBundle i18n = ResourceBundle.getBundle("GlyphPicker");
-        String className = this.getClass().getSimpleName();
         String description = i18n.getString(className + ".description");
         String mnemonic = i18n.getString(className + ".mnemonic");
         

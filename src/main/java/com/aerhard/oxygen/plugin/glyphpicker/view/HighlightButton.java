@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.AbstractAction;
+import javax.swing.SwingConstants;
 import javax.swing.Timer;
 
 import com.jidesoft.swing.JideButton;
@@ -16,16 +17,22 @@ public class HighlightButton extends JideButton {
 
     public HighlightButton() {
         originalForeground = getForeground();
+        setVerticalTextPosition(SwingConstants.BOTTOM);
+        setHorizontalTextPosition(SwingConstants.CENTER);
     }
 
     public HighlightButton(String text) {
         super(text);
         originalForeground = getForeground();
+        setVerticalTextPosition(SwingConstants.BOTTOM);
+        setHorizontalTextPosition(SwingConstants.CENTER);
     }
 
     public HighlightButton(AbstractAction insertAction) {
         super(insertAction);
         originalForeground = getForeground();
+        setVerticalTextPosition(SwingConstants.BOTTOM);
+        setHorizontalTextPosition(SwingConstants.CENTER);
     }
 
     public void highlight() {

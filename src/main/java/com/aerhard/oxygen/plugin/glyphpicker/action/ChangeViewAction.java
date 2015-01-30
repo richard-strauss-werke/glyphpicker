@@ -18,16 +18,17 @@ public class ChangeViewAction extends AbstractAction {
     private GlyphTable table;
     private GlyphGrid list;
 
+    private static ResourceBundle i18n = ResourceBundle.getBundle("GlyphPicker");
+    private static String className = ChangeViewAction.class.getSimpleName();
+    
     public ChangeViewAction(ContainerPanel panel, GlyphTable table,
             GlyphGrid list) {
-        super(null, new ImageIcon(
+        super(i18n.getString(className + ".label"), new ImageIcon(
                 ChangeViewAction.class.getResource("/images/grid.png")));
         this.panel = panel;
         this.table = table;
         this.list = list;
         
-        ResourceBundle i18n = ResourceBundle.getBundle("GlyphPicker");
-        String className = this.getClass().getSimpleName();
         String description = i18n.getString(className + ".description");
         String mnemonic = i18n.getString(className + ".mnemonic");
         

@@ -20,16 +20,17 @@ public class EditAction extends AbstractAction {
     private JPanel panel;
     private DataSourceList dataSourceList;
 
+    private static ResourceBundle i18n = ResourceBundle.getBundle("GlyphPicker");
+    private static String className = EditAction.class.getSimpleName();
+    
     public EditAction(PropertyChangeListener listener, JPanel panel, DataSourceList dataSourceList) {
-        super(null, new ImageIcon(
+        super(i18n.getString(className + ".label"), new ImageIcon(
                 EditAction.class.getResource("/images/gear.png")));
         
         addPropertyChangeListener(listener);
         this.panel = panel;
         this.dataSourceList = dataSourceList;
         
-        ResourceBundle i18n = ResourceBundle.getBundle("GlyphPicker");
-        String className = this.getClass().getSimpleName();
         String description = i18n.getString(className + ".description");
         String mnemonic = i18n.getString(className + ".mnemonic");
         

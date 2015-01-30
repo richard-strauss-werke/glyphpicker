@@ -73,9 +73,6 @@ public class MainController implements PropertyChangeListener {
 
         mainPanel.getTabbedPane().setSelectedIndex(config.getTabIndex());
 
-        mainPanel.getTabbedPane().setMnemonicAt(0, KeyEvent.VK_U);
-        mainPanel.getTabbedPane().setMnemonicAt(1, KeyEvent.VK_D);
-
         new TabFocusHandler(mainPanel.getTabbedPane());
     }
 

@@ -34,9 +34,11 @@ public class i18nTest {
     public void testGermanLanguage() {
         ResourceBundle i18n = ResourceBundle.getBundle("GlyphPicker",
                 Locale.GERMAN);
-        assertEquals("Konfigurations-Datei 'xxx' nicht gefunden.",
-                String.format(i18n.getString("configStore.fileNotFoundError"),
-                        "xxx"));
+        assertEquals("Der Ordner \"xxx\" konnte nicht angelegt werden.", String.format(
+                i18n.getString("UserCollectionLoader.couldNotCreateFolder"),
+                "xxx"));
+        assertEquals("Lade Daten ...",
+                i18n.getString("ContainerPanel.loading"));
     }
 
 }

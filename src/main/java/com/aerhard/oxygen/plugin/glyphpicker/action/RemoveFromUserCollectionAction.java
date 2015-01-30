@@ -20,10 +20,13 @@ public class RemoveFromUserCollectionAction extends AbstractAction {
     private FilterList<GlyphDefinition> filterList;
     private GlyphGrid list;
 
+    private static ResourceBundle i18n = ResourceBundle.getBundle("GlyphPicker");
+    private static String className = RemoveFromUserCollectionAction.class.getSimpleName();
+    
     public RemoveFromUserCollectionAction(PropertyChangeListener listener,
             EventList<GlyphDefinition> glyphList,
             FilterList<GlyphDefinition> filterList, GlyphGrid list) {
-        super(null, new ImageIcon(
+        super(i18n.getString(className + ".label"), new ImageIcon(
                 ChangeViewAction.class.getResource("/images/minus.png")));
 
         this.addPropertyChangeListener(listener);
@@ -31,8 +34,6 @@ public class RemoveFromUserCollectionAction extends AbstractAction {
         this.filterList = filterList;
         this.list = list;
         
-        ResourceBundle i18n = ResourceBundle.getBundle("GlyphPicker");
-        String className = this.getClass().getSimpleName();
         String description = i18n.getString(className + ".description");
         String mnemonic = i18n.getString(className + ".mnemonic");
         

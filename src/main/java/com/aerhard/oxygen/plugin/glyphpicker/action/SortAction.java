@@ -10,12 +10,13 @@ import javax.swing.KeyStroke;
 public class SortAction extends AbstractAction {
     private static final long serialVersionUID = 1L;
 
+    private static ResourceBundle i18n = ResourceBundle.getBundle("GlyphPicker");
+    private static String className = SortAction.class.getSimpleName();
+    
     public SortAction() {
-        super(null, new ImageIcon(
+        super(i18n.getString(className + ".label"), new ImageIcon(
                 SortAction.class.getResource("/images/sort-number.png")));
         
-        ResourceBundle i18n = ResourceBundle.getBundle("GlyphPicker");
-        String className = this.getClass().getSimpleName();
         String description = i18n.getString(className + ".description");
         String mnemonic = i18n.getString(className + ".mnemonic");
         

@@ -10,6 +10,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.JToolBar;
@@ -60,11 +61,15 @@ public class ControlPanel extends JPanel {
         toolBar.add(Box.createHorizontalGlue());
 
         sortBtn = new JideToggleButton();
+        sortBtn.setVerticalTextPosition(SwingConstants.BOTTOM);
+        sortBtn.setHorizontalTextPosition(SwingConstants.CENTER);
         toolBar.add(sortBtn);
 
         // toolBar.addSeparator();
 
         viewBtn = new JideButton();
+        viewBtn.setVerticalTextPosition(SwingConstants.BOTTOM);
+        viewBtn.setHorizontalTextPosition(SwingConstants.CENTER);
         toolBar.add(viewBtn);
 
         if (setDataSourceCombo) {
@@ -162,7 +167,10 @@ public class ControlPanel extends JPanel {
     }
 
     public void addToToolbar(Action action, int index) {
-        toolBar.add(new JideButton(action), index);
+        JideButton button = new JideButton(action);
+        button.setVerticalTextPosition(SwingConstants.BOTTOM);
+        button.setHorizontalTextPosition(SwingConstants.CENTER);
+        toolBar.add(button, index);
     }
 
     public JButton getBtnConfigure() {

@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 
 import javax.swing.JComponent;
 import javax.swing.JPanel;
+import javax.swing.KeyStroke;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JTabbedPane;
 
@@ -25,17 +26,22 @@ public class MainPanel extends JPanel {
         tabbedPane = new JTabbedPane(JTabbedPane.TOP);
         tabbedPane.setBorder(new EmptyBorder(8, 8, 8, 8));
 
+        String userCollectionLabel = i18n.getString(className
+                + ".userCollection");
         tabbedPane.addTab(null, null, userCollectionPanel, null);
-        tabbedPane.setTabComponentAt(
-                0,
-                new HighlightLabel(getHtmlLabel(i18n.getString(className
-                        + ".userCollection"))));
+        tabbedPane.setTabComponentAt(0, new HighlightLabel(
+                getHtmlLabel(userCollectionLabel)));
+        tabbedPane.setMnemonicAt(0,
+                KeyStroke.getKeyStroke(userCollectionLabel.substring(0, 1))
+                        .getKeyCode());
 
+        String dataSourcesLabel = i18n.getString(className + ".dataSources");
         tabbedPane.addTab(null, null, browserPanel, null);
-        tabbedPane.setTabComponentAt(
-                1,
-                new HighlightLabel(getHtmlLabel(i18n.getString(className
-                        + ".dataSources"))));
+        tabbedPane.setTabComponentAt(1, new HighlightLabel(
+                getHtmlLabel(dataSourcesLabel)));
+        tabbedPane.setMnemonicAt(1,
+                KeyStroke.getKeyStroke(dataSourcesLabel.substring(0, 1))
+                        .getKeyCode());
 
         add(tabbedPane, BorderLayout.CENTER);
         setMinimumSize(new Dimension(200, 200));

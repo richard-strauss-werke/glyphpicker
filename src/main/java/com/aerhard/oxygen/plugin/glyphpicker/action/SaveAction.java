@@ -14,16 +14,17 @@ public class SaveAction extends AbstractAction {
     private static final long serialVersionUID = 1L;
     private Set<Action> actions;
 
+    private static ResourceBundle i18n = ResourceBundle.getBundle("GlyphPicker");
+    private static String className = SaveAction.class.getSimpleName();
+    
     public SaveAction(PropertyChangeListener listener, Set<Action> actions) {
-        super(null, new ImageIcon(
+        super(i18n.getString(className + ".label"), new ImageIcon(
                 SaveAction.class
                         .getResource("/images/disk.png")));
         
         this.addPropertyChangeListener(listener);
         this.actions = actions;
         
-        ResourceBundle i18n = ResourceBundle.getBundle("GlyphPicker");
-        String className = this.getClass().getSimpleName();
         String description = i18n.getString(className + ".description");
         String mnemonic = i18n.getString(className + ".mnemonic");
         
