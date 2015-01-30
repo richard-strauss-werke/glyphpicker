@@ -23,7 +23,7 @@ public class TransformedGlyphList extends
     }
 
     /**
-     * When the source list changes, propogate the exact same changes for the
+     * When the source list changes, propagate the exact same changes for the
      * transformed list.
      */
     public void listChanged(ListEvent<GlyphDefinition> listChanges) {

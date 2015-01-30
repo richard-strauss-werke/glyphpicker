@@ -3,6 +3,7 @@ package com.aerhard.oxygen.plugin.glyphpicker.view;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.util.ResourceBundle;
 
 import javax.swing.Action;
 import javax.swing.JButton;
@@ -30,6 +31,10 @@ public class ControlPanel extends JPanel {
     private JToolBar toolBar;
 
     public ControlPanel(boolean setDataSourceCombo) {
+        
+        ResourceBundle i18n = ResourceBundle.getBundle("GlyphPicker");
+        String className = this.getClass().getSimpleName();
+        
         setBorder(new EmptyBorder(0, 8, 0, 8));
 
         int row = 0;
@@ -68,7 +73,8 @@ public class ControlPanel extends JPanel {
 
             dataSourcePanel = new JPanel();
 
-            dataSourcePanel.setBorder(new TitledBorder(null, "Data source",
+            dataSourcePanel.setBorder(new TitledBorder(null, 
+                    i18n.getString(className + ".dataSource"),
                     TitledBorder.LEADING, TitledBorder.TOP, null, null));
 
             GridBagConstraints gbcDataSourcePanel = new GridBagConstraints();
@@ -110,7 +116,7 @@ public class ControlPanel extends JPanel {
 
         JPanel searchPanel = new JPanel();
 
-        searchPanel.setBorder(new TitledBorder(null, "Search",
+        searchPanel.setBorder(new TitledBorder(null, i18n.getString(className + ".search"),
                 TitledBorder.LEADING, TitledBorder.TOP, null, null));
 
         GridBagConstraints gbcSearchPanel = new GridBagConstraints();

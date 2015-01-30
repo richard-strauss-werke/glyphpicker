@@ -1,16 +1,17 @@
 package com.aerhard.oxygen.plugin.glyphpicker.controller.editor;
 
 import java.awt.event.ActionEvent;
-import java.awt.event.KeyEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import javax.swing.AbstractAction;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.KeyStroke;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -31,18 +32,26 @@ public class DataSourceEditorController {
 
     private List<String> displayModes = new ArrayList<String>();
 
-    private NewAction newAction = new NewAction();
-    private CloneAction cloneAction = new CloneAction();
-    private DeleteAction deleteAction = new DeleteAction();
+    private NewAction newAction;
+    private CloneAction cloneAction;
+    private DeleteAction deleteAction;
 
     private boolean listEditingOccurred = false;
 
     private DefaultListModel<DataSource> listModel;
     private DataSource currentDataSource = null;
 
+    private ResourceBundle i18n;
+
     public DataSourceEditorController(DataSourceEditor contentPane,
             JPanel parentPanel) {
 
+        i18n = ResourceBundle.getBundle("GlyphPicker");
+
+        newAction = new NewAction();
+        cloneAction = new CloneAction();
+        deleteAction = new DeleteAction();
+        
         this.contentPane = contentPane;
         this.parentPanel = parentPanel;
 
@@ -66,9 +75,15 @@ public class DataSourceEditorController {
         private static final long serialVersionUID = 1L;
 
         private NewAction() {
-            super("New");
-            putValue(SHORT_DESCRIPTION, "Create a new data source.");
-            putValue(MNEMONIC_KEY, Integer.valueOf(KeyEvent.VK_N));
+            super(i18n.getString("NewAction.label"));
+
+            String className = this.getClass().getSimpleName();
+            String description = i18n.getString(className + ".description");
+            String mnemonic = i18n.getString(className + ".mnemonic");
+
+            putValue(SHORT_DESCRIPTION, description + " (Alt+" + mnemonic + ")");
+            putValue(MNEMONIC_KEY, KeyStroke.getKeyStroke(mnemonic)
+                    .getKeyCode());
         }
 
         @Override
@@ -89,10 +104,16 @@ public class DataSourceEditorController {
         private static final long serialVersionUID = 1L;
 
         private CloneAction() {
-            super("Clone");
+            super(i18n.getString("CloneAction.label"));
             setEnabled(false);
-            putValue(SHORT_DESCRIPTION, "Clone the selected data source.");
-            putValue(MNEMONIC_KEY, Integer.valueOf(KeyEvent.VK_C));
+
+            String className = this.getClass().getSimpleName();
+            String description = i18n.getString(className + ".description");
+            String mnemonic = i18n.getString(className + ".mnemonic");
+
+            putValue(SHORT_DESCRIPTION, description + " (Alt+" + mnemonic + ")");
+            putValue(MNEMONIC_KEY, KeyStroke.getKeyStroke(mnemonic)
+                    .getKeyCode());
         }
 
         @Override
@@ -119,10 +140,16 @@ public class DataSourceEditorController {
         private static final long serialVersionUID = 1L;
 
         private DeleteAction() {
-            super("Delete");
+            super(i18n.getString("DeleteAction.label"));
             setEnabled(false);
-            putValue(SHORT_DESCRIPTION, "Delete the selected data source.");
-            putValue(MNEMONIC_KEY, Integer.valueOf(KeyEvent.VK_D));
+
+            String className = this.getClass().getSimpleName();
+            String description = i18n.getString(className + ".description");
+            String mnemonic = i18n.getString(className + ".mnemonic");
+
+            putValue(SHORT_DESCRIPTION, description + " (Alt+" + mnemonic + ")");
+            putValue(MNEMONIC_KEY, KeyStroke.getKeyStroke(mnemonic)
+                    .getKeyCode());
         }
 
         @Override
@@ -162,7 +189,7 @@ public class DataSourceEditorController {
             contentPane.getList().setSelectedIndex(0);
             onListSelection();
         }
-        
+
         contentPane.getList().getSelectionModel()
                 .addListSelectionListener(new ListSelectionListener() {
 
@@ -175,11 +202,10 @@ public class DataSourceEditorController {
                 });
 
         int result = JOptionPane.showConfirmDialog(parentPanel, contentPane,
-                "Data Source Editor", JOptionPane.OK_CANCEL_OPTION,
+                i18n.getString("DataSourceEditorController.frameTitle"), JOptionPane.OK_CANCEL_OPTION,
                 JOptionPane.PLAIN_MESSAGE);
 
         if (result == JOptionPane.OK_OPTION && listEditingOccurred) {
-            LOGGER.info("List editing occurred.");
             List<DataSource> resultList = new ArrayList<DataSource>();
             for (int i = 0; i < listModel.getSize(); i++) {
                 resultList.add(listModel.getElementAt(i));

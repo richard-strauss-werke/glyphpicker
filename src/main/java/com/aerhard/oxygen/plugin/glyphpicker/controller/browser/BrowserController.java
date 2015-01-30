@@ -9,6 +9,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.HashSet;
 import java.util.List;
+import java.util.ResourceBundle;
 import java.util.Set;
 
 import javax.swing.AbstractAction;
@@ -36,7 +37,8 @@ public class BrowserController extends TabController {
 
     public BrowserController(ContainerPanel panel, Config config) {
 
-        super(panel, config.getBrowserSearchFieldScopeIndex(), config.getBrowserViewIndex());
+        super(panel, config.getBrowserSearchFieldScopeIndex(), config
+                .getBrowserViewIndex());
 
         dataSourceList = config.getDataSources();
         controlPanel.getDataSourceCombo().setModel(dataSourceList);
@@ -101,24 +103,20 @@ public class BrowserController extends TabController {
         }
 
         if (index > dataSourceList.getSize() - 1) {
-            JOptionPane.showMessageDialog(panel,
-                    "No data source has been found.");
-            glyphList.clear();
+            showNoDataSourceDialog();
             return;
         }
 
         DataSource dataSource = dataSourceList.getDataSourceAt(index);
 
         if (dataSource == null) {
-            JOptionPane.showMessageDialog(panel,
-                    "No data source has been found.");
-            glyphList.clear();
+            showNoDataSourceDialog();
             return;
         }
 
         cancelTeiLoadWorker();
         cancelBitmapLoadWorker();
-        
+
         panel.setMask(true);
 
         teiLoadWorker = new TeiLoadWorker(dataSource);
@@ -128,16 +126,23 @@ public class BrowserController extends TabController {
             public void propertyChange(PropertyChangeEvent e) {
                 if ("state".equals(e.getPropertyName().toString())
                         && "DONE".equals(e.getNewValue().toString())) {
-                    displayLoadedData(teiLoadWorker
-                            .getResult());
+                    displayLoadedData(teiLoadWorker.getResult());
                 }
             }
         };
-        
+
         teiLoadWorker.addPropertyChangeListener(teiLoadListener);
 
         teiLoadWorker.execute();
 
+    }
+
+    private void showNoDataSourceDialog() {
+        JOptionPane.showMessageDialog(
+                panel,
+                ResourceBundle.getBundle("GlyphPicker").getString(this.getClass().getSimpleName()
+                        + ".noDataSource"));
+        glyphList.clear();
     }
 
     public void cancelTeiLoadWorker() {

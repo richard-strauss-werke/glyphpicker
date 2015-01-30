@@ -20,6 +20,7 @@ import javax.swing.UIManager;
 
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
+import java.util.ResourceBundle;
 
 public class ContainerPanel extends JPanel {
 
@@ -36,8 +37,11 @@ public class ContainerPanel extends JPanel {
     private ControlPanel controlPanel;
 
     public ContainerPanel(ControlPanel controlPanel) {
+
+        ResourceBundle i18n = ResourceBundle.getBundle("GlyphPicker");
+
         this.controlPanel = controlPanel;
-        
+
         setLayout(new BorderLayout(0, 0));
 
         add(controlPanel, BorderLayout.NORTH);
@@ -52,32 +56,33 @@ public class ContainerPanel extends JPanel {
         jPane.setBorder(new EtchedBorder());
 
         overlayPanel = new JPanel();
-        overlayPanel.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
+        overlayPanel.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null,
+                null));
         JLabel overlayLabel = new JLabel(
-                "Loading data ...");
+                i18n.getString("ContainerPanel.loading"));
         overlayPanel.add(overlayLabel);
         overlayPanel.setBackground(UIManager.getColor("Panel.background"));
-        
+
         overlayable = new DefaultOverlayable(jPane, overlayPanel);
         tablePanel.add(overlayable, BorderLayout.CENTER);
-        
+
         infoPanel = new JPanel();
         infoPanel.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
         infoPanel.setBackground(UIManager.getColor("TextField.background"));
         GridBagLayout gbl_infoPanel = new GridBagLayout();
-        gbl_infoPanel.columnWidths = new int[]{210, 14, 0};
-        gbl_infoPanel.rowHeights = new int[] {0, 0};
-        gbl_infoPanel.columnWeights = new double[]{1.0, 0.0, Double.MIN_VALUE};
-        gbl_infoPanel.rowWeights = new double[]{0.0, 0.0};
+        gbl_infoPanel.columnWidths = new int[] { 210, 14, 0 };
+        gbl_infoPanel.rowHeights = new int[] { 0, 0 };
+        gbl_infoPanel.columnWeights = new double[] { 1.0, 0.0, Double.MIN_VALUE };
+        gbl_infoPanel.rowWeights = new double[] { 0.0, 0.0 };
         infoPanel.setLayout(gbl_infoPanel);
-        
+
         tablePanel.add(infoPanel, BorderLayout.SOUTH);
-        
+
         infoLabel = new JTextPane();
         infoLabel.putClientProperty(JEditorPane.HONOR_DISPLAY_PROPERTIES, true);
         infoLabel.setEditable(false);
         infoLabel.setContentType("text/html");
-        infoLabel.setPreferredSize(new Dimension(90,90));
+        infoLabel.setPreferredSize(new Dimension(90, 90));
         GridBagConstraints gbc_infoLabel = new GridBagConstraints();
         gbc_infoLabel.insets = new Insets(5, 8, 5, 8);
         gbc_infoLabel.gridwidth = 2;
@@ -87,13 +92,13 @@ public class ContainerPanel extends JPanel {
         gbc_infoLabel.gridx = 0;
         gbc_infoLabel.gridy = 0;
         infoPanel.add(infoLabel, gbc_infoLabel);
-        
+
     }
-    
+
     public void setListComponent(JComponent component) {
         jPane.setViewportView(component);
     }
-    
+
     public Component getListComponent() {
         return jPane.getViewport().getComponent(0);
     }
@@ -109,20 +114,23 @@ public class ContainerPanel extends JPanel {
     public JTextPane getInfoLabel() {
         return infoLabel;
     }
-    
+
     public void setMask(boolean mask) {
         overlayable.setOverlayVisible(mask);
     }
-    
+
     public void redrawIconInList(int index) {
         Component listComponent = getListComponent();
         if (index != -1) {
             if (listComponent instanceof GlyphGrid) {
-                ((GlyphGrid)listComponent).repaint(((GlyphGrid)listComponent).getCellBounds(index, index));
+                ((GlyphGrid) listComponent).repaint(((GlyphGrid) listComponent)
+                        .getCellBounds(index, index));
             }
-            
+
             else if (listComponent instanceof GlyphTable) {
-                ((GlyphTable)listComponent).repaint(((GlyphTable)listComponent).getCellRect(index, 0, true));
+                ((GlyphTable) listComponent)
+                        .repaint(((GlyphTable) listComponent).getCellRect(
+                                index, 0, true));
             }
         }
     }

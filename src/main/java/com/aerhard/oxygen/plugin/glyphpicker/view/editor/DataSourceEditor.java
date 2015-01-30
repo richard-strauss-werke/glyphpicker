@@ -33,6 +33,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 
 public class DataSourceEditor extends JPanel {
 
@@ -60,13 +61,16 @@ public class DataSourceEditor extends JPanel {
 
     public DataSourceEditor() {
 
+        ResourceBundle i18n = ResourceBundle.getBundle("GlyphPicker");
+        String className = this.getClass().getSimpleName();
+        
         setPreferredSize(new Dimension(PREFERRED_WIDTH, PREFERRED_HEIGHT));
 
         setLayout(new BorderLayout(8, 0));
 
         JPanel listPanel = new JPanel();
         listPanel.setBorder(new CompoundBorder(new TitledBorder(UIManager
-                .getBorder("TitledBorder.border"), "Data Sources",
+                .getBorder("TitledBorder.border"), i18n.getString(className + ".dataSources"),
                 TitledBorder.LEADING, TitledBorder.TOP, null,
                 new Color(0, 0, 0)), new EmptyBorder(8, 8, 8, 8)));
         add(listPanel, BorderLayout.WEST);
@@ -82,7 +86,7 @@ public class DataSourceEditor extends JPanel {
 
         editorPanel = new JPanel();
         editorPanel.setBorder(new CompoundBorder(new TitledBorder(UIManager
-                .getBorder("TitledBorder.border"), "Edit",
+                .getBorder("TitledBorder.border"), i18n.getString(className + ".edit"),
                 TitledBorder.LEADING, TitledBorder.TOP, null,
                 new Color(0, 0, 0)), new EmptyBorder(8, 8, 8, 8)));
         add(editorPanel);
@@ -103,17 +107,17 @@ public class DataSourceEditor extends JPanel {
         mappingAttNameTextField = new JTextField();
         mappingAttValueTextField = new JTextField();
 
-        editorConfig.add(new EditorConfigItem("Label", labelTextField));
-        editorConfig.add(new EditorConfigItem("Path", pathTextField));
-        editorConfig.add(new EditorConfigItem("Font Name", fontNameTextField));
-        editorConfig.add(new EditorConfigItem("Display Mode",
+        editorConfig.add(new EditorConfigItem(i18n.getString(className + ".label"), labelTextField));
+        editorConfig.add(new EditorConfigItem(i18n.getString(className + ".path"), pathTextField));
+        editorConfig.add(new EditorConfigItem(i18n.getString(className + ".fontName"), fontNameTextField));
+        editorConfig.add(new EditorConfigItem(i18n.getString(className + ".displayMode"),
                 displayModeTextField));
         editorConfig
-                .add(new EditorConfigItem("Glyph Size in %", sizeTextField));
-        editorConfig.add(new EditorConfigItem("Template", templateTextField));
-        editorConfig.add(new EditorConfigItem("Mapping Attribute Name",
+                .add(new EditorConfigItem(i18n.getString(className + ".glyphSize"), sizeTextField));
+        editorConfig.add(new EditorConfigItem(i18n.getString(className + ".template"), templateTextField));
+        editorConfig.add(new EditorConfigItem(i18n.getString(className + ".attributeName"),
                 mappingAttNameTextField));
-        editorConfig.add(new EditorConfigItem("Mapping Attribute Value",
+        editorConfig.add(new EditorConfigItem(i18n.getString(className + ".attributeValue"),
                 mappingAttValueTextField));
 
         for (int i = 0; i < editorConfig.size(); i++) {

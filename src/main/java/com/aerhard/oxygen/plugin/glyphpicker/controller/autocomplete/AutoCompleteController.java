@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.ResourceBundle;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
@@ -46,14 +47,17 @@ public class AutoCompleteController {
             JComboBox<String> autoCompleteCombo, JComboBox<String> scopeCombo,
             SortedList<GlyphDefinition> sortedList) {
 
+        ResourceBundle i18n = ResourceBundle.getBundle("GlyphPicker");
+        String className = this.getClass().getSimpleName();
+        
         this.autoCompleteCombo = autoCompleteCombo;
         this.sortedList = sortedList;
-
-        autoCompleteScope.put("Range", new RangeSelector());
-        autoCompleteScope.put("Char Name", new CharNameSelector());
-        autoCompleteScope.put("xml:id", new IdSelector());
-        autoCompleteScope.put("Codepoint", new CodePointSelector());
-        autoCompleteScope.put("ALL FIELDS", new AllSelector());
+        
+        autoCompleteScope.put(i18n.getString(className + ".charName"), new CharNameSelector());
+        autoCompleteScope.put(i18n.getString(className + ".xmlId"), new IdSelector());
+        autoCompleteScope.put(i18n.getString(className + ".codepoint"), new CodePointSelector());
+        autoCompleteScope.put(i18n.getString(className + ".range"), new RangeSelector());
+        autoCompleteScope.put(i18n.getString(className + ".allFields"), new AllSelector());
 
         // TODO add entity field
 

@@ -2,6 +2,7 @@ package com.aerhard.oxygen.plugin.glyphpicker.action;
 
 import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeListener;
+import java.util.ResourceBundle;
 import java.util.Set;
 
 import javax.swing.AbstractAction;
@@ -21,9 +22,13 @@ public class SaveAction extends AbstractAction {
         this.addPropertyChangeListener(listener);
         this.actions = actions;
         
-        String mnemonic = "S";
+        ResourceBundle i18n = ResourceBundle.getBundle("GlyphPicker");
+        String className = this.getClass().getSimpleName();
+        String description = i18n.getString(className + ".description");
+        String mnemonic = i18n.getString(className + ".mnemonic");
         
-        putValue(SHORT_DESCRIPTION, "Save the User Collection (Alt+"+mnemonic+")");
+        putValue(SHORT_DESCRIPTION,
+                description + " (Alt+"+mnemonic+")");
         putValue(MNEMONIC_KEY, KeyStroke.getKeyStroke(mnemonic).getKeyCode());
     }
 

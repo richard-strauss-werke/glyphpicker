@@ -3,6 +3,7 @@ package com.aerhard.oxygen.plugin.glyphpicker.action;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.beans.PropertyChangeListener;
+import java.util.ResourceBundle;
 
 import javax.swing.AbstractAction;
 import javax.swing.ImageIcon;
@@ -25,8 +26,12 @@ public class MoveDownAction extends AbstractAction {
         this.addPropertyChangeListener(listener);
         this.glyphList = glyphList;
         this.list = list;
-
-        putValue(SHORT_DESCRIPTION, "Move the selected glyph down (Alt+Arrow Down)");
+        
+        ResourceBundle i18n = ResourceBundle.getBundle("GlyphPicker");
+        String className = this.getClass().getSimpleName();
+        String description = i18n.getString(className + ".description");
+        
+        putValue(SHORT_DESCRIPTION, description + " (Alt+↓)");
         putValue(MNEMONIC_KEY, KeyEvent.VK_DOWN);
     }
 

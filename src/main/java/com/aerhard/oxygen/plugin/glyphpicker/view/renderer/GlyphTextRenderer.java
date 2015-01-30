@@ -6,10 +6,6 @@ import java.awt.Font;
 
 import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinition;
 
-//TODO add error message if the font is not present
-
-// TODO try to add graphic as html image
-
 public class GlyphTextRenderer extends GlyphRenderer {
 
     private static final long serialVersionUID = 1L;

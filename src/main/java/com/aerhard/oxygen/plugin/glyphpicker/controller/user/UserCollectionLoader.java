@@ -2,6 +2,7 @@ package com.aerhard.oxygen.plugin.glyphpicker.controller.user;
 
 import java.io.File;
 import java.util.Properties;
+import java.util.ResourceBundle;
 
 import javax.swing.JOptionPane;
 import javax.xml.bind.DataBindingException;
@@ -21,8 +22,13 @@ public class UserCollectionLoader {
     private String pathName;
     private String fileName;
 
+    private ResourceBundle i18n;
+
     public UserCollectionLoader(StandalonePluginWorkspace workspace,
             Properties properties) {
+        
+        i18n = ResourceBundle.getBundle("GlyphPicker");
+        
         pathName = workspace.getPreferencesDirectory() + "/"
                 + properties.getProperty("config.path");
         fileName = properties.getProperty("userdata.filename");
@@ -40,8 +46,13 @@ public class UserCollectionLoader {
                 LOGGER.error("Error storing config.", e);
             }
         } else {
-            JOptionPane.showMessageDialog(null, "Could not create folder "
-                    + pathName, "Error storing config",
+            JOptionPane.showMessageDialog(
+                    null,
+                    String.format(
+                            i18n.getString(this.getClass().getSimpleName()
+                                    + ".couldNotCreateFolder"),
+                                    pathName),
+                    i18n.getString(this.getClass().getSimpleName() + ".storeError"),
                     JOptionPane.ERROR_MESSAGE);
         }
     }

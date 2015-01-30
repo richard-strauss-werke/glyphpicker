@@ -61,11 +61,6 @@ public class GlyphShapeRenderer extends GlyphRenderer {
 
     private void drawGlyph(Graphics2D g2, String text, String fontName) {
 
-        // frc = g2.getFontRenderContext();
-
-        // float w = getWidth() - (2 * padding);
-        // float h = getHeight() - (2 * padding);
-
         float w = getWidth() * factor;
         float h = getHeight() * factor;
 
@@ -74,7 +69,6 @@ public class GlyphShapeRenderer extends GlyphRenderer {
         Font font = new Font(fontName, Font.PLAIN, fontSize);
 
         GlyphVector gv = font.createGlyphVector(frc, text);
-        // Rectangle visualBounds = gv.getVisualBounds().getBounds();
         Rectangle visualBounds = gv.getPixelBounds(frc, 0, 0);
 
         float scaleFactor = Math.min(w / visualBounds.width, h

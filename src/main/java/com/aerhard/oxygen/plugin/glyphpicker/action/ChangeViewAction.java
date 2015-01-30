@@ -1,6 +1,7 @@
 package com.aerhard.oxygen.plugin.glyphpicker.action;
 
 import java.awt.event.ActionEvent;
+import java.util.ResourceBundle;
 
 import javax.swing.AbstractAction;
 import javax.swing.ImageIcon;
@@ -25,9 +26,13 @@ public class ChangeViewAction extends AbstractAction {
         this.table = table;
         this.list = list;
         
-        String mnemonic = "T";
+        ResourceBundle i18n = ResourceBundle.getBundle("GlyphPicker");
+        String className = this.getClass().getSimpleName();
+        String description = i18n.getString(className + ".description");
+        String mnemonic = i18n.getString(className + ".mnemonic");
         
-        putValue(SHORT_DESCRIPTION, "Toggle between grid and table view (Alt+"+mnemonic+")");
+        putValue(SHORT_DESCRIPTION,
+                description + " (Alt+"+mnemonic+")");
         putValue(MNEMONIC_KEY, KeyStroke.getKeyStroke(mnemonic).getKeyCode());
     }
 

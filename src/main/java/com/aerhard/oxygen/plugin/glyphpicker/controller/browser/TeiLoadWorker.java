@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 import java.util.concurrent.ExecutionException;
 
 import javax.swing.JOptionPane;
@@ -35,22 +36,26 @@ import com.icl.saxon.aelfred.SAXParserFactoryImpl;
 
 public class TeiLoadWorker extends SwingWorker<List<GlyphDefinition>, Void> {
 
-    private static final Logger LOGGER = Logger
-            .getLogger(TeiLoadWorker.class.getName());
-    
+    private static final Logger LOGGER = Logger.getLogger(TeiLoadWorker.class
+            .getName());
+
     private DataSource dataSource;
-    
+
     private List<GlyphDefinition> result = null;
-    
+
     public List<GlyphDefinition> getResult() {
         return result;
     }
-    
+
     private SAXParser parser;
+
+    private ResourceBundle i18n;
 
     public TeiLoadWorker(DataSource dataSource) {
         this.dataSource = dataSource;
-        
+
+        i18n = ResourceBundle.getBundle("GlyphPicker");
+
         SAXParserFactory parserFactory = SAXParserFactoryImpl.newInstance();
         try {
             parser = parserFactory.newSAXParser();
@@ -72,9 +77,9 @@ public class TeiLoadWorker extends SwingWorker<List<GlyphDefinition>, Void> {
             LOGGER.error(e);
         } catch (ExecutionException e) {
             LOGGER.error(e);
-        } 
+        }
     }
-    
+
     private Boolean isLocalFile(String path) {
         return (!path.matches("^\\w+:\\/\\/.*"));
     }
@@ -134,8 +139,13 @@ public class TeiLoadWorker extends SwingWorker<List<GlyphDefinition>, Void> {
             return httpclient.execute(httpGet, new GlyphResponseHandler(
                     dataSource));
         } catch (IOException e) {
-            JOptionPane.showMessageDialog(null, "Could not load data from \""
-                    + dataSource.getBasePath() + "\"", "Error",
+            JOptionPane.showMessageDialog(
+                    null,
+                    String.format(
+                            i18n.getString(this.getClass().getSimpleName()
+                                    + ".couldNotLoadData"),
+                            dataSource.getBasePath()),
+                    i18n.getString(this.getClass().getSimpleName() + ".error"),
                     JOptionPane.ERROR_MESSAGE);
             LOGGER.info(e);
         } finally {
@@ -148,16 +158,21 @@ public class TeiLoadWorker extends SwingWorker<List<GlyphDefinition>, Void> {
     public List<GlyphDefinition> parseXmlSax(InputStream is,
             DataSource dataSource) {
 
-        TeiXmlHandler handler = new TeiXmlHandler(
-                dataSource);
+        TeiXmlHandler handler = new TeiXmlHandler(dataSource);
         try {
             parser.parse(is, handler);
         } catch (SAXException e) {
-            JOptionPane.showMessageDialog(null, e.toString(),
-                    "XML parsing error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(
+                    null,
+                    e.toString(),
+                    i18n.getString(this.getClass().getSimpleName()
+                            + ".xmlParsingError"), JOptionPane.ERROR_MESSAGE);
         } catch (IOException e) {
-            JOptionPane.showMessageDialog(null, e.toString(),
-                    "XML parsing error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(
+                    null,
+                    e.toString(),
+                    i18n.getString(this.getClass().getSimpleName()
+                            + ".xmlParsingError"), JOptionPane.ERROR_MESSAGE);
         }
 
         return handler.getGlyphDefinitions();
@@ -183,19 +198,21 @@ public class TeiLoadWorker extends SwingWorker<List<GlyphDefinition>, Void> {
                 if (rows > 0) {
                     for (int i = 0; i < rows; i++) {
                         JSONObject obj = dataArray.getJSONObject(i);
-                        glyphList
-                                .add(new GlyphDefinition(obj.getString("id"),
-                                        obj.getString("name"), obj
-                                                .getString("codepoint"), obj
-                                                .getString("range"), obj
-                                                .getString("url"), dataSource));
+                        glyphList.add(new GlyphDefinition(obj.getString("id"),
+                                obj.getString("name"), obj
+                                        .getString("codepoint"), obj
+                                        .getString("range"), obj
+                                        .getString("url"), dataSource));
                     }
                     return glyphList;
                 }
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.toString(),
-                    "JSON parsing error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(
+                    null,
+                    e.toString(),
+                    i18n.getString(this.getClass().getSimpleName()
+                            + ".jsonParsingError"), JOptionPane.ERROR_MESSAGE);
         }
         return null;
     }
@@ -217,9 +234,13 @@ public class TeiLoadWorker extends SwingWorker<List<GlyphDefinition>, Void> {
                 inputStream = new FileInputStream(file);
 
             } catch (IOException e) {
-                JOptionPane.showMessageDialog(null,
-                        "Could not load data from \"" + fileName + "\"",
-                        "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(
+                        null,
+                        String.format(
+                                i18n.getString(this.getClass().getSimpleName()
+                                        + ".couldNotLoadData"), fileName),
+                        i18n.getString(this.getClass().getSimpleName()
+                                + ".error"), JOptionPane.ERROR_MESSAGE);
                 LOGGER.info(e);
             }
             if (inputStream != null && mimeType != null) {

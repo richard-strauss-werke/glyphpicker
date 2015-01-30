@@ -3,6 +3,7 @@ package com.aerhard.oxygen.plugin.glyphpicker.action;
 import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeListener;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import javax.swing.AbstractAction;
 import javax.swing.ImageIcon;
@@ -27,9 +28,13 @@ public class EditAction extends AbstractAction {
         this.panel = panel;
         this.dataSourceList = dataSourceList;
         
-        String mnemonic = "E";
+        ResourceBundle i18n = ResourceBundle.getBundle("GlyphPicker");
+        String className = this.getClass().getSimpleName();
+        String description = i18n.getString(className + ".description");
+        String mnemonic = i18n.getString(className + ".mnemonic");
         
-        putValue(SHORT_DESCRIPTION, "Edit data sources (Alt+"+mnemonic+")");
+        putValue(SHORT_DESCRIPTION,
+                description + " (Alt+"+mnemonic+")");
         putValue(MNEMONIC_KEY, KeyStroke.getKeyStroke(mnemonic).getKeyCode());
     }
 

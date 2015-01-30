@@ -1,6 +1,7 @@
 package com.aerhard.oxygen.plugin.glyphpicker.action;
 
 import java.awt.event.ActionEvent;
+import java.util.ResourceBundle;
 
 import javax.swing.AbstractAction;
 import javax.swing.ImageIcon;
@@ -13,9 +14,13 @@ public class SortAction extends AbstractAction {
         super(null, new ImageIcon(
                 SortAction.class.getResource("/images/sort-number.png")));
         
-        String mnemonic = "O";
+        ResourceBundle i18n = ResourceBundle.getBundle("GlyphPicker");
+        String className = this.getClass().getSimpleName();
+        String description = i18n.getString(className + ".description");
+        String mnemonic = i18n.getString(className + ".mnemonic");
         
-        putValue(SHORT_DESCRIPTION, "Sort glyphs by code point (Alt+"+mnemonic+")");
+        putValue(SHORT_DESCRIPTION,
+                description + " (Alt+"+mnemonic+")");
         putValue(MNEMONIC_KEY, KeyStroke.getKeyStroke(mnemonic).getKeyCode());
     }
 
