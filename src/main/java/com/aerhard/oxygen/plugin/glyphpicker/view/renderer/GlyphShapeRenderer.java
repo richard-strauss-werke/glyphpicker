@@ -11,11 +11,14 @@ import java.awt.RenderingHints;
 import java.awt.Shape;
 import java.awt.font.FontRenderContext;
 import java.awt.font.GlyphVector;
+import java.awt.font.TextAttribute;
 import java.awt.geom.AffineTransform;
+import java.util.HashMap;
+import java.util.Map;
+
+import static java.awt.font.TextAttribute.*;
 
 import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinition;
-
-// TODO add error message if the font is not present
 
 public class GlyphShapeRenderer extends GlyphRenderer {
 
@@ -29,10 +32,18 @@ public class GlyphShapeRenderer extends GlyphRenderer {
 
     private String ch = null;
 
+    private Map<TextAttribute, Integer> attr;
+
     public GlyphShapeRenderer(JComponent container) {
         super(container);
         frc = new FontRenderContext(null, true, true);
         setText(null);
+
+        attr = new HashMap<TextAttribute, Integer>();
+        {
+            attr.put(KERNING, KERNING_ON);
+            attr.put(LIGATURES, LIGATURES_ON);
+        }        
     }
 
     public Component getRendererComponent(GlyphDefinition gd, boolean isSelected) {
@@ -55,7 +66,6 @@ public class GlyphShapeRenderer extends GlyphRenderer {
             g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
                     RenderingHints.VALUE_ANTIALIAS_ON);
             drawGlyph(g2, ch, fontName);
-            g2.dispose();
         }
     }
 
@@ -66,8 +76,9 @@ public class GlyphShapeRenderer extends GlyphRenderer {
 
         int fontSize = Math.round(h);
 
-        Font font = new Font(fontName, Font.PLAIN, fontSize);
-
+        Font baseFont = new Font(fontName, Font.PLAIN, fontSize);
+        Font font = baseFont.deriveFont(attr);
+        
         GlyphVector gv = font.createGlyphVector(frc, text);
         Rectangle visualBounds = gv.getPixelBounds(frc, 0, 0);
 
@@ -91,7 +102,6 @@ public class GlyphShapeRenderer extends GlyphRenderer {
         Shape outline = gv.getOutline();
         outline = at.createTransformedShape(outline);
         g2.fill(outline);
-
     }
 
 }

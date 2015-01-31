@@ -1797,7 +1797,17 @@ public final class CustomAutoCompleteSupport<E> {
         public void actionPerformed(ActionEvent e) {
             if (comboBox.isShowing()) {
                 if (comboBox.isPopupVisible()) {
-                    selectPossibleValue(comboBox.getSelectedIndex() + offset);
+                    
+                    // MODIFIED
+                    int index = comboBox.getSelectedIndex();
+                    System.out.println(comboBox.getModel().getElementAt(0));
+                    if (index == -1 && comboBox.getModel().getElementAt(0) == null && offset == 1) {
+                        System.out.println(offset);
+                        selectPossibleValue(1);
+                    } else {
+                        selectPossibleValue(index + offset);
+                    }
+                    
                 } else {
                     applyFilter(prefix);
                     comboBox.showPopup();

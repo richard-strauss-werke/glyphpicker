@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Stack;
 
+import org.apache.log4j.Logger;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
@@ -14,6 +15,9 @@ import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphRef;
 import com.icl.saxon.aelfred.DefaultHandler;
 
 public class TeiXmlHandler extends DefaultHandler {
+
+    private static final Logger LOGGER = Logger.getLogger(TeiXmlHandler.class
+            .getName());
 
     private Boolean inChar = false;
     private Boolean inMapping = false;
@@ -175,8 +179,10 @@ public class TeiXmlHandler extends DefaultHandler {
 
         else if ("g".equals(qName) && inMapping) {
             String targetId = attrs.getValue("ref");
+
             currentGlyphRefs.add(new GlyphRef(textContent.length(), targetId
                     .substring(1)));
+
         }
 
     }
@@ -235,33 +241,40 @@ public class TeiXmlHandler extends DefaultHandler {
 
         if (!referencingGlyphDefinitions.isEmpty()) {
 
-            setReferencedTargets(createIdHashMap());
+            try {
 
-            // TODO recurse glyphdefinitions in order to include references of references
+                setReferencedTargets(createIdHashMap());
 
-            for (GlyphDefinition r : referencingGlyphDefinitions) {
-                int offset = 0;
+                // TODO recurse glyphdefinitions in order to include references
+                // of
+                // references
 
-                StringBuilder sb = new StringBuilder(r.getCodePoint());
+                for (GlyphDefinition r : referencingGlyphDefinitions) {
+                    int offset = 0;
 
-                for (GlyphRef ref : r.getGlyphRefs()) {
-                    GlyphDefinition target = ref.getTarget();
-                    if (target != null) {
-                        
-                        String additionalString = target.getCodePoint();
-                        
-                        ref.incrementIndex(offset);
-                        
-                        sb.insert(ref.getIndex(), additionalString);
-                        
-                        offset += additionalString.length();
+                    StringBuilder sb = new StringBuilder(r.getCodePoint());
 
+                    for (GlyphRef ref : r.getGlyphRefs()) {
+                        GlyphDefinition target = ref.getTarget();
+                        if (target != null) {
+                            String additionalString = target.getCodePoint();
+
+                            ref.incrementIndex(offset);
+
+                            sb.insert(ref.getIndex(), additionalString);
+
+                            offset += additionalString.length();
+
+                        }
                     }
-                }
-                
-                r.setCodePoint(sb.toString());
-                System.out.println(r.getCodePoint());
 
+                    r.setCodePoint(sb.toString());
+//                    System.out.println(r.getCodePoint());
+
+                }
+
+            } catch (Exception e) {
+                LOGGER.error(e);
             }
 
         }
