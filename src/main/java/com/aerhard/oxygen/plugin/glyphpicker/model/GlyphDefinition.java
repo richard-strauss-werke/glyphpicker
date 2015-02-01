@@ -11,27 +11,27 @@ import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
-@XmlRootElement(name = "char", namespace = "http://www.tei-c.org/ns/1.0")
+@XmlRootElement(name = "char")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class GlyphDefinition implements Cloneable {
 
     @XmlAttribute(name = "id", namespace = "http://www.w3.org/XML/1998/namespace")
     private String id;
 
-    @XmlElement(name = "charName", namespace = "http://www.tei-c.org/ns/1.0")
+    @XmlElement(name = "charName")
     private String charName;
 
-    @XmlElement(name = "mapping", namespace = "http://www.tei-c.org/ns/1.0")
+    @XmlElement(name = "mapping")
     private String codePoint;
 
-    @XmlElement(name = "graphic", namespace = "http://www.tei-c.org/ns/1.0")
+    @XmlElement(name = "graphic")
     private String url;
 
     @XmlElement(name = "range")
     private String range;
 
-    @XmlElement(name = "g", namespace = "http://www.tei-c.org/ns/1.0")
-    @XmlElementWrapper(name = "glyphRefs", namespace = "http://www.tei-c.org/ns/1.0")
+    @XmlElement(name = "g")
+    @XmlElementWrapper(name = "glyphRefs")
     private List<GlyphRef> glyphRefs = null; 
 
     @XmlElement(name = "dataSource")

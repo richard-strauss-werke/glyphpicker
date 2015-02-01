@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<config>
+<config xmlns="http://www.richard-strauss-ausgabe.de/ns/1.0">
     <tabIndex>1</tabIndex>
     <userSearchFieldScopeIndex>0</userSearchFieldScopeIndex>
     <browserSearchFieldScopeIndex>0</browserSearchFieldScopeIndex>

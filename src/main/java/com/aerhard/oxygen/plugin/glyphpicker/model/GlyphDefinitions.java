@@ -9,13 +9,13 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
-@XmlRootElement(name = "charDecl", namespace = "http://www.tei-c.org/ns/1.0")
+@XmlRootElement(name = "charDecl")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class GlyphDefinitions {
     @XmlTransient
     private static final long serialVersionUID = 1L;
 
-    @XmlElement(name = "char", namespace = "http://www.tei-c.org/ns/1.0")
+    @XmlElement(name = "char")
     private List<GlyphDefinition> data = new ArrayList<GlyphDefinition>();
 
     public GlyphDefinitions(List<GlyphDefinition> data) {

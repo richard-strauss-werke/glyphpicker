@@ -6,7 +6,7 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
-@XmlRootElement(name = "g", namespace = "http://www.tei-c.org/ns/1.0")
+@XmlRootElement(name = "g")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class GlyphRef {
 
