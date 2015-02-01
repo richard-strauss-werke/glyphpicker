@@ -28,13 +28,13 @@ public class ContainerPanel extends JPanel {
 
     private static final long serialVersionUID = 1L;
 
-    private JScrollPane jPane;
-    private DefaultOverlayable overlayable;
-    private JTextPane infoLabel;
+    private final JScrollPane jPane;
+    private final DefaultOverlayable overlayable;
+    private final JTextPane infoLabel;
 
-    private JPanel infoPanel;
+    private final JPanel infoPanel;
 
-    private ControlPanel controlPanel;
+    private final ControlPanel controlPanel;
 
     public ContainerPanel(ControlPanel controlPanel) {
 

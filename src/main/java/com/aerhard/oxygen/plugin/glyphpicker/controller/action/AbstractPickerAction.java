@@ -11,8 +11,8 @@ public abstract class AbstractPickerAction extends AbstractAction {
 
     protected static final ResourceBundle I18N = ResourceBundle
             .getBundle("GlyphPicker");
-    protected static final String MODIFIER_NAME = (System
-            .getProperty("os.name").toLowerCase().indexOf("mac") >= 0) ? "Option"
+    static final String MODIFIER_NAME = (System
+            .getProperty("os.name").toLowerCase().contains("mac")) ? "Option"
             : "Alt";
 
     public AbstractPickerAction(String className) {

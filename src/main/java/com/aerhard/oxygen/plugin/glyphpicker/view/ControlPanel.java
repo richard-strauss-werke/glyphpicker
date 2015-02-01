@@ -24,12 +24,11 @@ public class ControlPanel extends JPanel {
     private static final long serialVersionUID = 1L;
     private JComboBox<String> dataSourceCombo;
     private JButton btnLoad;
-    private JButton viewBtn;
-    private JideToggleButton sortBtn;
-    private JComboBox<String> autoCompleteCombo;
-    private JComboBox<String> autoCompleteScopeCombo;
-    private JPanel dataSourcePanel;
-    private JToolBar toolBar;
+    private final JButton viewBtn;
+    private final JideToggleButton sortBtn;
+    private final JComboBox<String> autoCompleteCombo;
+    private final JComboBox<String> autoCompleteScopeCombo;
+    private final JToolBar toolBar;
 
     public ControlPanel(boolean setDataSourceCombo) {
 
@@ -74,7 +73,7 @@ public class ControlPanel extends JPanel {
 
             row++;
 
-            dataSourcePanel = new JPanel();
+            JPanel dataSourcePanel = new JPanel();
 
             dataSourcePanel.setBorder(new TitledBorder(null, i18n
                     .getString(className + ".dataSource"),
@@ -96,7 +95,7 @@ public class ControlPanel extends JPanel {
             panelLayout.rowWeights = new double[] { 0.0 };
             dataSourcePanel.setLayout(panelLayout);
 
-            dataSourceCombo = new JComboBox<String>();
+            dataSourceCombo = new JComboBox<>();
             dataSourceCombo.setEditable(false);
             GridBagConstraints gbcPathCombo = new GridBagConstraints();
             gbcPathCombo.weightx = 1.0;
@@ -139,7 +138,7 @@ public class ControlPanel extends JPanel {
         panelLayout.rowWeights = new double[] { 0.0 };
         searchPanel.setLayout(panelLayout);
 
-        autoCompleteScopeCombo = new JComboBox<String>();
+        autoCompleteScopeCombo = new JComboBox<>();
         GridBagConstraints gbcAutoCompleteScopeCombo = new GridBagConstraints();
         gbcAutoCompleteScopeCombo.anchor = GridBagConstraints.WEST;
         gbcAutoCompleteScopeCombo.fill = GridBagConstraints.BOTH;
@@ -148,7 +147,7 @@ public class ControlPanel extends JPanel {
         gbcAutoCompleteScopeCombo.gridy = row;
         searchPanel.add(autoCompleteScopeCombo, gbcAutoCompleteScopeCombo);
 
-        autoCompleteCombo = new JComboBox<String>();
+        autoCompleteCombo = new JComboBox<>();
         autoCompleteCombo.setEditable(true);
         GridBagConstraints gbcAutoCompleteCombo = new GridBagConstraints();
         gbcAutoCompleteCombo.gridwidth = 3;

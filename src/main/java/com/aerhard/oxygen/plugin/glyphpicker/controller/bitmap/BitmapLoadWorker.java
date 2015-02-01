@@ -12,10 +12,10 @@ import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinition;
 public class BitmapLoadWorker extends
         SwingWorker<List<GlyphDefinition>, Void> {
 
-    private ExecutorService executorService = Executors.newFixedThreadPool(10);
+    private final ExecutorService executorService = Executors.newFixedThreadPool(10);
 
-    private List<GlyphDefinition> glyphDefinitions;
-    private int size;
+    private final List<GlyphDefinition> glyphDefinitions;
+    private final int size;
 
     public BitmapLoadWorker(List<GlyphDefinition> glyphDefinitions,
             int size) {

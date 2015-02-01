@@ -24,13 +24,6 @@ public class DataSourceList extends AbstractListModel<String> implements
     @XmlElement(name = "dataSource")
     private List<DataSource> data;
 
-    public DataSourceList(List<DataSource> arrayList) {
-        data = arrayList;
-        if (arrayList.size() > 0) {
-            selectedItem = data.get(0).getLabel();
-        }
-    }
-
     public DataSourceList() {
     }
 

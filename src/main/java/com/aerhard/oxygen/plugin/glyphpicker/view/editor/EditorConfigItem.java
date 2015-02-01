@@ -3,8 +3,8 @@ package com.aerhard.oxygen.plugin.glyphpicker.view.editor;
 import javax.swing.JComponent;
 
 public class EditorConfigItem {
-    private JComponent component;
-    private String label;
+    private final JComponent component;
+    private final String label;
 
     public EditorConfigItem(String label, JComponent component) {
         this.component = component;

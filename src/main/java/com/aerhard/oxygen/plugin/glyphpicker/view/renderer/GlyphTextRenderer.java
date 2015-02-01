@@ -21,11 +21,11 @@ import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinition;
 public class GlyphTextRenderer extends GlyphRenderer {
 
     private static final long serialVersionUID = 1L;
-    private Map<TextAttribute, Integer> attr;
+    private final Map<TextAttribute, Integer> attr;
 
     public GlyphTextRenderer(JComponent container) {
         super(container);
-        attr = new HashMap<TextAttribute, Integer>();
+        attr = new HashMap<>();
         {
             attr.put(KERNING, KERNING_ON);
             attr.put(LIGATURES, LIGATURES_ON);

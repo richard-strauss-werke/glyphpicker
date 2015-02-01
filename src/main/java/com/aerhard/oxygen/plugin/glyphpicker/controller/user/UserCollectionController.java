@@ -34,7 +34,7 @@ public class UserCollectionController extends TabController {
     private MoveUpAction moveUpAction;
     private MoveDownAction moveDownAction;
 
-    private UserCollectionLoader loader;
+    private final UserCollectionLoader loader;
     private boolean listInSync = true;
 
     public UserCollectionController(ContainerPanel panel, Config config,
@@ -67,7 +67,7 @@ public class UserCollectionController extends TabController {
         moveDownAction.setEnabled(false);
         controlPanel.addToToolbar(moveDownAction, 3);
 
-        Set<Action> actions = new HashSet<Action>();
+        Set<Action> actions = new HashSet<>();
 
         saveAction = new SaveAction(this, actions);
         saveAction.setEnabled(false);
@@ -87,7 +87,7 @@ public class UserCollectionController extends TabController {
 
     private void setListeners() {
 
-        Set<Action> selectionDependentActions = new HashSet<Action>();
+        Set<Action> selectionDependentActions = new HashSet<>();
         selectionDependentActions.add(removeAction);
         selectionDependentActions.add(insertAction);
         selectionDependentActions.add(moveUpAction);

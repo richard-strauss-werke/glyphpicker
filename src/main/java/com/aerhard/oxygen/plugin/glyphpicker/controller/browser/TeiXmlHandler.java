@@ -23,21 +23,21 @@ public class TeiXmlHandler extends DefaultHandler {
     private Boolean inChar = false;
     private Boolean inMapping = false;
 
-    private List<GlyphDefinition> glyphDefinitions = new ArrayList<GlyphDefinition>();
-    private Stack<String> elementStack = new Stack<String>();
+    private final List<GlyphDefinition> glyphDefinitions = new ArrayList<>();
+    private final Stack<String> elementStack = new Stack<>();
 
-    private List<GlyphRef> currentGlyphRefs = new ArrayList<GlyphRef>();
-    private List<GlyphDefinition> referencingGlyphDefinitions = new ArrayList<GlyphDefinition>();
+    private List<GlyphRef> currentGlyphRefs = new ArrayList<>();
+    private final List<GlyphDefinition> referencingGlyphDefinitions = new ArrayList<>();
 
     private GlyphDefinition currentGlyphDefinition;
 
     private String range = "";
-    private DataSource dataSource;
+    private final DataSource dataSource;
 
-    private StringBuffer textContent = new StringBuffer();
+    private final StringBuffer textContent = new StringBuffer();
 
-    private MappingMatcher mappingMatcher;
-    private MappingParser mappingParser;
+    private final MappingMatcher mappingMatcher;
+    private final MappingParser mappingParser;
 
     public TeiXmlHandler(DataSource dataSource) {
         this.dataSource = dataSource;
@@ -79,8 +79,8 @@ public class TeiXmlHandler extends DefaultHandler {
 
     public static class MappingSingleMatcher implements MappingMatcher {
 
-        private String key;
-        private String value;
+        private final String key;
+        private final String value;
 
         public MappingSingleMatcher(String key, String value) {
             this.key = key;
@@ -95,10 +95,10 @@ public class TeiXmlHandler extends DefaultHandler {
 
     public static class MappingDoubleMatcher implements MappingMatcher {
 
-        private String value1;
-        private String key1;
-        private String value2;
-        private String key2;
+        private final String value1;
+        private final String key1;
+        private final String value2;
+        private final String key2;
 
         public MappingDoubleMatcher(String key1, String value1, String key2,
                 String value2) {
@@ -249,7 +249,7 @@ public class TeiXmlHandler extends DefaultHandler {
 
             if (!currentGlyphRefs.isEmpty()) {
                 currentGlyphDefinition.setGlyphRefs(currentGlyphRefs);
-                currentGlyphRefs = new ArrayList<GlyphRef>();
+                currentGlyphRefs = new ArrayList<>();
                 referencingGlyphDefinitions.add(currentGlyphDefinition);
             }
 
@@ -269,7 +269,7 @@ public class TeiXmlHandler extends DefaultHandler {
     }
 
     private Map<String, GlyphDefinition> createIdHashMap() {
-        Map<String, GlyphDefinition> ids = new HashMap<String, GlyphDefinition>();
+        Map<String, GlyphDefinition> ids = new HashMap<>();
         for (GlyphDefinition d : glyphDefinitions) {
             ids.put(d.getId(), d);
         }

@@ -14,11 +14,11 @@ import ro.sync.exml.workspace.api.standalone.StandalonePluginWorkspace;
 public class TogglePickerWindowAction extends AbstractPickerAction {
     private static final long serialVersionUID = 1L;
 
-    private StandalonePluginWorkspace workspace;
+    private final StandalonePluginWorkspace workspace;
 
-    private String viewId;
+    private final String viewId;
 
-    private static String className = TogglePickerWindowAction.class
+    private static final String className = TogglePickerWindowAction.class
             .getSimpleName();
 
     public TogglePickerWindowAction(StandalonePluginWorkspace workspace,

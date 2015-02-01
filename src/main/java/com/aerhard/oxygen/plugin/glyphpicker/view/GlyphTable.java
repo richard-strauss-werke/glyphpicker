@@ -26,7 +26,7 @@ public class GlyphTable extends JTable {
     private static final long serialVersionUID = 1L;
 
     private TableCellRenderer tableIconRenderer;
-    private TableCellRenderer tableDescriptionRenderer;
+    private final TableCellRenderer tableDescriptionRenderer;
 
     public GlyphTable(TableModel tableModel) {
         tableDescriptionRenderer = new DescriptionRenderer();
@@ -48,12 +48,12 @@ public class GlyphTable extends JTable {
     }
 
     private void setDefaultFocusTraversal() {
-        Set<AWTKeyStroke> forward = new HashSet<AWTKeyStroke>(
+        Set<AWTKeyStroke> forward = new HashSet<>(
                 getFocusTraversalKeys(KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS));
         forward.add(KeyStroke.getKeyStroke("TAB"));
         setFocusTraversalKeys(KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS,
                 forward);
-        Set<AWTKeyStroke> backward = new HashSet<AWTKeyStroke>(
+        Set<AWTKeyStroke> backward = new HashSet<>(
                 getFocusTraversalKeys(KeyboardFocusManager.BACKWARD_TRAVERSAL_KEYS));
         backward.add(KeyStroke.getKeyStroke("shift TAB"));
         setFocusTraversalKeys(KeyboardFocusManager.BACKWARD_TRAVERSAL_KEYS,
@@ -76,10 +76,6 @@ public class GlyphTable extends JTable {
 
     public void setTableIconRenderer(TableCellRenderer renderer) {
         tableIconRenderer = renderer;
-    }
-
-    public TableCellRenderer getTableIconRenderer() {
-        return tableIconRenderer;
     }
 
     public TableCellRenderer getCellRenderer(int row, int column) {

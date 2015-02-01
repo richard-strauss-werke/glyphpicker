@@ -31,20 +31,20 @@ public class DataSourceEditorController implements PropertyChangeListener {
 
     public static final String LIST_EDITING_OCCURRED = "listEditingOccurred";
 
-    private DataSourceEditor contentPane;
-    private JPanel parentPanel;
+    private final DataSourceEditor contentPane;
+    private final JPanel parentPanel;
 
-    private List<String> displayModes = new ArrayList<String>();
+    private final List<String> displayModes = new ArrayList<>();
 
-    private CloneAction cloneAction;
-    private DeleteAction deleteAction;
+    private final CloneAction cloneAction;
+    private final DeleteAction deleteAction;
 
     private boolean listEditingOccurred = false;
 
     private DefaultListModel<DataSource> listModel;
     private DataSource currentDataSource = null;
 
-    private ResourceBundle i18n = ResourceBundle.getBundle("GlyphPicker");
+    private final ResourceBundle i18n = ResourceBundle.getBundle("GlyphPicker");
 
     public DataSourceEditorController(DataSourceEditor contentPane,
             JPanel parentPanel) {
@@ -65,8 +65,8 @@ public class DataSourceEditorController implements PropertyChangeListener {
 
         contentPane.setFormEnabled(false);
 
-        for (int i = 0; i < displayModes.size(); i++) {
-            contentPane.getDisplayModeTextField().addItem(displayModes.get(i));
+        for (String displayMode : displayModes) {
+            contentPane.getDisplayModeTextField().addItem(displayMode);
         }
         contentPane.getDisplayModeTextField().setSelectedItem(null);
     }
@@ -158,7 +158,7 @@ public class DataSourceEditorController implements PropertyChangeListener {
                 JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
 
         if (result == JOptionPane.OK_OPTION && listEditingOccurred) {
-            List<DataSource> resultList = new ArrayList<DataSource>();
+            List<DataSource> resultList = new ArrayList<>();
             for (int i = 0; i < listModel.getSize(); i++) {
                 resultList.add(listModel.getElementAt(i));
             }
@@ -180,7 +180,7 @@ public class DataSourceEditorController implements PropertyChangeListener {
     }
 
     private void initListModel(List<DataSource> dataSourceList) {
-        listModel = new DefaultListModel<DataSource>();
+        listModel = new DefaultListModel<>();
 
         try {
             for (DataSource dataSource : dataSourceList) {

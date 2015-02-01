@@ -1572,7 +1572,9 @@ public final class CustomAutoCompleteSupport<E> {
             // record the selection before post processing the Document change
             // (we'll use this to decide whether to broadcast an ActionEvent
             // when choosing the next selected index)
-            final Object selectedItemBeforeEdit = comboBox.getSelectedItem();
+
+            // MODIFIED
+            //final Object selectedItemBeforeEdit = comboBox.getSelectedItem();
             updateFilter();
             applyFilter(prefix);
 
@@ -2587,8 +2589,7 @@ public final class CustomAutoCompleteSupport<E> {
             // UIdelegate
             final FocusListener[] focusListeners = c.getFocusListeners();
             for (int i = 0; i < focusListeners.length; i++)
-                if (focusListeners[i].getClass().getName()
-                        .indexOf("ComboBoxUI") != -1)
+                if (focusListeners[i].getClass().getName().contains("ComboBoxUI"))
                     c.removeFocusListener(focusListeners[i]);
             c.addFocusListener(replacement);
         }

@@ -16,7 +16,7 @@ public class GlyphDefinitions {
     private static final long serialVersionUID = 1L;
 
     @XmlElement(name = "char")
-    private List<GlyphDefinition> data = new ArrayList<GlyphDefinition>();
+    private List<GlyphDefinition> data = new ArrayList<>();
 
     public GlyphDefinitions(List<GlyphDefinition> data) {
         this.data = data;

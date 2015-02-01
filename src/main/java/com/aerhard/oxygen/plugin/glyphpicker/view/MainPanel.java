@@ -14,7 +14,7 @@ import java.util.ResourceBundle;
 public class MainPanel extends JPanel {
 
     private static final long serialVersionUID = 1L;
-    private JTabbedPane tabbedPane;
+    private final JTabbedPane tabbedPane;
 
     private static final int MAIN_BORDER_WIDTH = 8;
     private static final int MIN_WIDTH = 200;

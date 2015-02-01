@@ -8,9 +8,9 @@ import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinition;
 
 public class InsertXmlAction extends AbstractPickerAction {
     private static final long serialVersionUID = 1L;
-    private DefaultEventSelectionModel<GlyphDefinition> selectionModel;
+    private final DefaultEventSelectionModel<GlyphDefinition> selectionModel;
 
-    private static String className = InsertXmlAction.class.getSimpleName();
+    private static final String className = InsertXmlAction.class.getSimpleName();
 
     public InsertXmlAction(PropertyChangeListener listener,
             DefaultEventSelectionModel<GlyphDefinition> selectionModel) {

@@ -12,10 +12,10 @@ import com.aerhard.oxygen.plugin.glyphpicker.view.GlyphGrid;
 
 public class MoveUpAction extends AbstractPickerAction {
     private static final long serialVersionUID = 1L;
-    private EventList<GlyphDefinition> glyphList;
-    private GlyphGrid list;
+    private final EventList<GlyphDefinition> glyphList;
+    private final GlyphGrid list;
 
-    private static String className = MoveUpAction.class.getSimpleName();
+    private static final String className = MoveUpAction.class.getSimpleName();
 
     public MoveUpAction(PropertyChangeListener listener,
             EventList<GlyphDefinition> glyphList, GlyphGrid list) {

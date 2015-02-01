@@ -17,19 +17,6 @@ public class HighlightButton extends JideButton {
 
     private static final int DELAY = 300;
     
-    public HighlightButton() {
-        originalForeground = getForeground();
-        setVerticalTextPosition(SwingConstants.BOTTOM);
-        setHorizontalTextPosition(SwingConstants.CENTER);
-    }
-
-    public HighlightButton(String text) {
-        super(text);
-        originalForeground = getForeground();
-        setVerticalTextPosition(SwingConstants.BOTTOM);
-        setHorizontalTextPosition(SwingConstants.CENTER);
-    }
-
     public HighlightButton(AbstractAction insertAction) {
         super(insertAction);
         originalForeground = getForeground();

@@ -13,7 +13,6 @@ import java.beans.PropertyChangeSupport;
 import java.util.List;
 
 import javax.swing.AbstractAction;
-import javax.swing.JTextField;
 
 import ca.odell.glazedlists.BasicEventList;
 import ca.odell.glazedlists.EventList;
@@ -43,24 +42,24 @@ public abstract class TabController implements PropertyChangeListener {
 
     public static final int LIST_ITEM_SIZE = 40;
 
-    protected PropertyChangeSupport pcs = new PropertyChangeSupport(this);
+    protected final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
 
-    protected EventList<GlyphDefinition> glyphList = new BasicEventList<GlyphDefinition>();
-    protected SortedList<GlyphDefinition> sortedList = new SortedList<GlyphDefinition>(
+    protected final EventList<GlyphDefinition> glyphList = new BasicEventList<>();
+    protected final SortedList<GlyphDefinition> sortedList = new SortedList<>(
             glyphList, null);
 
-    protected FilterList<GlyphDefinition> filterList;
+    protected final FilterList<GlyphDefinition> filterList;
 
-    protected DefaultEventSelectionModel<GlyphDefinition> selectionModel;
+    protected final DefaultEventSelectionModel<GlyphDefinition> selectionModel;
 
-    protected ContainerPanel panel;
-    protected GlyphTable table;
-    protected GlyphGrid list;
+    protected final ContainerPanel panel;
+    protected final GlyphTable table;
+    protected final GlyphGrid list;
 
-    protected ControlPanel controlPanel;
+    protected final ControlPanel controlPanel;
     protected BitmapLoadWorker bmpLoader = null;
     private PropertyChangeListener bmpListener;
-    protected AutoCompleteController autoCompleteController;
+    protected final AutoCompleteController autoCompleteController;
 
     protected AbstractAction insertAction;
     protected HighlightButton insertBtn;
@@ -77,20 +76,20 @@ public abstract class TabController implements PropertyChangeListener {
                 userSearchFieldScopeIndex, controlPanel.getAutoCompleteCombo(),
                 controlPanel.getAutoCompleteScopeCombo(), sortedList);
 
-        filterList = new FilterList<GlyphDefinition>(sortedList,
+        filterList = new FilterList<>(sortedList,
                 autoCompleteController.getGlyphSelect());
 
-        selectionModel = new DefaultEventSelectionModel<GlyphDefinition>(
+        selectionModel = new DefaultEventSelectionModel<>(
                 filterList);
 
-        list = new GlyphGrid(new DefaultEventListModel<GlyphDefinition>(
+        list = new GlyphGrid(new DefaultEventListModel<>(
                 filterList));
         GlyphRendererAdapter r = new GlyphRendererAdapter(list);
         r.setPreferredSize(new Dimension(LIST_ITEM_SIZE, LIST_ITEM_SIZE));
         list.setFixedSize(LIST_ITEM_SIZE);
         list.setCellRenderer(r);
 
-        DefaultEventTableModel<GlyphDefinition> tableListModel = new DefaultEventTableModel<GlyphDefinition>(
+        DefaultEventTableModel<GlyphDefinition> tableListModel = new DefaultEventTableModel<>(
                 filterList, new GlyphTableFormat());
         table = new GlyphTable(tableListModel);
         r = new GlyphRendererAdapter(table);
@@ -183,8 +182,8 @@ public abstract class TabController implements PropertyChangeListener {
 
         table.addKeyListener(enterKeyAdapter);
         list.addKeyListener(enterKeyAdapter);
-        ((JTextField) controlPanel.getAutoCompleteCombo().getEditor()
-                .getEditorComponent()).addKeyListener(enterKeyAdapter);
+        controlPanel.getAutoCompleteCombo().getEditor()
+                .getEditorComponent().addKeyListener(enterKeyAdapter);
     }
 
     public void startBitmapLoadWorker(List<GlyphDefinition> data) {
@@ -195,7 +194,7 @@ public abstract class TabController implements PropertyChangeListener {
             public void propertyChange(PropertyChangeEvent e) {
                 if ("iconLoaded".equals(e.getPropertyName())) {
                     panel.redrawIconInList(filterList
-                            .indexOf((GlyphDefinition) e.getNewValue()));
+                            .indexOf(e.getNewValue()));
                 }
             }
         };

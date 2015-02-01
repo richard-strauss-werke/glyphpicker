@@ -43,16 +43,6 @@ public class GlyphDefinition implements Cloneable {
     public GlyphDefinition() {
     }
 
-    public GlyphDefinition(String id, String name, String codepoint,
-            String range, String url, DataSource dataSource) {
-        this.id = id;
-        this.charName = name;
-        this.codePoint = codepoint;
-        this.range = range;
-        this.url = url;
-        this.dataSource = dataSource;
-    }
-
     public String getCharName() {
         return charName;
     }

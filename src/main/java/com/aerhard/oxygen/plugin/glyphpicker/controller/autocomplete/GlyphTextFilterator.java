@@ -9,7 +9,7 @@ import com.aerhard.oxygen.plugin.glyphpicker.model.trans.PropertySelector;
 
 public class GlyphTextFilterator implements TextFilterator<GlyphDefinition> {
 
-    private PropertySelector propertySelector;
+    private final PropertySelector propertySelector;
 
     public GlyphTextFilterator(PropertySelector propertySelector) {
         this.propertySelector = propertySelector;

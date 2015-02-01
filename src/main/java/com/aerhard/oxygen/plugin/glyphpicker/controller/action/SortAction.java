@@ -5,7 +5,7 @@ import java.awt.event.ActionEvent;
 public class SortAction extends AbstractPickerAction {
     private static final long serialVersionUID = 1L;
 
-    private static String className = SortAction.class.getSimpleName();
+    private static final String className = SortAction.class.getSimpleName();
 
     public SortAction() {
         super(className, "/images/sort-number.png");

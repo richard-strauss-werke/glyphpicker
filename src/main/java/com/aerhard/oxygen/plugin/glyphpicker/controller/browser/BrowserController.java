@@ -1,8 +1,8 @@
 package com.aerhard.oxygen.plugin.glyphpicker.controller.browser;
 
-import java.awt.AWTEvent;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
+import java.awt.event.InputEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.beans.PropertyChangeEvent;
@@ -28,7 +28,7 @@ import com.aerhard.oxygen.plugin.glyphpicker.view.ContainerPanel;
 
 public class BrowserController extends TabController {
 
-    private DataSourceList dataSourceList;
+    private final DataSourceList dataSourceList;
 
     private AbstractAction addAction;
 
@@ -62,7 +62,7 @@ public class BrowserController extends TabController {
 
     private void setListeners() {
 
-        Set<Action> selectionDependentActions = new HashSet<Action>();
+        Set<Action> selectionDependentActions = new HashSet<>();
         selectionDependentActions.add(addAction);
         selectionDependentActions.add(insertAction);
 
@@ -78,7 +78,7 @@ public class BrowserController extends TabController {
 
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        if (e.getModifiers() == AWTEvent.MOUSE_EVENT_MASK) {
+                        if (e.getModifiers() == InputEvent.BUTTON1_MASK) {
                             loadData();
                         }
                     }
@@ -124,7 +124,7 @@ public class BrowserController extends TabController {
         teiLoadListener = new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent e) {
-                if ("state".equals(e.getPropertyName().toString())
+                if ("state".equals(e.getPropertyName())
                         && "DONE".equals(e.getNewValue().toString())) {
                     displayLoadedData(teiLoadWorker.getResult());
                 }

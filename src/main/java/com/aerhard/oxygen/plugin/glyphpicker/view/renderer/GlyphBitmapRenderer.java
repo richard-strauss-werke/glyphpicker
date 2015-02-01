@@ -13,7 +13,7 @@ public class GlyphBitmapRenderer extends GlyphRenderer {
 
     private static final long serialVersionUID = 1L;
 
-    private Color inactiveColor = UIManager
+    private final Color inactiveColor = UIManager
             .getColor("TextField.inactiveBackground");
 
     public GlyphBitmapRenderer(JComponent container) {

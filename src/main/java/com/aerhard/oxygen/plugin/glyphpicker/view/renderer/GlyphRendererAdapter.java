@@ -20,7 +20,7 @@ public class GlyphRendererAdapter extends JLabel implements TableCellRenderer,
 
     private static final long serialVersionUID = 1L;
 
-    private Map<String, GlyphRenderer> renderers = new HashMap<String, GlyphRenderer>();
+    private final Map<String, GlyphRenderer> renderers = new HashMap<>();
 
     public GlyphRendererAdapter(JComponent container) {
         setText(null);

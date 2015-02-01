@@ -19,10 +19,10 @@ public class UserCollectionLoader {
     private static final Logger LOGGER = Logger
             .getLogger(UserCollectionLoader.class.getName());
 
-    private String pathName;
-    private String fileName;
+    private final String pathName;
+    private final String fileName;
 
-    private ResourceBundle i18n;
+    private final ResourceBundle i18n;
 
     public UserCollectionLoader(StandalonePluginWorkspace workspace,
             Properties properties) {
@@ -36,7 +36,7 @@ public class UserCollectionLoader {
 
     public void save(GlyphDefinitions glyphDefinitions) {
         File path = new File(pathName);
-        Boolean pathExists = (path.exists()) ? true : path.mkdir();
+        Boolean pathExists = path.exists() || path.mkdir();
         if (pathExists) {
             File file = new File(path, fileName);
             LOGGER.info("Storing user list.");

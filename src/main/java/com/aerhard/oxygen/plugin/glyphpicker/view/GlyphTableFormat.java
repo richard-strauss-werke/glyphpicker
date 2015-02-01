@@ -8,8 +8,8 @@ import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinition;
 
 public class GlyphTableFormat implements TableFormat<GlyphDefinition> {
 
-    private String glyphLabel;
-    private String descriptionLabel;
+    private final String glyphLabel;
+    private final String descriptionLabel;
 
     public GlyphTableFormat() {
         ResourceBundle i18n = ResourceBundle.getBundle("GlyphPicker");

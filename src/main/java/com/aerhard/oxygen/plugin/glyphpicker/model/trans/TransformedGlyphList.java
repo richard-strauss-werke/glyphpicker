@@ -9,7 +9,7 @@ import ca.odell.glazedlists.event.ListEvent;
 public class TransformedGlyphList extends
         TransformedList<GlyphDefinition, String> {
 
-    private PropertySelector propertySelector;
+    private final PropertySelector propertySelector;
 
     public TransformedGlyphList(EventList<GlyphDefinition> source,
             PropertySelector propertySelector) {

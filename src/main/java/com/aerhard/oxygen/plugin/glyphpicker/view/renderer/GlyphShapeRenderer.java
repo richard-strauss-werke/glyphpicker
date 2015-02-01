@@ -28,18 +28,18 @@ public class GlyphShapeRenderer extends GlyphRenderer {
 
     private float factor = 0.73f;
 
-    private FontRenderContext frc;
+    private final FontRenderContext frc;
 
     private String ch = null;
 
-    private Map<TextAttribute, Integer> attr;
+    private final Map<TextAttribute, Integer> attr;
 
     public GlyphShapeRenderer(JComponent container) {
         super(container);
         frc = new FontRenderContext(null, true, true);
         setText(null);
 
-        attr = new HashMap<TextAttribute, Integer>();
+        attr = new HashMap<>();
         {
             attr.put(KERNING, KERNING_ON);
             attr.put(LIGATURES, LIGATURES_ON);

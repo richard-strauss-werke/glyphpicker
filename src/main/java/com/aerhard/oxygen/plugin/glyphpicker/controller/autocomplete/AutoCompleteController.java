@@ -33,15 +33,15 @@ public class AutoCompleteController {
     private static final Logger LOGGER = Logger
             .getLogger(AutoCompleteController.class.getName());
 
-    private Map<String, PropertySelector> autoCompleteScope = new LinkedHashMap<String, PropertySelector>();
+    private final Map<String, PropertySelector> autoCompleteScope = new LinkedHashMap<>();
 
     private CustomAutoCompleteSupport<String> autoCompleteSupport = null;
 
-    private JComboBox<String> autoCompleteCombo;
+    private final JComboBox<String> autoCompleteCombo;
 
     private final GlyphSelect glyphSelect = new GlyphSelect();
 
-    private SortedList<GlyphDefinition> sortedList;
+    private final SortedList<GlyphDefinition> sortedList;
 
     public AutoCompleteController(int scopeIndex,
             JComboBox<String> autoCompleteCombo, JComboBox<String> scopeCombo,
@@ -86,7 +86,7 @@ public class AutoCompleteController {
 
     private void initAutoCompleteScopeCombo(int scopeIndex,
             JComboBox<String> scopeCombo) {
-        DefaultComboBoxModel<String> autoCompleteScopeModel = new DefaultComboBoxModel<String>();
+        DefaultComboBoxModel<String> autoCompleteScopeModel = new DefaultComboBoxModel<>();
 
         for (String property : autoCompleteScope.keySet()) {
             autoCompleteScopeModel.addElement(property);
@@ -116,7 +116,7 @@ public class AutoCompleteController {
     }
 
     public final PropertySelector getPropertySelectorByIndex(int index) {
-        List<String> l = new ArrayList<String>(autoCompleteScope.keySet());
+        List<String> l = new ArrayList<>(autoCompleteScope.keySet());
         return autoCompleteScope.get(l.get(index));
     }
 
@@ -126,7 +126,7 @@ public class AutoCompleteController {
             public void run() {
                 TransformedGlyphList propertyList = new TransformedGlyphList(
                         sortedList, propertySelector);
-                UniqueList<String> uniquePropertyList = new UniqueList<String>(
+                UniqueList<String> uniquePropertyList = new UniqueList<>(
                         propertyList);
                 if (autoCompleteSupport != null) {
                     autoCompleteSupport.uninstall();

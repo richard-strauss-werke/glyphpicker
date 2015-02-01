@@ -13,10 +13,10 @@ import com.aerhard.oxygen.plugin.glyphpicker.view.editor.DataSourceEditor;
 
 public class EditAction extends AbstractPickerAction {
     private static final long serialVersionUID = 1L;
-    private JPanel panel;
-    private DataSourceList dataSourceList;
+    private final JPanel panel;
+    private final DataSourceList dataSourceList;
 
-    private static String className = EditAction.class.getSimpleName();
+    private static final String className = EditAction.class.getSimpleName();
 
     public EditAction(PropertyChangeListener listener, JPanel panel,
             DataSourceList dataSourceList) {

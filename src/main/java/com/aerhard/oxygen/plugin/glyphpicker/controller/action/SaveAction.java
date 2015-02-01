@@ -8,9 +8,9 @@ import javax.swing.Action;
 
 public class SaveAction extends AbstractPickerAction {
     private static final long serialVersionUID = 1L;
-    private Set<Action> actions;
+    private final Set<Action> actions;
 
-    private static String className = SaveAction.class.getSimpleName();
+    private static final String className = SaveAction.class.getSimpleName();
 
     public SaveAction(PropertyChangeListener listener, Set<Action> actions) {
         super(className, "/images/disk.png");

@@ -8,11 +8,11 @@ import com.aerhard.oxygen.plugin.glyphpicker.view.GlyphTable;
 public class ChangeViewAction extends AbstractPickerAction {
     private static final long serialVersionUID = 1L;
 
-    private ContainerPanel panel;
-    private GlyphTable table;
-    private GlyphGrid list;
+    private final ContainerPanel panel;
+    private final GlyphTable table;
+    private final GlyphGrid list;
 
-    private static String className = ChangeViewAction.class.getSimpleName();
+    private static final String className = ChangeViewAction.class.getSimpleName();
 
     public ChangeViewAction(ContainerPanel panel, GlyphTable table,
             GlyphGrid list) {

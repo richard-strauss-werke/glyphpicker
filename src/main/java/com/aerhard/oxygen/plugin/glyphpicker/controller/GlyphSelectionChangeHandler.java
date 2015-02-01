@@ -18,10 +18,10 @@ import com.aerhard.oxygen.plugin.glyphpicker.view.renderer.DescriptionRenderer;
 
 public class GlyphSelectionChangeHandler implements ListSelectionListener {
 
-    private JTextPane infoLabel;
-    private Set<Action> actions;
-    private FilterList<GlyphDefinition> filterList;
-    private SortedList<GlyphDefinition> sortedList;
+    private final JTextPane infoLabel;
+    private final Set<Action> actions;
+    private final FilterList<GlyphDefinition> filterList;
+    private final SortedList<GlyphDefinition> sortedList;
 
     public GlyphSelectionChangeHandler(JTextPane infoLabel,
             SortedList<GlyphDefinition> sortedList,

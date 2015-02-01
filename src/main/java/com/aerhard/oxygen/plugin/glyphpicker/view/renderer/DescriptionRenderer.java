@@ -16,9 +16,9 @@ public class DescriptionRenderer extends JLabel implements TableCellRenderer {
 
     public static final int BORDER_WIDTH = 4;
 
-    private static ResourceBundle i18n = ResourceBundle
+    private static final ResourceBundle i18n = ResourceBundle
             .getBundle("GlyphPicker");
-    private static String className = DescriptionRenderer.class.getSimpleName();
+    private static final String className = DescriptionRenderer.class.getSimpleName();
 
     private static final String CODEPOINT_LABEL = i18n.getString(className
             + ".codepoint");
@@ -60,27 +60,19 @@ public class DescriptionRenderer extends JLabel implements TableCellRenderer {
         sb.append("<html><p>");
 
         if (d.getCharName() != null) {
-            sb.append("<nobr><b>");
-            sb.append(d.getCharName());
-            sb.append("</b></nobr><br>");
+            sb.append("<nobr><b>").append(d.getCharName()).append("</b></nobr><br>");
         }
 
         if (d.getCodePoint() != null) {
-            sb.append("<nobr>" + CODEPOINT_LABEL + ": ");
-            sb.append(d.getCodePointString());
-            sb.append("</nobr><br>");
+            sb.append("<nobr>").append(CODEPOINT_LABEL).append(": ").append(d.getCodePointString()).append("</nobr><br>");
         }
 
         if (d.getRange() != null) {
-            sb.append("<nobr>" + RANGE_LABEL + ": ");
-            sb.append(d.getRange());
-            sb.append("</nobr><br>");
+            sb.append("<nobr>").append(RANGE_LABEL).append(": ").append(d.getRange()).append("</nobr><br>");
         }
 
         if (d.getId() != null) {
-            sb.append("<nobr>" + XML_ID_LABEL + ": <em>");
-            sb.append(d.getId());
-            sb.append("</em></nobr><br>");
+            sb.append("<nobr>").append(XML_ID_LABEL).append(": <em>").append(d.getId()).append("</em></nobr><br>");
         }
 
         sb.append("</p></html>");

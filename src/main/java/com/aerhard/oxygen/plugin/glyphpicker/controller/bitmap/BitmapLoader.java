@@ -28,9 +28,9 @@ public class BitmapLoader implements Runnable {
     private static final Logger LOGGER = Logger
             .getLogger(BitmapLoader.class.getName());
 
-    private BitmapLoadWorker worker;
-    private GlyphDefinition glyphDefinition;
-    private int size;
+    private final BitmapLoadWorker worker;
+    private final GlyphDefinition glyphDefinition;
+    private final int size;
 
     public BitmapLoader(BitmapLoadWorker worker,
             GlyphDefinition glyphDefinition, int size) {
@@ -90,7 +90,7 @@ public class BitmapLoader implements Runnable {
     }
 
     public static Boolean isLocalFile(String path) {
-        return (!path.matches("^\\w+:\\/\\/.*"));
+        return !path.matches("^\\w+://.*");
     }
 
     public BufferedImage loadImage(String path, String relativePath) {
@@ -124,12 +124,11 @@ public class BitmapLoader implements Runnable {
                     + e.getMessage());
         }
         return image;
-    };
+    }
 
     public BufferedImage getImageFromUrl(String user, String password,
             String url) {
-        HttpResponse response = null;
-        BufferedImage image = null;
+        HttpResponse response;
         DefaultHttpClient httpclient = new DefaultHttpClient();
         try {
             HttpGet httpGet = new HttpGet(url);
@@ -143,8 +142,7 @@ public class BitmapLoader implements Runnable {
             if (statusCode == 200) {
                 HttpEntity entity = response.getEntity();
                 byte[] bytes = EntityUtils.toByteArray(entity);
-                image = ImageIO.read(new ByteArrayInputStream(bytes));
-                return image;
+                return ImageIO.read(new ByteArrayInputStream(bytes));
             } else {
                 throw new IOException("Download failed, HTTP response code "
                         + statusCode + " - " + statusLine.getReasonPhrase());
@@ -155,7 +153,7 @@ public class BitmapLoader implements Runnable {
         } finally {
             httpclient.getConnectionManager().shutdown();
         }
-        return image;
+        return null;
     }
 
 }

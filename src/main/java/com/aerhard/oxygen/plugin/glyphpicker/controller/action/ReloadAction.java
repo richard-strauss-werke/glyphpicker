@@ -8,9 +8,9 @@ import javax.swing.Action;
 
 public class ReloadAction extends AbstractPickerAction {
     private static final long serialVersionUID = 1L;
-    private Set<Action> actions;
+    private final Set<Action> actions;
 
-    private static String className = ReloadAction.class.getSimpleName();
+    private static final String className = ReloadAction.class.getSimpleName();
 
     public ReloadAction(PropertyChangeListener listener, Set<Action> actions) {
         super(className, "/images/arrow-circle-225-left.png");

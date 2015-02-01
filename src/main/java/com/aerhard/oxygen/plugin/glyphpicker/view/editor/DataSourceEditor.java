@@ -45,21 +45,21 @@ public class DataSourceEditor extends JPanel {
     private static final int PREFERRED_WIDTH = 600;
     private static final int PREFERRED_HEIGHT = 400;
 
-    private JList<DataSource> list;
+    private final JList<DataSource> list;
 
-    private JTextField labelTextField;
-    private JTextField pathTextField;
-    private JTextField fontNameTextField;
-    private JComboBox<String> displayModeTextField;
-    private JTextField sizeTextField;
-    private JTextField templateTextField;
-    private JTextField mappingTypeTextField;
-    private JTextField mappingSubTypeTextField;
-    private JCheckBox mappingAsCharStringCheckBox;
-    private JPanel listButtonPane;
-    private JPanel editorPanel;
+    private final JTextField labelTextField;
+    private final JTextField pathTextField;
+    private final JTextField fontNameTextField;
+    private final JComboBox<String> displayModeTextField;
+    private final JTextField sizeTextField;
+    private final JTextField templateTextField;
+    private final JTextField mappingTypeTextField;
+    private final JTextField mappingSubTypeTextField;
+    private final JCheckBox mappingAsCharStringCheckBox;
+    private final JPanel listButtonPane;
+    private final JPanel editorPanel;
 
-    private List<EditorConfigItem> editorConfig = new ArrayList<EditorConfigItem>();
+    private final List<EditorConfigItem> editorConfig = new ArrayList<>();
 
     public DataSourceEditor() {
 
@@ -82,7 +82,7 @@ public class DataSourceEditor extends JPanel {
         listPanel.add(listButtonPane, BorderLayout.SOUTH);
         listButtonPane.setAlignmentY(Component.BOTTOM_ALIGNMENT);
 
-        list = new JList<DataSource>();
+        list = new JList<>();
         JScrollPane scrollPane = new JScrollPane(list);
         listPanel.add(scrollPane);
 
@@ -103,7 +103,7 @@ public class DataSourceEditor extends JPanel {
         labelTextField = new JTextField();
         pathTextField = new JTextField();
         fontNameTextField = new JTextField();
-        displayModeTextField = new JComboBox<String>();
+        displayModeTextField = new JComboBox<>();
         sizeTextField = new JTextField();
         templateTextField = new JTextField();
         mappingTypeTextField = new JTextField();
@@ -157,14 +157,14 @@ public class DataSourceEditor extends JPanel {
         public void changedUpdate(DocumentEvent e) {
             firePropertyChange(FORM_EDITING_OCCURRED, null, null);
         }
-    };
+    }
 
     private class ComboChangeListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
             firePropertyChange(FORM_EDITING_OCCURRED, null, null);
         }
-    };
+    }
 
     private void addToEditorPanel(int index, EditorConfigItem eci) {
         JLabel label = new JLabel(eci.getLabel());

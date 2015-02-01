@@ -8,8 +8,8 @@ import javax.swing.event.*;
 
 public class TabFocusHandler implements ChangeListener, PropertyChangeListener {
 
-    private Map<Component, Component> tabFocus = new HashMap<Component, Component>();
-    private JTabbedPane tabbedPane;
+    private final Map<Component, Component> tabFocus = new HashMap<>();
+    private final JTabbedPane tabbedPane;
 
     public TabFocusHandler(JTabbedPane tabbedPane) {
         this.tabbedPane = tabbedPane;

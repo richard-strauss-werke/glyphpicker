@@ -20,8 +20,8 @@ public class ConfigLoader {
     private static final Logger LOGGER = Logger.getLogger(ConfigLoader.class
             .getName());
 
-    private String pathName;
-    private String fileName;
+    private final String pathName;
+    private final String fileName;
     private Config config = null;
 
     public ConfigLoader(StandalonePluginWorkspace workspace,
@@ -33,7 +33,7 @@ public class ConfigLoader {
 
     public void save() {
         File path = new File(pathName);
-        Boolean pathExists = (path.exists()) ? true : path.mkdir();
+        Boolean pathExists = path.exists() || path.mkdir();
         if (pathExists) {
             File file = new File(path, fileName);
             LOGGER.info("Storing config.");
@@ -75,6 +75,7 @@ public class ConfigLoader {
 
             if (dataSourceList == null) {
                 LOGGER.error("No data source list found in config.");
+                dataSourceList = new DataSourceList();
             }
 
             dataSourceList.init();

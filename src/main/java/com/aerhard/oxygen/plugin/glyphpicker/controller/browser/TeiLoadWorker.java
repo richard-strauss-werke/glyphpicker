@@ -36,7 +36,7 @@ public class TeiLoadWorker extends SwingWorker<List<GlyphDefinition>, Void> {
     private static final Logger LOGGER = Logger.getLogger(TeiLoadWorker.class
             .getName());
 
-    private DataSource dataSource;
+    private final DataSource dataSource;
 
     private List<GlyphDefinition> result = null;
 
@@ -46,7 +46,7 @@ public class TeiLoadWorker extends SwingWorker<List<GlyphDefinition>, Void> {
 
     private SAXParser parser;
 
-    private ResourceBundle i18n;
+    private final ResourceBundle i18n;
 
     public TeiLoadWorker(DataSource dataSource) {
         this.dataSource = dataSource;
@@ -70,30 +70,27 @@ public class TeiLoadWorker extends SwingWorker<List<GlyphDefinition>, Void> {
     protected void done() {
         try {
             result = get();
-        } catch (InterruptedException e) {
-            LOGGER.error(e);
-        } catch (ExecutionException e) {
+        } catch (InterruptedException | ExecutionException e) {
             LOGGER.error(e);
         }
     }
 
     private Boolean isLocalFile(String path) {
-        return (!path.matches("^\\w+:\\/\\/.*"));
+        return (!path.matches("^\\w+://.*"));
     }
 
     public List<GlyphDefinition> loadData(DataSource dataSource) {
         String path = dataSource.getBasePath();
-        List<GlyphDefinition> glyphList = (isLocalFile(path)) ? loadDataFromFile(dataSource)
+        return (isLocalFile(path)) ? loadDataFromFile(dataSource)
                 : loadDataFromUrl("guest", "guest", dataSource);
-        return glyphList;
     }
 
     private class GlyphResponseHandler implements
             ResponseHandler<List<GlyphDefinition>> {
 
-        private DataSource dataSource;
+        private final DataSource dataSource;
 
-        public GlyphResponseHandler(DataSource dataSource) {
+        public GlyphResponseHandler(final DataSource dataSource) {
             this.dataSource = dataSource;
         }
 
@@ -151,13 +148,7 @@ public class TeiLoadWorker extends SwingWorker<List<GlyphDefinition>, Void> {
         TeiXmlHandler handler = new TeiXmlHandler(dataSource);
         try {
             parser.parse(is, handler);
-        } catch (SAXException e) {
-            JOptionPane.showMessageDialog(
-                    null,
-                    e.toString(),
-                    i18n.getString(this.getClass().getSimpleName()
-                            + ".xmlParsingError"), JOptionPane.ERROR_MESSAGE);
-        } catch (IOException e) {
+        } catch (SAXException | IOException e) {
             JOptionPane.showMessageDialog(
                     null,
                     e.toString(),

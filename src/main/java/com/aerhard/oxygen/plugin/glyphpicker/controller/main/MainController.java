@@ -24,7 +24,7 @@ public class MainController implements PropertyChangeListener {
     private static final Logger LOGGER = Logger.getLogger(MainController.class
             .getName());
 
-    private PropertyChangeSupport pcs = new PropertyChangeSupport(this);
+    private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
 
     public void addPropertyChangeListener(PropertyChangeListener l) {
         pcs.addPropertyChangeListener(l);
@@ -34,15 +34,15 @@ public class MainController implements PropertyChangeListener {
         pcs.removePropertyChangeListener(l);
     }
 
-    private MainPanel mainPanel;
+    private final MainPanel mainPanel;
 
-    private ConfigLoader configLoader;
+    private final ConfigLoader configLoader;
 
-    private BrowserController browserController;
-    private UserCollectionController userCollectionController;
+    private final BrowserController browserController;
+    private final UserCollectionController userCollectionController;
 
-    private ContainerPanel browserPanel;
-    private ContainerPanel userCollectionPanel;
+    private final ContainerPanel browserPanel;
+    private final ContainerPanel userCollectionPanel;
 
     public MainController(StandalonePluginWorkspace workspace) {
 

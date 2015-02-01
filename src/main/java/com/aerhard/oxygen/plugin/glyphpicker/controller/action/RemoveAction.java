@@ -10,11 +10,11 @@ import com.aerhard.oxygen.plugin.glyphpicker.view.GlyphGrid;
 
 public class RemoveAction extends AbstractPickerAction {
     private static final long serialVersionUID = 1L;
-    private EventList<GlyphDefinition> glyphList;
-    private FilterList<GlyphDefinition> filterList;
-    private GlyphGrid list;
+    private final EventList<GlyphDefinition> glyphList;
+    private final FilterList<GlyphDefinition> filterList;
+    private final GlyphGrid list;
 
-    private static String className = RemoveAction.class.getSimpleName();
+    private static final String className = RemoveAction.class.getSimpleName();
 
     public RemoveAction(PropertyChangeListener listener,
             EventList<GlyphDefinition> glyphList,
