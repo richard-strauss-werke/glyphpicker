@@ -4,8 +4,8 @@
 /target/*
 !/target/update/
 
-#.project
-#.classpath
-#.settings
-#.idea
+.project
+.classpath
+.settings
+.idea
 
