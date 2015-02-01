@@ -7,22 +7,21 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import javax.swing.AbstractAction;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.KeyStroke;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import org.apache.log4j.Logger;
 
+import com.aerhard.oxygen.plugin.glyphpicker.action.AbstractPickerAction;
 import com.aerhard.oxygen.plugin.glyphpicker.model.DataSource;
 import com.aerhard.oxygen.plugin.glyphpicker.view.editor.DataSourceEditor;
 import com.jidesoft.swing.JideButton;
 
-public class DataSourceEditorController {
+public class DataSourceEditorController implements PropertyChangeListener {
 
     private static final Logger LOGGER = Logger
             .getLogger(DataSourceEditorController.class.getName());
@@ -41,17 +40,15 @@ public class DataSourceEditorController {
     private DefaultListModel<DataSource> listModel;
     private DataSource currentDataSource = null;
 
-    private ResourceBundle i18n;
+    private ResourceBundle i18n = ResourceBundle.getBundle("GlyphPicker");
 
     public DataSourceEditorController(DataSourceEditor contentPane,
             JPanel parentPanel) {
 
-        i18n = ResourceBundle.getBundle("GlyphPicker");
+        newAction = new NewAction(this);
+        cloneAction = new CloneAction(this);
+        deleteAction = new DeleteAction(this);
 
-        newAction = new NewAction();
-        cloneAction = new CloneAction();
-        deleteAction = new DeleteAction();
-        
         this.contentPane = contentPane;
         this.parentPanel = parentPanel;
 
@@ -71,19 +68,12 @@ public class DataSourceEditorController {
         contentPane.getDisplayModeTextField().setSelectedItem(null);
     }
 
-    private final class NewAction extends AbstractAction {
+    private final class NewAction extends AbstractPickerAction {
         private static final long serialVersionUID = 1L;
 
-        private NewAction() {
-            super(i18n.getString("NewAction.label"));
-
-            String className = this.getClass().getSimpleName();
-            String description = i18n.getString(className + ".description");
-            String mnemonic = i18n.getString(className + ".mnemonic");
-
-            putValue(SHORT_DESCRIPTION, description + " (Alt+" + mnemonic + ")");
-            putValue(MNEMONIC_KEY, KeyStroke.getKeyStroke(mnemonic)
-                    .getKeyCode());
+        private NewAction(PropertyChangeListener listener) {
+            super(NewAction.class.getSimpleName());
+            addPropertyChangeListener(listener);
         }
 
         @Override
@@ -96,24 +86,17 @@ public class DataSourceEditorController {
                     .getSelectionModel()
                     .setSelectionInterval(listModel.size() - 1,
                             listModel.size() - 1);
-            listEditingOccurred = true;
+            firePropertyChange("listEditingOccurred", null, null);
         }
     }
 
-    private final class CloneAction extends AbstractAction {
+    private final class CloneAction extends AbstractPickerAction {
         private static final long serialVersionUID = 1L;
 
-        private CloneAction() {
-            super(i18n.getString("CloneAction.label"));
+        private CloneAction(PropertyChangeListener listener) {
+            super(CloneAction.class.getSimpleName());
+            addPropertyChangeListener(listener);
             setEnabled(false);
-
-            String className = this.getClass().getSimpleName();
-            String description = i18n.getString(className + ".description");
-            String mnemonic = i18n.getString(className + ".mnemonic");
-
-            putValue(SHORT_DESCRIPTION, description + " (Alt+" + mnemonic + ")");
-            putValue(MNEMONIC_KEY, KeyStroke.getKeyStroke(mnemonic)
-                    .getKeyCode());
         }
 
         @Override
@@ -129,27 +112,20 @@ public class DataSourceEditorController {
                         .getSelectionModel()
                         .setSelectionInterval(listModel.size() - 1,
                                 listModel.size() - 1);
-                listEditingOccurred = true;
+                firePropertyChange("listEditingOccurred", null, null);
             } catch (CloneNotSupportedException e1) {
                 LOGGER.error(e1);
             }
         }
     }
 
-    private final class DeleteAction extends AbstractAction {
+    private final class DeleteAction extends AbstractPickerAction {
         private static final long serialVersionUID = 1L;
 
-        private DeleteAction() {
-            super(i18n.getString("DeleteAction.label"));
+        private DeleteAction(PropertyChangeListener listener) {
+            super(DeleteAction.class.getSimpleName());
+            addPropertyChangeListener(listener);
             setEnabled(false);
-
-            String className = this.getClass().getSimpleName();
-            String description = i18n.getString(className + ".description");
-            String mnemonic = i18n.getString(className + ".mnemonic");
-
-            putValue(SHORT_DESCRIPTION, description + " (Alt+" + mnemonic + ")");
-            putValue(MNEMONIC_KEY, KeyStroke.getKeyStroke(mnemonic)
-                    .getKeyCode());
         }
 
         @Override
@@ -164,7 +140,7 @@ public class DataSourceEditorController {
                             .setSelectionInterval(index, index);
                 }
             }
-            listEditingOccurred = true;
+            firePropertyChange("listEditingOccurred", null, null);
 
         }
     }
@@ -202,8 +178,8 @@ public class DataSourceEditorController {
                 });
 
         int result = JOptionPane.showConfirmDialog(parentPanel, contentPane,
-                i18n.getString("DataSourceEditorController.frameTitle"), JOptionPane.OK_CANCEL_OPTION,
-                JOptionPane.PLAIN_MESSAGE);
+                i18n.getString("DataSourceEditorController.frameTitle"),
+                JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
 
         if (result == JOptionPane.OK_OPTION && listEditingOccurred) {
             List<DataSource> resultList = new ArrayList<DataSource>();
@@ -236,7 +212,7 @@ public class DataSourceEditorController {
 
     private void setFormValues(DataSource dataSource) {
 
-        contentPane.removePropertyChangeListener(formListener);
+        contentPane.removePropertyChangeListener(this);
 
         contentPane.getLabelTextField().setText(dataSource.getLabel());
         contentPane.getPathTextField().setText(dataSource.getBasePath());
@@ -259,9 +235,10 @@ public class DataSourceEditorController {
                 dataSource.getMappingTypeValue());
         contentPane.getMappingAttValueTextField().setText(
                 dataSource.getMappingSubTypeValue());
-        contentPane.getMappingAsCharStringCheckBox().setSelected(dataSource.getMappingAsCharString());
+        contentPane.getMappingAsCharStringCheckBox().setSelected(
+                dataSource.getMappingAsCharString());
 
-        contentPane.addPropertyChangeListener(formListener);
+        contentPane.addPropertyChangeListener(this);
     }
 
     private void updateCurrentModelFromForm() {
@@ -290,19 +267,25 @@ public class DataSourceEditorController {
                     .getMappingAttNameTextField().getText());
             currentDataSource.setMappingSubTypeValue(contentPane
                     .getMappingAttValueTextField().getText());
-            currentDataSource.setMappingAsCharString(contentPane.getMappingAsCharStringCheckBox().isSelected());
+            currentDataSource.setMappingAsCharString(contentPane
+                    .getMappingAsCharStringCheckBox().isSelected());
         }
     }
 
-    private PropertyChangeListener formListener = new PropertyChangeListener() {
+    @Override
+    public void propertyChange(PropertyChangeEvent e) {
 
-        @Override
-        public void propertyChange(PropertyChangeEvent e) {
-            if (e.getPropertyName() == DataSourceEditor.EDITING_OCCURRED) {
-                updateCurrentModelFromForm();
-                listEditingOccurred = true;
-            }
+        if (DataSourceEditor.FORM_EDITING_OCCURRED.equals(e.getPropertyName())) {
+            updateCurrentModelFromForm();
+            System.out.println("formediting");
+            listEditingOccurred = true;
         }
-    };
+        
+        else if ("listEditingOccurred".equals(e.getPropertyName())) {
+            System.out.println("listediting");
+            listEditingOccurred = true;
+        }
+
+    }
 
 }

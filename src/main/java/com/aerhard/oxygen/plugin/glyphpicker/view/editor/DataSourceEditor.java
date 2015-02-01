@@ -40,7 +40,7 @@ public class DataSourceEditor extends JPanel {
 
     private static final long serialVersionUID = 1L;
 
-    public static final String EDITING_OCCURRED = "editingOccurred";
+    public static final String FORM_EDITING_OCCURRED = "formEditingOccurred";
 
     private static final int PREFERRED_WIDTH = 600;
     private static final int PREFERRED_HEIGHT = 400;
@@ -142,24 +142,24 @@ public class DataSourceEditor extends JPanel {
 
         @Override
         public void removeUpdate(DocumentEvent e) {
-            firePropertyChange(EDITING_OCCURRED, null, null);
+            firePropertyChange(FORM_EDITING_OCCURRED, null, null);
         }
 
         @Override
         public void insertUpdate(DocumentEvent e) {
-            firePropertyChange(EDITING_OCCURRED, null, null);
+            firePropertyChange(FORM_EDITING_OCCURRED, null, null);
         }
 
         @Override
         public void changedUpdate(DocumentEvent e) {
-            firePropertyChange(EDITING_OCCURRED, null, null);
+            firePropertyChange(FORM_EDITING_OCCURRED, null, null);
         }
     };
 
     private class ComboChangeListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            firePropertyChange(EDITING_OCCURRED, null, null);
+            firePropertyChange(FORM_EDITING_OCCURRED, null, null);
         }
     };
 

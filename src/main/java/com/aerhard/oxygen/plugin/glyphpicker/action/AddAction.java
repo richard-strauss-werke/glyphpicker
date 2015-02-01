@@ -6,28 +6,28 @@ import ca.odell.glazedlists.swing.DefaultEventSelectionModel;
 
 import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinition;
 
-public class InsertXmlAction extends AbstractPickerAction {
+public class AddAction extends AbstractPickerAction {
     private static final long serialVersionUID = 1L;
     private DefaultEventSelectionModel<GlyphDefinition> selectionModel;
 
-    private static String className = InsertXmlAction.class.getSimpleName();
+    private static String className = AddAction.class.getSimpleName();
     
-    public InsertXmlAction(PropertyChangeListener listener,
+    public AddAction(PropertyChangeListener listener,
             DefaultEventSelectionModel<GlyphDefinition> selectionModel) {
-        super(className, "/images/tick.png");
-        
+        super(className, "/images/plus.png");
+
         addPropertyChangeListener(listener);
         this.selectionModel = selectionModel;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
+
         if (!selectionModel.isSelectionEmpty()) {
             GlyphDefinition d = selectionModel.getSelected().get(0);
             if (d != null) {
-                firePropertyChange("insert", null, d);
+                firePropertyChange("copyToUserCollection", null, d);
             }
         }
     }
-    
 }

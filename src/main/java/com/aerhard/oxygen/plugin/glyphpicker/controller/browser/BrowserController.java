@@ -16,7 +16,7 @@ import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.JOptionPane;
 
-import com.aerhard.oxygen.plugin.glyphpicker.action.AddToUserCollectionAction;
+import com.aerhard.oxygen.plugin.glyphpicker.action.AddAction;
 import com.aerhard.oxygen.plugin.glyphpicker.action.EditAction;
 import com.aerhard.oxygen.plugin.glyphpicker.controller.TabController;
 import com.aerhard.oxygen.plugin.glyphpicker.controller.GlyphSelectionChangeHandler;
@@ -55,7 +55,7 @@ public class BrowserController extends TabController {
     private void setActions() {
         controlPanel.addToToolbar(insertBtn, 0);
 
-        addAction = new AddToUserCollectionAction(this, selectionModel);
+        addAction = new AddAction(this, selectionModel);
         addAction.setEnabled(false);
         controlPanel.addToToolbar(addAction, 1);
     }

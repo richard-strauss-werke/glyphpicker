@@ -17,7 +17,7 @@ import ca.odell.glazedlists.event.ListEventListener;
 import com.aerhard.oxygen.plugin.glyphpicker.action.MoveDownAction;
 import com.aerhard.oxygen.plugin.glyphpicker.action.MoveUpAction;
 import com.aerhard.oxygen.plugin.glyphpicker.action.ReloadAction;
-import com.aerhard.oxygen.plugin.glyphpicker.action.RemoveFromUserCollectionAction;
+import com.aerhard.oxygen.plugin.glyphpicker.action.RemoveAction;
 import com.aerhard.oxygen.plugin.glyphpicker.action.SaveAction;
 import com.aerhard.oxygen.plugin.glyphpicker.controller.TabController;
 import com.aerhard.oxygen.plugin.glyphpicker.controller.GlyphSelectionChangeHandler;
@@ -54,7 +54,7 @@ public class UserCollectionController extends TabController {
 
         controlPanel.addToToolbar(insertBtn, 0);
 
-        removeAction = new RemoveFromUserCollectionAction(this, glyphList,
+        removeAction = new RemoveAction(this, glyphList,
                 filterList, list);
         removeAction.setEnabled(false);
         controlPanel.addToToolbar(removeAction, 1);
