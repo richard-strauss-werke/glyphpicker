@@ -72,7 +72,9 @@ public class MainController implements PropertyChangeListener {
 
         mainPanel.getTabbedPane().setSelectedIndex(config.getTabIndex());
 
-        new TabFocusHandler(mainPanel.getTabbedPane());
+        TabFocusHandler focusHandler = new TabFocusHandler(mainPanel.getTabbedPane());
+        focusHandler.setTabComponentFocus(0, userCollectionPanel.getControlPanel().getAutoCompleteCombo());
+        focusHandler.setTabComponentFocus(1, browserPanel.getControlPanel().getAutoCompleteCombo());
     }
 
     public ConfigLoader getConfigLoader() {

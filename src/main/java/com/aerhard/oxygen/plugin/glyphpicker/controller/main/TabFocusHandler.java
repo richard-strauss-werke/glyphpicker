@@ -10,7 +10,7 @@ public class TabFocusHandler implements ChangeListener, PropertyChangeListener {
 
     private Map<Component, Component> tabFocus = new HashMap<Component, Component>();
     private JTabbedPane tabbedPane;
-    
+
     public TabFocusHandler(JTabbedPane tabbedPane) {
         this.tabbedPane = tabbedPane;
         tabbedPane.addChangeListener(this);
@@ -18,11 +18,15 @@ public class TabFocusHandler implements ChangeListener, PropertyChangeListener {
                 .getCurrentKeyboardFocusManager();
         focusManager.addPropertyChangeListener("permanentFocusOwner", this);
     }
-    
+
+    public void setTabComponentFocus(int index, Component component) {
+        tabFocus.put(tabbedPane.getComponentAt(index), component);
+    }
+
     // request focus on tab change
     public void stateChanged(ChangeEvent e) {
-        Component container = tabbedPane
-                .getComponentAt(tabbedPane.getSelectedIndex());
+        Component container = tabbedPane.getComponentAt(tabbedPane
+                .getSelectedIndex());
         if (container != null) {
             Component component = tabFocus.get(container);
             if (component == null) {
@@ -30,18 +34,19 @@ public class TabFocusHandler implements ChangeListener, PropertyChangeListener {
                 tabFocus.put(container, null);
             } else {
                 component.requestFocusInWindow();
-            }    
+            }
         }
     }
 
     public void propertyChange(PropertyChangeEvent e) {
 
-        Component container = tabbedPane
-                .getComponentAt(tabbedPane.getSelectedIndex());
+        Component container = tabbedPane.getComponentAt(tabbedPane
+                .getSelectedIndex());
 
         Component component = (Component) e.getNewValue();
 
-        if (component != null && SwingUtilities.isDescendingFrom(component, container)) {
+        if (component != null
+                && SwingUtilities.isDescendingFrom(component, container)) {
             tabFocus.put(container, component);
         }
     }

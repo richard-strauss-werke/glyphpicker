@@ -120,7 +120,7 @@ public class GlyphBitmapLoader implements Runnable {
         try {
             image = ImageIO.read(file);
         } catch (IOException e) {
-            LOGGER.warn("\"" + file.toPath() + "\" could not be loaded.", e);
+            LOGGER.warn("\"" + file.toPath() + "\" could not be loaded. " + e.getMessage());
         }
         return image;
     };
@@ -149,7 +149,7 @@ public class GlyphBitmapLoader implements Runnable {
                         + statusCode + " - " + statusLine.getReasonPhrase());
             }
         } catch (IOException e) {
-            LOGGER.info("Error loading image from \"" + url + "\"", e);
+            LOGGER.warn("Error loading image from \"" + url + "\". " + e.getMessage());
         } finally {
             httpclient.getConnectionManager().shutdown();
         }
