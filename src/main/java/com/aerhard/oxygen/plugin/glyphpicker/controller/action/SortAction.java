@@ -1,4 +1,4 @@
-package com.aerhard.oxygen.plugin.glyphpicker.action;
+package com.aerhard.oxygen.plugin.glyphpicker.controller.action;
 
 import java.awt.event.ActionEvent;
 

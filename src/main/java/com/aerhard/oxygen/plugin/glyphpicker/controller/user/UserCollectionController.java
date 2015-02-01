@@ -14,13 +14,13 @@ import ro.sync.exml.workspace.api.standalone.StandalonePluginWorkspace;
 import ca.odell.glazedlists.event.ListEvent;
 import ca.odell.glazedlists.event.ListEventListener;
 
-import com.aerhard.oxygen.plugin.glyphpicker.action.MoveDownAction;
-import com.aerhard.oxygen.plugin.glyphpicker.action.MoveUpAction;
-import com.aerhard.oxygen.plugin.glyphpicker.action.ReloadAction;
-import com.aerhard.oxygen.plugin.glyphpicker.action.RemoveAction;
-import com.aerhard.oxygen.plugin.glyphpicker.action.SaveAction;
 import com.aerhard.oxygen.plugin.glyphpicker.controller.TabController;
 import com.aerhard.oxygen.plugin.glyphpicker.controller.GlyphSelectionChangeHandler;
+import com.aerhard.oxygen.plugin.glyphpicker.controller.action.MoveDownAction;
+import com.aerhard.oxygen.plugin.glyphpicker.controller.action.MoveUpAction;
+import com.aerhard.oxygen.plugin.glyphpicker.controller.action.ReloadAction;
+import com.aerhard.oxygen.plugin.glyphpicker.controller.action.RemoveAction;
+import com.aerhard.oxygen.plugin.glyphpicker.controller.action.SaveAction;
 import com.aerhard.oxygen.plugin.glyphpicker.model.Config;
 import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinition;
 import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinitions;

@@ -1,10 +1,12 @@
-package com.aerhard.oxygen.plugin.glyphpicker.action;
+package com.aerhard.oxygen.plugin.glyphpicker.controller.editor;
 
 import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeListener;
 import java.util.List;
+
 import javax.swing.JPanel;
-import com.aerhard.oxygen.plugin.glyphpicker.controller.editor.DataSourceEditorController;
+
+import com.aerhard.oxygen.plugin.glyphpicker.controller.action.AbstractPickerAction;
 import com.aerhard.oxygen.plugin.glyphpicker.model.DataSource;
 import com.aerhard.oxygen.plugin.glyphpicker.model.DataSourceList;
 import com.aerhard.oxygen.plugin.glyphpicker.view.editor.DataSourceEditor;

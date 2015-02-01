@@ -17,7 +17,7 @@ import javax.swing.event.ListSelectionListener;
 
 import org.apache.log4j.Logger;
 
-import com.aerhard.oxygen.plugin.glyphpicker.action.AbstractPickerAction;
+import com.aerhard.oxygen.plugin.glyphpicker.controller.action.AbstractPickerAction;
 import com.aerhard.oxygen.plugin.glyphpicker.model.DataSource;
 import com.aerhard.oxygen.plugin.glyphpicker.view.editor.DataSourceEditor;
 import com.jidesoft.swing.JideButton;

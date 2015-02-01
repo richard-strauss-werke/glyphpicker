@@ -1,10 +1,13 @@
-package com.aerhard.oxygen.plugin.glyphpicker.action;
+package com.aerhard.oxygen.plugin.glyphpicker;
 
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+
 import javax.swing.ImageIcon;
 import javax.swing.KeyStroke;
+
+import com.aerhard.oxygen.plugin.glyphpicker.controller.action.AbstractPickerAction;
 
 import ro.sync.exml.workspace.api.standalone.StandalonePluginWorkspace;
 

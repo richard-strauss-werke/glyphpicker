@@ -1,4 +1,4 @@
-package com.aerhard.oxygen.plugin.glyphpicker.action;
+package com.aerhard.oxygen.plugin.glyphpicker.controller.action;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
@@ -10,17 +10,17 @@ import ca.odell.glazedlists.EventList;
 import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinition;
 import com.aerhard.oxygen.plugin.glyphpicker.view.GlyphGrid;
 
-public class MoveDownAction extends AbstractPickerAction {
+public class MoveUpAction extends AbstractPickerAction {
     private static final long serialVersionUID = 1L;
     private EventList<GlyphDefinition> glyphList;
     private GlyphGrid list;
 
-    private static String className = MoveDownAction.class.getSimpleName();
+    private static String className = MoveUpAction.class.getSimpleName();
 
-    public MoveDownAction(PropertyChangeListener listener,
+    public MoveUpAction(PropertyChangeListener listener,
             EventList<GlyphDefinition> glyphList, GlyphGrid list) {
         super(I18N.getString(className + ".label"), new ImageIcon(
-                MoveDownAction.class.getResource("/images/arrow-270.png")));
+                MoveUpAction.class.getResource("/images/arrow-090.png")));
 
         this.addPropertyChangeListener(listener);
         this.glyphList = glyphList;
@@ -28,15 +28,15 @@ public class MoveDownAction extends AbstractPickerAction {
 
         String description = I18N.getString(className + ".description");
 
-        putValue(SHORT_DESCRIPTION, description + " (" + MODIFIER_NAME + "+↓)");
-        putValue(MNEMONIC_KEY, KeyEvent.VK_DOWN);
+        putValue(SHORT_DESCRIPTION, description + " (" + MODIFIER_NAME + "+↑)");
+        putValue(MNEMONIC_KEY, KeyEvent.VK_UP);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
 
         int index = list.getSelectedIndex();
-        if (index != -1 && index < glyphList.size() - 1) {
+        if (index > 0) {
 
             firePropertyChange("listInSync", null, false);
             GlyphDefinition item = glyphList.get(index);
@@ -44,8 +44,8 @@ public class MoveDownAction extends AbstractPickerAction {
             boolean itemRemoved = glyphList.remove(item);
 
             if (itemRemoved) {
-                glyphList.add(index + 1, item);
-                list.setSelectedIndex(index + 1);
+                glyphList.add(index - 1, item);
+                list.setSelectedIndex(index - 1);
             }
         }
     }

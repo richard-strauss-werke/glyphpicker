@@ -11,8 +11,8 @@ import ca.odell.glazedlists.FilterList;
 import ca.odell.glazedlists.SortedList;
 import ca.odell.glazedlists.swing.DefaultEventSelectionModel;
 
-import com.aerhard.oxygen.plugin.glyphpicker.action.MoveDownAction;
-import com.aerhard.oxygen.plugin.glyphpicker.action.MoveUpAction;
+import com.aerhard.oxygen.plugin.glyphpicker.controller.action.MoveDownAction;
+import com.aerhard.oxygen.plugin.glyphpicker.controller.action.MoveUpAction;
 import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinition;
 import com.aerhard.oxygen.plugin.glyphpicker.view.renderer.DescriptionRenderer;
 

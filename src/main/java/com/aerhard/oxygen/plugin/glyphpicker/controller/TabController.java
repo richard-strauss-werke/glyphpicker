@@ -25,9 +25,9 @@ import ca.odell.glazedlists.swing.DefaultEventListModel;
 import ca.odell.glazedlists.swing.DefaultEventSelectionModel;
 import ca.odell.glazedlists.swing.DefaultEventTableModel;
 
-import com.aerhard.oxygen.plugin.glyphpicker.action.ChangeViewAction;
-import com.aerhard.oxygen.plugin.glyphpicker.action.InsertXmlAction;
-import com.aerhard.oxygen.plugin.glyphpicker.action.SortAction;
+import com.aerhard.oxygen.plugin.glyphpicker.controller.action.ChangeViewAction;
+import com.aerhard.oxygen.plugin.glyphpicker.controller.action.InsertXmlAction;
+import com.aerhard.oxygen.plugin.glyphpicker.controller.action.SortAction;
 import com.aerhard.oxygen.plugin.glyphpicker.controller.autocomplete.AutoCompleteController;
 import com.aerhard.oxygen.plugin.glyphpicker.controller.bitmap.BitmapLoadWorker;
 import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinition;

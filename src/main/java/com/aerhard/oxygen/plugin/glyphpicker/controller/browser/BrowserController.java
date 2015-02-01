@@ -16,10 +16,10 @@ import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.JOptionPane;
 
-import com.aerhard.oxygen.plugin.glyphpicker.action.AddAction;
-import com.aerhard.oxygen.plugin.glyphpicker.action.EditAction;
 import com.aerhard.oxygen.plugin.glyphpicker.controller.TabController;
 import com.aerhard.oxygen.plugin.glyphpicker.controller.GlyphSelectionChangeHandler;
+import com.aerhard.oxygen.plugin.glyphpicker.controller.action.AddAction;
+import com.aerhard.oxygen.plugin.glyphpicker.controller.editor.EditAction;
 import com.aerhard.oxygen.plugin.glyphpicker.model.Config;
 import com.aerhard.oxygen.plugin.glyphpicker.model.DataSource;
 import com.aerhard.oxygen.plugin.glyphpicker.model.DataSourceList;
