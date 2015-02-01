@@ -47,19 +47,10 @@ public class AutoCompleteController {
             JComboBox<String> autoCompleteCombo, JComboBox<String> scopeCombo,
             SortedList<GlyphDefinition> sortedList) {
 
-        ResourceBundle i18n = ResourceBundle.getBundle("GlyphPicker");
-        String className = this.getClass().getSimpleName();
-        
         this.autoCompleteCombo = autoCompleteCombo;
         this.sortedList = sortedList;
-        
-        autoCompleteScope.put(i18n.getString(className + ".charName"), new CharNameSelector());
-        autoCompleteScope.put(i18n.getString(className + ".xmlId"), new IdSelector());
-        autoCompleteScope.put(i18n.getString(className + ".codepoint"), new CodePointSelector());
-        autoCompleteScope.put(i18n.getString(className + ".range"), new RangeSelector());
-        autoCompleteScope.put(i18n.getString(className + ".allFields"), new AllSelector());
 
-        // TODO add entity field
+        initAutoCompleteScope();
 
         PropertySelector initialPropertySelector = getPropertySelectorByIndex(scopeIndex);
 
@@ -71,6 +62,30 @@ public class AutoCompleteController {
 
         setAutoCompleteSupport(initialPropertySelector);
 
+        initAutoCompleteScopeCombo(scopeIndex, scopeCombo);
+    }
+
+    private void initAutoCompleteScope() {
+
+        // TODO add entity field
+
+        ResourceBundle i18n = ResourceBundle.getBundle("GlyphPicker");
+        String className = this.getClass().getSimpleName();
+
+        autoCompleteScope.put(i18n.getString(className + ".charName"),
+                new CharNameSelector());
+        autoCompleteScope.put(i18n.getString(className + ".xmlId"),
+                new IdSelector());
+        autoCompleteScope.put(i18n.getString(className + ".codepoint"),
+                new CodePointSelector());
+        autoCompleteScope.put(i18n.getString(className + ".range"),
+                new RangeSelector());
+        autoCompleteScope.put(i18n.getString(className + ".allFields"),
+                new AllSelector());
+    }
+
+    private void initAutoCompleteScopeCombo(int scopeIndex,
+            JComboBox<String> scopeCombo) {
         DefaultComboBoxModel<String> autoCompleteScopeModel = new DefaultComboBoxModel<String>();
 
         for (String property : autoCompleteScope.keySet()) {
@@ -100,7 +115,7 @@ public class AutoCompleteController {
         });
     }
 
-    public PropertySelector getPropertySelectorByIndex(int index) {
+    public final PropertySelector getPropertySelectorByIndex(int index) {
         List<String> l = new ArrayList<String>(autoCompleteScope.keySet());
         return autoCompleteScope.get(l.get(index));
     }

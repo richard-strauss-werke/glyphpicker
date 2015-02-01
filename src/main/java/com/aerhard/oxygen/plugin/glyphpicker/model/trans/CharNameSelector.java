@@ -9,5 +9,4 @@ public class CharNameSelector implements PropertySelector {
         return d.getCharName();
     }
 
-    
 }

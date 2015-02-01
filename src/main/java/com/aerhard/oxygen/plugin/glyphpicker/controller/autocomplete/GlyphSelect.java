@@ -9,13 +9,13 @@ import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinition;
 
 import ca.odell.glazedlists.matchers.TextMatcherEditor;
 
-public class GlyphSelect extends TextMatcherEditor<GlyphDefinition>
-        implements DocumentListener {
+public class GlyphSelect extends TextMatcherEditor<GlyphDefinition> implements
+        DocumentListener {
 
-    public GlyphSelect () {
+    public GlyphSelect() {
         setMode(TextMatcherEditor.CONTAINS);
     }
-    
+
     public void performUpdate(final DocumentEvent e) {
 
         String q;
@@ -30,7 +30,7 @@ public class GlyphSelect extends TextMatcherEditor<GlyphDefinition>
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                setFilterText(new String[] {query});
+                setFilterText(new String[] { query });
             }
         });
 

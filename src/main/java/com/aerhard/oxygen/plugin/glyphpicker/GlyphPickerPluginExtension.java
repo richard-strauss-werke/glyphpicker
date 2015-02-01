@@ -106,8 +106,9 @@ public class GlyphPickerPluginExtension implements
             @Override
             public void customizeMainMenu(JMenuBar mainMenu) {
                 mainMenu.getMenu(1).addSeparator();
-                mainMenu.getMenu(1)
-                        .add(new TogglePickerWindowAction(workspace, PLUGIN_ICON, VIEW_ID));
+                mainMenu.getMenu(1).add(
+                        new TogglePickerWindowAction(workspace, PLUGIN_ICON,
+                                VIEW_ID));
             }
         });
 
@@ -184,6 +185,5 @@ public class GlyphPickerPluginExtension implements
 
         return true;
     }
-
 
 }

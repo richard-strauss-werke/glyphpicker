@@ -12,6 +12,8 @@ public class HighlightLabel extends JLabel {
     private static final long serialVersionUID = 1L;
     private Color originalForeground = null;
 
+    private static final int DELAY = 300;
+    
     public HighlightLabel(String text) {
         super(text);
         originalForeground = getForeground();
@@ -19,7 +21,7 @@ public class HighlightLabel extends JLabel {
 
     public void highlight() {
         setForeground(Color.GRAY);
-        Timer timer = new Timer(300, new ActionListener() {
+        Timer timer = new Timer(DELAY, new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
                 setForeground(originalForeground);
             }

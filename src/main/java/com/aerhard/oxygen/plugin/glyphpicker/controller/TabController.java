@@ -29,7 +29,7 @@ import com.aerhard.oxygen.plugin.glyphpicker.action.ChangeViewAction;
 import com.aerhard.oxygen.plugin.glyphpicker.action.InsertXmlAction;
 import com.aerhard.oxygen.plugin.glyphpicker.action.SortAction;
 import com.aerhard.oxygen.plugin.glyphpicker.controller.autocomplete.AutoCompleteController;
-import com.aerhard.oxygen.plugin.glyphpicker.controller.bitmap.GlyphBitmapLoadWorker;
+import com.aerhard.oxygen.plugin.glyphpicker.controller.bitmap.BitmapLoadWorker;
 import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinition;
 import com.aerhard.oxygen.plugin.glyphpicker.view.ContainerPanel;
 import com.aerhard.oxygen.plugin.glyphpicker.view.ControlPanel;
@@ -58,7 +58,7 @@ public abstract class TabController implements PropertyChangeListener {
     protected GlyphGrid list;
 
     protected ControlPanel controlPanel;
-    protected GlyphBitmapLoadWorker bmpLoader = null;
+    protected BitmapLoadWorker bmpLoader = null;
     private PropertyChangeListener bmpListener;
     protected AutoCompleteController autoCompleteController;
 
@@ -150,6 +150,11 @@ public abstract class TabController implements PropertyChangeListener {
             }
         });
 
+        initKeyAndMouseListeners();
+
+    }
+
+    private void initKeyAndMouseListeners() {
         insertAction = new InsertXmlAction(this, selectionModel);
         insertAction.setEnabled(false);
         insertBtn = new HighlightButton(insertAction);
@@ -180,11 +185,10 @@ public abstract class TabController implements PropertyChangeListener {
         list.addKeyListener(enterKeyAdapter);
         ((JTextField) controlPanel.getAutoCompleteCombo().getEditor()
                 .getEditorComponent()).addKeyListener(enterKeyAdapter);
-
     }
 
     public void startBitmapLoadWorker(List<GlyphDefinition> data) {
-        bmpLoader = new GlyphBitmapLoadWorker(data, LIST_ITEM_SIZE);
+        bmpLoader = new BitmapLoadWorker(data, LIST_ITEM_SIZE);
 
         bmpListener = new PropertyChangeListener() {
             @Override

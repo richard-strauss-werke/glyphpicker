@@ -9,7 +9,7 @@ import javax.swing.SwingWorker;
 import com.aerhard.oxygen.plugin.glyphpicker.model.DataSource;
 import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinition;
 
-public class GlyphBitmapLoadWorker extends
+public class BitmapLoadWorker extends
         SwingWorker<List<GlyphDefinition>, Void> {
 
     private ExecutorService executorService = Executors.newFixedThreadPool(10);
@@ -17,18 +17,18 @@ public class GlyphBitmapLoadWorker extends
     private List<GlyphDefinition> glyphDefinitions;
     private int size;
 
-    public GlyphBitmapLoadWorker(List<GlyphDefinition> glyphDefinitions,
+    public BitmapLoadWorker(List<GlyphDefinition> glyphDefinitions,
             int size) {
         this.glyphDefinitions = glyphDefinitions;
         this.size = size;
     }
 
     public void shutdownExecutor() {
-       executorService.shutdownNow();
+        executorService.shutdownNow();
     }
-    
+
     @Override
-    protected List<GlyphDefinition> doInBackground() throws Exception {
+    protected List<GlyphDefinition> doInBackground() {
 
         for (GlyphDefinition gd : glyphDefinitions) {
             if (isCancelled()) {
@@ -37,8 +37,8 @@ public class GlyphBitmapLoadWorker extends
             if (DataSource.DISPLAY_MODE_BITMAP.equals(gd.getDataSource()
                     .getDisplayMode())) {
                 float factor = gd.getDataSource().getSizeFactor();
-                executorService.submit(new GlyphBitmapLoader(this, gd, Math.round(size
-                        * factor)));
+                executorService.submit(new BitmapLoader(this, gd, Math
+                        .round(size * factor)));
             }
         }
 

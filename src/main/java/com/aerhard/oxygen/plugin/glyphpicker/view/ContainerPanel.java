@@ -24,6 +24,8 @@ import java.util.ResourceBundle;
 
 public class ContainerPanel extends JPanel {
 
+    private static final int INFO_LABEL_PREFERRED_SIZE = 90;
+
     private static final long serialVersionUID = 1L;
 
     private JScrollPane jPane;
@@ -31,8 +33,6 @@ public class ContainerPanel extends JPanel {
     private JTextPane infoLabel;
 
     private JPanel infoPanel;
-
-    private JPanel overlayPanel;
 
     private ControlPanel controlPanel;
 
@@ -55,7 +55,7 @@ public class ContainerPanel extends JPanel {
         jPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         jPane.setBorder(new EtchedBorder());
 
-        overlayPanel = new JPanel();
+        JPanel overlayPanel = new JPanel();
         overlayPanel.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null,
                 null));
         JLabel overlayLabel = new JLabel(
@@ -69,12 +69,12 @@ public class ContainerPanel extends JPanel {
         infoPanel = new JPanel();
         infoPanel.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
         infoPanel.setBackground(UIManager.getColor("TextField.background"));
-        GridBagLayout gbl_infoPanel = new GridBagLayout();
-        gbl_infoPanel.columnWidths = new int[] { 210, 14, 0 };
-        gbl_infoPanel.rowHeights = new int[] { 0, 0 };
-        gbl_infoPanel.columnWeights = new double[] { 1.0, 0.0, Double.MIN_VALUE };
-        gbl_infoPanel.rowWeights = new double[] { 0.0, 0.0 };
-        infoPanel.setLayout(gbl_infoPanel);
+        GridBagLayout gblInfoPanel = new GridBagLayout();
+        gblInfoPanel.columnWidths = new int[] { 210, 14, 0 };
+        gblInfoPanel.rowHeights = new int[] { 0, 0 };
+        gblInfoPanel.columnWeights = new double[] { 1.0, 0.0, Double.MIN_VALUE };
+        gblInfoPanel.rowWeights = new double[] { 0.0, 0.0 };
+        infoPanel.setLayout(gblInfoPanel);
 
         tablePanel.add(infoPanel, BorderLayout.SOUTH);
 
@@ -82,16 +82,16 @@ public class ContainerPanel extends JPanel {
         infoLabel.putClientProperty(JEditorPane.HONOR_DISPLAY_PROPERTIES, true);
         infoLabel.setEditable(false);
         infoLabel.setContentType("text/html");
-        infoLabel.setPreferredSize(new Dimension(90, 90));
-        GridBagConstraints gbc_infoLabel = new GridBagConstraints();
-        gbc_infoLabel.insets = new Insets(5, 8, 5, 8);
-        gbc_infoLabel.gridwidth = 2;
-        gbc_infoLabel.weightx = 1.0;
-        gbc_infoLabel.fill = GridBagConstraints.HORIZONTAL;
-        gbc_infoLabel.anchor = GridBagConstraints.NORTHWEST;
-        gbc_infoLabel.gridx = 0;
-        gbc_infoLabel.gridy = 0;
-        infoPanel.add(infoLabel, gbc_infoLabel);
+        infoLabel.setPreferredSize(new Dimension(INFO_LABEL_PREFERRED_SIZE, INFO_LABEL_PREFERRED_SIZE));
+        GridBagConstraints gbcInfoLabel = new GridBagConstraints();
+        gbcInfoLabel.insets = new Insets(5, 8, 5, 8);
+        gbcInfoLabel.gridwidth = 2;
+        gbcInfoLabel.weightx = 1.0;
+        gbcInfoLabel.fill = GridBagConstraints.HORIZONTAL;
+        gbcInfoLabel.anchor = GridBagConstraints.NORTHWEST;
+        gbcInfoLabel.gridx = 0;
+        gbcInfoLabel.gridy = 0;
+        infoPanel.add(infoLabel, gbcInfoLabel);
 
     }
 

@@ -9,29 +9,32 @@ import javax.swing.KeyStroke;
 public abstract class AbstractPickerAction extends AbstractAction {
     private static final long serialVersionUID = 1L;
 
-    protected static final ResourceBundle i18n = ResourceBundle.getBundle("GlyphPicker");
-    protected static final String modifierName = (System.getProperty("os.name").toLowerCase().indexOf("mac") >= 0) ? "Option" : "Alt";
+    protected static final ResourceBundle I18N = ResourceBundle
+            .getBundle("GlyphPicker");
+    protected static final String MODIFIER_NAME = (System
+            .getProperty("os.name").toLowerCase().indexOf("mac") >= 0) ? "Option"
+            : "Alt";
 
     public AbstractPickerAction(String className) {
-        super(i18n.getString(className + ".label"));
+        super(I18N.getString(className + ".label"));
 
-        String description = i18n.getString(className + ".description");
-        String mnemonic = i18n.getString(className + ".mnemonic");
-        
-        putValue(SHORT_DESCRIPTION,
-                description + " ("+modifierName+"+"+mnemonic+")");
+        String description = I18N.getString(className + ".description");
+        String mnemonic = I18N.getString(className + ".mnemonic");
+
+        putValue(SHORT_DESCRIPTION, description + " (" + MODIFIER_NAME + "+"
+                + mnemonic + ")");
         putValue(MNEMONIC_KEY, KeyStroke.getKeyStroke(mnemonic).getKeyCode());
     }
-    
+
     public AbstractPickerAction(String className, String icon) {
-        super(i18n.getString(className + ".label"), new ImageIcon(
+        super(I18N.getString(className + ".label"), new ImageIcon(
                 AbstractPickerAction.class.getResource(icon)));
 
-        String description = i18n.getString(className + ".description");
-        String mnemonic = i18n.getString(className + ".mnemonic");
-        
-        putValue(SHORT_DESCRIPTION,
-                description + " ("+modifierName+"+"+mnemonic+")");
+        String description = I18N.getString(className + ".description");
+        String mnemonic = I18N.getString(className + ".mnemonic");
+
+        putValue(SHORT_DESCRIPTION, description + " (" + MODIFIER_NAME + "+"
+                + mnemonic + ")");
         putValue(MNEMONIC_KEY, KeyStroke.getKeyStroke(mnemonic).getKeyCode());
     }
 

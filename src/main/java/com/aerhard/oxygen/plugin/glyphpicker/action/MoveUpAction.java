@@ -16,19 +16,19 @@ public class MoveUpAction extends AbstractPickerAction {
     private GlyphGrid list;
 
     private static String className = MoveUpAction.class.getSimpleName();
-    
+
     public MoveUpAction(PropertyChangeListener listener,
             EventList<GlyphDefinition> glyphList, GlyphGrid list) {
-        super(i18n.getString(className + ".label"), new ImageIcon(
+        super(I18N.getString(className + ".label"), new ImageIcon(
                 MoveUpAction.class.getResource("/images/arrow-090.png")));
 
         this.addPropertyChangeListener(listener);
         this.glyphList = glyphList;
         this.list = list;
 
-        String description = i18n.getString(className + ".description");
-        
-        putValue(SHORT_DESCRIPTION, description + " ("+modifierName+"+↑)");
+        String description = I18N.getString(className + ".description");
+
+        putValue(SHORT_DESCRIPTION, description + " (" + MODIFIER_NAME + "+↑)");
         putValue(MNEMONIC_KEY, KeyEvent.VK_UP);
     }
 

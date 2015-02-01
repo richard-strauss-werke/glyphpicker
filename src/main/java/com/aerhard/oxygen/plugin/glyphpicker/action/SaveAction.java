@@ -11,7 +11,7 @@ public class SaveAction extends AbstractPickerAction {
     private Set<Action> actions;
 
     private static String className = SaveAction.class.getSimpleName();
-    
+
     public SaveAction(PropertyChangeListener listener, Set<Action> actions) {
         super(className, "/images/disk.png");
         this.addPropertyChangeListener(listener);

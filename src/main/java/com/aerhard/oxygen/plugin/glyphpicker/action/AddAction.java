@@ -11,7 +11,7 @@ public class AddAction extends AbstractPickerAction {
     private DefaultEventSelectionModel<GlyphDefinition> selectionModel;
 
     private static String className = AddAction.class.getSimpleName();
-    
+
     public AddAction(PropertyChangeListener listener,
             DefaultEventSelectionModel<GlyphDefinition> selectionModel) {
         super(className, "/images/plus.png");

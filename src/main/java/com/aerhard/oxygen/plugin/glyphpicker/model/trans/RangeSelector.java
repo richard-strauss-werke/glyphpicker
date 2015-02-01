@@ -9,5 +9,4 @@ public class RangeSelector implements PropertySelector {
         return d.getRange();
     }
 
-    
 }

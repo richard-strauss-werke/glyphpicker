@@ -6,8 +6,6 @@ import java.awt.event.KeyEvent;
 import javax.swing.ImageIcon;
 import javax.swing.KeyStroke;
 
-import com.aerhard.oxygen.plugin.glyphpicker.GlyphPickerPluginExtension;
-
 import ro.sync.exml.workspace.api.standalone.StandalonePluginWorkspace;
 
 public class TogglePickerWindowAction extends AbstractPickerAction {
@@ -16,22 +14,24 @@ public class TogglePickerWindowAction extends AbstractPickerAction {
     private StandalonePluginWorkspace workspace;
 
     private String viewId;
-    
-    private static String className = TogglePickerWindowAction.class.getSimpleName();
 
-    public TogglePickerWindowAction(StandalonePluginWorkspace workspace, String icon, String viewId) {
+    private static String className = TogglePickerWindowAction.class
+            .getSimpleName();
+
+    public TogglePickerWindowAction(StandalonePluginWorkspace workspace,
+            String icon, String viewId) {
         super("GyphPicker", new ImageIcon(
-                GlyphPickerPluginExtension.class.getResource(icon)));
+                TogglePickerWindowAction.class.getResource(icon)));
 
         this.workspace = workspace;
-        this.viewId=viewId;
+        this.viewId = viewId;
 
-        String description = i18n.getString(className + ".description");
-        
+        String description = I18N.getString(className + ".description");
+
         putValue(SHORT_DESCRIPTION, description);
 
-        putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_P,
-                Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
+        putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_P, Toolkit
+                .getDefaultToolkit().getMenuShortcutKeyMask()));
     }
 
     @Override

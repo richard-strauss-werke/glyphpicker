@@ -16,6 +16,10 @@ public class MainPanel extends JPanel {
     private static final long serialVersionUID = 1L;
     private JTabbedPane tabbedPane;
 
+    private static final int MAIN_BORDER_WIDTH = 8;
+    private static final int MIN_WIDTH = 200;
+    private static final int MIN_HEIGHT = 200;
+
     public MainPanel(JComponent userCollectionPanel, JComponent browserPanel) {
 
         ResourceBundle i18n = ResourceBundle.getBundle("GlyphPicker");
@@ -24,7 +28,8 @@ public class MainPanel extends JPanel {
         setLayout(new BorderLayout(0, 0));
 
         tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-        tabbedPane.setBorder(new EmptyBorder(8, 8, 8, 8));
+        tabbedPane.setBorder(new EmptyBorder(MAIN_BORDER_WIDTH,
+                MAIN_BORDER_WIDTH, MAIN_BORDER_WIDTH, MAIN_BORDER_WIDTH));
 
         String userCollectionLabel = i18n.getString(className
                 + ".userCollection");
@@ -44,7 +49,7 @@ public class MainPanel extends JPanel {
                         .getKeyCode());
 
         add(tabbedPane, BorderLayout.CENTER);
-        setMinimumSize(new Dimension(200, 200));
+        setMinimumSize(new Dimension(MIN_WIDTH, MIN_HEIGHT));
     }
 
     private String getHtmlLabel(String str) {

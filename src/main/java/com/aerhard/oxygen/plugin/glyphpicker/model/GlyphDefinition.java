@@ -32,7 +32,7 @@ public class GlyphDefinition implements Cloneable {
 
     @XmlElement(name = "g")
     @XmlElementWrapper(name = "glyphRefs")
-    private List<GlyphRef> glyphRefs = null; 
+    private List<GlyphRef> glyphRefs = null;
 
     @XmlElement(name = "dataSource")
     private DataSource dataSource;
@@ -66,7 +66,7 @@ public class GlyphDefinition implements Cloneable {
     }
 
     public String getCodePointString() {
-        
+
         if (codePoint != null) {
             StringBuilder sb = new StringBuilder();
             for (Character c : codePoint.toCharArray()) {
@@ -91,7 +91,7 @@ public class GlyphDefinition implements Cloneable {
     public void setRange(String range) {
         this.range = range;
     }
-    
+
     public List<GlyphRef> getGlyphRefs() {
         return glyphRefs;
     }
@@ -99,7 +99,7 @@ public class GlyphDefinition implements Cloneable {
     public void setGlyphRefs(List<GlyphRef> glyphRefs) {
         this.glyphRefs = glyphRefs;
     }
-    
+
     public String getId() {
         return id;
     }

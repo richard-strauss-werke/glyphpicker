@@ -32,10 +32,10 @@ public class ControlPanel extends JPanel {
     private JToolBar toolBar;
 
     public ControlPanel(boolean setDataSourceCombo) {
-        
+
         ResourceBundle i18n = ResourceBundle.getBundle("GlyphPicker");
         String className = this.getClass().getSimpleName();
-        
+
         setBorder(new EmptyBorder(0, 8, 0, 8));
 
         int row = 0;
@@ -50,13 +50,13 @@ public class ControlPanel extends JPanel {
 
         toolBar = new JToolBar();
         toolBar.setFloatable(false);
-        GridBagConstraints gbc_toolBar = new GridBagConstraints();
-        gbc_toolBar.fill = GridBagConstraints.HORIZONTAL;
-        gbc_toolBar.gridwidth = 4;
-        gbc_toolBar.insets = new Insets(5, 0, 5, 5);
-        gbc_toolBar.gridx = 0;
-        gbc_toolBar.gridy = row;
-        add(toolBar, gbc_toolBar);
+        GridBagConstraints gbcToolBar = new GridBagConstraints();
+        gbcToolBar.fill = GridBagConstraints.HORIZONTAL;
+        gbcToolBar.gridwidth = 4;
+        gbcToolBar.insets = new Insets(5, 0, 5, 5);
+        gbcToolBar.gridx = 0;
+        gbcToolBar.gridy = row;
+        add(toolBar, gbcToolBar);
 
         toolBar.add(Box.createHorizontalGlue());
 
@@ -64,8 +64,6 @@ public class ControlPanel extends JPanel {
         sortBtn.setVerticalTextPosition(SwingConstants.BOTTOM);
         sortBtn.setHorizontalTextPosition(SwingConstants.CENTER);
         toolBar.add(sortBtn);
-
-        // toolBar.addSeparator();
 
         viewBtn = new JideButton();
         viewBtn.setVerticalTextPosition(SwingConstants.BOTTOM);
@@ -78,8 +76,8 @@ public class ControlPanel extends JPanel {
 
             dataSourcePanel = new JPanel();
 
-            dataSourcePanel.setBorder(new TitledBorder(null, 
-                    i18n.getString(className + ".dataSource"),
+            dataSourcePanel.setBorder(new TitledBorder(null, i18n
+                    .getString(className + ".dataSource"),
                     TitledBorder.LEADING, TitledBorder.TOP, null, null));
 
             GridBagConstraints gbcDataSourcePanel = new GridBagConstraints();
@@ -121,8 +119,9 @@ public class ControlPanel extends JPanel {
 
         JPanel searchPanel = new JPanel();
 
-        searchPanel.setBorder(new TitledBorder(null, i18n.getString(className + ".search"),
-                TitledBorder.LEADING, TitledBorder.TOP, null, null));
+        searchPanel.setBorder(new TitledBorder(null, i18n.getString(className
+                + ".search"), TitledBorder.LEADING, TitledBorder.TOP, null,
+                null));
 
         GridBagConstraints gbcSearchPanel = new GridBagConstraints();
         gbcSearchPanel.anchor = GridBagConstraints.WEST;

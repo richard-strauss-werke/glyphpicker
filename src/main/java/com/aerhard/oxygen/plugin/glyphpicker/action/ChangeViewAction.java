@@ -13,7 +13,7 @@ public class ChangeViewAction extends AbstractPickerAction {
     private GlyphGrid list;
 
     private static String className = ChangeViewAction.class.getSimpleName();
-    
+
     public ChangeViewAction(ContainerPanel panel, GlyphTable table,
             GlyphGrid list) {
         super(className, "/images/grid.png");

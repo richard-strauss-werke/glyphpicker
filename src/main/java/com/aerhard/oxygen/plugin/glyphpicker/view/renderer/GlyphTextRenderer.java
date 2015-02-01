@@ -14,13 +14,14 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.font.TextAttribute;
 import java.util.HashMap;
+import java.util.Map;
 
 import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinition;
 
 public class GlyphTextRenderer extends GlyphRenderer {
 
     private static final long serialVersionUID = 1L;
-    private HashMap<TextAttribute, Integer> attr;
+    private Map<TextAttribute, Integer> attr;
 
     public GlyphTextRenderer(JComponent container) {
         super(container);
@@ -28,7 +29,7 @@ public class GlyphTextRenderer extends GlyphRenderer {
         {
             attr.put(KERNING, KERNING_ON);
             attr.put(LIGATURES, LIGATURES_ON);
-        } 
+        }
     }
 
     public Component getRendererComponent(GlyphDefinition gd, boolean isSelected) {
@@ -37,7 +38,7 @@ public class GlyphTextRenderer extends GlyphRenderer {
 
         if (fontName != null) {
             float factor = gd.getDataSource().getSizeFactor();
-            
+
             Font baseFont = new Font(fontName, Font.PLAIN,
                     Math.round(getPreferredSize().height * factor));
 

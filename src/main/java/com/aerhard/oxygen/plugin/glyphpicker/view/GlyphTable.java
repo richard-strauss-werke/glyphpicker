@@ -18,6 +18,11 @@ import com.aerhard.oxygen.plugin.glyphpicker.view.renderer.DescriptionRenderer;
 
 public class GlyphTable extends JTable {
 
+    private static final int COL_1_PREFERRED_WIDTH = 70;
+    private static final int COL_1_MIN_WIDTH = 30;
+    private static final int COL_2_PREFERRED_WIDTH = 600;
+    private static final int COL_2_MIN_WIDTH = 10;
+
     private static final long serialVersionUID = 1L;
 
     private TableCellRenderer tableIconRenderer;
@@ -35,10 +40,10 @@ public class GlyphTable extends JTable {
 
         setDefaultFocusTraversal();
 
-        getColumnModel().getColumn(0).setPreferredWidth(70);
-        getColumnModel().getColumn(0).setMinWidth(30);
-        getColumnModel().getColumn(1).setPreferredWidth(600);
-        getColumnModel().getColumn(1).setMinWidth(10);
+        getColumnModel().getColumn(0).setPreferredWidth(COL_1_PREFERRED_WIDTH);
+        getColumnModel().getColumn(0).setMinWidth(COL_1_MIN_WIDTH);
+        getColumnModel().getColumn(1).setPreferredWidth(COL_2_PREFERRED_WIDTH);
+        getColumnModel().getColumn(1).setMinWidth(COL_2_MIN_WIDTH);
 
     }
 

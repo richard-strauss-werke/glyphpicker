@@ -26,9 +26,9 @@ public class UserCollectionLoader {
 
     public UserCollectionLoader(StandalonePluginWorkspace workspace,
             Properties properties) {
-        
+
         i18n = ResourceBundle.getBundle("GlyphPicker");
-        
+
         pathName = workspace.getPreferencesDirectory() + "/"
                 + properties.getProperty("config.path");
         fileName = properties.getProperty("userdata.filename");
@@ -50,23 +50,22 @@ public class UserCollectionLoader {
                     null,
                     String.format(
                             i18n.getString(this.getClass().getSimpleName()
-                                    + ".couldNotCreateFolder"),
-                                    pathName),
-                    i18n.getString(this.getClass().getSimpleName() + ".storeError"),
-                    JOptionPane.ERROR_MESSAGE);
+                                    + ".couldNotCreateFolder"), pathName),
+                    i18n.getString(this.getClass().getSimpleName()
+                            + ".storeError"), JOptionPane.ERROR_MESSAGE);
         }
     }
 
     public GlyphDefinitions load() {
         File file = new File(pathName + "/" + fileName);
         GlyphDefinitions glyphDefinitions = null;
-        
+
         if (file.exists()) {
             try {
                 glyphDefinitions = JAXB.unmarshal(file, GlyphDefinitions.class);
             } catch (DataBindingException e) {
                 LOGGER.error("Error unmarshalling user data.", e);
-            }            
+            }
         }
 
         if (glyphDefinitions == null) {

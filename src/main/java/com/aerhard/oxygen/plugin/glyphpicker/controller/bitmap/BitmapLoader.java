@@ -23,35 +23,35 @@ import org.apache.log4j.Logger;
 import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinition;
 import com.aerhard.oxygen.plugin.glyphpicker.view.renderer.GlyphBitmapIcon;
 
-public class GlyphBitmapLoader implements Runnable {
+public class BitmapLoader implements Runnable {
 
     private static final Logger LOGGER = Logger
-            .getLogger(GlyphBitmapLoader.class.getName());
+            .getLogger(BitmapLoader.class.getName());
 
-    private GlyphBitmapLoadWorker worker;
+    private BitmapLoadWorker worker;
     private GlyphDefinition glyphDefinition;
     private int size;
 
-    public GlyphBitmapLoader(GlyphBitmapLoadWorker worker,
+    public BitmapLoader(BitmapLoadWorker worker,
             GlyphDefinition glyphDefinition, int size) {
         this.worker = worker;
         this.glyphDefinition = glyphDefinition;
         this.size = size;
     }
 
-
     @Override
     public void run() {
         if (!worker.isCancelled()) {
             try {
                 GlyphBitmapIcon icon = null;
-                
+
                 BufferedImage bi = loadImage(glyphDefinition.getDataSource()
                         .getBasePath(), glyphDefinition.getUrl());
                 if (bi != null) {
-                    icon= new GlyphBitmapIcon(scaleToBound(bi, size, size), size);
+                    icon = new GlyphBitmapIcon(scaleToBound(bi, size, size),
+                            size);
                 }
-                
+
                 if (icon != null) {
                     glyphDefinition.setIcon(icon);
                     worker.firePropertyChange("iconLoaded", null,
@@ -120,7 +120,8 @@ public class GlyphBitmapLoader implements Runnable {
         try {
             image = ImageIO.read(file);
         } catch (IOException e) {
-            LOGGER.warn("\"" + file.toPath() + "\" could not be loaded. " + e.getMessage());
+            LOGGER.warn("\"" + file.toPath() + "\" could not be loaded. "
+                    + e.getMessage());
         }
         return image;
     };
@@ -149,7 +150,8 @@ public class GlyphBitmapLoader implements Runnable {
                         + statusCode + " - " + statusLine.getReasonPhrase());
             }
         } catch (IOException e) {
-            LOGGER.warn("Error loading image from \"" + url + "\". " + e.getMessage());
+            LOGGER.warn("Error loading image from \"" + url + "\". "
+                    + e.getMessage());
         } finally {
             httpclient.getConnectionManager().shutdown();
         }

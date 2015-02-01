@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import javax.swing.DefaultListModel;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.ListSelectionModel;
@@ -23,15 +24,18 @@ import com.jidesoft.swing.JideButton;
 
 public class DataSourceEditorController implements PropertyChangeListener {
 
+    private static final float PERCENTAGE_FACTOR = 100f;
+
     private static final Logger LOGGER = Logger
             .getLogger(DataSourceEditorController.class.getName());
+
+    public static final String LIST_EDITING_OCCURRED = "listEditingOccurred";
 
     private DataSourceEditor contentPane;
     private JPanel parentPanel;
 
     private List<String> displayModes = new ArrayList<String>();
 
-    private NewAction newAction;
     private CloneAction cloneAction;
     private DeleteAction deleteAction;
 
@@ -45,14 +49,13 @@ public class DataSourceEditorController implements PropertyChangeListener {
     public DataSourceEditorController(DataSourceEditor contentPane,
             JPanel parentPanel) {
 
-        newAction = new NewAction(this);
         cloneAction = new CloneAction(this);
         deleteAction = new DeleteAction(this);
 
         this.contentPane = contentPane;
         this.parentPanel = parentPanel;
 
-        contentPane.getListButtonPane().add(new JideButton(newAction));
+        contentPane.getListButtonPane().add(new JideButton(new NewAction(this)));
         contentPane.getListButtonPane().add(new JideButton(cloneAction));
         contentPane.getListButtonPane().add(new JideButton(deleteAction));
 
@@ -86,7 +89,7 @@ public class DataSourceEditorController implements PropertyChangeListener {
                     .getSelectionModel()
                     .setSelectionInterval(listModel.size() - 1,
                             listModel.size() - 1);
-            firePropertyChange("listEditingOccurred", null, null);
+            firePropertyChange(LIST_EDITING_OCCURRED, null, null);
         }
     }
 
@@ -112,7 +115,7 @@ public class DataSourceEditorController implements PropertyChangeListener {
                         .getSelectionModel()
                         .setSelectionInterval(listModel.size() - 1,
                                 listModel.size() - 1);
-                firePropertyChange("listEditingOccurred", null, null);
+                firePropertyChange(LIST_EDITING_OCCURRED, null, null);
             } catch (CloneNotSupportedException e1) {
                 LOGGER.error(e1);
             }
@@ -140,42 +143,15 @@ public class DataSourceEditorController implements PropertyChangeListener {
                             .setSelectionInterval(index, index);
                 }
             }
-            firePropertyChange("listEditingOccurred", null, null);
+            firePropertyChange(LIST_EDITING_OCCURRED, null, null);
 
         }
     }
 
     public List<DataSource> load(List<DataSource> dataSourceList) {
 
-        listModel = new DefaultListModel<DataSource>();
-
-        try {
-            for (DataSource dataSource : dataSourceList) {
-                listModel.addElement(dataSource.clone());
-            }
-        } catch (CloneNotSupportedException e) {
-            LOGGER.error(e);
-        }
-
-        contentPane.getList().setModel(listModel);
-        contentPane.getList().setSelectionMode(
-                ListSelectionModel.SINGLE_SELECTION);
-
-        if (listModel.size() > 0) {
-            contentPane.getList().setSelectedIndex(0);
-            onListSelection();
-        }
-
-        contentPane.getList().getSelectionModel()
-                .addListSelectionListener(new ListSelectionListener() {
-
-                    @Override
-                    public void valueChanged(ListSelectionEvent e) {
-                        if (!e.getValueIsAdjusting()) {
-                            onListSelection();
-                        }
-                    }
-                });
+        initListModel(dataSourceList);
+        initListComponent(contentPane.getList());
 
         int result = JOptionPane.showConfirmDialog(parentPanel, contentPane,
                 i18n.getString("DataSourceEditorController.frameTitle"),
@@ -189,6 +165,39 @@ public class DataSourceEditorController implements PropertyChangeListener {
             return resultList;
         } else {
             return null;
+        }
+    }
+
+    private void initListComponent(JList<DataSource> list) {
+        list.setModel(listModel);
+        list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        if (listModel.size() > 0) {
+            contentPane.getList().setSelectedIndex(0);
+            onListSelection();
+        }
+        list.getSelectionModel().addListSelectionListener(
+                new DataSourceListSelectionListener());
+    }
+
+    private void initListModel(List<DataSource> dataSourceList) {
+        listModel = new DefaultListModel<DataSource>();
+
+        try {
+            for (DataSource dataSource : dataSourceList) {
+                listModel.addElement(dataSource.clone());
+            }
+        } catch (CloneNotSupportedException e) {
+            LOGGER.error(e);
+        }
+    }
+
+    private class DataSourceListSelectionListener implements
+            ListSelectionListener {
+        @Override
+        public void valueChanged(ListSelectionEvent e) {
+            if (!e.getValueIsAdjusting()) {
+                onListSelection();
+            }
         }
     }
 
@@ -221,7 +230,7 @@ public class DataSourceEditorController implements PropertyChangeListener {
         int index = displayModes.indexOf(dataSource.getDisplayMode());
         contentPane.getDisplayModeTextField().setSelectedIndex(index);
 
-        Integer sizeFactor = Math.round(dataSource.getSizeFactor() * 100);
+        Integer sizeFactor = Math.round(dataSource.getSizeFactor() * PERCENTAGE_FACTOR);
         String sizeFactorString;
         try {
             sizeFactorString = sizeFactor.toString();
@@ -254,7 +263,7 @@ public class DataSourceEditorController implements PropertyChangeListener {
 
             try {
                 float sizeFactor = Float.parseFloat(contentPane
-                        .getSizeTextField().getText() + "f") / 100f;
+                        .getSizeTextField().getText() + "f") / PERCENTAGE_FACTOR;
                 currentDataSource.setSizeFactor(sizeFactor);
             } catch (Exception e) {
                 LOGGER.info("Error converting size factor "
@@ -277,12 +286,10 @@ public class DataSourceEditorController implements PropertyChangeListener {
 
         if (DataSourceEditor.FORM_EDITING_OCCURRED.equals(e.getPropertyName())) {
             updateCurrentModelFromForm();
-            System.out.println("formediting");
             listEditingOccurred = true;
         }
-        
-        else if ("listEditingOccurred".equals(e.getPropertyName())) {
-            System.out.println("listediting");
+
+        else if (LIST_EDITING_OCCURRED.equals(e.getPropertyName())) {
             listEditingOccurred = true;
         }
 

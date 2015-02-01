@@ -12,9 +12,10 @@ import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinition;
 public class GlyphBitmapRenderer extends GlyphRenderer {
 
     private static final long serialVersionUID = 1L;
-    
-    public Color inactiveColor = UIManager.getColor("TextField.inactiveBackground");
-    
+
+    private Color inactiveColor = UIManager
+            .getColor("TextField.inactiveBackground");
+
     public GlyphBitmapRenderer(JComponent container) {
         super(container);
     }
@@ -23,13 +24,13 @@ public class GlyphBitmapRenderer extends GlyphRenderer {
     public Component getRendererComponent(GlyphDefinition gd, boolean isSelected) {
 
         ImageIcon icon = gd.getIcon();
-        
+
         setIcon(gd.getIcon());
 
         if (icon == null) {
             setBackground(inactiveColor);
         } else {
-            configureBackground(isSelected);           
+            configureBackground(isSelected);
         }
 
         return this;

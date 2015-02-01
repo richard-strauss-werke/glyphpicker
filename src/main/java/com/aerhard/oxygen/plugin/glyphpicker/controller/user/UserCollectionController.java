@@ -33,15 +33,16 @@ public class UserCollectionController extends TabController {
     private AbstractAction removeAction;
     private MoveUpAction moveUpAction;
     private MoveDownAction moveDownAction;
-    
+
     private UserCollectionLoader loader;
     private boolean listInSync = true;
-    
+
     public UserCollectionController(ContainerPanel panel, Config config,
             Properties properties, StandalonePluginWorkspace workspace) {
 
-        super(panel, config.getUserSearchFieldScopeIndex(), config.getUserViewIndex());
-        
+        super(panel, config.getUserSearchFieldScopeIndex(), config
+                .getUserViewIndex());
+
         loader = new UserCollectionLoader(workspace, properties);
 
         setActions();
@@ -54,8 +55,7 @@ public class UserCollectionController extends TabController {
 
         controlPanel.addToToolbar(insertBtn, 0);
 
-        removeAction = new RemoveAction(this, glyphList,
-                filterList, list);
+        removeAction = new RemoveAction(this, glyphList, filterList, list);
         removeAction.setEnabled(false);
         controlPanel.addToToolbar(removeAction, 1);
 
@@ -95,7 +95,8 @@ public class UserCollectionController extends TabController {
 
         selectionModel
                 .addListSelectionListener(new GlyphSelectionChangeHandler(panel
-                        .getInfoLabel(), sortedList, filterList, selectionDependentActions));
+                        .getInfoLabel(), sortedList, filterList,
+                        selectionDependentActions));
 
         glyphList
                 .addListEventListener(new ListEventListener<GlyphDefinition>() {
@@ -123,7 +124,7 @@ public class UserCollectionController extends TabController {
 
                 listInSync = true;
                 glyphList.clear();
-                
+
                 startBitmapLoadWorker(data);
 
                 glyphList.addAll(data);
@@ -131,7 +132,7 @@ public class UserCollectionController extends TabController {
             }
         });
     }
-        
+
     public void saveData() {
         loader.save(new GlyphDefinitions(glyphList));
         listInSync = true;
@@ -141,19 +142,18 @@ public class UserCollectionController extends TabController {
         setListInSync(false);
         glyphList.add(d);
     }
-    
 
     @Override
     public void propertyChange(PropertyChangeEvent e) {
-        
+
         if ("insert".equals(e.getPropertyName())) {
             pcs.firePropertyChange(e);
         }
-        
+
         else if ("reload".equals(e.getPropertyName())) {
             loadData();
         }
-        
+
         else if ("saveData".equals(e.getPropertyName())) {
             saveData();
         }
@@ -161,7 +161,7 @@ public class UserCollectionController extends TabController {
         else if ("listInSync".equals(e.getPropertyName())) {
             setListInSync((boolean) e.getNewValue());
         }
-        
+
     }
 
 }

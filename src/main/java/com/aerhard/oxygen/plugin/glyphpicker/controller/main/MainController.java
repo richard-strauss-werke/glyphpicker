@@ -24,7 +24,7 @@ public class MainController implements PropertyChangeListener {
     private static final Logger LOGGER = Logger.getLogger(MainController.class
             .getName());
 
-    protected PropertyChangeSupport pcs = new PropertyChangeSupport(this);
+    private PropertyChangeSupport pcs = new PropertyChangeSupport(this);
 
     public void addPropertyChangeListener(PropertyChangeListener l) {
         pcs.addPropertyChangeListener(l);
@@ -33,14 +33,14 @@ public class MainController implements PropertyChangeListener {
     public void removePropertyChangeListener(PropertyChangeListener l) {
         pcs.removePropertyChangeListener(l);
     }
-    
+
     private MainPanel mainPanel;
 
     private ConfigLoader configLoader;
 
     private BrowserController browserController;
     private UserCollectionController userCollectionController;
-    
+
     private ContainerPanel browserPanel;
     private ContainerPanel userCollectionPanel;
 
@@ -64,17 +64,20 @@ public class MainController implements PropertyChangeListener {
         browserController.addPropertyChangeListener(this);
 
         userCollectionPanel = new ContainerPanel(new ControlPanel(false));
-        userCollectionController = new UserCollectionController(userCollectionPanel, config,
-                properties, workspace);
+        userCollectionController = new UserCollectionController(
+                userCollectionPanel, config, properties, workspace);
         userCollectionController.addPropertyChangeListener(this);
 
         mainPanel = new MainPanel(userCollectionPanel, browserPanel);
 
         mainPanel.getTabbedPane().setSelectedIndex(config.getTabIndex());
 
-        TabFocusHandler focusHandler = new TabFocusHandler(mainPanel.getTabbedPane());
-        focusHandler.setTabComponentFocus(0, userCollectionPanel.getControlPanel().getAutoCompleteCombo());
-        focusHandler.setTabComponentFocus(1, browserPanel.getControlPanel().getAutoCompleteCombo());
+        TabFocusHandler focusHandler = new TabFocusHandler(
+                mainPanel.getTabbedPane());
+        focusHandler.setTabComponentFocus(0, userCollectionPanel
+                .getControlPanel().getAutoCompleteCombo());
+        focusHandler.setTabComponentFocus(1, browserPanel.getControlPanel()
+                .getAutoCompleteCombo());
     }
 
     public ConfigLoader getConfigLoader() {
@@ -93,21 +96,21 @@ public class MainController implements PropertyChangeListener {
     public void saveData() {
         Config config = getConfigLoader().getConfig();
         config.setTabIndex(mainPanel.getTabbedPane().getSelectedIndex());
-        config.setBrowserSearchFieldScopeIndex(browserPanel
-                .getControlPanel().getAutoCompleteScopeCombo()
-                .getSelectedIndex());
+        config.setBrowserSearchFieldScopeIndex(browserPanel.getControlPanel()
+                .getAutoCompleteScopeCombo().getSelectedIndex());
         config.setUserSearchFieldScopeIndex(userCollectionPanel
                 .getControlPanel().getAutoCompleteScopeCombo()
                 .getSelectedIndex());
 
-        config.setBrowserViewIndex((browserPanel.getListComponent() instanceof GlyphGrid) ? 0:1);
-        config.setUserViewIndex((userCollectionPanel.getListComponent() instanceof GlyphGrid) ? 0:1);        
-        
+        config.setBrowserViewIndex((browserPanel.getListComponent() instanceof GlyphGrid) ? 0
+                : 1);
+        config.setUserViewIndex((userCollectionPanel.getListComponent() instanceof GlyphGrid) ? 0
+                : 1);
+
         getConfigLoader().save();
         userCollectionController.saveData();
     }
 
-    
     @Override
     public void propertyChange(PropertyChangeEvent e) {
         if ("insert".equals(e.getPropertyName())) {
@@ -116,7 +119,8 @@ public class MainController implements PropertyChangeListener {
 
         else if ("copyToUserCollection".equals(e.getPropertyName())) {
             try {
-                GlyphDefinition clone = ((GlyphDefinition) e.getNewValue()).clone();
+                GlyphDefinition clone = ((GlyphDefinition) e.getNewValue())
+                        .clone();
                 userCollectionController.addGlyphDefinition(clone);
                 mainPanel.highlightTabTitle(0);
             } catch (CloneNotSupportedException e1) {

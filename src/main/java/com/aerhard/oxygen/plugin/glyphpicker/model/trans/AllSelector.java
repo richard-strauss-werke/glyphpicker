@@ -6,7 +6,8 @@ public class AllSelector implements PropertySelector {
 
     @Override
     public String get(GlyphDefinition d) {
-        return d.getCodePointString() + " " + d.getId() + " " + d.getRange() + " " + d.getCharName();
+        return d.getCodePointString() + " " + d.getId() + " " + d.getRange()
+                + " " + d.getCharName();
     }
-    
+
 }

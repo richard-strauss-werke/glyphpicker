@@ -26,7 +26,7 @@ public class GlyphShapeRenderer extends GlyphRenderer {
 
     private String fontName = null;
 
-    private float factor = 66f / 90f;
+    private float factor = 0.73f;
 
     private FontRenderContext frc;
 
@@ -43,7 +43,7 @@ public class GlyphShapeRenderer extends GlyphRenderer {
         {
             attr.put(KERNING, KERNING_ON);
             attr.put(LIGATURES, LIGATURES_ON);
-        }        
+        }
     }
 
     public Component getRendererComponent(GlyphDefinition gd, boolean isSelected) {
@@ -78,7 +78,7 @@ public class GlyphShapeRenderer extends GlyphRenderer {
 
         Font baseFont = new Font(fontName, Font.PLAIN, fontSize);
         Font font = baseFont.deriveFont(attr);
-        
+
         GlyphVector gv = font.createGlyphVector(frc, text);
         Rectangle visualBounds = gv.getPixelBounds(frc, 0, 0);
 

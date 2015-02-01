@@ -56,30 +56,33 @@ public class GlyphSelectionChangeHandler implements ListSelectionListener {
                 }
             }
 
-            boolean isSortingOrFiltering = sortedList.getComparator() != null
-                    || sortedList.size() > filterList.size();
+            adjustActions(enableButtons, model);
+        }
+    }
 
-            for (Action action : actions) {
+    private void adjustActions(Boolean enableButtons,
+            DefaultEventSelectionModel<GlyphDefinition> model) {
+        boolean isSortingOrFiltering = sortedList.getComparator() != null
+                || sortedList.size() > filterList.size();
 
-                if (isSortingOrFiltering
-                        && (action instanceof MoveUpAction || action instanceof MoveDownAction)) {
-                    action.setEnabled(false);
-                }
+        for (Action action : actions) {
 
-                else if (action instanceof MoveUpAction
-                        && model.isSelectedIndex(0)) {
-                    action.setEnabled(false);
-                }
+            if (isSortingOrFiltering
+                    && (action instanceof MoveUpAction || action instanceof MoveDownAction)) {
+                action.setEnabled(false);
+            }
 
-                else if (action instanceof MoveDownAction
-                        && model.isSelectedIndex(filterList.size() - 1)) {
-                    action.setEnabled(false);
-                }
+            else if (action instanceof MoveUpAction && model.isSelectedIndex(0)) {
+                action.setEnabled(false);
+            }
 
-                else {
-                    action.setEnabled(enableButtons);
-                }
+            else if (action instanceof MoveDownAction
+                    && model.isSelectedIndex(filterList.size() - 1)) {
+                action.setEnabled(false);
+            }
 
+            else {
+                action.setEnabled(enableButtons);
             }
         }
     }

@@ -10,15 +10,14 @@ public class GlyphTableFormat implements TableFormat<GlyphDefinition> {
 
     private String glyphLabel;
     private String descriptionLabel;
-    
-    public GlyphTableFormat(){
+
+    public GlyphTableFormat() {
         ResourceBundle i18n = ResourceBundle.getBundle("GlyphPicker");
         String className = this.getClass().getSimpleName();
         glyphLabel = i18n.getString(className + ".glyphLabel");
         descriptionLabel = i18n.getString(className + ".descriptionLabel");
     }
-    
-    
+
     public int getColumnCount() {
         return 2;
     }

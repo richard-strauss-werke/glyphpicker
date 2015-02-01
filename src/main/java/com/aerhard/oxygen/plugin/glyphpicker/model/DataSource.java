@@ -9,6 +9,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class DataSource implements Cloneable {
 
+    private static final float DEFAULT_SIZE = 0.5f;
     public static final String DISPLAY_MODE_VECTOR_PROPORTIONAL = "proportional";
     public static final String DISPLAY_MODE_VECTOR_FIT = "fit";
     public static final String DISPLAY_MODE_BITMAP = "bitmap";
@@ -22,7 +23,7 @@ public class DataSource implements Cloneable {
     @XmlElement(name = "displayMode")
     private String displayMode;
     @XmlElement(name = "sizeFactor")
-    private Float sizeFactor = 0.5f;
+    private Float sizeFactor = DEFAULT_SIZE;
     @XmlElement(name = "template")
     private String template = "";
     @XmlElement(name = "mappingTypeValue")
@@ -50,7 +51,7 @@ public class DataSource implements Cloneable {
     public void setMappingSubTypeValue(String mappingAttValue) {
         this.mappingSubTypeValue = mappingAttValue;
     }
-    
+
     public boolean getMappingAsCharString() {
         return mappingAsCharString;
     }

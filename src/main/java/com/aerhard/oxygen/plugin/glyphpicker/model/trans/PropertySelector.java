@@ -5,5 +5,5 @@ import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinition;
 public interface PropertySelector {
 
     String get(GlyphDefinition d);
-    
+
 }

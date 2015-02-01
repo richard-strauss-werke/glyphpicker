@@ -11,19 +11,19 @@ public class Config {
 
     @XmlElement
     private int tabIndex = 1;
-    
+
     @XmlElement
     private int userSearchFieldScopeIndex = 0;
-    
+
     @XmlElement
     private int browserSearchFieldScopeIndex = 0;
 
     @XmlElement
     private int userViewIndex = 0;
-    
+
     @XmlElement
     private int browserViewIndex = 0;
-    
+
     @XmlElement(name = "dataSources")
     private DataSourceList dataSources = null;
 
@@ -34,7 +34,7 @@ public class Config {
     public void setTabIndex(int tabIndex) {
         this.tabIndex = tabIndex;
     }
-    
+
     public int getUserSearchFieldScopeIndex() {
         return userSearchFieldScopeIndex;
     }
@@ -42,11 +42,11 @@ public class Config {
     public void setUserSearchFieldScopeIndex(int userSearchFieldScopeIndex) {
         this.userSearchFieldScopeIndex = userSearchFieldScopeIndex;
     }
-    
+
     public int getBrowserSearchFieldScopeIndex() {
         return browserSearchFieldScopeIndex;
     }
-    
+
     public void setBrowserSearchFieldScopeIndex(int browserSearchFieldScopeIndex) {
         this.browserSearchFieldScopeIndex = browserSearchFieldScopeIndex;
     }
@@ -66,7 +66,7 @@ public class Config {
     public void setBrowserViewIndex(int browserViewIndex) {
         this.browserViewIndex = browserViewIndex;
     }
-    
+
     public DataSourceList getDataSources() {
         return dataSources;
     }

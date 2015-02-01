@@ -9,5 +9,4 @@ public class IdSelector implements PropertySelector {
         return d.getId();
     }
 
-    
 }

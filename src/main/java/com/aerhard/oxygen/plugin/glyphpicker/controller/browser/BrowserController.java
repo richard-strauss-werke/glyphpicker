@@ -94,7 +94,7 @@ public class BrowserController extends TabController {
 
     }
 
-    public void loadData() {
+    public final void loadData() {
 
         int index = controlPanel.getDataSourceCombo().getSelectedIndex();
 
@@ -140,14 +140,13 @@ public class BrowserController extends TabController {
     private void showNoDataSourceDialog() {
         JOptionPane.showMessageDialog(
                 panel,
-                ResourceBundle.getBundle("GlyphPicker").getString(this.getClass().getSimpleName()
-                        + ".noDataSource"));
+                ResourceBundle.getBundle("GlyphPicker").getString(
+                        this.getClass().getSimpleName() + ".noDataSource"));
         glyphList.clear();
     }
 
     public void cancelTeiLoadWorker() {
         if (teiLoadWorker != null) {
-            // teiLoadWorker.shutdownExecutor();
             teiLoadWorker.cancel(true);
             teiLoadWorker.removePropertyChangeListener(teiLoadListener);
             teiLoadWorker = null;

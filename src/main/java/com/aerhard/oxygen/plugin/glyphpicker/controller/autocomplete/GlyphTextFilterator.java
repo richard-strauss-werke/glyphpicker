@@ -10,11 +10,11 @@ import com.aerhard.oxygen.plugin.glyphpicker.model.trans.PropertySelector;
 public class GlyphTextFilterator implements TextFilterator<GlyphDefinition> {
 
     private PropertySelector propertySelector;
-    
+
     public GlyphTextFilterator(PropertySelector propertySelector) {
         this.propertySelector = propertySelector;
     }
-    
+
     @Override
     public void getFilterStrings(List<String> baseList, GlyphDefinition element) {
         baseList.add(propertySelector.get(element));

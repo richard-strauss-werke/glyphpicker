@@ -15,6 +15,8 @@ public class HighlightButton extends JideButton {
     private static final long serialVersionUID = 1L;
     private Color originalForeground = null;
 
+    private static final int DELAY = 300;
+    
     public HighlightButton() {
         originalForeground = getForeground();
         setVerticalTextPosition(SwingConstants.BOTTOM);
@@ -37,7 +39,7 @@ public class HighlightButton extends JideButton {
 
     public void highlight() {
         setForeground(Color.GRAY);
-        Timer timer = new Timer(300, new ActionListener() {
+        Timer timer = new Timer(DELAY, new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
                 setForeground(originalForeground);
             }

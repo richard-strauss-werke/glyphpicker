@@ -15,8 +15,9 @@ public class EditAction extends AbstractPickerAction {
     private DataSourceList dataSourceList;
 
     private static String className = EditAction.class.getSimpleName();
-    
-    public EditAction(PropertyChangeListener listener, JPanel panel, DataSourceList dataSourceList) {
+
+    public EditAction(PropertyChangeListener listener, JPanel panel,
+            DataSourceList dataSourceList) {
         super(className, "/images/gear.png");
         addPropertyChangeListener(listener);
         this.panel = panel;
@@ -26,15 +27,13 @@ public class EditAction extends AbstractPickerAction {
     @Override
     public void actionPerformed(ActionEvent e) {
         List<DataSource> result = new DataSourceEditorController(
-                new DataSourceEditor(), panel).load(dataSourceList
-                .getData());
+                new DataSourceEditor(), panel).load(dataSourceList.getData());
 
         if (result != null) {
             dataSourceList.getData().clear();
             dataSourceList.getData().addAll(result);
             if (dataSourceList.getSize() > 0) {
-                dataSourceList.setSelectedItem(dataSourceList
-                        .getElementAt(0));
+                dataSourceList.setSelectedItem(dataSourceList.getElementAt(0));
             }
             firePropertyChange("editChanges", null, null);
         }

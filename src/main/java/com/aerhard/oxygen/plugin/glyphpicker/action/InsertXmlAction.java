@@ -11,11 +11,11 @@ public class InsertXmlAction extends AbstractPickerAction {
     private DefaultEventSelectionModel<GlyphDefinition> selectionModel;
 
     private static String className = InsertXmlAction.class.getSimpleName();
-    
+
     public InsertXmlAction(PropertyChangeListener listener,
             DefaultEventSelectionModel<GlyphDefinition> selectionModel) {
         super(className, "/images/tick.png");
-        
+
         addPropertyChangeListener(listener);
         this.selectionModel = selectionModel;
     }
@@ -29,5 +29,5 @@ public class InsertXmlAction extends AbstractPickerAction {
             }
         }
     }
-    
+
 }

@@ -9,5 +9,4 @@ public class CodePointSelector implements PropertySelector {
         return d.getCodePointString();
     }
 
-    
 }

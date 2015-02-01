@@ -65,16 +65,16 @@ public class DataSourceEditor extends JPanel {
 
         ResourceBundle i18n = ResourceBundle.getBundle("GlyphPicker");
         String className = this.getClass().getSimpleName();
-        
+
         setPreferredSize(new Dimension(PREFERRED_WIDTH, PREFERRED_HEIGHT));
 
         setLayout(new BorderLayout(8, 0));
 
         JPanel listPanel = new JPanel();
         listPanel.setBorder(new CompoundBorder(new TitledBorder(UIManager
-                .getBorder("TitledBorder.border"), i18n.getString(className + ".dataSources"),
-                TitledBorder.LEADING, TitledBorder.TOP, null,
-                new Color(0, 0, 0)), new EmptyBorder(8, 8, 8, 8)));
+                .getBorder("TitledBorder.border"), i18n.getString(className
+                + ".dataSources"), TitledBorder.LEADING, TitledBorder.TOP,
+                null, new Color(0, 0, 0)), new EmptyBorder(8, 8, 8, 8)));
         add(listPanel, BorderLayout.WEST);
         listPanel.setLayout(new BorderLayout(0, 0));
 
@@ -88,16 +88,16 @@ public class DataSourceEditor extends JPanel {
 
         editorPanel = new JPanel();
         editorPanel.setBorder(new CompoundBorder(new TitledBorder(UIManager
-                .getBorder("TitledBorder.border"), i18n.getString(className + ".edit"),
-                TitledBorder.LEADING, TitledBorder.TOP, null,
+                .getBorder("TitledBorder.border"), i18n.getString(className
+                + ".edit"), TitledBorder.LEADING, TitledBorder.TOP, null,
                 new Color(0, 0, 0)), new EmptyBorder(8, 8, 8, 8)));
         add(editorPanel);
         GridBagLayout gbl = new GridBagLayout();
         gbl.columnWidths = new int[] { 102, 46 };
         gbl.rowHeights = new int[] { 20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
         gbl.columnWeights = new double[] { 0.0, 1.0 };
-        gbl.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
-                Double.MIN_VALUE };
+        gbl.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+                0.0, Double.MIN_VALUE };
         editorPanel.setLayout(gbl);
 
         labelTextField = new JTextField();
@@ -109,22 +109,25 @@ public class DataSourceEditor extends JPanel {
         mappingTypeTextField = new JTextField();
         mappingSubTypeTextField = new JTextField();
         mappingAsCharStringCheckBox = new JCheckBox();
-        
 
-        editorConfig.add(new EditorConfigItem(i18n.getString(className + ".label"), labelTextField));
-        editorConfig.add(new EditorConfigItem(i18n.getString(className + ".path"), pathTextField));
-        editorConfig.add(new EditorConfigItem(i18n.getString(className + ".fontName"), fontNameTextField));
-        editorConfig.add(new EditorConfigItem(i18n.getString(className + ".displayMode"),
-                displayModeTextField));
-        editorConfig
-                .add(new EditorConfigItem(i18n.getString(className + ".glyphSize"), sizeTextField));
-        editorConfig.add(new EditorConfigItem(i18n.getString(className + ".template"), templateTextField));
-        editorConfig.add(new EditorConfigItem(i18n.getString(className + ".typeAttributeValue"),
-                mappingTypeTextField));
-        editorConfig.add(new EditorConfigItem(i18n.getString(className + ".subTypeAttributeValue"),
-                mappingSubTypeTextField));
-        editorConfig.add(new EditorConfigItem(i18n.getString(className + ".mappingAsCharString"),
-                mappingAsCharStringCheckBox));
+        editorConfig.add(new EditorConfigItem(i18n.getString(className
+                + ".label"), labelTextField));
+        editorConfig.add(new EditorConfigItem(i18n.getString(className
+                + ".path"), pathTextField));
+        editorConfig.add(new EditorConfigItem(i18n.getString(className
+                + ".fontName"), fontNameTextField));
+        editorConfig.add(new EditorConfigItem(i18n.getString(className
+                + ".displayMode"), displayModeTextField));
+        editorConfig.add(new EditorConfigItem(i18n.getString(className
+                + ".glyphSize"), sizeTextField));
+        editorConfig.add(new EditorConfigItem(i18n.getString(className
+                + ".template"), templateTextField));
+        editorConfig.add(new EditorConfigItem(i18n.getString(className
+                + ".typeAttributeValue"), mappingTypeTextField));
+        editorConfig.add(new EditorConfigItem(i18n.getString(className
+                + ".subTypeAttributeValue"), mappingSubTypeTextField));
+        editorConfig.add(new EditorConfigItem(i18n.getString(className
+                + ".mappingAsCharString"), mappingAsCharStringCheckBox));
 
         for (int i = 0; i < editorConfig.size(); i++) {
             addToEditorPanel(i, editorConfig.get(i));
@@ -177,18 +180,18 @@ public class DataSourceEditor extends JPanel {
             ((JTextField) component).setColumns(10);
             ((JTextField) component).getDocument().addDocumentListener(
                     new TextFieldEditingListener());
-        } 
-        
+        }
+
         else if (component instanceof JComboBox) {
             ((JComboBox<?>) component)
                     .addActionListener(new ComboChangeListener());
         }
-        
+
         else if (component instanceof JCheckBox) {
             ((JCheckBox) component)
                     .addActionListener(new ComboChangeListener());
         }
-        
+
         GridBagConstraints gbcComponent = new GridBagConstraints();
         gbcComponent.insets = new Insets(0, 0, 5, 0);
         gbcComponent.fill = GridBagConstraints.HORIZONTAL;
@@ -237,7 +240,7 @@ public class DataSourceEditor extends JPanel {
     public JCheckBox getMappingAsCharStringCheckBox() {
         return mappingAsCharStringCheckBox;
     }
-    
+
     public JPanel getListButtonPane() {
         return listButtonPane;
     }

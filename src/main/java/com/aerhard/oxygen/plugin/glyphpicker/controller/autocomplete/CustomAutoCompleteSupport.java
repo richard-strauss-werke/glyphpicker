@@ -365,7 +365,8 @@ public final class CustomAutoCompleteSupport<E> {
      */
     private boolean doNotFilter = false;
     /**
-     * <tt>true</tt> indicates attempts to change the document should be ignored.
+     * <tt>true</tt> indicates attempts to change the document should be
+     * ignored.
      */
     private boolean doNotChangeDocument = false;
     /**
@@ -386,9 +387,9 @@ public final class CustomAutoCompleteSupport<E> {
      */
     private boolean doNotTogglePopup;
     /**
-     * <tt>true</tt> indicates attempts to clear the filter when hiding the popup
-     * should be ignored. This is because sometimes we hide and reshow a popup
-     * in rapid succession and we want to avoid the work to
+     * <tt>true</tt> indicates attempts to clear the filter when hiding the
+     * popup should be ignored. This is because sometimes we hide and reshow a
+     * popup in rapid succession and we want to avoid the work to
      * unfiltering/refiltering it.
      */
     private boolean doNotClearFilterOnPopupHide = false;
@@ -1574,10 +1575,10 @@ public final class CustomAutoCompleteSupport<E> {
             final Object selectedItemBeforeEdit = comboBox.getSelectedItem();
             updateFilter();
             applyFilter(prefix);
-            
+
             // MODIFIED
-//            selectAutoCompleteTerm(filterBypass, attributeSet,
-//                    selectedItemBeforeEdit, allowPartialAutoCompletionTerm);
+            // selectAutoCompleteTerm(filterBypass, attributeSet,
+            // selectedItemBeforeEdit, allowPartialAutoCompletionTerm);
             togglePopup();
         }
 
@@ -1797,17 +1798,17 @@ public final class CustomAutoCompleteSupport<E> {
         public void actionPerformed(ActionEvent e) {
             if (comboBox.isShowing()) {
                 if (comboBox.isPopupVisible()) {
-                    
+
                     // MODIFIED
                     int index = comboBox.getSelectedIndex();
-                    System.out.println(comboBox.getModel().getElementAt(0));
-                    if (index == -1 && comboBox.getModel().getElementAt(0) == null && offset == 1) {
-                        System.out.println(offset);
+                    if (index == -1
+                            && comboBox.getModel().getElementAt(0) == null
+                            && offset == 1) {
                         selectPossibleValue(1);
                     } else {
                         selectPossibleValue(index + offset);
                     }
-                    
+
                 } else {
                     applyFilter(prefix);
                     comboBox.showPopup();
