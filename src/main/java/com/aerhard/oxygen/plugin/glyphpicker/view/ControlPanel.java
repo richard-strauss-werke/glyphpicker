@@ -1,3 +1,18 @@
+/**
+ * Copyright 2015 Alexander Erhard
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.aerhard.oxygen.plugin.glyphpicker.view;
 
 import java.awt.GridBagConstraints;
@@ -19,17 +34,39 @@ import javax.swing.Box;
 import com.jidesoft.swing.JideButton;
 import com.jidesoft.swing.JideToggleButton;
 
+/**
+ * The ControlPanel class.
+ */
 public class ControlPanel extends JPanel {
 
     private static final long serialVersionUID = 1L;
+    
+    /** The data source combo. */
     private JComboBox<String> dataSourceCombo;
-    private JButton btnLoad;
+    
+    /** The edit button. */
+    private JButton editBtn;
+    
+    /** The view button. */
     private final JButton viewBtn;
+    
+    /** The sort button. */
     private final JideToggleButton sortBtn;
+    
+    /** The auto complete combo. */
     private final JComboBox<String> autoCompleteCombo;
+    
+    /** The auto complete scope combo. */
     private final JComboBox<String> autoCompleteScopeCombo;
+    
+    /** The toolbar. */
     private final JToolBar toolBar;
 
+    /**
+     * Instantiates a new ControlPanel.
+     *
+     * @param setDataSourceCombo the set data source combo
+     */
     public ControlPanel(boolean setDataSourceCombo) {
 
         ResourceBundle i18n = ResourceBundle.getBundle("GlyphPicker");
@@ -105,13 +142,13 @@ public class ControlPanel extends JPanel {
             gbcPathCombo.gridy = 0;
             dataSourcePanel.add(dataSourceCombo, gbcPathCombo);
 
-            btnLoad = new JideButton();
+            editBtn = new JideButton();
             GridBagConstraints gbcBrowserButtonLoad = new GridBagConstraints();
             gbcBrowserButtonLoad.insets = new Insets(4, 5, 4, 5);
             gbcBrowserButtonLoad.fill = GridBagConstraints.BOTH;
             gbcBrowserButtonLoad.gridx = 1;
             gbcBrowserButtonLoad.gridy = 0;
-            dataSourcePanel.add(btnLoad, gbcBrowserButtonLoad);
+            dataSourcePanel.add(editBtn, gbcBrowserButtonLoad);
         }
 
         row++;
@@ -160,10 +197,22 @@ public class ControlPanel extends JPanel {
 
     }
 
+    /**
+     * Adds a new component at the specified index to the toolbar.
+     *
+     * @param component the component
+     * @param index the index
+     */
     public void addToToolbar(JComponent component, int index) {
         toolBar.add(component, index);
     }
 
+    /**
+     * Adds a new JideButton with the specified action at the specified index to the toolbar.
+     *
+     * @param action the action
+     * @param index the index
+     */
     public void addToToolbar(Action action, int index) {
         JideButton button = new JideButton(action);
         button.setVerticalTextPosition(SwingConstants.BOTTOM);
@@ -171,26 +220,56 @@ public class ControlPanel extends JPanel {
         toolBar.add(button, index);
     }
 
-    public JButton getBtnConfigure() {
-        return btnLoad;
+    /**
+     * Gets the edit button.
+     *
+     * @return the edit button
+     */
+    public JButton getEditBtn() {
+        return editBtn;
     }
 
+    /**
+     * Gets the data source combo.
+     *
+     * @return the data source combo
+     */
     public JComboBox<String> getDataSourceCombo() {
         return dataSourceCombo;
     }
 
+    /**
+     * Gets the auto complete scope combo.
+     *
+     * @return the auto complete scope combo
+     */
     public JComboBox<String> getAutoCompleteScopeCombo() {
         return autoCompleteScopeCombo;
     }
 
+    /**
+     * Gets the auto complete combo.
+     *
+     * @return the auto complete combo
+     */
     public JComboBox<String> getAutoCompleteCombo() {
         return autoCompleteCombo;
     }
 
+    /**
+     * Gets the sort button.
+     *
+     * @return the sort button
+     */
     public JideToggleButton getSortBtn() {
         return sortBtn;
     }
 
+    /**
+     * Gets the view button.
+     *
+     * @return the view button
+     */
     public JButton getViewBtn() {
         return viewBtn;
     }

@@ -1,3 +1,18 @@
+/**
+ * Copyright 2015 Alexander Erhard
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.aerhard.oxygen.plugin.glyphpicker.view;
 
 import java.awt.BorderLayout;
@@ -22,20 +37,37 @@ import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.util.ResourceBundle;
 
+/**
+ * A container panel in a tab.
+ */
 public class ContainerPanel extends JPanel {
 
-    private static final int INFO_LABEL_PREFERRED_SIZE = 90;
 
     private static final long serialVersionUID = 1L;
+    
+    /** The preferred height and width of the info label component. */
+    private static final int INFO_LABEL_PREFERRED_SIZE = 90;
 
+    /** The scroll pane. */
     private final JScrollPane jPane;
+    
+    /** The scroll pane's overlayable. */
     private final DefaultOverlayable overlayable;
+    
+    /** The info label. */
     private final JTextPane infoLabel;
 
+    /** The info panel containing the info label. */
     private final JPanel infoPanel;
 
+    /** The control panel. */
     private final ControlPanel controlPanel;
 
+    /**
+     * Instantiates a new Container Panel.
+     *
+     * @param controlPanel the control panel to be added
+     */
     public ContainerPanel(ControlPanel controlPanel) {
 
         ResourceBundle i18n = ResourceBundle.getBundle("GlyphPicker");
@@ -95,30 +127,65 @@ public class ContainerPanel extends JPanel {
 
     }
 
+    /**
+     * Sets the list component.
+     *
+     * @param component the new list component
+     */
     public void setListComponent(JComponent component) {
         jPane.setViewportView(component);
     }
 
+    /**
+     * Gets the list component.
+     *
+     * @return the list component
+     */
     public Component getListComponent() {
         return jPane.getViewport().getComponent(0);
     }
 
+    /**
+     * Gets the control panel.
+     *
+     * @return the control panel
+     */
     public ControlPanel getControlPanel() {
         return controlPanel;
     }
 
+    /**
+     * Gets the info panel.
+     *
+     * @return the info panel
+     */
     public JPanel getInfoPanel() {
         return infoPanel;
     }
 
+    /**
+     * Gets the info label.
+     *
+     * @return the info label
+     */
     public JTextPane getInfoLabel() {
         return infoLabel;
     }
 
+    /**
+     * Turns the mask on/off.
+     *
+     * @param mask true to show the mask, false to hide it
+     */
     public void setMask(boolean mask) {
         overlayable.setOverlayVisible(mask);
     }
 
+    /**
+     * Redraws the icon at the specified list index; called each time a new bitmap has been loaded.
+     *
+     * @param index the index
+     */
     public void redrawIconInList(int index) {
         Component listComponent = getListComponent();
         if (index != -1) {

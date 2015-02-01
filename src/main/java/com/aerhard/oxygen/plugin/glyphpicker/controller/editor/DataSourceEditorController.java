@@ -1,3 +1,18 @@
+/**
+ * Copyright 2015 Alexander Erhard
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.aerhard.oxygen.plugin.glyphpicker.controller.editor;
 
 import java.awt.event.ActionEvent;
@@ -22,30 +37,54 @@ import com.aerhard.oxygen.plugin.glyphpicker.model.DataSource;
 import com.aerhard.oxygen.plugin.glyphpicker.view.editor.DataSourceEditor;
 import com.jidesoft.swing.JideButton;
 
+/**
+ * The controller of the data source editor window.
+ */
 public class DataSourceEditorController implements PropertyChangeListener {
 
-    private static final float PERCENTAGE_FACTOR = 100f;
-
+    /** The logger. */
     private static final Logger LOGGER = Logger
             .getLogger(DataSourceEditorController.class.getName());
+    
+    /** The percentage factor. */
+    private static final float PERCENTAGE_FACTOR = 100f;
 
+    /** The name of the "listEditingOccurred" change property. */
     public static final String LIST_EDITING_OCCURRED = "listEditingOccurred";
 
+    /** The window's content pane. */
     private final DataSourceEditor contentPane;
+    
+    /** The panel from which the window has been opened. */
     private final JPanel parentPanel;
 
+    /** The display modes added to the display mode JCombo. */
     private final List<String> displayModes = new ArrayList<>();
 
+    /** The clone action. */
     private final CloneAction cloneAction;
+    
+    /** The delete action. */
     private final DeleteAction deleteAction;
 
+    /** Indicates if there have been changes to the data source list. */
     private boolean listEditingOccurred = false;
 
+    /** The list model. */
     private DefaultListModel<DataSource> listModel;
+    
+    /** The current data source. */
     private DataSource currentDataSource = null;
 
+    /** The i18n resource bundle. */
     private final ResourceBundle i18n = ResourceBundle.getBundle("GlyphPicker");
 
+    /**
+     * Instantiates a new DataSourceEditorController.
+     *
+     * @param contentPane The window's content pane
+     * @param parentPanel The panel from which the window has been opened
+     */
     public DataSourceEditorController(DataSourceEditor contentPane,
             JPanel parentPanel) {
 
@@ -71,14 +110,26 @@ public class DataSourceEditorController implements PropertyChangeListener {
         contentPane.getDisplayModeTextField().setSelectedItem(null);
     }
 
+    /**
+     * An action to create a new data source record.
+     */
     private final class NewAction extends AbstractPickerAction {
+        
         private static final long serialVersionUID = 1L;
 
+        /**
+         * Instantiates a new NewAction.
+         *
+         * @param listener the property change listener to be added to this action
+         */
         private NewAction(PropertyChangeListener listener) {
             super(NewAction.class.getSimpleName());
             addPropertyChangeListener(listener);
         }
 
+        /* (non-Javadoc)
+         * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+         */
         @Override
         public void actionPerformed(ActionEvent e) {
             DataSource dataSource = new DataSource();
@@ -93,15 +144,27 @@ public class DataSourceEditorController implements PropertyChangeListener {
         }
     }
 
+    /**
+     * An action to clone the selected data source.
+     */
     private final class CloneAction extends AbstractPickerAction {
+        
         private static final long serialVersionUID = 1L;
 
+        /**
+         * Instantiates a new CloneAction.
+         *
+         * @param listener the property change listener to be added to this action
+         */
         private CloneAction(PropertyChangeListener listener) {
             super(CloneAction.class.getSimpleName());
             addPropertyChangeListener(listener);
             setEnabled(false);
         }
 
+        /* (non-Javadoc)
+         * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+         */
         @Override
         public void actionPerformed(ActionEvent e) {
             int index = contentPane.getList().getSelectionModel()
@@ -122,15 +185,27 @@ public class DataSourceEditorController implements PropertyChangeListener {
         }
     }
 
+    /**
+     * An action to delete the selected data source.
+     */
     private final class DeleteAction extends AbstractPickerAction {
+        
         private static final long serialVersionUID = 1L;
 
+        /**
+         * Instantiates a new DeleteAction.
+         *
+         * @param listener the property change listener to be added to this action
+         */
         private DeleteAction(PropertyChangeListener listener) {
             super(DeleteAction.class.getSimpleName());
             addPropertyChangeListener(listener);
             setEnabled(false);
         }
 
+        /* (non-Javadoc)
+         * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+         */
         @Override
         public void actionPerformed(ActionEvent e) {
             int index = contentPane.getList().getSelectionModel()
@@ -148,6 +223,12 @@ public class DataSourceEditorController implements PropertyChangeListener {
         }
     }
 
+    /**
+     * Loads the data source editor window.
+     *
+     * @param dataSourceList the data source list
+     * @return if changes occurred, a new data source list, otherwise null
+     */
     public List<DataSource> load(List<DataSource> dataSourceList) {
 
         initListModel(dataSourceList);
@@ -168,6 +249,11 @@ public class DataSourceEditorController implements PropertyChangeListener {
         }
     }
 
+    /**
+     * Initializes the list component.
+     *
+     * @param list the list component
+     */
     private void initListComponent(JList<DataSource> list) {
         list.setModel(listModel);
         list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -179,6 +265,11 @@ public class DataSourceEditorController implements PropertyChangeListener {
                 new DataSourceListSelectionListener());
     }
 
+    /**
+     * Initializes the list model.
+     *
+     * @param dataSourceList the data source list
+     */
     private void initListModel(List<DataSource> dataSourceList) {
         listModel = new DefaultListModel<>();
 
@@ -191,8 +282,15 @@ public class DataSourceEditorController implements PropertyChangeListener {
         }
     }
 
+    /**
+     * The data source list selection event listener
+     */
     private class DataSourceListSelectionListener implements
             ListSelectionListener {
+        
+        /* (non-Javadoc)
+         * @see javax.swing.event.ListSelectionListener#valueChanged(javax.swing.event.ListSelectionEvent)
+         */
         @Override
         public void valueChanged(ListSelectionEvent e) {
             if (!e.getValueIsAdjusting()) {
@@ -201,6 +299,9 @@ public class DataSourceEditorController implements PropertyChangeListener {
         }
     }
 
+    /**
+     * The data source list selection event handler.
+     */
     private void onListSelection() {
         if (contentPane.getList().getSelectionModel().isSelectionEmpty()) {
             currentDataSource = null;
@@ -219,6 +320,11 @@ public class DataSourceEditorController implements PropertyChangeListener {
         }
     }
 
+    /**
+     * Sets form component's values.
+     *
+     * @param dataSource the form values
+     */
     private void setFormValues(DataSource dataSource) {
 
         contentPane.removePropertyChangeListener(this);
@@ -240,9 +346,9 @@ public class DataSourceEditorController implements PropertyChangeListener {
 
         contentPane.getSizeTextField().setText(sizeFactorString);
         contentPane.getTemplateTextField().setText(dataSource.getTemplate());
-        contentPane.getMappingAttNameTextField().setText(
+        contentPane.getMappingTypeTextField().setText(
                 dataSource.getMappingTypeValue());
-        contentPane.getMappingAttValueTextField().setText(
+        contentPane.getMappingSubTypeTextField().setText(
                 dataSource.getMappingSubTypeValue());
         contentPane.getMappingAsCharStringCheckBox().setSelected(
                 dataSource.getMappingAsCharString());
@@ -250,6 +356,9 @@ public class DataSourceEditorController implements PropertyChangeListener {
         contentPane.addPropertyChangeListener(this);
     }
 
+    /**
+     * Updates data source model from the form's values.
+     */
     private void updateCurrentModelFromForm() {
         if (currentDataSource != null) {
             currentDataSource.setLabel(contentPane.getLabelTextField()
@@ -273,14 +382,17 @@ public class DataSourceEditorController implements PropertyChangeListener {
             currentDataSource.setTemplate(contentPane.getTemplateTextField()
                     .getText());
             currentDataSource.setMappingTypeValue(contentPane
-                    .getMappingAttNameTextField().getText());
+                    .getMappingTypeTextField().getText());
             currentDataSource.setMappingSubTypeValue(contentPane
-                    .getMappingAttValueTextField().getText());
+                    .getMappingSubTypeTextField().getText());
             currentDataSource.setMappingAsCharString(contentPane
                     .getMappingAsCharStringCheckBox().isSelected());
         }
     }
 
+    /* (non-Javadoc)
+     * @see java.beans.PropertyChangeListener#propertyChange(java.beans.PropertyChangeEvent)
+     */
     @Override
     public void propertyChange(PropertyChangeEvent e) {
 

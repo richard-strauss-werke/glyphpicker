@@ -1,3 +1,18 @@
+/**
+ * Copyright 2015 Alexander Erhard
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.aerhard.oxygen.plugin.glyphpicker.controller.main;
 
 import java.io.File;
@@ -15,15 +30,30 @@ import com.aerhard.oxygen.plugin.glyphpicker.controller.user.UserCollectionLoade
 import com.aerhard.oxygen.plugin.glyphpicker.model.Config;
 import com.aerhard.oxygen.plugin.glyphpicker.model.DataSourceList;
 
+/**
+ * Loads and saves the plugin's config.
+ */
 public class ConfigLoader {
 
+    /** The logger. */
     private static final Logger LOGGER = Logger.getLogger(ConfigLoader.class
             .getName());
 
+    /** The folder path to the config file. */
     private final String pathName;
+    
+    /** The name of the config file. */
     private final String fileName;
+    
+    /** The config object. */
     private Config config = null;
 
+    /**
+     * Instantiates a new ConfigLoader.
+     *
+     * @param workspace oXygen's plugin workspace
+     * @param properties the plugin's properties file
+     */
     public ConfigLoader(StandalonePluginWorkspace workspace,
             Properties properties) {
         pathName = workspace.getPreferencesDirectory() + "/"
@@ -31,6 +61,9 @@ public class ConfigLoader {
         fileName = properties.getProperty("config.filename");
     }
 
+    /**
+     * Saves the config.
+     */
     public void save() {
         File path = new File(pathName);
         Boolean pathExists = path.exists() || path.mkdir();
@@ -47,6 +80,9 @@ public class ConfigLoader {
         }
     }
 
+    /**
+     * Loads the config.
+     */
     public void load() {
         config = null;
 
@@ -83,10 +119,20 @@ public class ConfigLoader {
 
     }
 
+    /**
+     * Gets the config.
+     *
+     * @return the config
+     */
     public Config getConfig() {
         return config;
     }
 
+    /**
+     * Sets the config.
+     *
+     * @param config the new config
+     */
     public void setConfig(Config config) {
         this.config = config;
     }

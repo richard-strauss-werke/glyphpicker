@@ -1,3 +1,19 @@
+/**
+ * Copyright 2015 Alexander Erhard
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package com.aerhard.oxygen.plugin.glyphpicker.controller;
 
 import java.awt.Dimension;
@@ -38,42 +54,74 @@ import com.aerhard.oxygen.plugin.glyphpicker.view.GlyphTableFormat;
 import com.aerhard.oxygen.plugin.glyphpicker.view.HighlightButton;
 import com.aerhard.oxygen.plugin.glyphpicker.view.renderer.GlyphRendererAdapter;
 
+/**
+ * An abstract controller of a tab panel.
+ */
 public abstract class TabController implements PropertyChangeListener {
 
+    /** The pixel height and width of a rendered glyph. */
     public static final int LIST_ITEM_SIZE = 40;
 
+    /** The property change support. */
     protected final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
 
+    /** The glyph list. */
     protected final EventList<GlyphDefinition> glyphList = new BasicEventList<>();
+    
+    /** The sorted glyph list. */
     protected final SortedList<GlyphDefinition> sortedList = new SortedList<>(
             glyphList, null);
 
+    /** The filtered glyph list. */
     protected final FilterList<GlyphDefinition> filterList;
 
+    /** The glyph list's selection model. */
     protected final DefaultEventSelectionModel<GlyphDefinition> selectionModel;
 
+    /** The container panel in the tab. */
     protected final ContainerPanel panel;
+
+    /** The control panel in the tab. */
+    protected final ControlPanel controlPanel;
+    
+    /** The glyph table component. */
     protected final GlyphTable table;
+    
+    /** The glyph list component. */
     protected final GlyphGrid list;
 
-    protected final ControlPanel controlPanel;
+    /** The bmp load worker. */
     protected BitmapLoadWorker bmpLoader = null;
+    
+    /** The listener to property changes in the bmp load worker. */
     private PropertyChangeListener bmpListener;
+    
+    /** The auto complete controller. */
     protected final AutoCompleteController autoCompleteController;
 
+    /** The action to trigger the insertion of a glyph reference into an XML document. */
     protected AbstractAction insertAction;
+    
+    /** The button to trigger the insert action. */
     protected HighlightButton insertBtn;
 
+    /**
+     * Instantiates a new tab controller.
+     *
+     * @param panel The container panel in the tab
+     * @param searchFieldScopeIndex the index of the auto complete scope checkbox which should be selected initially
+     * @param listViewIndex the index of the list view to show initially. Set 0 for the grid and 1 for the table component.
+     */
     @SuppressWarnings("unchecked")
     public TabController(final ContainerPanel panel,
-            int userSearchFieldScopeIndex, int listViewIndex) {
+            int searchFieldScopeIndex, int listViewIndex) {
 
         this.panel = panel;
 
         controlPanel = panel.getControlPanel();
 
         autoCompleteController = new AutoCompleteController(
-                userSearchFieldScopeIndex, controlPanel.getAutoCompleteCombo(),
+                searchFieldScopeIndex, controlPanel.getAutoCompleteCombo(),
                 controlPanel.getAutoCompleteScopeCombo(), sortedList);
 
         filterList = new FilterList<>(sortedList,
@@ -95,7 +143,7 @@ public abstract class TabController implements PropertyChangeListener {
         r = new GlyphRendererAdapter(table);
         r.setPreferredSize(new Dimension(LIST_ITEM_SIZE, LIST_ITEM_SIZE));
         table.setRowHeight(90);
-        table.setTableIconRenderer(r);
+        table.setGlyphRenderer(r);
 
         if (listViewIndex == 0) {
             panel.setListComponent(list);
@@ -153,6 +201,9 @@ public abstract class TabController implements PropertyChangeListener {
 
     }
 
+    /**
+     * Initializes the keyboard and mouse listeners.
+     */
     private void initKeyAndMouseListeners() {
         insertAction = new InsertXmlAction(this, selectionModel);
         insertAction.setEnabled(false);
@@ -186,6 +237,11 @@ public abstract class TabController implements PropertyChangeListener {
                 .getEditorComponent().addKeyListener(enterKeyAdapter);
     }
 
+    /**
+     * Starts the bitmap load worker.
+     *
+     * @param data the glyph definitions containing the bitmap's paths
+     */
     public void startBitmapLoadWorker(List<GlyphDefinition> data) {
         bmpLoader = new BitmapLoadWorker(data, LIST_ITEM_SIZE);
 
@@ -203,6 +259,9 @@ public abstract class TabController implements PropertyChangeListener {
         bmpLoader.execute();
     }
 
+    /**
+     * Cancels the bitmap load worker.
+     */
     public void cancelBitmapLoadWorker() {
         if (bmpLoader != null) {
             bmpLoader.shutdownExecutor();
@@ -212,10 +271,20 @@ public abstract class TabController implements PropertyChangeListener {
         }
     }
 
+    /**
+     * Adds a property change listener to the controller.
+     *
+     * @param l the listener
+     */
     public void addPropertyChangeListener(PropertyChangeListener l) {
         pcs.addPropertyChangeListener(l);
     }
 
+    /**
+     * Removes a property change listener from the controller.
+     *
+     * @param l the listener
+     */
     public void removePropertyChangeListener(PropertyChangeListener l) {
         pcs.removePropertyChangeListener(l);
     }

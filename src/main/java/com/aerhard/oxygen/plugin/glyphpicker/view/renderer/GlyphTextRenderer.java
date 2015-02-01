@@ -1,3 +1,18 @@
+/**
+ * Copyright 2015 Alexander Erhard
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.aerhard.oxygen.plugin.glyphpicker.view.renderer;
 
 import static java.awt.font.TextAttribute.KERNING;
@@ -18,11 +33,21 @@ import java.util.Map;
 
 import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinition;
 
+/**
+ * A font-based GlyphRenderer rendering simple text.
+ */
 public class GlyphTextRenderer extends GlyphRenderer {
 
     private static final long serialVersionUID = 1L;
+    
+    /** The font attributes. */
     private final Map<TextAttribute, Integer> attr;
 
+    /**
+     * Instantiates a new GlyphTextRenderer.
+     *
+     * @param container the container
+     */
     public GlyphTextRenderer(JComponent container) {
         super(container);
         attr = new HashMap<>();
@@ -32,6 +57,9 @@ public class GlyphTextRenderer extends GlyphRenderer {
         }
     }
 
+    /* (non-Javadoc)
+     * @see com.aerhard.oxygen.plugin.glyphpicker.view.renderer.GlyphRenderer#getRendererComponent(com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinition, boolean)
+     */
     public Component getRendererComponent(GlyphDefinition gd, boolean isSelected) {
 
         String fontName = gd.getDataSource().getFontName();
@@ -53,6 +81,9 @@ public class GlyphTextRenderer extends GlyphRenderer {
         return this;
     }
 
+    /* (non-Javadoc)
+     * @see javax.swing.JComponent#paintComponent(java.awt.Graphics)
+     */
     @Override
     protected void paintComponent(Graphics g) {
         Graphics2D g2 = (Graphics2D) g;

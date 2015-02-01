@@ -1,3 +1,18 @@
+/**
+ * Copyright 2015 Alexander Erhard
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.aerhard.oxygen.plugin.glyphpicker.view.renderer;
 
 import javax.swing.JComponent;
@@ -20,20 +35,34 @@ import static java.awt.font.TextAttribute.*;
 
 import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinition;
 
+/**
+ * A font-based GlyphRenderer rendering scaled vectors.
+ */
 public class GlyphShapeRenderer extends GlyphRenderer {
 
+    /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
 
+    /** The font name. */
     private String fontName = null;
 
+    /** The scaling factor. */
     private float factor = 0.73f;
 
+    /** The font render context. */
     private final FontRenderContext frc;
 
+    /** The characters to render. */
     private String ch = null;
 
+    /** The font attributes. */
     private final Map<TextAttribute, Integer> attr;
 
+    /**
+     * Instantiates a new glyph shape renderer.
+     *
+     * @param container the container
+     */
     public GlyphShapeRenderer(JComponent container) {
         super(container);
         frc = new FontRenderContext(null, true, true);
@@ -46,6 +75,9 @@ public class GlyphShapeRenderer extends GlyphRenderer {
         }
     }
 
+    /* (non-Javadoc)
+     * @see com.aerhard.oxygen.plugin.glyphpicker.view.renderer.GlyphRenderer#getRendererComponent(com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinition, boolean)
+     */
     public Component getRendererComponent(GlyphDefinition gd, boolean isSelected) {
 
         ch = gd.getCodePoint();
@@ -58,6 +90,9 @@ public class GlyphShapeRenderer extends GlyphRenderer {
         return this;
     }
 
+    /* (non-Javadoc)
+     * @see javax.swing.JComponent#paintComponent(java.awt.Graphics)
+     */
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -69,6 +104,13 @@ public class GlyphShapeRenderer extends GlyphRenderer {
         }
     }
 
+    /**
+     * Draw glyph.
+     *
+     * @param g2 the g2
+     * @param text the text
+     * @param fontName the font name
+     */
     private void drawGlyph(Graphics2D g2, String text, String fontName) {
 
         float w = getWidth() * factor;

@@ -1,3 +1,18 @@
+/**
+ * Copyright 2015 Alexander Erhard
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.aerhard.oxygen.plugin.glyphpicker.view.editor;
 
 import javax.swing.JPanel;
@@ -36,31 +51,64 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+/**
+ * A data source editor component.
+ */
 public class DataSourceEditor extends JPanel {
 
     private static final long serialVersionUID = 1L;
 
+    /** The name of the "formEditingOccurred" property. */
     public static final String FORM_EDITING_OCCURRED = "formEditingOccurred";
 
+    /** The component's preferred width. */
     private static final int PREFERRED_WIDTH = 600;
+    
+    /** The component's preferred height. */
     private static final int PREFERRED_HEIGHT = 400;
 
+    /** The list component. */
     private final JList<DataSource> list;
 
+    /** The label's text field. */
     private final JTextField labelTextField;
+    
+    /** The path's text field. */
     private final JTextField pathTextField;
+    
+    /** The font name's text field. */
     private final JTextField fontNameTextField;
-    private final JComboBox<String> displayModeTextField;
+    
+    /** The display mode's combo. */
+    private final JComboBox<String> displayModeCombo;
+    
+    /** The size's text field. */
     private final JTextField sizeTextField;
+    
+    /** The template's text field. */
     private final JTextField templateTextField;
+    
+    /** The mapping type's text field. */
     private final JTextField mappingTypeTextField;
+    
+    /** The mapping subtype's text field. */
     private final JTextField mappingSubTypeTextField;
+    
+    /** The mapping-as-char-string's check box. */
     private final JCheckBox mappingAsCharStringCheckBox;
+    
+    /** The button pane for editing the list items. */
     private final JPanel listButtonPane;
+    
+    /** The editor panel. */
     private final JPanel editorPanel;
 
+    /** The editor config. */
     private final List<EditorConfigItem> editorConfig = new ArrayList<>();
 
+    /**
+     * Instantiates a new DataSourceEditor panel.
+     */
     public DataSourceEditor() {
 
         ResourceBundle i18n = ResourceBundle.getBundle("GlyphPicker");
@@ -103,7 +151,7 @@ public class DataSourceEditor extends JPanel {
         labelTextField = new JTextField();
         pathTextField = new JTextField();
         fontNameTextField = new JTextField();
-        displayModeTextField = new JComboBox<>();
+        displayModeCombo = new JComboBox<>();
         sizeTextField = new JTextField();
         templateTextField = new JTextField();
         mappingTypeTextField = new JTextField();
@@ -117,7 +165,7 @@ public class DataSourceEditor extends JPanel {
         editorConfig.add(new EditorConfigItem(i18n.getString(className
                 + ".fontName"), fontNameTextField));
         editorConfig.add(new EditorConfigItem(i18n.getString(className
-                + ".displayMode"), displayModeTextField));
+                + ".displayMode"), displayModeCombo));
         editorConfig.add(new EditorConfigItem(i18n.getString(className
                 + ".glyphSize"), sizeTextField));
         editorConfig.add(new EditorConfigItem(i18n.getString(className
@@ -135,37 +183,67 @@ public class DataSourceEditor extends JPanel {
 
     }
 
+    /**
+     * Enables/disables the form components.
+     *
+     * @param enabled the new form enabled
+     */
     public void setFormEnabled(boolean enabled) {
         for (EditorConfigItem eci : editorConfig) {
             eci.getComponent().setEnabled(enabled);
         }
     }
 
+/**
+ * A DocumentListener added to the form text fields, firing the change event of the property FORM_EDITING_OCCURRED
+ */
     private class TextFieldEditingListener implements DocumentListener {
 
+        /* (non-Javadoc)
+         * @see javax.swing.event.DocumentListener#removeUpdate(javax.swing.event.DocumentEvent)
+         */
         @Override
         public void removeUpdate(DocumentEvent e) {
             firePropertyChange(FORM_EDITING_OCCURRED, null, null);
         }
 
+        /* (non-Javadoc)
+         * @see javax.swing.event.DocumentListener#insertUpdate(javax.swing.event.DocumentEvent)
+         */
         @Override
         public void insertUpdate(DocumentEvent e) {
             firePropertyChange(FORM_EDITING_OCCURRED, null, null);
         }
 
+        /* (non-Javadoc)
+         * @see javax.swing.event.DocumentListener#changedUpdate(javax.swing.event.DocumentEvent)
+         */
         @Override
         public void changedUpdate(DocumentEvent e) {
             firePropertyChange(FORM_EDITING_OCCURRED, null, null);
         }
     }
 
+    /**
+     * An ActionListener added to the form combo, firing the change event of the property FORM_EDITING_OCCURRED
+     */
     private class ComboChangeListener implements ActionListener {
+        
+        /* (non-Javadoc)
+         * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+         */
         @Override
         public void actionPerformed(ActionEvent e) {
             firePropertyChange(FORM_EDITING_OCCURRED, null, null);
         }
     }
 
+    /**
+     * Adds a component to editor panel.
+     *
+     * @param index the component's index
+     * @param eci the EditorConfigItem object specifying the component's properties
+     */
     private void addToEditorPanel(int index, EditorConfigItem eci) {
         JLabel label = new JLabel(eci.getLabel());
         GridBagConstraints gbcLabel = new GridBagConstraints();
@@ -201,46 +279,101 @@ public class DataSourceEditor extends JPanel {
         editorPanel.add(component, gbcComponent);
     }
 
+    /**
+     * Gets the data source list component.
+     *
+     * @return the list component
+     */
     public JList<DataSource> getList() {
         return list;
     }
 
+    /**
+     * Gets the label's text field.
+     *
+     * @return the label's text field
+     */
     public JTextField getLabelTextField() {
         return labelTextField;
     }
 
+    /**
+     * Gets the path's text field.
+     *
+     * @return the path's text field
+     */
     public JTextField getPathTextField() {
         return pathTextField;
     }
 
+    /**
+     * Gets the font name's text field.
+     *
+     * @return the font name's text field
+     */
     public JTextField getFontNameTextField() {
         return fontNameTextField;
     }
 
+    /**
+     * Gets the display mode's text field.
+     *
+     * @return the display mode's text field
+     */
     public JComboBox<String> getDisplayModeTextField() {
-        return displayModeTextField;
+        return displayModeCombo;
     }
 
+    /**
+     * Gets the size's text field.
+     *
+     * @return the size's text field
+     */
     public JTextField getSizeTextField() {
         return sizeTextField;
     }
 
+    /**
+     * Gets the template's text field.
+     *
+     * @return the template's text field
+     */
     public JTextField getTemplateTextField() {
         return templateTextField;
     }
 
-    public JTextField getMappingAttNameTextField() {
+    /**
+     * Gets the mapping type's text field.
+     *
+     * @return the mapping type's text field
+     */
+    public JTextField getMappingTypeTextField() {
         return mappingTypeTextField;
     }
 
-    public JTextField getMappingAttValueTextField() {
+    /**
+     * Gets the mapping sub type's text field.
+     *
+     * @return the mapping sub type's text field
+     */
+    public JTextField getMappingSubTypeTextField() {
         return mappingSubTypeTextField;
     }
 
+    /**
+     * Gets the mapping-as-char-string check box.
+     *
+     * @return the mapping-as-char-string check box
+     */
     public JCheckBox getMappingAsCharStringCheckBox() {
         return mappingAsCharStringCheckBox;
     }
 
+    /**
+     * Gets the list button pane.
+     *
+     * @return The button pane for editing the list items
+     */
     public JPanel getListButtonPane() {
         return listButtonPane;
     }

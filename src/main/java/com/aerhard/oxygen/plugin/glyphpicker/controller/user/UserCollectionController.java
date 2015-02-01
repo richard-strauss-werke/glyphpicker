@@ -1,3 +1,18 @@
+/**
+ * Copyright 2015 Alexander Erhard
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.aerhard.oxygen.plugin.glyphpicker.controller.user;
 
 import java.beans.PropertyChangeEvent;
@@ -26,17 +41,44 @@ import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinition;
 import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinitions;
 import com.aerhard.oxygen.plugin.glyphpicker.view.ContainerPanel;
 
+/**
+ * The user collection tab controller.
+ */
 public class UserCollectionController extends TabController {
 
+    /** The save action. */
     private AbstractAction saveAction;
+
+    /** The reload action. */
     private AbstractAction reloadAction;
+
+    /** The remove action. */
     private AbstractAction removeAction;
+
+    /** The move-up action. */
     private MoveUpAction moveUpAction;
+
+    /** The move-down action. */
     private MoveDownAction moveDownAction;
 
+    /** The user collection data loader. */
     private final UserCollectionLoader loader;
+
+    /** Indicates if the list in memory is in sync with the list stored on disk. */
     private boolean listInSync = true;
 
+    /**
+     * Instantiates a new UserCollectionController.
+     *
+     * @param panel
+     *            the user collection tab's container panel
+     * @param config
+     *            the plugin config
+     * @param properties
+     *            the plugin properties
+     * @param workspace
+     *            the workspace
+     */
     public UserCollectionController(ContainerPanel panel, Config config,
             Properties properties, StandalonePluginWorkspace workspace) {
 
@@ -45,13 +87,16 @@ public class UserCollectionController extends TabController {
 
         loader = new UserCollectionLoader(workspace, properties);
 
-        setActions();
+        setAdditionalActions();
 
-        setListeners();
+        setAdditionalListeners();
 
     }
 
-    private void setActions() {
+    /**
+     * Sets the additional actions.
+     */
+    private void setAdditionalActions() {
 
         controlPanel.addToToolbar(insertBtn, 0);
 
@@ -81,11 +126,20 @@ public class UserCollectionController extends TabController {
         actions.add(reloadAction);
     }
 
+    /**
+     * Sets the indicator of memory-disk list synchronization.
+     *
+     * @param listInSync
+     *            true if the list is in sync, false otherwise
+     */
     public void setListInSync(boolean listInSync) {
         this.listInSync = listInSync;
     }
 
-    private void setListeners() {
+    /**
+     * Sets the additional listeners.
+     */
+    private void setAdditionalListeners() {
 
         Set<Action> selectionDependentActions = new HashSet<>();
         selectionDependentActions.add(removeAction);
@@ -114,6 +168,9 @@ public class UserCollectionController extends TabController {
 
     }
 
+    /**
+     * Loads the user collection data.
+     */
     public void loadData() {
         panel.setMask(true);
         SwingUtilities.invokeLater(new Runnable() {
@@ -133,16 +190,31 @@ public class UserCollectionController extends TabController {
         });
     }
 
+    /**
+     * Saves the user collection data.
+     */
     public void saveData() {
         loader.save(new GlyphDefinitions(glyphList));
         listInSync = true;
     }
 
+    /**
+     * Adds a glyph definition to the user collection.
+     *
+     * @param d
+     *            the glyh definition to add
+     */
     public void addGlyphDefinition(GlyphDefinition d) {
         setListInSync(false);
         glyphList.add(d);
     }
 
+    /*
+     * (non-Javadoc)
+     * 
+     * @see java.beans.PropertyChangeListener#propertyChange(java.beans.
+     * PropertyChangeEvent)
+     */
     @Override
     public void propertyChange(PropertyChangeEvent e) {
 

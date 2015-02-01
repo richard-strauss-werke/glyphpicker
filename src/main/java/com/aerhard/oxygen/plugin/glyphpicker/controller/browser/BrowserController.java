@@ -1,3 +1,18 @@
+/**
+ * Copyright 2015 Alexander Erhard
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.aerhard.oxygen.plugin.glyphpicker.controller.browser;
 
 import java.awt.Rectangle;
@@ -26,15 +41,29 @@ import com.aerhard.oxygen.plugin.glyphpicker.model.DataSourceList;
 import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinition;
 import com.aerhard.oxygen.plugin.glyphpicker.view.ContainerPanel;
 
+/**
+ * The browser tab controller.
+ */
 public class BrowserController extends TabController {
 
+    /** The list of all data sources. */
     private final DataSourceList dataSourceList;
 
+    /** The add action. */
     private AbstractAction addAction;
 
+    /** The worker loading glyph definitions from a document or online resource. */
     private TeiLoadWorker teiLoadWorker = null;
+    
+    /** A property change listener attached to the teiLoadWorker. */
     private PropertyChangeListener teiLoadListener;
 
+    /**
+     * Instantiates a new BrowserController.
+     *
+     * @param panel the browser tab's container panel
+     * @param config the plugin config
+     */
     public BrowserController(ContainerPanel panel, Config config) {
 
         super(panel, config.getBrowserSearchFieldScopeIndex(), config
@@ -43,16 +72,19 @@ public class BrowserController extends TabController {
         dataSourceList = config.getDataSources();
         controlPanel.getDataSourceCombo().setModel(dataSourceList);
 
-        controlPanel.getBtnConfigure().setAction(
+        controlPanel.getEditBtn().setAction(
                 new EditAction(this, panel, dataSourceList));
 
-        setActions();
+        setAdditionalActions();
 
-        setListeners();
+        setAdditionalListeners();
 
     }
 
-    private void setActions() {
+    /**
+     * Sets the browser panel's additional actions.
+     */
+    private void setAdditionalActions() {
         controlPanel.addToToolbar(insertBtn, 0);
 
         addAction = new AddAction(this, selectionModel);
@@ -60,7 +92,10 @@ public class BrowserController extends TabController {
         controlPanel.addToToolbar(addAction, 1);
     }
 
-    private void setListeners() {
+    /**
+     * Sets the panel' additional listeners.
+     */
+    private void setAdditionalListeners() {
 
         Set<Action> selectionDependentActions = new HashSet<>();
         selectionDependentActions.add(addAction);
@@ -94,6 +129,9 @@ public class BrowserController extends TabController {
 
     }
 
+    /**
+     * Loads the TEI data.
+     */
     public final void loadData() {
 
         int index = controlPanel.getDataSourceCombo().getSelectedIndex();
@@ -103,14 +141,14 @@ public class BrowserController extends TabController {
         }
 
         if (index > dataSourceList.getSize() - 1) {
-            showNoDataSourceDialog();
+            showNoDataSourceMessage();
             return;
         }
 
         DataSource dataSource = dataSourceList.getDataSourceAt(index);
 
         if (dataSource == null) {
-            showNoDataSourceDialog();
+            showNoDataSourceMessage();
             return;
         }
 
@@ -137,7 +175,10 @@ public class BrowserController extends TabController {
 
     }
 
-    private void showNoDataSourceDialog() {
+    /**
+     * Shows a popup frame with the message that no data source has been found.
+     */
+    private void showNoDataSourceMessage() {
         JOptionPane.showMessageDialog(
                 panel,
                 ResourceBundle.getBundle("GlyphPicker").getString(
@@ -145,6 +186,9 @@ public class BrowserController extends TabController {
         glyphList.clear();
     }
 
+    /**
+     * Cancels loading of the TEI data.
+     */
     public void cancelTeiLoadWorker() {
         if (teiLoadWorker != null) {
             teiLoadWorker.cancel(true);
@@ -153,6 +197,11 @@ public class BrowserController extends TabController {
         }
     }
 
+    /**
+     * Displays the loaded data.
+     *
+     * @param data the data
+     */
     private void displayLoadedData(List<GlyphDefinition> data) {
 
         glyphList.clear();
@@ -177,6 +226,9 @@ public class BrowserController extends TabController {
 
     }
 
+    /* (non-Javadoc)
+     * @see java.beans.PropertyChangeListener#propertyChange(java.beans.PropertyChangeEvent)
+     */
     @Override
     public void propertyChange(PropertyChangeEvent e) {
         if ("copyToUserCollection".equals(e.getPropertyName())

@@ -1,5 +1,5 @@
 /**
- * Copyright 2014 Alexander Erhard
+ * Copyright 2015 Alexander Erhard
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -52,11 +52,16 @@ public class GlyphPickerPluginExtension implements
     private static final Logger LOGGER = Logger
             .getLogger(GlyphPickerPluginExtension.class.getName());
 
+    /** The path of the plugin's icon. */
     private static final String PLUGIN_ICON = "/images/grid.png";
+    
+    /** The plugin's view ID in oXygen. */
     private static final String VIEW_ID = "GlyphPicker";
 
+    /** The main controller. */
     private MainController mainController;
 
+    /** The main panel. */
     private MainPanel mainPanel;
 
     /*
@@ -113,13 +118,26 @@ public class GlyphPickerPluginExtension implements
 
     }
 
-    private String getXmlString(GlyphDefinition model, Boolean setNs) {
+    /**
+     * Creates an XML string from a GlyphDefinition object.
+     *
+     * @param d the glyph definition
+     * @param setNs if true, the TEI namespace will be added to the XML string.
+     * @return the XML string
+     */
+    private String createXmlString(GlyphDefinition d, Boolean setNs) {
         String ns = (setNs) ? " xmlns=\"http://www.tei-c.org/ns/1.0\"" : "";
-        return "<g" + ns + " ref=\"" + model.getRefString() + "\"/>";
+        return "<g" + ns + " ref=\"" + d.getRefString() + "\"/>";
     }
 
+    /**
+     * Inserts a text fragment into a text or author editor pane.
+     *
+     * @param workspace oXygen's plugin workspace
+     * @param d the glyph definition
+     */
     private void insertFragment(StandalonePluginWorkspace workspace,
-            GlyphDefinition model) {
+            GlyphDefinition d) {
         WSEditorPage currentPage = workspace.getCurrentEditorAccess(
                 PluginWorkspace.MAIN_EDITING_AREA).getCurrentPage();
         if (currentPage instanceof WSTextEditorPage) {
@@ -132,7 +150,7 @@ public class GlyphPickerPluginExtension implements
             page.deleteSelection();
             try {
                 page.getDocument().insertString(selectionOffset,
-                        getXmlString(model, false),
+                        createXmlString(d, false),
                         javax.swing.text.SimpleAttributeSet.EMPTY);
             } catch (BadLocationException e) {
                 LOGGER.error(e);
@@ -155,7 +173,7 @@ public class GlyphPickerPluginExtension implements
 
                 authorAccess.getDocumentController()
                         .insertXMLFragmentSchemaAware(
-                                getXmlString(model, true), offset);
+                                createXmlString(d, true), offset);
 
                 int endOffset = endOffsetPos != null ? endOffsetPos.getOffset() - 1
                         : offset;

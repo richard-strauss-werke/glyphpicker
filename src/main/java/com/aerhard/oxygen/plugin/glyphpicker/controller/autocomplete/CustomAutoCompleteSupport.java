@@ -1,6 +1,9 @@
 /* Glazed Lists (c) 2003-2006 */
 /* http://publicobject.com/glazedlists/ publicobject.com,*/
 /* O'Dell Engineering Ltd.*/
+
+/* minor adjustments to use with the GlyphPicker plugin, Alexander Erhard */
+
 package com.aerhard.oxygen.plugin.glyphpicker.controller.autocomplete;
 
 import ca.odell.glazedlists.*;

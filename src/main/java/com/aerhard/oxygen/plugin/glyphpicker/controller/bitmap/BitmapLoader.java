@@ -1,3 +1,18 @@
+/**
+ * Copyright 2015 Alexander Erhard
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.aerhard.oxygen.plugin.glyphpicker.controller.bitmap;
 
 import java.awt.Image;
@@ -23,15 +38,31 @@ import org.apache.log4j.Logger;
 import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinition;
 import com.aerhard.oxygen.plugin.glyphpicker.view.renderer.GlyphBitmapIcon;
 
+/**
+ * The Class BitmapLoader.
+ */
 public class BitmapLoader implements Runnable {
 
+    /** The logger. */
     private static final Logger LOGGER = Logger
             .getLogger(BitmapLoader.class.getName());
 
+    /** The worker from which the bitmap loader has been called. */
     private final BitmapLoadWorker worker;
+    
+    /** The glyph definition containing the path to the bmp. */
     private final GlyphDefinition glyphDefinition;
+    
+    /** The size to which the bitmap should be scaled. */
     private final int size;
 
+    /**
+     * Instantiates a new bitmap loader.
+     *
+     * @param worker The worker from which the bitmap loader has been called
+     * @param glyphDefinition The glyph definition containing the path to the bmp
+     * @param size The size to which the bitmap should be scaled
+     */
     public BitmapLoader(BitmapLoadWorker worker,
             GlyphDefinition glyphDefinition, int size) {
         this.worker = worker;
@@ -39,6 +70,9 @@ public class BitmapLoader implements Runnable {
         this.size = size;
     }
 
+    /* (non-Javadoc)
+     * @see java.lang.Runnable#run()
+     */
     @Override
     public void run() {
         if (!worker.isCancelled()) {
@@ -63,7 +97,15 @@ public class BitmapLoader implements Runnable {
         }
     }
 
-    public Image scaleToBound(BufferedImage image, int boundX, int boundY) {
+    /**
+     * Scales an image to maximally fill the bound dimension, keeping the aspect ratio.
+     *
+     * @param image the image
+     * @param maxWidth the maximum width of the result image
+     * @param maxHeight the maximum height of the result image
+     * @return the scaled image
+     */
+    public Image scaleToBound(BufferedImage image, int maxWidth, int maxHeight) {
 
         int originalWidth = image.getWidth();
         int originalHeight = image.getHeight();
@@ -71,13 +113,13 @@ public class BitmapLoader implements Runnable {
         int resultWidth = originalWidth;
         int resultHeight = originalHeight;
 
-        if (originalWidth > boundX) {
-            resultWidth = boundX;
+        if (originalWidth > maxWidth) {
+            resultWidth = maxWidth;
             resultHeight = (resultWidth * originalHeight) / originalWidth;
         }
 
-        if (resultHeight > boundY) {
-            resultHeight = boundY;
+        if (resultHeight > maxHeight) {
+            resultHeight = maxHeight;
             resultWidth = (resultHeight * originalWidth) / originalHeight;
         }
 
@@ -89,21 +131,24 @@ public class BitmapLoader implements Runnable {
                 Image.SCALE_AREA_AVERAGING);
     }
 
-    public static Boolean isLocalFile(String path) {
-        return !path.matches("^\\w+://.*");
-    }
-
-    public BufferedImage loadImage(String path, String relativePath) {
+    /**
+     * Loads an image from the specified path.
+     *
+     * @param basePath the base path
+     * @param relativePath the relative path
+     * @return the image
+     */
+    public BufferedImage loadImage(String basePath, String relativePath) {
         BufferedImage image = null;
         if (relativePath != null) {
-            if (isLocalFile(path)) {
-                File a = new File(path);
+            if (isLocalFile(basePath)) {
+                File a = new File(basePath);
                 File parentFolder = new File(a.getParent());
                 File b = new File(parentFolder, relativePath);
                 image = getImageFromFile(b);
             } else {
                 try {
-                    String imagePath = (new URL(new URL(path), relativePath))
+                    String imagePath = (new URL(new URL(basePath), relativePath))
                             .toString();
                     image = getImageFromUrl("guest", "guest", imagePath);
                 } catch (MalformedURLException e) {
@@ -115,6 +160,22 @@ public class BitmapLoader implements Runnable {
         return image;
     }
 
+    /**
+     * Checks if a string refers to a local file.
+     *
+     * @param path the path
+     * @return the result
+     */
+    public static Boolean isLocalFile(String path) {
+        return !path.matches("^\\w+://.*");
+    }
+    
+    /**
+     * Gets an image from a file.
+     *
+     * @param file the file
+     * @return the image from the file
+     */
     public BufferedImage getImageFromFile(File file) {
         BufferedImage image = null;
         try {
@@ -126,6 +187,14 @@ public class BitmapLoader implements Runnable {
         return image;
     }
 
+    /**
+     * Gets an image from a URL.
+     *
+     * @param user the user name
+     * @param password the password
+     * @param url the url
+     * @return the image from the url
+     */
     public BufferedImage getImageFromUrl(String user, String password,
             String url) {
         HttpResponse response;

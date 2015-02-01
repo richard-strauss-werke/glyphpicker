@@ -1,3 +1,18 @@
+/**
+ * Copyright 2015 Alexander Erhard
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.aerhard.oxygen.plugin.glyphpicker.controller.browser;
 
 import java.io.File;
@@ -6,6 +21,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.concurrent.CancellationException;
 import java.util.concurrent.ExecutionException;
 
 import javax.swing.JOptionPane;
@@ -31,23 +47,41 @@ import com.aerhard.oxygen.plugin.glyphpicker.model.DataSource;
 import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinition;
 import com.icl.saxon.aelfred.SAXParserFactoryImpl;
 
+/**
+ * A worker loading glyph definitions from a document or online resource.
+ */
 public class TeiLoadWorker extends SwingWorker<List<GlyphDefinition>, Void> {
 
+    /** The logger. */
     private static final Logger LOGGER = Logger.getLogger(TeiLoadWorker.class
             .getName());
 
+    /** The data source object providing the loading parameters. */
     private final DataSource dataSource;
 
+    /** The result, a list of GlyphDefinition objects. */
     private List<GlyphDefinition> result = null;
 
+    /**
+     * returns the resulting glyph list.
+     *
+     * @return the result list
+     */
     public List<GlyphDefinition> getResult() {
         return result;
     }
 
+    /** The SAX parser. */
     private SAXParser parser;
 
+    /** The i18n resource bundle. */
     private final ResourceBundle i18n;
 
+    /**
+     * Instantiates a new TeiLoadWorker.
+     *
+     * @param dataSource The data source object providing the loading parameters
+     */
     public TeiLoadWorker(DataSource dataSource) {
         this.dataSource = dataSource;
 
@@ -61,70 +95,64 @@ public class TeiLoadWorker extends SwingWorker<List<GlyphDefinition>, Void> {
         }
     }
 
+    /* (non-Javadoc)
+     * @see javax.swing.SwingWorker#doInBackground()
+     */
     @Override
     protected List<GlyphDefinition> doInBackground() {
-        return loadData(dataSource);
+        return loadData();
     }
 
+    /* (non-Javadoc)
+     * @see javax.swing.SwingWorker#done()
+     */
     @Override
     protected void done() {
         try {
             result = get();
-        } catch (InterruptedException | ExecutionException e) {
+        } catch (InterruptedException | ExecutionException | CancellationException e) {
             LOGGER.error(e);
         }
     }
 
+    /**
+     * Load data.
+     *
+     * @param dataSource the data source
+     * @return the list
+     */
+    public List<GlyphDefinition> loadData() {
+        String path = dataSource.getBasePath();
+        return (isLocalFile(path)) ? loadDataFromFile()
+                : loadDataFromUrl("guest", "guest");
+    }
+
+    /**
+     * Checks if the provided path points to a local file.
+     *
+     * @param path the path
+     * @return the result
+     */
     private Boolean isLocalFile(String path) {
         return (!path.matches("^\\w+://.*"));
     }
+    
 
-    public List<GlyphDefinition> loadData(DataSource dataSource) {
-        String path = dataSource.getBasePath();
-        return (isLocalFile(path)) ? loadDataFromFile(dataSource)
-                : loadDataFromUrl("guest", "guest", dataSource);
-    }
-
-    private class GlyphResponseHandler implements
-            ResponseHandler<List<GlyphDefinition>> {
-
-        private final DataSource dataSource;
-
-        public GlyphResponseHandler(final DataSource dataSource) {
-            this.dataSource = dataSource;
-        }
-
-        @Override
-        public List<GlyphDefinition> handleResponse(final HttpResponse response)
-                throws IOException {
-            StatusLine statusLine = response.getStatusLine();
-            HttpEntity entity = response.getEntity();
-            if (statusLine.getStatusCode() >= 300) {
-                throw new HttpResponseException(statusLine.getStatusCode(),
-                        statusLine.getReasonPhrase());
-            }
-            if (entity == null) {
-                throw new ClientProtocolException(
-                        "Response contains no content");
-            }
-
-            InputStream inputStream = entity.getContent();
-
-            return parseXmlSax(inputStream, dataSource);
-        }
-
-    }
-
-    public List<GlyphDefinition> loadDataFromUrl(String user, String password,
-            final DataSource dataSource) {
+    /**
+     * Loads TEI data from {@link ab} URL.
+     *
+     * @param user the user
+     * @param password the password
+     * @return the resulting GlyphDefinition list
+     */
+    public List<GlyphDefinition> loadDataFromUrl(String user, String password) {
         DefaultHttpClient httpclient = new DefaultHttpClient();
         try {
             HttpGet httpGet = new HttpGet(dataSource.getBasePath());
             httpGet.addHeader(BasicScheme.authenticate(
                     new UsernamePasswordCredentials(user, password), "UTF-8",
                     false));
-            return httpclient.execute(httpGet, new GlyphResponseHandler(
-                    dataSource));
+            return httpclient.execute(httpGet, new XMLResponseHandler());
         } catch (IOException e) {
             JOptionPane.showMessageDialog(
                     null,
@@ -141,27 +169,42 @@ public class TeiLoadWorker extends SwingWorker<List<GlyphDefinition>, Void> {
 
         return null;
     }
+    
+    /**
+     * The XML response handler.
+     */
+    private class XMLResponseHandler implements
+            ResponseHandler<List<GlyphDefinition>> {
 
-    public List<GlyphDefinition> parseXmlSax(InputStream is,
-            DataSource dataSource) {
+        /* (non-Javadoc)
+         * @see org.apache.http.client.ResponseHandler#handleResponse(org.apache.http.HttpResponse)
+         */
+        @Override
+        public List<GlyphDefinition> handleResponse(final HttpResponse response)
+                throws IOException {
+            StatusLine statusLine = response.getStatusLine();
+            HttpEntity entity = response.getEntity();
+            if (statusLine.getStatusCode() >= 300) {
+                throw new HttpResponseException(statusLine.getStatusCode(),
+                        statusLine.getReasonPhrase());
+            }
+            if (entity == null) {
+                throw new ClientProtocolException(
+                        "Response contains no content");
+            }
 
-        TeiXmlHandler handler = new TeiXmlHandler(dataSource);
-        try {
-            parser.parse(is, handler);
-        } catch (SAXException | IOException e) {
-            JOptionPane.showMessageDialog(
-                    null,
-                    e.toString(),
-                    i18n.getString(this.getClass().getSimpleName()
-                            + ".xmlParsingError"), JOptionPane.ERROR_MESSAGE);
+            InputStream inputStream = entity.getContent();
+
+            return parseXmlSax(inputStream);
         }
-
-        return handler.getGlyphDefinitions();
     }
 
-    public List<GlyphDefinition> loadDataFromFile(DataSource dataSource) {
-
-        List<GlyphDefinition> glyphList = null;
+    /**
+     * Loads data from a file.
+     *
+     * @return the resulting GlyphDefinition list
+     */
+    public List<GlyphDefinition> loadDataFromFile() {
 
         String fileName = dataSource.getBasePath();
 
@@ -182,10 +225,32 @@ public class TeiLoadWorker extends SwingWorker<List<GlyphDefinition>, Void> {
                 LOGGER.info(e);
             }
             if (inputStream != null) {
-                glyphList = parseXmlSax(inputStream, dataSource);
+                return parseXmlSax(inputStream);
             }
         }
-        return glyphList;
+        return null;
+    }
+    
+    /**
+     * Triggers parsing of the XML input stream.
+     *
+     * @param is the input stream
+     * @return the resulting GlyphDefinition list
+     */
+    public List<GlyphDefinition> parseXmlSax(InputStream is) {
+
+        TeiXmlHandler handler = new TeiXmlHandler(dataSource);
+        try {
+            parser.parse(is, handler);
+        } catch (SAXException | IOException e) {
+            JOptionPane.showMessageDialog(
+                    null,
+                    e.toString(),
+                    i18n.getString(this.getClass().getSimpleName()
+                            + ".xmlParsingError"), JOptionPane.ERROR_MESSAGE);
+        }
+
+        return handler.getGlyphDefinitions();
     }
 
 }
