@@ -1,34 +1,58 @@
 package com.aerhard.oxygen.plugin.glyphpicker.view;
 
+import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 
 import javax.swing.JList;
+import javax.swing.JViewport;
+import javax.swing.ListModel;
 import javax.swing.ListSelectionModel;
 
 import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinition;
-import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphGridModel;
 
 public class GlyphGrid extends JList<GlyphDefinition> {
 
     private static final long serialVersionUID = 1L;
 
-    public GlyphGrid(GlyphGridModel listGridModel) {
+    private int size = 0;
+
+    public GlyphGrid(ListModel<GlyphDefinition> listModel) {
         setLayoutOrientation(JList.HORIZONTAL_WRAP);
-        
+        setModel(listModel);
         setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        
-        setModel(listGridModel);
-        
-        addComponentListener(new ComponentAdapter() {
-            @Override
-            public void componentResized(ComponentEvent e) {
-                fixRowCountForVisibleColumns();
-            }
-        });
+        addComponentListener(new ResizeAdapter());
     }
 
-    private void fixRowCountForVisibleColumns() {
+    public void setFixedSize(int size) {
+        this.size = size;
+        setFixedCellWidth(size);
+        setFixedCellHeight(size);
+    }
+
+    private class ResizeAdapter extends ComponentAdapter {
+        @Override
+        public void componentResized(ComponentEvent e) {
+            fixRowCountForVisibleColumns();
+        }
+    }
+
+    public int getTopVisibleRow() {
+        JViewport viewport = (JViewport) getParent();
+        Point pt = viewport.getViewPosition();
+        return locationToIndex(pt);
+    }
+
+    public void setTopVisibleRow(int row) {
+        Rectangle cellBounds = getCellBounds(row, row);
+        int h = getVisibleRect().height;
+        Rectangle targetViewRect = new Rectangle(cellBounds.x - h
+                + cellBounds.height, cellBounds.y, cellBounds.width, h);
+        scrollRectToVisible(targetViewRect);
+    }
+
+    public void fixRowCountForVisibleColumns() {
         int nCols = computeVisibleColumnCount();
         int nItems = getModel().getSize();
         int nRows = nItems / nCols;
@@ -39,9 +63,8 @@ public class GlyphGrid extends JList<GlyphDefinition> {
     }
 
     private int computeVisibleColumnCount() {
-        int cellWidth = Math.max(getCellBounds(0, 0).width, 1);
-        int width = getVisibleRect().width;
-        return Math.max(width / cellWidth, 1);
+        return Math.max(
+                (int) Math.floor(getVisibleRect().width / (double) size), 1);
     }
 
 }

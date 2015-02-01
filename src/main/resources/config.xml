@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<config xmlns="http://www.richard-strauss-ausgabe.de/ns/1.0">
+    <tabIndex>1</tabIndex>
+    <userSearchFieldScopeIndex>0</userSearchFieldScopeIndex>
+    <browserSearchFieldScopeIndex>0</browserSearchFieldScopeIndex>
+    <userViewIndex>0</userViewIndex>
+    <browserViewIndex>0</browserViewIndex>
+    <dataSources>
+        <dataSource>
+            <label>Edirom SMuFL Browser (web, bitmap)</label>
+            <basePath>http://aerhard.github.io/glyphpicker/testdata/smuflBrowser/data/charDecl.xml</basePath>
+            <fontName>BravuraText</fontName>
+            <displayMode>bitmap</displayMode>
+            <sizeFactor>0.8</sizeFactor>
+            <template>${basePath}#${id}</template>
+            <mappingTypeValue>smufl</mappingTypeValue>
+            <mappingSubTypeValue></mappingSubTypeValue>
+            <mappingAsCharString>true</mappingAsCharString>
+        </dataSource>
+        <dataSource>
+            <label>Edirom SMuFL Browser (web, glyph)</label>
+            <basePath>http://aerhard.github.io/glyphpicker/testdata/smuflBrowser/data/charDecl.xml</basePath>
+            <fontName>BravuraText</fontName>
+            <displayMode>fit</displayMode>
+            <sizeFactor>0.7</sizeFactor>
+            <template>${basePath}#${id}</template>
+            <mappingTypeValue>smufl</mappingTypeValue>
+            <mappingSubTypeValue></mappingSubTypeValue>
+            <mappingAsCharString>true</mappingAsCharString>
+        </dataSource>
+        <dataSource>
+            <label>gBank (web, bitmap)</label>
+            <basePath>http://aerhard.github.io/glyphpicker/testdata/gBankImages/gBank.xml</basePath>
+            <fontName>Andron Scriptor Web</fontName>
+            <displayMode>bitmap</displayMode>
+            <sizeFactor>1.0</sizeFactor>
+            <template>#${id}</template>
+            <mappingTypeValue></mappingTypeValue>
+            <mappingSubTypeValue>PUA</mappingSubTypeValue>
+            <mappingAsCharString>true</mappingAsCharString>
+        </dataSource>
+        <dataSource>
+            <label>gBank (web, glyph)</label>
+            <basePath>http://aerhard.github.io/glyphpicker/testdata/gBankImages/gBank.xml</basePath>
+            <fontName>Andron Scriptor Web</fontName>
+            <displayMode>proportional</displayMode>
+            <sizeFactor>0.5</sizeFactor>
+            <template>#${id}</template>
+            <mappingTypeValue></mappingTypeValue>
+            <mappingSubTypeValue>PUA</mappingSubTypeValue>
+            <mappingAsCharString>true</mappingAsCharString>
+        </dataSource>
+        <dataSource>
+            <label>Edirom SMuFL Browser (local, bitmap)</label>
+            <basePath>/Users/Ahlse/Desktop/SMuFL-Browser-1.0/data/charDecl.xml</basePath>
+            <fontName>BravuraText</fontName>
+            <displayMode>bitmap</displayMode>
+            <sizeFactor>0.7</sizeFactor>
+            <template>${basePath}#${id}</template>
+            <mappingTypeValue>smufl</mappingTypeValue>
+            <mappingSubTypeValue></mappingSubTypeValue>
+            <mappingAsCharString>true</mappingAsCharString>
+        </dataSource>
+        <dataSource>
+            <label>Edirom SMuFL Browser (local, glyph)</label>
+            <basePath>/Users/Ahlse/Desktop/SMuFL-Browser-1.0/data/charDecl.xml</basePath>
+            <fontName>BravuraText</fontName>
+            <displayMode>fit</displayMode>
+            <sizeFactor>0.7</sizeFactor>
+            <template>${basePath}#${id}</template>
+            <mappingTypeValue>smufl</mappingTypeValue>
+            <mappingSubTypeValue></mappingSubTypeValue>
+            <mappingAsCharString>true</mappingAsCharString>
+        </dataSource>
+        <dataSource>
+            <label>gBank (local, bitmap)</label>
+            <basePath>/Users/Ahlse/Desktop/gBankImages/gBank.xml</basePath>
+            <fontName>Andron Scriptor Web</fontName>
+            <displayMode>bitmap</displayMode>
+            <sizeFactor>1.0</sizeFactor>
+            <template>#${id}</template>
+            <mappingTypeValue></mappingTypeValue>
+            <mappingSubTypeValue>PUA</mappingSubTypeValue>
+            <mappingAsCharString>true</mappingAsCharString>
+        </dataSource>
+        <dataSource>
+            <label>gBank (local, glyph)</label>
+            <basePath>/Users/Ahlse/Desktop/gBankImages/gBank.xml</basePath>
+            <fontName>Andron Scriptor Web</fontName>
+            <displayMode>proportional</displayMode>
+            <sizeFactor>0.5</sizeFactor>
+            <template>#${id}</template>
+            <mappingTypeValue></mappingTypeValue>
+            <mappingSubTypeValue>PUA</mappingSubTypeValue>
+            <mappingAsCharString>true</mappingAsCharString>
+        </dataSource>
+        <dataSource>
+            <label>Edirom SMuFL Browser (localhost, glyph)</label>
+            <basePath>http://localhost:8080/exist/apps/smufl-browser/list/</basePath>
+            <fontName>BravuraText</fontName>
+            <displayMode>fit</displayMode>
+            <sizeFactor>0.5</sizeFactor>
+            <template>${basePath}#${id}</template>
+            <mappingTypeValue>smufl</mappingTypeValue>
+            <mappingSubTypeValue></mappingSubTypeValue>
+            <mappingAsCharString>true</mappingAsCharString>
+        </dataSource>
+    </dataSources>
+</config>

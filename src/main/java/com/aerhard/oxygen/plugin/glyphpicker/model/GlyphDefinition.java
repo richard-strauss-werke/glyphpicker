@@ -1,10 +1,8 @@
 package com.aerhard.oxygen.plugin.glyphpicker.model;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.ImageIcon;
-import javax.swing.JComponent;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
@@ -13,129 +11,83 @@ import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
-@XmlRootElement(name = "char", namespace="http://www.tei-c.org/ns/1.0")
+@XmlRootElement(name = "char")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class GlyphDefinition {
-    
+public class GlyphDefinition implements Cloneable {
+
     @XmlAttribute(name = "id", namespace = "http://www.w3.org/XML/1998/namespace")
     private String id;
 
-    @XmlAttribute(name = "base", namespace = "http://www.w3.org/XML/1998/namespace")
-    private String baseUrl;
-
-    @XmlElement(name = "charName", namespace="http://www.tei-c.org/ns/1.0")
+    @XmlElement(name = "charName")
     private String charName;
-    
-    @XmlElement(name="mapping", namespace="http://www.tei-c.org/ns/1.0")
+
+    @XmlElement(name = "mapping")
     private String codePoint;
-    
-    @XmlElementWrapper(name="list", namespace="http://www.tei-c.org/ns/1.0")
-    private List<String> classes = new ArrayList<String>();
-    
-    @XmlElement(name="graphic", namespace="http://www.tei-c.org/ns/1.0")
+
+    @XmlElement(name = "graphic")
     private String url;
 
-    @XmlElement(name="range")
+    @XmlElement(name = "range")
     private String range;
 
-    @XmlTransient
-    private JComponent component = null;
+    @XmlElement(name = "g")
+    @XmlElementWrapper(name = "glyphRefs")
+    private List<GlyphRef> glyphRefs = null;
+
+    @XmlElement(name = "dataSource")
+    private DataSource dataSource;
+
     @XmlTransient
     private ImageIcon icon = null;
 
     public GlyphDefinition() {
-
     }
 
-    public GlyphDefinition(GlyphDefinition ch) {
-        this.id = ch.getId();
-        this.charName = ch.getCharName();
-        this.codePoint = ch.getCodePoint();
-        this.range = ch.getRange();
-        this.url = ch.getUrl();
-        this.classes = ch.getClasses();
-        this.baseUrl = ch.getBaseUrl();
-    }
-
-    public GlyphDefinition(String id, String name, String codepoint,
-            String range, String url, String baseUrl, List<String> classes) {
-        this.id = id;
-        this.charName = name;
-        this.codePoint = codepoint;
-        this.range = range;
-        this.url = url;
-        this.baseUrl = baseUrl;
-        this.classes = classes;
-    }
-
-    /**
-     * @return the label
-     */
     public String getCharName() {
         return charName;
     }
 
-    /**
-     * @param label
-     *            the label to set
-     */
     public void setCharName(String label) {
         this.charName = label;
     }
 
-    /**
-     * @return the codePoint
-     */
     public String getCodePoint() {
         return codePoint;
     }
-    
-    public String getCharString() {
-        try {
-            String cp = codePoint.substring(2);
-            int c = Integer.parseInt(cp, 16);
-            return Character.toString((char) c);    
-        } catch (Exception e) {
-            return null;
+
+    public String getCodePointString() {
+
+        if (codePoint != null) {
+            StringBuilder sb = new StringBuilder();
+            for (Character c : codePoint.toCharArray()) {
+                sb.append("U+");
+                sb.append(String.format("%X", (int) c));
+                sb.append(" ");
+            }
+            return sb.toString();
         }
+        return null;
+
     }
 
-    /**
-     * @param codePoint
-     *            the codePoint to set
-     */
     public void setCodePoint(String codePoint) {
         this.codePoint = codePoint;
     }
 
-    /**
-     * @return the range
-     */
     public String getRange() {
         return range;
     }
 
-    /**
-     * @param range
-     *            the range to set
-     */
     public void setRange(String range) {
         this.range = range;
     }
 
-    /**
-     * @return the classes
-     */
-    public List<String> getClasses() {
-        return classes;
+    public List<GlyphRef> getGlyphRefs() {
+        return glyphRefs;
     }
 
-    /**
-     * @param classes
-     *            the classes to set
-     */
-    public void setClasses(List<String> classes) {
-        this.classes = classes;
+    public void setGlyphRefs(List<GlyphRef> glyphRefs) {
+        this.glyphRefs = glyphRefs;
     }
 
     public String getId() {
@@ -162,27 +114,36 @@ public class GlyphDefinition {
         return icon;
     }
 
-    public String getBaseUrl() {
-        return baseUrl;
+    public DataSource getDataSource() {
+        return dataSource;
     }
 
-    public void setBaseUrl(String baseUrl) {
-        this.baseUrl = baseUrl;
+    public void setDataSource(DataSource dataSource) {
+        this.dataSource = dataSource;
     }
 
-    /**
-     * @return the component
-     */
-    public JComponent getComponent() {
-        return component;
+    public String getRefString() {
+
+        String template = getDataSource().getTemplate();
+
+        // if no template is specified, use default template
+        if (template == null) {
+            return getDataSource().getBasePath() + "#" + getId();
+        }
+
+        return template.replaceAll("\\$\\{basePath\\}",
+                getDataSource().getBasePath()).replaceAll("\\$\\{id\\}",
+                getId());
     }
 
-    /**
-     * @param c
-     *            the component to set
-     */
-    public void setComponent(JComponent c) {
-        this.component = c;
+    @Override
+    public GlyphDefinition clone() throws CloneNotSupportedException {
+        return (GlyphDefinition) super.clone();
+    }
+
+    @Override
+    public String toString() {
+        return getCodePointString() + ": " + charName + " (" + range + ")";
     }
 
 }

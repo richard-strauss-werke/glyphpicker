@@ -1,50 +1,39 @@
 package com.aerhard.oxygen.plugin.glyphpicker.view.renderer;
 
+import javax.swing.ImageIcon;
 import javax.swing.JComponent;
-import javax.swing.JLabel;
-import javax.swing.JTable;
-import javax.swing.table.TableCellRenderer;
+import javax.swing.UIManager;
 
+import java.awt.Color;
 import java.awt.Component;
 
 import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinition;
-import com.aerhard.oxygen.plugin.glyphpicker.view.GlyphComponent;
 
-public class GlyphBitmapRenderer extends JLabel implements TableCellRenderer {
+public class GlyphBitmapRenderer extends GlyphRenderer {
 
     private static final long serialVersionUID = 1L;
 
-    public GlyphBitmapRenderer() {
+    private final Color inactiveColor = UIManager
+            .getColor("TextField.inactiveBackground");
+
+    public GlyphBitmapRenderer(JComponent container) {
+        super(container);
     }
 
-    public Component getTableCellRendererComponent(JTable table, Object value,
-            boolean isSelected, boolean hasFocus, int row, int column) {
+    @Override
+    public Component getRendererComponent(GlyphDefinition gd, boolean isSelected) {
 
-        JComponent c;
-        if (value == null) {
-            c = new GlyphComponent();
+        ImageIcon icon = gd.getIcon();
+
+        setIcon(gd.getIcon());
+
+        if (icon == null) {
+            setBackground(inactiveColor);
         } else {
-            GlyphDefinition model = (GlyphDefinition) value;
-            if (model.getComponent() == null) {
-                GlyphComponent gc = new GlyphComponent(model, false);
-                gc.loadIcon();
-                gc.setContainer(table);
-                model.setComponent(gc);
-                c = gc;
-            } else {
-                c = model.getComponent();
-            }
+            configureBackground(isSelected);
         }
 
-        if (isSelected) {
-            c.setBackground(table.getSelectionBackground());
-            c.setForeground(table.getSelectionForeground());
-        } else {
-            c.setBackground(table.getBackground());
-            c.setForeground(table.getForeground());
-        }
-
-        c.setOpaque(true);
-        return c;
+        return this;
     }
+
 }

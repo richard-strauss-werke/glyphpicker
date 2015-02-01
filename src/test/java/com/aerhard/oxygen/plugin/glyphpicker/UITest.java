@@ -1,12 +1,17 @@
 package com.aerhard.oxygen.plugin.glyphpicker;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.io.IOException;
+import java.util.Locale;
 import java.util.Properties;
 
 import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
@@ -17,8 +22,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import ro.sync.exml.workspace.api.standalone.StandalonePluginWorkspace;
 
-import com.aerhard.oxygen.plugin.glyphpicker.controller.GlyphEventListener;
-import com.aerhard.oxygen.plugin.glyphpicker.controller.MainController;
+import com.aerhard.oxygen.plugin.glyphpicker.controller.main.MainController;
 import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinition;
 
 import static org.mockito.Mockito.*;
@@ -31,16 +35,16 @@ public class UITest {
 
     private static MainController mainController;
 
-    
     @Test
     public void testSearchDialog() {
         LOGGER.info("UI test.");
     }
-    
-    
-    public static void main(String[] args) {
+
+    private static void runTest() {
         setSystemLookAndFeel();
         
+        Locale.setDefault(Locale.ENGLISH);
+
         Properties properties = new Properties();
         try {
             properties.load(UITest.class
@@ -48,43 +52,61 @@ public class UITest {
         } catch (IOException e) {
             LOGGER.error("Could not read \"mock.properties\".");
         }
-        
+
         String oxyPropFolder = properties.getProperty("oxygen.propertyfolder");
-        
-        
+
         StandalonePluginWorkspace workspace = mock(StandalonePluginWorkspace.class);
         when(workspace.getPreferencesDirectory()).thenReturn(oxyPropFolder);
-        
 
         JFrame frame = new JFrame("UI Test");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+        frame.setPreferredSize(new Dimension(600, 600));
+        
         mainController = new MainController(workspace);
 
         frame.setLayout(new BorderLayout(0, 0));
         frame.getContentPane().add(mainController.getPanel());
 
-        mainController.addListener(new GlyphEventListener() {
-            public void eventOccured(String type, GlyphDefinition model) {
-                if ("insert".equals(type)) {
-                    LOGGER.info("Insertion triggered: " + model.getCharName());
+        mainController.addPropertyChangeListener(new PropertyChangeListener() {
+            @Override
+            public void propertyChange(PropertyChangeEvent e) {
+                if ("insert".equals(e.getPropertyName())) {
+                    GlyphDefinition model = (GlyphDefinition) e.getNewValue();
+                    LOGGER.info("Insertion triggered: " + model.getCharName()
+                            + "\nrefString: " + model.getRefString());
                 }
             }
         });
-
+        
         frame.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
                 mainController.saveData();
             }
         });
-        
+
         mainController.loadData();
 
         frame.pack();
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
 
+
+    }
+    
+    public static void main(String[] args) {
+        
+        SwingUtilities.invokeLater(new Runnable() {
+            
+            @Override
+            public void run() {
+               runTest();
+                
+            }
+        });
+        
+ 
     }
 
     private static void setSystemLookAndFeel() {

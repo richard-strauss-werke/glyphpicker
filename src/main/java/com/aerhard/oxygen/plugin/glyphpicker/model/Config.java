@@ -9,22 +9,70 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Config {
 
-    @XmlElement(name = "paths")
-    private PathComboModel paths = null;
+    @XmlElement
+    private int tabIndex = 1;
 
-    /**
-     * @return the paths
-     */
-    public PathComboModel getPaths() {
-        return paths;
+    @XmlElement
+    private int userSearchFieldScopeIndex = 0;
+
+    @XmlElement
+    private int browserSearchFieldScopeIndex = 0;
+
+    @XmlElement
+    private int userViewIndex = 0;
+
+    @XmlElement
+    private int browserViewIndex = 0;
+
+    @XmlElement(name = "dataSources")
+    private DataSourceList dataSources = null;
+
+    public int getTabIndex() {
+        return tabIndex;
     }
 
-    /**
-     * @param paths
-     *            the paths to set
-     */
-    public void setPaths(PathComboModel paths) {
-        this.paths = paths;
+    public void setTabIndex(int tabIndex) {
+        this.tabIndex = tabIndex;
+    }
+
+    public int getUserSearchFieldScopeIndex() {
+        return userSearchFieldScopeIndex;
+    }
+
+    public void setUserSearchFieldScopeIndex(int userSearchFieldScopeIndex) {
+        this.userSearchFieldScopeIndex = userSearchFieldScopeIndex;
+    }
+
+    public int getBrowserSearchFieldScopeIndex() {
+        return browserSearchFieldScopeIndex;
+    }
+
+    public void setBrowserSearchFieldScopeIndex(int browserSearchFieldScopeIndex) {
+        this.browserSearchFieldScopeIndex = browserSearchFieldScopeIndex;
+    }
+
+    public int getUserViewIndex() {
+        return userViewIndex;
+    }
+
+    public void setUserViewIndex(int userViewIndex) {
+        this.userViewIndex = userViewIndex;
+    }
+
+    public int getBrowserViewIndex() {
+        return browserViewIndex;
+    }
+
+    public void setBrowserViewIndex(int browserViewIndex) {
+        this.browserViewIndex = browserViewIndex;
+    }
+
+    public DataSourceList getDataSources() {
+        return dataSources;
+    }
+
+    public void setDataSources(DataSourceList dataSources) {
+        this.dataSources = dataSources;
     }
 
 }

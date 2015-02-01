@@ -2,28 +2,35 @@ package com.aerhard.oxygen.plugin.glyphpicker.view.renderer;
 
 import javax.swing.JLabel;
 import javax.swing.JTable;
+import javax.swing.border.EmptyBorder;
 import javax.swing.table.TableCellRenderer;
 
 import java.awt.Component;
-import java.util.List;
+import java.util.ResourceBundle;
 
 import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinition;
 
-public class DescriptionRenderer extends JLabel implements
-        TableCellRenderer {
+public class DescriptionRenderer extends JLabel implements TableCellRenderer {
 
     private static final long serialVersionUID = 1L;
 
+    public static final int BORDER_WIDTH = 4;
+
+    private static final ResourceBundle i18n = ResourceBundle
+            .getBundle("GlyphPicker");
+    private static final String className = DescriptionRenderer.class.getSimpleName();
+
+    private static final String CODEPOINT_LABEL = i18n.getString(className
+            + ".codepoint");
+    private static final String RANGE_LABEL = i18n.getString(className
+            + ".range");
+    private static final String XML_ID_LABEL = i18n.getString(className
+            + ".xmlId");
+
     public DescriptionRenderer() {
+        setBorder(new EmptyBorder(BORDER_WIDTH, BORDER_WIDTH, BORDER_WIDTH,
+                BORDER_WIDTH));
     }
-
-//    private int padding = 12;
-
-//    public void setPadding(int padding) {
-//        this.padding = padding;
-//    }
-    
-//    private List<List<Integer>> rowColHeight = new ArrayList<>();
 
     public Component getTableCellRendererComponent(JTable table, Object value,
             boolean isSelected, boolean hasFocus, int row, int column) {
@@ -31,8 +38,8 @@ public class DescriptionRenderer extends JLabel implements
         if (value == null) {
             setText("");
         } else {
-            GlyphDefinition model = (GlyphDefinition) value;
-            setText(formatText(model));
+            GlyphDefinition d = (GlyphDefinition) value;
+            setText(getHTML(d));
         }
 
         if (isSelected) {
@@ -44,79 +51,34 @@ public class DescriptionRenderer extends JLabel implements
         }
 
         setOpaque(true);
-//        adjustRowHeight(table, row, column);
         return this;
     }
 
-    public static String formatText(GlyphDefinition model) {
-        List<String> classes = model.getClasses();
+    public static String getHTML(GlyphDefinition d) {
         StringBuilder sb = new StringBuilder();
 
-        sb.append("<html>");
+        sb.append("<html><p>");
 
-        if (model.getCharName() != null) {
-            sb.append("<p><nobr><b>");
-            sb.append(model.getCharName());
-            sb.append("</b></nobr></p>");
+        if (d.getCharName() != null) {
+            sb.append("<nobr><b>").append(d.getCharName()).append("</b></nobr><br>");
         }
 
-        if (model.getCodePoint() != null) {
-            sb.append("<p><nobr>Codepoint: ");
-            sb.append(model.getCodePoint());
-            sb.append("</nobr></p>");
+        if (d.getCodePoint() != null) {
+            sb.append("<nobr>").append(CODEPOINT_LABEL).append(": ").append(d.getCodePointString()).append("</nobr><br>");
         }
 
-        if (model.getRange() != null) {
-            sb.append("<p><nobr>Range: ");
-            sb.append(model.getRange());
-            sb.append("</nobr></p>");
+        if (d.getRange() != null) {
+            sb.append("<nobr>").append(RANGE_LABEL).append(": ").append(d.getRange()).append("</nobr><br>");
         }
 
-        if (model.getClasses().size() > 0) {
-            sb.append("<p><nobr>Classes: ");
-            for (String cl : classes) {
-                sb.append(cl);
-                sb.append(" ");
-            }
-            sb.append("</nobr></p>");
+        if (d.getId() != null) {
+            sb.append("<nobr>").append(XML_ID_LABEL).append(": <em>").append(d.getId()).append("</em></nobr><br>");
         }
 
-        if (model.getId() != null) {
-            sb.append("<p><nobr><em>");
-            sb.append(model.getId());
-            sb.append("</em></nobr></p>");
-        }
-
-        sb.append("</div></html>");
+        sb.append("</p></html>");
 
         return sb.toString();
 
     }
-
-//    private void adjustRowHeight(JTable table, int row, int column) {
-//
-//        int cWidth = table.getTableHeader().getColumnModel().getColumn(column)
-//                .getWidth();
-//        setSize(new Dimension(cWidth, 1000));
-//        int prefH = getPreferredSize().height;
-//        while (rowColHeight.size() <= row) {
-//            rowColHeight.add(new ArrayList<Integer>(column));
-//        }
-//        List<Integer> colHeights = rowColHeight.get(row);
-//        while (colHeights.size() <= column) {
-//            colHeights.add(0);
-//        }
-//        colHeights.set(column, prefH);
-//        int maxH = prefH;
-//        for (Integer colHeight : colHeights) {
-//            if (colHeight > maxH) {
-//                maxH = colHeight;
-//            }
-//        }
-//        maxH+=padding;
-//        if (table.getRowHeight(row) != maxH) {
-//            table.setRowHeight(row, maxH);
-//        }
-//    }
 
 }

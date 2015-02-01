@@ -16,15 +16,19 @@
 
 package com.aerhard.oxygen.plugin.glyphpicker;
 
-import javax.swing.JComponent;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+
+import javax.swing.ImageIcon;
+import javax.swing.JMenuBar;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Position;
 
 import org.apache.log4j.Logger;
 
-import com.aerhard.oxygen.plugin.glyphpicker.controller.GlyphEventListener;
-import com.aerhard.oxygen.plugin.glyphpicker.controller.MainController;
+import com.aerhard.oxygen.plugin.glyphpicker.controller.main.MainController;
 import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinition;
+import com.aerhard.oxygen.plugin.glyphpicker.view.MainPanel;
 
 import ro.sync.ecss.extensions.api.AuthorAccess;
 import ro.sync.ecss.extensions.api.AuthorOperationException;
@@ -33,6 +37,7 @@ import ro.sync.exml.workspace.api.PluginWorkspace;
 import ro.sync.exml.workspace.api.editor.page.WSEditorPage;
 import ro.sync.exml.workspace.api.editor.page.author.WSAuthorEditorPage;
 import ro.sync.exml.workspace.api.editor.page.text.WSTextEditorPage;
+import ro.sync.exml.workspace.api.standalone.MenuBarCustomizer;
 import ro.sync.exml.workspace.api.standalone.StandalonePluginWorkspace;
 import ro.sync.exml.workspace.api.standalone.ViewComponentCustomizer;
 import ro.sync.exml.workspace.api.standalone.ViewInfo;
@@ -47,7 +52,12 @@ public class GlyphPickerPluginExtension implements
     private static final Logger LOGGER = Logger
             .getLogger(GlyphPickerPluginExtension.class.getName());
 
+    private static final String PLUGIN_ICON = "/images/grid.png";
+    private static final String VIEW_ID = "GlyphPicker";
+
     private MainController mainController;
+
+    private MainPanel mainPanel;
 
     /*
      * (non-Javadoc)
@@ -60,14 +70,17 @@ public class GlyphPickerPluginExtension implements
     public void applicationStarted(final StandalonePluginWorkspace workspace) {
 
         mainController = new MainController(workspace);
-        mainController.addListener(new GlyphEventListener() {
+        mainController.addPropertyChangeListener(new PropertyChangeListener() {
             @Override
-            public void eventOccured(String type, GlyphDefinition model) {
-                if ("insert".equals(type)) {
-                    insertFragment(workspace, model);
+            public void propertyChange(PropertyChangeEvent e) {
+                if ("insert".equals(e.getPropertyName())) {
+                    insertFragment(workspace, (GlyphDefinition) e.getNewValue());
                 }
             }
         });
+
+        mainPanel = mainController.getPanel();
+        mainController.loadData();
 
         workspace.addViewComponentCustomizer(new ViewComponentCustomizer() {
             /**
@@ -75,28 +88,34 @@ public class GlyphPickerPluginExtension implements
              */
             @Override
             public void customizeView(ViewInfo viewInfo) {
-                if ("GlyphPicker".equals(viewInfo.getViewID())) {
+                if (VIEW_ID.equals(viewInfo.getViewID())) {
 
-                    JComponent panel = mainController.getPanel();
-                    mainController.loadData();
-
-                    viewInfo.setComponent(panel);
+                    viewInfo.setComponent(mainPanel);
                     viewInfo.setTitle("GlyphPicker");
 
-                    // TODO add icon
-                    // viewInfo.setIcon(Icons
-                    // .getIcon(Icons.CMS_MESSAGES_CUSTOM_VIEW_STRING));
+                    // TODO use custom icon
+                    viewInfo.setIcon(new ImageIcon(
+                            GlyphPickerPluginExtension.class
+                                    .getResource(PLUGIN_ICON)));
                 }
+            }
+        });
 
+        workspace.addMenuBarCustomizer(new MenuBarCustomizer() {
+            @Override
+            public void customizeMainMenu(JMenuBar mainMenu) {
+                mainMenu.getMenu(1).addSeparator();
+                mainMenu.getMenu(1).add(
+                        new TogglePickerWindowAction(workspace, PLUGIN_ICON,
+                                VIEW_ID));
             }
         });
 
     }
 
-    private String formatModel(GlyphDefinition model, Boolean setNs) {
+    private String getXmlString(GlyphDefinition model, Boolean setNs) {
         String ns = (setNs) ? " xmlns=\"http://www.tei-c.org/ns/1.0\"" : "";
-        return "<g" + ns + " ref=\"" + model.getBaseUrl() + "#" + model.getId()
-                + "\"/>";
+        return "<g" + ns + " ref=\"" + model.getRefString() + "\"/>";
     }
 
     private void insertFragment(StandalonePluginWorkspace workspace,
@@ -113,7 +132,7 @@ public class GlyphPickerPluginExtension implements
             page.deleteSelection();
             try {
                 page.getDocument().insertString(selectionOffset,
-                        formatModel(model, false),
+                        getXmlString(model, false),
                         javax.swing.text.SimpleAttributeSet.EMPTY);
             } catch (BadLocationException e) {
                 LOGGER.error(e);
@@ -135,8 +154,8 @@ public class GlyphPickerPluginExtension implements
                 }
 
                 authorAccess.getDocumentController()
-                        .insertXMLFragmentSchemaAware(formatModel(model, true),
-                                offset);
+                        .insertXMLFragmentSchemaAware(
+                                getXmlString(model, true), offset);
 
                 int endOffset = endOffsetPos != null ? endOffsetPos.getOffset() - 1
                         : offset;
@@ -147,7 +166,7 @@ public class GlyphPickerPluginExtension implements
 
         } else {
             workspace
-                    .showInformationMessage("No editor pane found to insert the glyph.");
+                    .showErrorMessage("No editor pane found to insert the glyph.");
         }
 
     }
@@ -164,6 +183,6 @@ public class GlyphPickerPluginExtension implements
         mainController.saveData();
 
         return true;
-    };
+    }
 
 }

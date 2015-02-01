@@ -3,13 +3,18 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.aerhard.oxygen.plugin.glyphpicker</groupId>
 	<packaging>jar</packaging>
-	<version>0.2.0</version>
+	<version>0.7.0</version>
 	<url>https://github.com/aerhard/glyphpicker</url>
 	<description>oXygen XML Editor plugin for glyph reference insertion in TEI documents</description>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 	<dependencies>
+		<dependency>
+			<groupId>net.java.dev.glazedlists</groupId>
+			<artifactId>glazedlists_java15</artifactId>
+			<version>1.9.0</version>
+		</dependency>
 		<dependency>
 			<groupId>com.oxygenxml</groupId>
 			<artifactId>oxygen-sdk</artifactId>
@@ -25,11 +30,6 @@
 			<artifactId>junit</artifactId>
 			<version>4.11</version>
 			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.json</groupId>
-			<artifactId>json</artifactId>
-			<version>20140107</version>
 		</dependency>
 	</dependencies>
 	<build>
@@ -64,9 +64,9 @@
 						<configuration>
 							<artifactItems>
 								<artifactItem>
-									<groupId>org.json</groupId>
-									<artifactId>json</artifactId>
-									<version>20140107</version>
+									<groupId>net.java.dev.glazedlists</groupId>
+									<artifactId>glazedlists_java15</artifactId>
+									<version>1.9.0</version>
 									<type>jar</type>
 									<overWrite>true</overWrite>
 								</artifactItem>
@@ -140,8 +140,18 @@
 				<includes>
 					<include>**/*.*</include>
 				</includes>
+				<excludes>
+                    <exclude>**/*.xml</exclude>
+                </excludes>
 				<filtering>true</filtering>
 			</resource>
+			<resource>
+                <directory>src/main/resources</directory>
+                <includes>
+                    <include>**/*.xml</include>
+                </includes>
+                <filtering>false</filtering>
+            </resource>
 			<resource>
 				<directory>src/test/resources</directory>
 				<excludes>
