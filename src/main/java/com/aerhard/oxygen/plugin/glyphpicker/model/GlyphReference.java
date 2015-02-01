@@ -26,7 +26,7 @@ import javax.xml.bind.annotation.XmlTransient;
  */
 @XmlRootElement(name = "g")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class GlyphRef {
+public class GlyphReference {
 
     /** The string index of this reference's <g> attribute in its <mapping> parent. */
     @XmlAttribute(name = "n")
@@ -50,7 +50,7 @@ public class GlyphRef {
      * @param index The string index of this reference's <g> attribute in its <mapping> parent
      * @param targetId The target id
      */
-    public GlyphRef(int index, String targetId) {
+    public GlyphReference(int index, String targetId) {
         this.index = index;
         this.targetId = targetId;
     }
@@ -58,7 +58,7 @@ public class GlyphRef {
     /**
      * Instantiates a new glyph ref.
      */
-    public GlyphRef() {
+    public GlyphReference() {
     }
 
     /**

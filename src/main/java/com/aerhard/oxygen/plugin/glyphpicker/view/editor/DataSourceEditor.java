@@ -89,13 +89,13 @@ public class DataSourceEditor extends JPanel {
     private final JTextField templateTextField;
     
     /** The mapping type's text field. */
-    private final JTextField mappingTypeTextField;
+    private final JTextField typeAttributeTextField;
     
     /** The mapping subtype's text field. */
-    private final JTextField mappingSubTypeTextField;
+    private final JTextField subtypeAttributeTextField;
     
     /** The mapping-as-char-string's check box. */
-    private final JCheckBox mappingAsCharStringCheckBox;
+    private final JCheckBox parseMappingCheckBox;
     
     /** The button pane for editing the list items. */
     private final JPanel listButtonPane;
@@ -154,9 +154,9 @@ public class DataSourceEditor extends JPanel {
         displayModeCombo = new JComboBox<>();
         sizeTextField = new JTextField();
         templateTextField = new JTextField();
-        mappingTypeTextField = new JTextField();
-        mappingSubTypeTextField = new JTextField();
-        mappingAsCharStringCheckBox = new JCheckBox();
+        typeAttributeTextField = new JTextField();
+        subtypeAttributeTextField = new JTextField();
+        parseMappingCheckBox = new JCheckBox();
 
         editorConfig.add(new EditorConfigItem(i18n.getString(className
                 + ".label"), labelTextField));
@@ -171,11 +171,11 @@ public class DataSourceEditor extends JPanel {
         editorConfig.add(new EditorConfigItem(i18n.getString(className
                 + ".template"), templateTextField));
         editorConfig.add(new EditorConfigItem(i18n.getString(className
-                + ".typeAttributeValue"), mappingTypeTextField));
+                + ".typeAttributeValue"), typeAttributeTextField));
         editorConfig.add(new EditorConfigItem(i18n.getString(className
-                + ".subTypeAttributeValue"), mappingSubTypeTextField));
+                + ".subtypeAttributeValue"), subtypeAttributeTextField));
         editorConfig.add(new EditorConfigItem(i18n.getString(className
-                + ".mappingAsCharString"), mappingAsCharStringCheckBox));
+                + ".parseMapping"), parseMappingCheckBox));
 
         for (int i = 0; i < editorConfig.size(); i++) {
             addToEditorPanel(i, editorConfig.get(i));
@@ -347,8 +347,8 @@ public class DataSourceEditor extends JPanel {
      *
      * @return the mapping type's text field
      */
-    public JTextField getMappingTypeTextField() {
-        return mappingTypeTextField;
+    public JTextField getTypeAttributeTextField() {
+        return typeAttributeTextField;
     }
 
     /**
@@ -356,8 +356,8 @@ public class DataSourceEditor extends JPanel {
      *
      * @return the mapping sub type's text field
      */
-    public JTextField getMappingSubTypeTextField() {
-        return mappingSubTypeTextField;
+    public JTextField getSubtypeAttributeTextField() {
+        return subtypeAttributeTextField;
     }
 
     /**
@@ -365,8 +365,8 @@ public class DataSourceEditor extends JPanel {
      *
      * @return the mapping-as-char-string check box
      */
-    public JCheckBox getMappingAsCharStringCheckBox() {
-        return mappingAsCharStringCheckBox;
+    public JCheckBox getParseMappingCheckBox() {
+        return parseMappingCheckBox;
     }
 
     /**

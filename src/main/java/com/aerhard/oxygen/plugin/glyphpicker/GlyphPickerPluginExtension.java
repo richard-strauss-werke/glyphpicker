@@ -111,7 +111,7 @@ public class GlyphPickerPluginExtension implements
             public void customizeMainMenu(JMenuBar mainMenu) {
                 mainMenu.getMenu(1).addSeparator();
                 mainMenu.getMenu(1).add(
-                        new TogglePickerWindowAction(workspace, PLUGIN_ICON,
+                        new ToggleWindowAction(workspace, PLUGIN_ICON,
                                 VIEW_ID));
             }
         });

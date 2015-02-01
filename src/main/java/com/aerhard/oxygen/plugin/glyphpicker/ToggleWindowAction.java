@@ -30,31 +30,31 @@ import ro.sync.exml.workspace.api.standalone.StandalonePluginWorkspace;
 /**
  * An action to show or hide the GlyphPicker panel in oXygen.
  */
-public class TogglePickerWindowAction extends AbstractPickerAction {
+public class ToggleWindowAction extends AbstractPickerAction {
     
     private static final long serialVersionUID = 1L;
 
-    /** @param workspace oXygen's plugin workspace */
+    /** oXygen's plugin workspace */
     private final StandalonePluginWorkspace workspace;
 
     /** The plugin's view ID in oXygen. */
     private final String viewId;
 
     /** The name of the current class. */
-    private static final String className = TogglePickerWindowAction.class
+    private static final String className = ToggleWindowAction.class
             .getSimpleName();
 
     /**
-     * Instantiates a new TogglePickerWindowAction.
+     * Instantiates a new ToggleWindowAction.
      *
      * @param workspace oXygen's plugin workspace
      * @param icon The plugin's icon
      * @param viewId The plugin's view ID in oXygen
      */
-    public TogglePickerWindowAction(StandalonePluginWorkspace workspace,
-            String icon, String viewId) {
+    public ToggleWindowAction(StandalonePluginWorkspace workspace,
+                              String icon, String viewId) {
         super("GyphPicker", new ImageIcon(
-                TogglePickerWindowAction.class.getResource(icon)));
+                ToggleWindowAction.class.getResource(icon)));
 
         this.workspace = workspace;
         this.viewId = viewId;

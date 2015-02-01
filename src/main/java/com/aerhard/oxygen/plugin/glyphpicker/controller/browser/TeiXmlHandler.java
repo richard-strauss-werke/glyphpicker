@@ -27,7 +27,7 @@ import org.xml.sax.SAXException;
 
 import com.aerhard.oxygen.plugin.glyphpicker.model.DataSource;
 import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinition;
-import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphRef;
+import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphReference;
 import com.icl.saxon.aelfred.DefaultHandler;
 
 /**
@@ -52,7 +52,7 @@ public class TeiXmlHandler extends DefaultHandler {
     private final Stack<String> elementStack = new Stack<>();
 
     /** The list of all glyph references in the current mapping. */
-    private List<GlyphRef> currentGlyphRefs = new ArrayList<>();
+    private List<GlyphReference> currentGlyphReferences = new ArrayList<>();
 
     /** A list of the glyph definitions with glyph references in <mapping>. */
     private final List<GlyphDefinition> referencingGlyphDefinitions = new ArrayList<>();
@@ -83,11 +83,11 @@ public class TeiXmlHandler extends DefaultHandler {
      */
     public TeiXmlHandler(DataSource dataSource) {
         this.dataSource = dataSource;
-        String mappingTypeValue = dataSource.getMappingTypeValue();
+        String mappingTypeValue = dataSource.getTypeAttributeValue();
         if (mappingTypeValue == null) {
             mappingTypeValue = "";
         }
-        String mappingSubTypeValue = dataSource.getMappingSubTypeValue();
+        String mappingSubTypeValue = dataSource.getSubtypeAttributeValue();
         if (mappingSubTypeValue == null) {
             mappingSubTypeValue = "";
         }
@@ -107,7 +107,7 @@ public class TeiXmlHandler extends DefaultHandler {
             mappingMatcher = new MappingAllMatcher();
         }
 
-        if (dataSource.getMappingAsCharString()) {
+        if (dataSource.getParseMapping()) {
             mappingParser = new MappingUPlusParser();
         } else {
             mappingParser = new MappingNoParser();
@@ -363,7 +363,7 @@ public class TeiXmlHandler extends DefaultHandler {
         else if ("g".equals(qName) && inMapping) {
             String targetId = attrs.getValue("ref");
 
-            currentGlyphRefs.add(new GlyphRef(textContent.length(), targetId
+            currentGlyphReferences.add(new GlyphReference(textContent.length(), targetId
                     .substring(1)));
         }
     }
@@ -435,9 +435,9 @@ public class TeiXmlHandler extends DefaultHandler {
             currentGlyphDefinition.setCodePoint(mappingParser.parse(textContent
                     .toString()));
 
-            if (!currentGlyphRefs.isEmpty()) {
-                currentGlyphDefinition.setGlyphRefs(currentGlyphRefs);
-                currentGlyphRefs = new ArrayList<>();
+            if (!currentGlyphReferences.isEmpty()) {
+                currentGlyphDefinition.setGlyphReferences(currentGlyphReferences);
+                currentGlyphReferences = new ArrayList<>();
                 referencingGlyphDefinitions.add(currentGlyphDefinition);
             }
 
@@ -483,7 +483,7 @@ public class TeiXmlHandler extends DefaultHandler {
      */
     private void setReferencedTargets(Map<String, GlyphDefinition> ids) {
         for (GlyphDefinition r : referencingGlyphDefinitions) {
-            for (GlyphRef ref : r.getGlyphRefs()) {
+            for (GlyphReference ref : r.getGlyphReferences()) {
                 GlyphDefinition target = ids.get(ref.getTargetId());
                 if (target != null) {
                     ref.setTarget(target);
@@ -503,7 +503,7 @@ public class TeiXmlHandler extends DefaultHandler {
         for (GlyphDefinition r : referencingGlyphDefinitions) {
             int offset = 0;
             StringBuilder sb = new StringBuilder(r.getCodePoint());
-            for (GlyphRef ref : r.getGlyphRefs()) {
+            for (GlyphReference ref : r.getGlyphReferences()) {
                 GlyphDefinition target = ref.getTarget();
                 if (target != null) {
                     String additionalString = target.getCodePoint();

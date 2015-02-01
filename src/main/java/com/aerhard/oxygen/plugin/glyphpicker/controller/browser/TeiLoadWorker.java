@@ -59,7 +59,7 @@ public class TeiLoadWorker extends SwingWorker<List<GlyphDefinition>, Void> {
     /** The data source object providing the loading parameters. */
     private final DataSource dataSource;
 
-    /** The result, a list of GlyphDefinition objects. */
+    /** The loading result, a list of GlyphDefinition objects. */
     private List<GlyphDefinition> result = null;
 
     /**
@@ -118,7 +118,6 @@ public class TeiLoadWorker extends SwingWorker<List<GlyphDefinition>, Void> {
     /**
      * Load data.
      *
-     * @param dataSource the data source
      * @return the list
      */
     public List<GlyphDefinition> loadData() {
@@ -139,20 +138,20 @@ public class TeiLoadWorker extends SwingWorker<List<GlyphDefinition>, Void> {
     
 
     /**
-     * Loads TEI data from {@link ab} URL.
+     * Loads TEI data from a URL.
      *
      * @param user the user
      * @param password the password
      * @return the resulting GlyphDefinition list
      */
     public List<GlyphDefinition> loadDataFromUrl(String user, String password) {
-        DefaultHttpClient httpclient = new DefaultHttpClient();
+        DefaultHttpClient httpClient = new DefaultHttpClient();
         try {
             HttpGet httpGet = new HttpGet(dataSource.getBasePath());
             httpGet.addHeader(BasicScheme.authenticate(
                     new UsernamePasswordCredentials(user, password), "UTF-8",
                     false));
-            return httpclient.execute(httpGet, new XMLResponseHandler());
+            return httpClient.execute(httpGet, new XMLResponseHandler());
         } catch (IOException e) {
             JOptionPane.showMessageDialog(
                     null,
@@ -164,7 +163,7 @@ public class TeiLoadWorker extends SwingWorker<List<GlyphDefinition>, Void> {
                     JOptionPane.ERROR_MESSAGE);
             LOGGER.info(e);
         } finally {
-            httpclient.getConnectionManager().shutdown();
+            httpClient.getConnectionManager().shutdown();
         }
 
         return null;

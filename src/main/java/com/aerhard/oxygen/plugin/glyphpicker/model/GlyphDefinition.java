@@ -55,8 +55,8 @@ public class GlyphDefinition implements Cloneable {
 
     /** The glyph references in the relevant <mapping> of the glyph definition. */
     @XmlElement(name = "g")
-    @XmlElementWrapper(name = "glyphRefs")
-    private List<GlyphRef> glyphRefs = null;
+    @XmlElementWrapper(name = "glyphReferences")
+    private List<GlyphReference> glyphReferences = null;
 
     /** The data source in which the current glyph definition originates. */
     @XmlElement(name = "dataSource")
@@ -151,17 +151,17 @@ public class GlyphDefinition implements Cloneable {
      *
      * @return the glyph references
      */
-    public List<GlyphRef> getGlyphRefs() {
-        return glyphRefs;
+    public List<GlyphReference> getGlyphReferences() {
+        return glyphReferences;
     }
 
     /**
      * Sets the glyph references.
      *
-     * @param glyphRefs the new glyph references
+     * @param glyphReferences the new glyph references
      */
-    public void setGlyphRefs(List<GlyphRef> glyphRefs) {
-        this.glyphRefs = glyphRefs;
+    public void setGlyphReferences(List<GlyphReference> glyphReferences) {
+        this.glyphReferences = glyphReferences;
     }
 
     /**

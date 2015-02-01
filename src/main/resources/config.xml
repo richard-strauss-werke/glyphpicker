@@ -13,9 +13,9 @@
             <displayMode>bitmap</displayMode>
             <sizeFactor>0.8</sizeFactor>
             <template>${basePath}#${id}</template>
-            <mappingTypeValue>smufl</mappingTypeValue>
-            <mappingSubTypeValue></mappingSubTypeValue>
-            <mappingAsCharString>true</mappingAsCharString>
+            <typeAttributeValue>smufl</typeAttributeValue>
+            <subtypeAttributeValue></subtypeAttributeValue>
+            <parseMapping>true</parseMapping>
         </dataSource>
         <dataSource>
             <label>Edirom SMuFL Browser (web, glyph)</label>
@@ -24,9 +24,9 @@
             <displayMode>fit</displayMode>
             <sizeFactor>0.7</sizeFactor>
             <template>${basePath}#${id}</template>
-            <mappingTypeValue>smufl</mappingTypeValue>
-            <mappingSubTypeValue></mappingSubTypeValue>
-            <mappingAsCharString>true</mappingAsCharString>
+            <typeAttributeValue>smufl</typeAttributeValue>
+            <subtypeAttributeValue></subtypeAttributeValue>
+            <parseMapping>true</parseMapping>
         </dataSource>
         <dataSource>
             <label>gBank (web, bitmap)</label>
@@ -35,9 +35,9 @@
             <displayMode>bitmap</displayMode>
             <sizeFactor>1.0</sizeFactor>
             <template>#${id}</template>
-            <mappingTypeValue></mappingTypeValue>
-            <mappingSubTypeValue>PUA</mappingSubTypeValue>
-            <mappingAsCharString>true</mappingAsCharString>
+            <typeAttributeValue></typeAttributeValue>
+            <subtypeAttributeValue>PUA</subtypeAttributeValue>
+            <parseMapping>true</parseMapping>
         </dataSource>
         <dataSource>
             <label>gBank (web, glyph)</label>
@@ -46,9 +46,9 @@
             <displayMode>proportional</displayMode>
             <sizeFactor>0.5</sizeFactor>
             <template>#${id}</template>
-            <mappingTypeValue></mappingTypeValue>
-            <mappingSubTypeValue>PUA</mappingSubTypeValue>
-            <mappingAsCharString>true</mappingAsCharString>
+            <typeAttributeValue></typeAttributeValue>
+            <subtypeAttributeValue>PUA</subtypeAttributeValue>
+            <parseMapping>true</parseMapping>
         </dataSource>
         <dataSource>
             <label>Edirom SMuFL Browser (local, bitmap)</label>
@@ -57,9 +57,9 @@
             <displayMode>bitmap</displayMode>
             <sizeFactor>0.7</sizeFactor>
             <template>${basePath}#${id}</template>
-            <mappingTypeValue>smufl</mappingTypeValue>
-            <mappingSubTypeValue></mappingSubTypeValue>
-            <mappingAsCharString>true</mappingAsCharString>
+            <typeAttributeValue>smufl</typeAttributeValue>
+            <subtypeAttributeValue></subtypeAttributeValue>
+            <parseMapping>true</parseMapping>
         </dataSource>
         <dataSource>
             <label>Edirom SMuFL Browser (local, glyph)</label>
@@ -68,9 +68,9 @@
             <displayMode>fit</displayMode>
             <sizeFactor>0.7</sizeFactor>
             <template>${basePath}#${id}</template>
-            <mappingTypeValue>smufl</mappingTypeValue>
-            <mappingSubTypeValue></mappingSubTypeValue>
-            <mappingAsCharString>true</mappingAsCharString>
+            <typeAttributeValue>smufl</typeAttributeValue>
+            <subtypeAttributeValue></subtypeAttributeValue>
+            <parseMapping>true</parseMapping>
         </dataSource>
         <dataSource>
             <label>gBank (local, bitmap)</label>
@@ -79,9 +79,9 @@
             <displayMode>bitmap</displayMode>
             <sizeFactor>1.0</sizeFactor>
             <template>#${id}</template>
-            <mappingTypeValue></mappingTypeValue>
-            <mappingSubTypeValue>PUA</mappingSubTypeValue>
-            <mappingAsCharString>true</mappingAsCharString>
+            <typeAttributeValue></typeAttributeValue>
+            <subtypeAttributeValue>PUA</subtypeAttributeValue>
+            <parseMapping>true</parseMapping>
         </dataSource>
         <dataSource>
             <label>gBank (local, glyph)</label>
@@ -90,9 +90,9 @@
             <displayMode>proportional</displayMode>
             <sizeFactor>0.5</sizeFactor>
             <template>#${id}</template>
-            <mappingTypeValue></mappingTypeValue>
-            <mappingSubTypeValue>PUA</mappingSubTypeValue>
-            <mappingAsCharString>true</mappingAsCharString>
+            <typeAttributeValue></typeAttributeValue>
+            <subtypeAttributeValue>PUA</subtypeAttributeValue>
+            <parseMapping>true</parseMapping>
         </dataSource>
         <dataSource>
             <label>Edirom SMuFL Browser (localhost, glyph)</label>
@@ -101,9 +101,9 @@
             <displayMode>fit</displayMode>
             <sizeFactor>0.5</sizeFactor>
             <template>${basePath}#${id}</template>
-            <mappingTypeValue>smufl</mappingTypeValue>
-            <mappingSubTypeValue></mappingSubTypeValue>
-            <mappingAsCharString>true</mappingAsCharString>
+            <typeAttributeValue>smufl</typeAttributeValue>
+            <subtypeAttributeValue></subtypeAttributeValue>
+            <parseMapping>true</parseMapping>
         </dataSource>
     </dataSources>
 </config>

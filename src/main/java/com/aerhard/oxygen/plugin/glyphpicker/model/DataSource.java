@@ -64,16 +64,16 @@ public class DataSource implements Cloneable {
     private String template = "";
     
     /** The value of the type attribute to be matched to get the relevant mapping element. */
-    @XmlElement(name = "mappingTypeValue")
-    private String mappingTypeValue = null;
+    @XmlElement(name = "typeAttributeValue")
+    private String typeAttributeValue = null;
     
     /** The value of the subtype attribute to be matched to get the relevant mapping element. */
-    @XmlElement(name = "mappingSubTypeValue")
-    private String mappingSubTypeValue = null;
+    @XmlElement(name = "subtypeAttributeValue")
+    private String subtypeAttributeValue = null;
     
     /** Indicates if the string in <mapping> needs to be parsed in order to obtain code points. */
-    @XmlElement(name = "mappingAsCharString")
-    private boolean mappingAsCharString = false;
+    @XmlElement(name = "parseMapping")
+    private boolean parseMapping = false;
 
     /**
      * Instantiates a new DataSource.
@@ -86,8 +86,8 @@ public class DataSource implements Cloneable {
      *
      * @return the mapping/@type value
      */
-    public String getMappingTypeValue() {
-        return mappingTypeValue;
+    public String getTypeAttributeValue() {
+        return typeAttributeValue;
     }
 
     /**
@@ -95,8 +95,8 @@ public class DataSource implements Cloneable {
      *
      * @param mappingAttName the new mapping/@type value
      */
-    public void setMappingTypeValue(String mappingAttName) {
-        this.mappingTypeValue = mappingAttName;
+    public void setTypeAttributeValue(String mappingAttName) {
+        this.typeAttributeValue = mappingAttName;
     }
 
     /**
@@ -104,8 +104,8 @@ public class DataSource implements Cloneable {
      *
      * @return the mapping subtype value
      */
-    public String getMappingSubTypeValue() {
-        return mappingSubTypeValue;
+    public String getSubtypeAttributeValue() {
+        return subtypeAttributeValue;
     }
 
     /**
@@ -113,26 +113,26 @@ public class DataSource implements Cloneable {
      *
      * @param mappingAttValue the new mapping sub type value
      */
-    public void setMappingSubTypeValue(String mappingAttValue) {
-        this.mappingSubTypeValue = mappingAttValue;
+    public void setSubtypeAttributeValue(String mappingAttValue) {
+        this.subtypeAttributeValue = mappingAttValue;
     }
 
     /**
-     * Gets the value of mappingAsCharString.
+     * Gets the value of parseMapping.
      *
-     * @return the value of mappingAsCharString
+     * @return the value of parseMapping
      */
-    public boolean getMappingAsCharString() {
-        return mappingAsCharString;
+    public boolean getParseMapping() {
+        return parseMapping;
     }
 
     /**
-     * Sets the value of mappingAsCharString.
+     * Sets the value of parseMapping.
      *
-     * @param mappingAsCharString the new mapping as char string
+     * @param parseMapping the new mapping as char string
      */
-    public void setMappingAsCharString(boolean mappingAsCharString) {
-        this.mappingAsCharString = mappingAsCharString;
+    public void setParseMapping(boolean parseMapping) {
+        this.parseMapping = parseMapping;
     }
 
     /**

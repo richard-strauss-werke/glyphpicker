@@ -346,12 +346,12 @@ public class DataSourceEditorController implements PropertyChangeListener {
 
         contentPane.getSizeTextField().setText(sizeFactorString);
         contentPane.getTemplateTextField().setText(dataSource.getTemplate());
-        contentPane.getMappingTypeTextField().setText(
-                dataSource.getMappingTypeValue());
-        contentPane.getMappingSubTypeTextField().setText(
-                dataSource.getMappingSubTypeValue());
-        contentPane.getMappingAsCharStringCheckBox().setSelected(
-                dataSource.getMappingAsCharString());
+        contentPane.getTypeAttributeTextField().setText(
+                dataSource.getTypeAttributeValue());
+        contentPane.getSubtypeAttributeTextField().setText(
+                dataSource.getSubtypeAttributeValue());
+        contentPane.getParseMappingCheckBox().setSelected(
+                dataSource.getParseMapping());
 
         contentPane.addPropertyChangeListener(this);
     }
@@ -381,12 +381,12 @@ public class DataSourceEditorController implements PropertyChangeListener {
 
             currentDataSource.setTemplate(contentPane.getTemplateTextField()
                     .getText());
-            currentDataSource.setMappingTypeValue(contentPane
-                    .getMappingTypeTextField().getText());
-            currentDataSource.setMappingSubTypeValue(contentPane
-                    .getMappingSubTypeTextField().getText());
-            currentDataSource.setMappingAsCharString(contentPane
-                    .getMappingAsCharStringCheckBox().isSelected());
+            currentDataSource.setTypeAttributeValue(contentPane
+                    .getTypeAttributeTextField().getText());
+            currentDataSource.setSubtypeAttributeValue(contentPane
+                    .getSubtypeAttributeTextField().getText());
+            currentDataSource.setParseMapping(contentPane
+                    .getParseMappingCheckBox().isSelected());
         }
     }
 
