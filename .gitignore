@@ -1,11 +1,7 @@
 
-
-!/target
-/target/*
-!/target/update/
-
 .project
 .classpath
 .settings
 .idea
 glyphpicker.iml
+/target
