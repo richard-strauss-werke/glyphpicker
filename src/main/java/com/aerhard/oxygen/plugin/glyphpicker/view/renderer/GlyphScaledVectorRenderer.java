@@ -105,9 +105,9 @@ public class GlyphScaledVectorRenderer extends GlyphRenderer {
     }
 
     /**
-     * Draw glyph.
+     * Draws a glyph to the component.
      *
-     * @param g2 the g2
+     * @param g2 the graphic context
      * @param text the text
      * @param fontName the font name
      */

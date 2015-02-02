@@ -110,18 +110,15 @@ public class GlyphVectorRenderer extends GlyphRenderer {
     }
 
     /**
-     * Draw glyph.
+     * Draws a glyph to the component.
      *
-     * @param g2       the g2
+     * @param g2       the graphic context
      * @param text     the text
      * @param fontName the font name
      */
     private void drawGlyph(Graphics2D g2, String text, String fontName) {
 
-        float w = getWidth() * factor;
-        float h = getHeight() * factor;
-
-        int fontSize = Math.round(h);
+        int fontSize = Math.round(getHeight() * factor);
 
         Font baseFont = new Font(fontName, Font.PLAIN, fontSize);
         Font font = baseFont.deriveFont(attr);
