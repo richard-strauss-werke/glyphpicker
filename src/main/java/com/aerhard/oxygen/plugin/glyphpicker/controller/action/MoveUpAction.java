@@ -71,18 +71,13 @@ public class MoveUpAction extends AbstractPickerAction {
      */
     @Override
     public void actionPerformed(ActionEvent e) {
-
         int index = list.getSelectedIndex();
         if (index > 0) {
-
-            firePropertyChange(KEY, null, null);
             GlyphDefinition item = glyphList.get(index);
-
-            boolean itemRemoved = glyphList.remove(item);
-
-            if (itemRemoved) {
+            if (glyphList.remove(item)) {
                 glyphList.add(index - 1, item);
                 list.setSelectedIndex(index - 1);
+                firePropertyChange(KEY, null, null);
             }
         }
     }

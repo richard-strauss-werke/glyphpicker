@@ -134,7 +134,7 @@ public class DataSourceEditorController implements PropertyChangeListener {
         @Override
         public void actionPerformed(ActionEvent e) {
             DataSource dataSource = new DataSource();
-            dataSource.setLabel("new data source");
+            dataSource.setLabel(I18N.getString(NewAction.class.getSimpleName() + ".newDataSource"));
             listModel.addElement(dataSource);
             contentPane
                     .getList()
