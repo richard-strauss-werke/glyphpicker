@@ -21,7 +21,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
- * A model containing data of a single data source.
+ * A model containing data about a single data source.
  */
 @XmlRootElement(name = "dataSource")
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -30,14 +30,17 @@ public class DataSource implements Cloneable {
     /** The default glyph display size factor. */
     private static final float DEFAULT_SIZE_FACTOR = 0.5f;
     
-    /** The display mode value "proportional". */
-    public static final String DISPLAY_MODE_VECTOR_PROPORTIONAL = "proportional";
+    /** The text glyph renderer code. */
+    public static final String GLYPH_TEXT_RENDERER = "text";
+
+    /** The vector glyph renderer code. */
+    public static final String GLYPH_VECTOR_RENDERER = "vector";
+
+    /** The scaled vector glyph renderer code. */
+    public static final String GLYPH_SCALED_VECTOR_RENDERER = "scaled vector";
     
-    /** The display mode value "fit". */
-    public static final String DISPLAY_MODE_VECTOR_FIT = "fit";
-    
-    /** The display mode value "bitmap". */
-    public static final String DISPLAY_MODE_BITMAP = "bitmap";
+    /** The bitmap glyph renderer code. */
+    public static final String GLYPH_BITMAP_RENDERER = "bitmap";
 
     /** The label. */
     @XmlElement(name = "label")
@@ -52,8 +55,8 @@ public class DataSource implements Cloneable {
     private String fontName;
     
     /** The display mode. */
-    @XmlElement(name = "displayMode")
-    private String displayMode;
+    @XmlElement(name = "glyphRenderer")
+    private String glyphRenderer;
     
     /** The size factor. */
     @XmlElement(name = "sizeFactor")
@@ -158,17 +161,17 @@ public class DataSource implements Cloneable {
      *
      * @return the display mode
      */
-    public String getDisplayMode() {
-        return displayMode;
+    public String getGlyphRenderer() {
+        return glyphRenderer;
     }
 
     /**
      * Sets the display mode.
      *
-     * @param displayMode the new display mode
+     * @param glyphRenderer the new display mode
      */
-    public void setDisplayMode(String displayMode) {
-        this.displayMode = displayMode;
+    public void setGlyphRenderer(String glyphRenderer) {
+        this.glyphRenderer = glyphRenderer;
     }
 
     /**

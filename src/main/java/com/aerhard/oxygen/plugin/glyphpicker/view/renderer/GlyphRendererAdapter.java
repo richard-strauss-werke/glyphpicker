@@ -32,15 +32,15 @@ import java.util.Map;
 
 /**
  * A glyph rendering adapter class which selects the GlyphRenderer based on the
- * glyph definition's displayMode property. .
+ * glyphRenderer property of the GlyphDefinition's DataSource. .
  */
 public class GlyphRendererAdapter extends JLabel implements TableCellRenderer,
         ListCellRenderer<Object> {
 
     private static final long serialVersionUID = 1L;
 
-    /** The renderers. */
-    private final Map<String, GlyphRenderer> renderers = new HashMap<>();
+    /** The GlyphRenderer objects. */
+    private final Map<String, GlyphRenderer> glyphRenderers = new HashMap<>();
 
     /**
      * Instantiates a new GlyphRendererAdapter.
@@ -50,12 +50,14 @@ public class GlyphRendererAdapter extends JLabel implements TableCellRenderer,
      */
     public GlyphRendererAdapter(JComponent container) {
         setText(null);
-        renderers.put(DataSource.DISPLAY_MODE_VECTOR_FIT,
-                new GlyphShapeRenderer(container));
-        renderers.put(DataSource.DISPLAY_MODE_VECTOR_PROPORTIONAL,
-                new GlyphTextRenderer(container));
-        renderers.put(DataSource.DISPLAY_MODE_BITMAP, new GlyphBitmapRenderer(
+        glyphRenderers.put(DataSource.GLYPH_SCALED_VECTOR_RENDERER,
+                new GlyphScaledVectorRenderer(container));
+        glyphRenderers.put(DataSource.GLYPH_VECTOR_RENDERER, new GlyphVectorRenderer(
                 container));
+        glyphRenderers.put(DataSource.GLYPH_BITMAP_RENDERER, new GlyphBitmapRenderer(
+                container));
+        glyphRenderers.put(DataSource.GLYPH_TEXT_RENDERER,
+                new GlyphTextRenderer(container));
     }
 
     /*
@@ -66,7 +68,7 @@ public class GlyphRendererAdapter extends JLabel implements TableCellRenderer,
     @Override
     public void setPreferredSize(Dimension d) {
         super.setPreferredSize(d);
-        for (GlyphRenderer renderer : renderers.values()) {
+        for (GlyphRenderer renderer : glyphRenderers.values()) {
             renderer.setPreferredSize(d);
         }
     }
@@ -82,8 +84,8 @@ public class GlyphRendererAdapter extends JLabel implements TableCellRenderer,
             boolean isSelected, boolean hasFocus, int row, int column) {
         if (value != null) {
             GlyphDefinition glyphDefinition = ((GlyphDefinition) value);
-            GlyphRenderer renderer = renderers.get(glyphDefinition
-                    .getDataSource().getDisplayMode());
+            GlyphRenderer renderer = glyphRenderers.get(glyphDefinition
+                    .getDataSource().getGlyphRenderer());
 
             if (renderer != null) {
                 return renderer.getRendererComponent(glyphDefinition,
@@ -105,8 +107,8 @@ public class GlyphRendererAdapter extends JLabel implements TableCellRenderer,
             int index, boolean isSelected, boolean cellHasFocus) {
         if (value != null) {
             GlyphDefinition glyphDefinition = ((GlyphDefinition) value);
-            GlyphRenderer renderer = renderers.get(glyphDefinition
-                    .getDataSource().getDisplayMode());
+            GlyphRenderer renderer = glyphRenderers.get(glyphDefinition
+                    .getDataSource().getGlyphRenderer());
 
             if (renderer != null) {
                 return renderer.getRendererComponent(glyphDefinition,

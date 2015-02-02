@@ -15,15 +15,10 @@
  */
 package com.aerhard.oxygen.plugin.glyphpicker.view.renderer;
 
-import javax.swing.JComponent;
+import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinition;
 
-import java.awt.Component;
-import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Rectangle;
-import java.awt.RenderingHints;
-import java.awt.Shape;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.font.FontRenderContext;
 import java.awt.font.GlyphVector;
 import java.awt.font.TextAttribute;
@@ -33,37 +28,47 @@ import java.util.Map;
 
 import static java.awt.font.TextAttribute.*;
 
-import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinition;
-
 /**
- * A font-based GlyphRenderer rendering scaled vectors.
+ * A font-based GlyphRenderer rendering vectors.
  */
-public class GlyphShapeRenderer extends GlyphRenderer {
+public class GlyphVectorRenderer extends GlyphRenderer {
 
-    /** The Constant serialVersionUID. */
+    /**
+     * The Constant serialVersionUID.
+     */
     private static final long serialVersionUID = 1L;
 
-    /** The font name. */
+    /**
+     * The font name.
+     */
     private String fontName = null;
 
-    /** The scaling factor. */
+    /**
+     * The scaling factor.
+     */
     private float factor = 0.73f;
 
-    /** The font render context. */
+    /**
+     * The font render context.
+     */
     private final FontRenderContext frc;
 
-    /** The characters to render. */
+    /**
+     * The characters to render.
+     */
     private String ch = null;
 
-    /** The font attributes. */
+    /**
+     * The font attributes.
+     */
     private final Map<TextAttribute, Integer> attr;
 
     /**
-     * Instantiates a new glyph shape renderer.
+     * Instantiates a new GlyphVectorRenderer.
      *
      * @param container the container
      */
-    public GlyphShapeRenderer(JComponent container) {
+    public GlyphVectorRenderer(JComponent container) {
         super(container);
         frc = new FontRenderContext(null, true, true);
         setText(null);
@@ -107,8 +112,8 @@ public class GlyphShapeRenderer extends GlyphRenderer {
     /**
      * Draw glyph.
      *
-     * @param g2 the g2
-     * @param text the text
+     * @param g2       the g2
+     * @param text     the text
      * @param fontName the font name
      */
     private void drawGlyph(Graphics2D g2, String text, String fontName) {
@@ -124,23 +129,14 @@ public class GlyphShapeRenderer extends GlyphRenderer {
         GlyphVector gv = font.createGlyphVector(frc, text);
         Rectangle visualBounds = gv.getPixelBounds(frc, 0, 0);
 
-        float scaleFactor = Math.min(w / visualBounds.width, h
-                / visualBounds.height);
-
         int centerX = getWidth() / 2;
         int centerY = getHeight() / 2;
 
-        int x1 = (visualBounds.x + visualBounds.width);
-        int glyphCenterX = (visualBounds.x + x1) / 2;
-        float offsetX = (glyphCenterX) * scaleFactor;
-
-        int y1 = (visualBounds.y + visualBounds.height);
-        int glyphCenterY = (visualBounds.y + y1) / 2;
-        float offsetY = (glyphCenterY) * scaleFactor;
+        float offsetX = visualBounds.x + (visualBounds.width / 2);
+        float offsetY = visualBounds.y + (visualBounds.height / 2);
 
         AffineTransform at = new AffineTransform();
         at.translate(centerX - offsetX, centerY - offsetY);
-        at.scale(scaleFactor, scaleFactor);
         Shape outline = gv.getOutline();
         outline = at.createTransformedShape(outline);
         g2.fill(outline);

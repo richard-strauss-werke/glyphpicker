@@ -10,7 +10,7 @@
             <label>Edirom SMuFL Browser (web, bitmap)</label>
             <basePath>http://aerhard.github.io/glyphpicker/testdata/smuflBrowser/data/charDecl.xml</basePath>
             <fontName>BravuraText</fontName>
-            <displayMode>bitmap</displayMode>
+            <glyphRenderer>bitmap</glyphRenderer>
             <sizeFactor>0.8</sizeFactor>
             <template>${basePath}#${id}</template>
             <typeAttributeValue>smufl</typeAttributeValue>
@@ -21,7 +21,7 @@
             <label>Edirom SMuFL Browser (web, glyph)</label>
             <basePath>http://aerhard.github.io/glyphpicker/testdata/smuflBrowser/data/charDecl.xml</basePath>
             <fontName>BravuraText</fontName>
-            <displayMode>fit</displayMode>
+            <glyphRenderer>scaled vector</glyphRenderer>
             <sizeFactor>0.7</sizeFactor>
             <template>${basePath}#${id}</template>
             <typeAttributeValue>smufl</typeAttributeValue>
@@ -32,7 +32,7 @@
             <label>gBank (web, bitmap)</label>
             <basePath>http://aerhard.github.io/glyphpicker/testdata/gBankImages/gBank.xml</basePath>
             <fontName>Andron Scriptor Web</fontName>
-            <displayMode>bitmap</displayMode>
+            <glyphRenderer>bitmap</glyphRenderer>
             <sizeFactor>1.0</sizeFactor>
             <template>#${id}</template>
             <typeAttributeValue></typeAttributeValue>
@@ -43,7 +43,7 @@
             <label>gBank (web, glyph)</label>
             <basePath>http://aerhard.github.io/glyphpicker/testdata/gBankImages/gBank.xml</basePath>
             <fontName>Andron Scriptor Web</fontName>
-            <displayMode>proportional</displayMode>
+            <glyphRenderer>vector</glyphRenderer>
             <sizeFactor>0.5</sizeFactor>
             <template>#${id}</template>
             <typeAttributeValue></typeAttributeValue>
@@ -54,7 +54,7 @@
             <label>Edirom SMuFL Browser (local, bitmap)</label>
             <basePath>/Users/Ahlse/Desktop/SMuFL-Browser-1.0/data/charDecl.xml</basePath>
             <fontName>BravuraText</fontName>
-            <displayMode>bitmap</displayMode>
+            <glyphRenderer>bitmap</glyphRenderer>
             <sizeFactor>0.7</sizeFactor>
             <template>${basePath}#${id}</template>
             <typeAttributeValue>smufl</typeAttributeValue>
@@ -65,7 +65,7 @@
             <label>Edirom SMuFL Browser (local, glyph)</label>
             <basePath>/Users/Ahlse/Desktop/SMuFL-Browser-1.0/data/charDecl.xml</basePath>
             <fontName>BravuraText</fontName>
-            <displayMode>fit</displayMode>
+            <glyphRenderer>scaled vector</glyphRenderer>
             <sizeFactor>0.7</sizeFactor>
             <template>${basePath}#${id}</template>
             <typeAttributeValue>smufl</typeAttributeValue>
@@ -76,7 +76,7 @@
             <label>gBank (local, bitmap)</label>
             <basePath>/Users/Ahlse/Desktop/gBankImages/gBank.xml</basePath>
             <fontName>Andron Scriptor Web</fontName>
-            <displayMode>bitmap</displayMode>
+            <glyphRenderer>bitmap</glyphRenderer>
             <sizeFactor>1.0</sizeFactor>
             <template>#${id}</template>
             <typeAttributeValue></typeAttributeValue>
@@ -87,7 +87,7 @@
             <label>gBank (local, glyph)</label>
             <basePath>/Users/Ahlse/Desktop/gBankImages/gBank.xml</basePath>
             <fontName>Andron Scriptor Web</fontName>
-            <displayMode>proportional</displayMode>
+            <glyphRenderer>vector</glyphRenderer>
             <sizeFactor>0.5</sizeFactor>
             <template>#${id}</template>
             <typeAttributeValue></typeAttributeValue>
@@ -98,7 +98,7 @@
             <label>Edirom SMuFL Browser (localhost, glyph)</label>
             <basePath>http://localhost:8080/exist/apps/smufl-browser/list/</basePath>
             <fontName>BravuraText</fontName>
-            <displayMode>fit</displayMode>
+            <glyphRenderer>scaled vector</glyphRenderer>
             <sizeFactor>0.5</sizeFactor>
             <template>${basePath}#${id}</template>
             <typeAttributeValue>smufl</typeAttributeValue>

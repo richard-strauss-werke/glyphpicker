@@ -1,9 +1,9 @@
 <xt:extension 
     xmlns:xt="http://www.oxygenxml.com/ns/extension" 
     id="com.aerhard.oxygen.plugin.glyphpicker">
-    <xt:location href="https://github.com/aerhard/glyphpicker/releases/download/v0.8.0-beta/glyphpicker-0.8.0-plugin.jar"/>
+    <xt:location href="https://github.com/aerhard/glyphpicker/releases/download/v${project.version}-beta/glyphpicker-${project.version}-plugin.jar"/>
     <xt:version>${project.version}</xt:version>
-    <xt:oxy_version>15.2+</xt:oxy_version>
+    <xt:oxy_version>15.0+</xt:oxy_version>
     <xt:type>plugin</xt:type>
     <xt:author>Alexander Erhard</xt:author>
     <xt:name>${project.name}</xt:name>

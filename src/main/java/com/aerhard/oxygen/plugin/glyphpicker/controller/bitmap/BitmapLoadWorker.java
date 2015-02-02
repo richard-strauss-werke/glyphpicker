@@ -68,8 +68,8 @@ public class BitmapLoadWorker extends
             if (isCancelled()) {
                 return null;
             }
-            if (DataSource.DISPLAY_MODE_BITMAP.equals(gd.getDataSource()
-                    .getDisplayMode())) {
+            if (DataSource.GLYPH_BITMAP_RENDERER.equals(gd.getDataSource()
+                    .getGlyphRenderer())) {
                 float factor = gd.getDataSource().getSizeFactor();
                 executorService.submit(new BitmapLoader(this, gd, Math
                         .round(size * factor)));

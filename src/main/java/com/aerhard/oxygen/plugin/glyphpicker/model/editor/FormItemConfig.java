@@ -13,14 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.aerhard.oxygen.plugin.glyphpicker.view.editor;
+package com.aerhard.oxygen.plugin.glyphpicker.model.editor;
 
 import javax.swing.JComponent;
 
 /**
  * A class providing config information about form controls in the editor window.
  */
-public class EditorConfigItem {
+public class FormItemConfig {
     
     /** The form control's component. */
     private final JComponent component;
@@ -29,12 +29,12 @@ public class EditorConfigItem {
     private final String label;
 
     /**
-     * Instantiates a new EditorConfigItem.
+     * Instantiates a new FormItemConfig.
      *
      * @param label the label
      * @param component the component
      */
-    public EditorConfigItem(String label, JComponent component) {
+    public FormItemConfig(String label, JComponent component) {
         this.component = component;
         this.label = label;
     }

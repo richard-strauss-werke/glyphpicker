@@ -19,6 +19,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 import com.aerhard.oxygen.plugin.glyphpicker.model.DataSource;
+import com.aerhard.oxygen.plugin.glyphpicker.model.editor.FormItemConfig;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -80,7 +81,7 @@ public class DataSourceEditor extends JPanel {
     private final JTextField fontNameTextField;
     
     /** The display mode's combo. */
-    private final JComboBox<String> displayModeCombo;
+    private final JComboBox<String> glyphRendererCombo;
     
     /** The size's text field. */
     private final JTextField sizeTextField;
@@ -88,23 +89,23 @@ public class DataSourceEditor extends JPanel {
     /** The template's text field. */
     private final JTextField templateTextField;
     
-    /** The mapping type's text field. */
+    /** The mapping type attribute's text field. */
     private final JTextField typeAttributeTextField;
     
-    /** The mapping subtype's text field. */
+    /** The mapping subtype attribute's text field. */
     private final JTextField subtypeAttributeTextField;
     
-    /** The mapping-as-char-string's check box. */
+    /** The "parse mapping" check box. */
     private final JCheckBox parseMappingCheckBox;
     
-    /** The button pane for editing the list items. */
+    /** The button pane containing list form controls. */
     private final JPanel listButtonPane;
     
-    /** The editor panel. */
-    private final JPanel editorPanel;
+    /** The form panel. */
+    private final JPanel formPanel;
 
-    /** The editor config. */
-    private final List<EditorConfigItem> editorConfig = new ArrayList<>();
+    /** A list of form item config objects. */
+    private final List<FormItemConfig> formItemConfigList = new ArrayList<>();
 
     /**
      * Instantiates a new DataSourceEditor panel.
@@ -134,51 +135,51 @@ public class DataSourceEditor extends JPanel {
         JScrollPane scrollPane = new JScrollPane(list);
         listPanel.add(scrollPane);
 
-        editorPanel = new JPanel();
-        editorPanel.setBorder(new CompoundBorder(new TitledBorder(UIManager
+        formPanel = new JPanel();
+        formPanel.setBorder(new CompoundBorder(new TitledBorder(UIManager
                 .getBorder("TitledBorder.border"), i18n.getString(className
                 + ".edit"), TitledBorder.LEADING, TitledBorder.TOP, null,
                 new Color(0, 0, 0)), new EmptyBorder(8, 8, 8, 8)));
-        add(editorPanel);
+        add(formPanel);
         GridBagLayout gbl = new GridBagLayout();
         gbl.columnWidths = new int[] { 102, 46 };
         gbl.rowHeights = new int[] { 20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
         gbl.columnWeights = new double[] { 0.0, 1.0 };
         gbl.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
                 0.0, Double.MIN_VALUE };
-        editorPanel.setLayout(gbl);
+        formPanel.setLayout(gbl);
 
         labelTextField = new JTextField();
         pathTextField = new JTextField();
         fontNameTextField = new JTextField();
-        displayModeCombo = new JComboBox<>();
+        glyphRendererCombo = new JComboBox<>();
         sizeTextField = new JTextField();
         templateTextField = new JTextField();
         typeAttributeTextField = new JTextField();
         subtypeAttributeTextField = new JTextField();
         parseMappingCheckBox = new JCheckBox();
 
-        editorConfig.add(new EditorConfigItem(i18n.getString(className
+        formItemConfigList.add(new FormItemConfig(i18n.getString(className
                 + ".label"), labelTextField));
-        editorConfig.add(new EditorConfigItem(i18n.getString(className
+        formItemConfigList.add(new FormItemConfig(i18n.getString(className
                 + ".path"), pathTextField));
-        editorConfig.add(new EditorConfigItem(i18n.getString(className
+        formItemConfigList.add(new FormItemConfig(i18n.getString(className
                 + ".fontName"), fontNameTextField));
-        editorConfig.add(new EditorConfigItem(i18n.getString(className
-                + ".displayMode"), displayModeCombo));
-        editorConfig.add(new EditorConfigItem(i18n.getString(className
+        formItemConfigList.add(new FormItemConfig(i18n.getString(className
+                + ".glyphRenderer"), glyphRendererCombo));
+        formItemConfigList.add(new FormItemConfig(i18n.getString(className
                 + ".glyphSize"), sizeTextField));
-        editorConfig.add(new EditorConfigItem(i18n.getString(className
+        formItemConfigList.add(new FormItemConfig(i18n.getString(className
                 + ".template"), templateTextField));
-        editorConfig.add(new EditorConfigItem(i18n.getString(className
+        formItemConfigList.add(new FormItemConfig(i18n.getString(className
                 + ".typeAttributeValue"), typeAttributeTextField));
-        editorConfig.add(new EditorConfigItem(i18n.getString(className
+        formItemConfigList.add(new FormItemConfig(i18n.getString(className
                 + ".subtypeAttributeValue"), subtypeAttributeTextField));
-        editorConfig.add(new EditorConfigItem(i18n.getString(className
+        formItemConfigList.add(new FormItemConfig(i18n.getString(className
                 + ".parseMapping"), parseMappingCheckBox));
 
-        for (int i = 0; i < editorConfig.size(); i++) {
-            addToEditorPanel(i, editorConfig.get(i));
+        for (int i = 0; i < formItemConfigList.size(); i++) {
+            addToFormPanel(i, formItemConfigList.get(i));
         }
 
     }
@@ -189,7 +190,7 @@ public class DataSourceEditor extends JPanel {
      * @param enabled the new form enabled
      */
     public void setFormEnabled(boolean enabled) {
-        for (EditorConfigItem eci : editorConfig) {
+        for (FormItemConfig eci : formItemConfigList) {
             eci.getComponent().setEnabled(enabled);
         }
     }
@@ -239,19 +240,19 @@ public class DataSourceEditor extends JPanel {
     }
 
     /**
-     * Adds a component to editor panel.
+     * Adds a component to the form panel.
      *
      * @param index the component's index
-     * @param eci the EditorConfigItem object specifying the component's properties
+     * @param eci the FormItemConfig object specifying the component's properties
      */
-    private void addToEditorPanel(int index, EditorConfigItem eci) {
+    private void addToFormPanel(int index, FormItemConfig eci) {
         JLabel label = new JLabel(eci.getLabel());
         GridBagConstraints gbcLabel = new GridBagConstraints();
         gbcLabel.anchor = GridBagConstraints.EAST;
         gbcLabel.insets = new Insets(0, 0, 5, 5);
         gbcLabel.gridx = 0;
         gbcLabel.gridy = index;
-        editorPanel.add(label, gbcLabel);
+        formPanel.add(label, gbcLabel);
 
         JComponent component = eci.getComponent();
         if (component instanceof JTextField) {
@@ -276,7 +277,7 @@ public class DataSourceEditor extends JPanel {
         gbcComponent.anchor = GridBagConstraints.NORTHWEST;
         gbcComponent.gridx = 1;
         gbcComponent.gridy = index;
-        editorPanel.add(component, gbcComponent);
+        formPanel.add(component, gbcComponent);
     }
 
     /**
@@ -316,12 +317,12 @@ public class DataSourceEditor extends JPanel {
     }
 
     /**
-     * Gets the display mode's text field.
+     * Gets the glyph renderer combo box.
      *
-     * @return the display mode's text field
+     * @return the glyph renderer combo box
      */
-    public JComboBox<String> getDisplayModeTextField() {
-        return displayModeCombo;
+    public JComboBox<String> getGlyphRendererCombo() {
+        return glyphRendererCombo;
     }
 
     /**
@@ -343,27 +344,27 @@ public class DataSourceEditor extends JPanel {
     }
 
     /**
-     * Gets the mapping type's text field.
+     * Gets the mapping type attribute's text field.
      *
-     * @return the mapping type's text field
+     * @return the mapping type attribute's text field
      */
     public JTextField getTypeAttributeTextField() {
         return typeAttributeTextField;
     }
 
     /**
-     * Gets the mapping sub type's text field.
+     * Gets the mapping subtype attribute's text field.
      *
-     * @return the mapping sub type's text field
+     * @return the mapping subtype attribute's text field
      */
     public JTextField getSubtypeAttributeTextField() {
         return subtypeAttributeTextField;
     }
 
     /**
-     * Gets the mapping-as-char-string check box.
+     * Gets the "parse mapping" check box.
      *
-     * @return the mapping-as-char-string check box
+     * @return the "parse mapping" check box
      */
     public JCheckBox getParseMappingCheckBox() {
         return parseMappingCheckBox;
@@ -372,7 +373,7 @@ public class DataSourceEditor extends JPanel {
     /**
      * Gets the list button pane.
      *
-     * @return The button pane for editing the list items
+     * @return The button pane containing list form controls
      */
     public JPanel getListButtonPane() {
         return listButtonPane;

@@ -59,7 +59,7 @@ public class DataSourceEditorController implements PropertyChangeListener {
     private final JPanel parentPanel;
 
     /** The display modes added to the display mode JCombo. */
-    private final List<String> displayModes = new ArrayList<>();
+    private final List<String> glyphRendererLabels = new ArrayList<>();
 
     /** The clone action. */
     private final CloneAction cloneAction;
@@ -98,16 +98,17 @@ public class DataSourceEditorController implements PropertyChangeListener {
         contentPane.getListButtonPane().add(new JideButton(cloneAction));
         contentPane.getListButtonPane().add(new JideButton(deleteAction));
 
-        displayModes.add(DataSource.DISPLAY_MODE_VECTOR_PROPORTIONAL);
-        displayModes.add(DataSource.DISPLAY_MODE_VECTOR_FIT);
-        displayModes.add(DataSource.DISPLAY_MODE_BITMAP);
+        glyphRendererLabels.add(DataSource.GLYPH_BITMAP_RENDERER);
+        glyphRendererLabels.add(DataSource.GLYPH_VECTOR_RENDERER);
+        glyphRendererLabels.add(DataSource.GLYPH_SCALED_VECTOR_RENDERER);
+        glyphRendererLabels.add(DataSource.GLYPH_TEXT_RENDERER);
 
         contentPane.setFormEnabled(false);
 
-        for (String displayMode : displayModes) {
-            contentPane.getDisplayModeTextField().addItem(displayMode);
+        for (String glyphRendererLabel : glyphRendererLabels) {
+            contentPane.getGlyphRendererCombo().addItem(glyphRendererLabel);
         }
-        contentPane.getDisplayModeTextField().setSelectedItem(null);
+        contentPane.getGlyphRendererCombo().setSelectedItem(null);
     }
 
     /**
@@ -333,8 +334,8 @@ public class DataSourceEditorController implements PropertyChangeListener {
         contentPane.getPathTextField().setText(dataSource.getBasePath());
         contentPane.getFontNameTextField().setText(dataSource.getFontName());
 
-        int index = displayModes.indexOf(dataSource.getDisplayMode());
-        contentPane.getDisplayModeTextField().setSelectedIndex(index);
+        int index = glyphRendererLabels.indexOf(dataSource.getGlyphRenderer());
+        contentPane.getGlyphRendererCombo().setSelectedIndex(index);
 
         Integer sizeFactor = Math.round(dataSource.getSizeFactor() * PERCENTAGE_FACTOR);
         String sizeFactorString;
@@ -367,8 +368,8 @@ public class DataSourceEditorController implements PropertyChangeListener {
                     .getText());
             currentDataSource.setFontName(contentPane.getFontNameTextField()
                     .getText());
-            currentDataSource.setDisplayMode(displayModes.get(contentPane
-                    .getDisplayModeTextField().getSelectedIndex()));
+            currentDataSource.setGlyphRenderer(glyphRendererLabels.get(contentPane
+                    .getGlyphRendererCombo().getSelectedIndex()));
 
             try {
                 float sizeFactor = Float.parseFloat(contentPane
