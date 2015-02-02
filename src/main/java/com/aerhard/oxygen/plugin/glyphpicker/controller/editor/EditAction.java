@@ -34,6 +34,7 @@ public class EditAction extends AbstractPickerAction {
 
     private static final long serialVersionUID = 1L;
 
+    /** The key of the action. */
     public static final String KEY = "changesInEditor";
 
     /** The panel from which the data source editor has been opened. */

@@ -77,6 +77,12 @@ public class UserCollectionController extends TabController {
      */
     private boolean listInSync = true;
 
+    /** The set of actions whose activation depends on the sync status of memory / disk lists. */
+    private Set<Action> syncDependentActions = new HashSet<>();
+
+    /** The set of actions whose activation depends on whether there is a list selection or not. */
+    Set<Action> selectionDependentActions = new HashSet<>();
+
     /**
      * Instantiates a new UserCollectionController.
      *
@@ -118,18 +124,21 @@ public class UserCollectionController extends TabController {
         moveDownAction.setEnabled(false);
         controlPanel.addToToolbar(moveDownAction, 3);
 
-        Set<Action> actions = new HashSet<>();
-
-        saveAction = new SaveAction(this, actions);
+        saveAction = new SaveAction(this, syncDependentActions);
         saveAction.setEnabled(false);
         controlPanel.addToToolbar(saveAction, 4);
 
-        reloadAction = new ReloadAction(this, actions);
+        reloadAction = new ReloadAction(this, syncDependentActions);
         reloadAction.setEnabled(false);
         controlPanel.addToToolbar(reloadAction, 5);
 
-        actions.add(saveAction);
-        actions.add(reloadAction);
+        syncDependentActions.add(saveAction);
+        syncDependentActions.add(reloadAction);
+
+        selectionDependentActions.add(removeAction);
+        selectionDependentActions.add(insertAction);
+        selectionDependentActions.add(moveUpAction);
+        selectionDependentActions.add(moveDownAction);
     }
 
     /**
@@ -146,12 +155,6 @@ public class UserCollectionController extends TabController {
      */
     private void setAdditionalListeners() {
 
-        Set<Action> selectionDependentActions = new HashSet<>();
-        selectionDependentActions.add(removeAction);
-        selectionDependentActions.add(insertAction);
-        selectionDependentActions.add(moveUpAction);
-        selectionDependentActions.add(moveDownAction);
-
         selectionModel
                 .addListSelectionListener(new GlyphSelectionChangeHandler(tabPanel
                         .getInfoLabel(), sortedList, filterList,
@@ -161,12 +164,9 @@ public class UserCollectionController extends TabController {
                 .addListEventListener(new ListEventListener<GlyphDefinition>() {
                     @Override
                     public void listChanged(ListEvent<GlyphDefinition> e) {
-                        if (listInSync) {
-                            saveAction.setEnabled(false);
-                            reloadAction.setEnabled(false);
-                        } else {
-                            saveAction.setEnabled(true);
-                            reloadAction.setEnabled(true);
+                        boolean enableActions = !listInSync;
+                        for (Action a : syncDependentActions) {
+                            a.setEnabled(enableActions);
                         }
                     }
                 });
