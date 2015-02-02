@@ -64,6 +64,8 @@ public abstract class TabController implements PropertyChangeListener {
      */
     public static final int LIST_ITEM_SIZE = 40;
 
+    public static final String DATA_LOADED = "dataLoaded";
+
     /**
      * The property change support.
      */

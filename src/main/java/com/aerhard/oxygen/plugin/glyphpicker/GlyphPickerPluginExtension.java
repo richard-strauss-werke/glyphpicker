@@ -24,6 +24,7 @@ import javax.swing.JMenuBar;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Position;
 
+import com.aerhard.oxygen.plugin.glyphpicker.controller.action.InsertXmlAction;
 import org.apache.log4j.Logger;
 
 import com.aerhard.oxygen.plugin.glyphpicker.controller.main.MainController;
@@ -78,7 +79,7 @@ public class GlyphPickerPluginExtension implements
         mainController.addPropertyChangeListener(new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent e) {
-                if ("insert".equals(e.getPropertyName())) {
+                if (InsertXmlAction.KEY.equals(e.getPropertyName())) {
                     insertFragment(workspace, (GlyphDefinition) e.getNewValue());
                 }
             }

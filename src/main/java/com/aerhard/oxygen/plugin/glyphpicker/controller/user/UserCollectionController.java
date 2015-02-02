@@ -25,17 +25,13 @@ import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.SwingUtilities;
 
+import com.aerhard.oxygen.plugin.glyphpicker.controller.action.*;
 import ro.sync.exml.workspace.api.standalone.StandalonePluginWorkspace;
 import ca.odell.glazedlists.event.ListEvent;
 import ca.odell.glazedlists.event.ListEventListener;
 
 import com.aerhard.oxygen.plugin.glyphpicker.controller.TabController;
 import com.aerhard.oxygen.plugin.glyphpicker.controller.GlyphSelectionChangeHandler;
-import com.aerhard.oxygen.plugin.glyphpicker.controller.action.MoveDownAction;
-import com.aerhard.oxygen.plugin.glyphpicker.controller.action.MoveUpAction;
-import com.aerhard.oxygen.plugin.glyphpicker.controller.action.ReloadAction;
-import com.aerhard.oxygen.plugin.glyphpicker.controller.action.RemoveAction;
-import com.aerhard.oxygen.plugin.glyphpicker.controller.action.SaveAction;
 import com.aerhard.oxygen.plugin.glyphpicker.model.Config;
 import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinition;
 import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinitions;
@@ -46,41 +42,51 @@ import com.aerhard.oxygen.plugin.glyphpicker.view.TabPanel;
  */
 public class UserCollectionController extends TabController {
 
-    /** The save action. */
+    /**
+     * The save action.
+     */
     private AbstractAction saveAction;
 
-    /** The reload action. */
+    /**
+     * The reload action.
+     */
     private AbstractAction reloadAction;
 
-    /** The remove action. */
+    /**
+     * The remove action.
+     */
     private AbstractAction removeAction;
 
-    /** The move-up action. */
+    /**
+     * The move-up action.
+     */
     private MoveUpAction moveUpAction;
 
-    /** The move-down action. */
+    /**
+     * The move-down action.
+     */
     private MoveDownAction moveDownAction;
 
-    /** The user collection data loader. */
+    /**
+     * The user collection data loader.
+     */
     private final UserCollectionLoader loader;
 
-    /** Indicates if the list in memory is in sync with the list stored on disk. */
+    /**
+     * Indicates if the list in memory is in sync with the list stored on disk.
+     */
     private boolean listInSync = true;
 
     /**
      * Instantiates a new UserCollectionController.
      *
-     * @param panel
-     *            the user collection tab's container panel
-     * @param config
-     *            the plugin config
-     * @param properties
-     *            the plugin properties
-     * @param workspace
-     *            the workspace
+     * @param panel      the user collection tab's container panel
+     * @param config     the plugin config
+     * @param properties the plugin properties
+     * @param workspace  the workspace
      */
     public UserCollectionController(TabPanel panel, Config config,
-            Properties properties, StandalonePluginWorkspace workspace) {
+                                    Properties properties, StandalonePluginWorkspace workspace) {
 
         super(panel, config.getUserSearchFieldScopeIndex(), config
                 .getUserViewIndex());
@@ -129,8 +135,7 @@ public class UserCollectionController extends TabController {
     /**
      * Sets the indicator of memory-disk list synchronization.
      *
-     * @param listInSync
-     *            true if the list is in sync, false otherwise
+     * @param listInSync true if the list is in sync, false otherwise
      */
     public void setListInSync(boolean listInSync) {
         this.listInSync = listInSync;
@@ -188,7 +193,7 @@ public class UserCollectionController extends TabController {
                 glyphList.addAll(data);
                 tabPanel.setMask(false);
 
-                pcs.firePropertyChange("dataLoaded", null, thisController);
+                pcs.firePropertyChange(DATA_LOADED, null, thisController);
             }
         });
     }
@@ -204,8 +209,7 @@ public class UserCollectionController extends TabController {
     /**
      * Adds a glyph definition to the user collection.
      *
-     * @param d
-     *            the glyh definition to add
+     * @param d the glyh definition to add
      */
     public void addGlyphDefinition(GlyphDefinition d) {
         setListInSync(false);
@@ -221,20 +225,16 @@ public class UserCollectionController extends TabController {
     @Override
     public void propertyChange(PropertyChangeEvent e) {
 
-        if ("insert".equals(e.getPropertyName())) {
+        if (InsertXmlAction.KEY.equals(e.getPropertyName())) {
             pcs.firePropertyChange(e);
-        }
-
-        else if ("reload".equals(e.getPropertyName())) {
+        } else if (ReloadAction.KEY.equals(e.getPropertyName())) {
             loadData();
-        }
-
-        else if ("saveData".equals(e.getPropertyName())) {
+        } else if (SaveAction.KEY.equals(e.getPropertyName())) {
             saveData();
-        }
-
-        else if ("listInSync".equals(e.getPropertyName())) {
-            setListInSync((boolean) e.getNewValue());
+        } else if (MoveDownAction.KEY.equals(e.getPropertyName())
+                || MoveUpAction.KEY.equals(e.getPropertyName())
+                || RemoveAction.KEY.equals(e.getPropertyName())) {
+            setListInSync(false);
         }
 
     }

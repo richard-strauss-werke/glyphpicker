@@ -31,7 +31,10 @@ import com.aerhard.oxygen.plugin.glyphpicker.view.GlyphGrid;
 public class MoveDownAction extends AbstractPickerAction {
     
     private static final long serialVersionUID = 1L;
-    
+
+    /** The key of the action. */
+    public static final String KEY = "moveDown";
+
     /** The glyph list model. */
     private final EventList<GlyphDefinition> glyphList;
     
@@ -72,7 +75,7 @@ public class MoveDownAction extends AbstractPickerAction {
         int index = list.getSelectedIndex();
         if (index != -1 && index < glyphList.size() - 1) {
 
-            firePropertyChange("listInSync", null, false);
+            firePropertyChange(KEY, null, null);
             GlyphDefinition item = glyphList.get(index);
 
             boolean itemRemoved = glyphList.remove(item);

@@ -27,7 +27,10 @@ import javax.swing.Action;
 public class ReloadAction extends AbstractPickerAction {
     
     private static final long serialVersionUID = 1L;
-    
+
+    /** The key of the action. */
+    public static final String KEY = "reload";
+
     /** The actions affected by this action. */
     private final Set<Action> actions;
 
@@ -51,7 +54,7 @@ public class ReloadAction extends AbstractPickerAction {
      */
     @Override
     public void actionPerformed(ActionEvent e) {
-        firePropertyChange("reload", null, null);
+        firePropertyChange(KEY, null, null);
         for (Action action : actions) {
             action.setEnabled(false);
         }

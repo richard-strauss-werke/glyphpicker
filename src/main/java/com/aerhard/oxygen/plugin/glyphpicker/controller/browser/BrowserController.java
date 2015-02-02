@@ -34,6 +34,7 @@ import javax.swing.JOptionPane;
 import com.aerhard.oxygen.plugin.glyphpicker.controller.TabController;
 import com.aerhard.oxygen.plugin.glyphpicker.controller.GlyphSelectionChangeHandler;
 import com.aerhard.oxygen.plugin.glyphpicker.controller.action.AddAction;
+import com.aerhard.oxygen.plugin.glyphpicker.controller.action.InsertXmlAction;
 import com.aerhard.oxygen.plugin.glyphpicker.controller.editor.EditAction;
 import com.aerhard.oxygen.plugin.glyphpicker.model.Config;
 import com.aerhard.oxygen.plugin.glyphpicker.model.DataSource;
@@ -223,7 +224,7 @@ public class BrowserController extends TabController {
                 dataSourceList.setFirstIndex(index);
             }
         }
-        pcs.firePropertyChange("dataLoaded", null, this);
+        pcs.firePropertyChange(DATA_LOADED, null, this);
     }
 
     /* (non-Javadoc)
@@ -231,12 +232,12 @@ public class BrowserController extends TabController {
      */
     @Override
     public void propertyChange(PropertyChangeEvent e) {
-        if ("copyToUserCollection".equals(e.getPropertyName())
-                || "insert".equals(e.getPropertyName())) {
+        if (AddAction.KEY.equals(e.getPropertyName())
+                || InsertXmlAction.KEY.equals(e.getPropertyName())) {
             pcs.firePropertyChange(e);
         }
 
-        else if ("editChanges".equals(e.getPropertyName())) {
+        else if (EditAction.KEY.equals(e.getPropertyName())) {
             loadData();
         }
 

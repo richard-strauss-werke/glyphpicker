@@ -23,11 +23,14 @@ import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinition;
 
 /**
  * An action which picks the selected glyph definition from a list and returns
- * it as new value of the "copyToUserCollection" property change event.
+ * it as new value of the ADD property change event.
  */
 public class AddAction extends AbstractPickerAction {
 
     private static final long serialVersionUID = 1L;
+
+    /** The key of the action. */
+    public static final String KEY = "addToUserCollection";
 
     /** The event selection model. */
     private final DefaultEventSelectionModel<GlyphDefinition> selectionModel;
@@ -63,7 +66,7 @@ public class AddAction extends AbstractPickerAction {
         if (!selectionModel.isSelectionEmpty()) {
             GlyphDefinition d = selectionModel.getSelected().get(0);
             if (d != null) {
-                firePropertyChange("copyToUserCollection", null, d);
+                firePropertyChange(KEY, null, d);
             }
         }
     }

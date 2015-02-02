@@ -29,7 +29,10 @@ import com.aerhard.oxygen.plugin.glyphpicker.view.GlyphGrid;
 public class RemoveAction extends AbstractPickerAction {
     
     private static final long serialVersionUID = 1L;
-    
+
+    /** The key of the action. */
+    public static final String KEY = "remove";
+
     /** The glyph list model. */
     private final EventList<GlyphDefinition> glyphList;
     
@@ -68,7 +71,7 @@ public class RemoveAction extends AbstractPickerAction {
 
         int index = list.getSelectedIndex();
         if (index != -1) {
-            firePropertyChange("listInSync", null, false);
+            firePropertyChange(KEY, null, null);
             GlyphDefinition item = filterList.get(index);
 
             boolean itemRemoved = glyphList.remove(item);

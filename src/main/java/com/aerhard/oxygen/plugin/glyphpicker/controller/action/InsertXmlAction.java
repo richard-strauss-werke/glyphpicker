@@ -27,7 +27,10 @@ import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinition;
 public class InsertXmlAction extends AbstractPickerAction {
     
     private static final long serialVersionUID = 1L;
-    
+
+    /** The key of the action. */
+    public static final String KEY = "insert";
+
     /** The event selection model. */
     private final DefaultEventSelectionModel<GlyphDefinition> selectionModel;
 
@@ -56,7 +59,7 @@ public class InsertXmlAction extends AbstractPickerAction {
         if (!selectionModel.isSelectionEmpty()) {
             GlyphDefinition d = selectionModel.getSelected().get(0);
             if (d != null) {
-                firePropertyChange("insert", null, d);
+                firePropertyChange(KEY, null, d);
             }
         }
     }

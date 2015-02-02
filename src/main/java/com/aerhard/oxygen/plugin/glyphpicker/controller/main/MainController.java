@@ -15,13 +15,15 @@
  */
 package com.aerhard.oxygen.plugin.glyphpicker.controller.main;
 
-import java.awt.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.io.IOException;
 import java.util.Properties;
 
+import com.aerhard.oxygen.plugin.glyphpicker.controller.TabController;
+import com.aerhard.oxygen.plugin.glyphpicker.controller.action.AddAction;
+import com.aerhard.oxygen.plugin.glyphpicker.controller.action.InsertXmlAction;
 import org.apache.log4j.Logger;
 
 import ro.sync.exml.workspace.api.standalone.StandalonePluginWorkspace;
@@ -192,9 +194,9 @@ public class MainController implements PropertyChangeListener {
      */
     @Override
     public void propertyChange(PropertyChangeEvent e) {
-        if ("insert".equals(e.getPropertyName())) {
+        if (InsertXmlAction.KEY.equals(e.getPropertyName())) {
             pcs.firePropertyChange(e);
-        } else if ("copyToUserCollection".equals(e.getPropertyName())) {
+        } else if (AddAction.KEY.equals(e.getPropertyName())) {
             try {
                 GlyphDefinition clone = ((GlyphDefinition) e.getNewValue())
                         .clone();
@@ -203,7 +205,7 @@ public class MainController implements PropertyChangeListener {
             } catch (CloneNotSupportedException e1) {
                 LOGGER.error(e1);
             }
-        } else if ("dataLoaded".equals(e.getPropertyName())) {
+        } else if (TabController.DATA_LOADED.equals(e.getPropertyName())) {
 
             int selectedIndex = mainPanel.getTabbedPane().getSelectedIndex();
 

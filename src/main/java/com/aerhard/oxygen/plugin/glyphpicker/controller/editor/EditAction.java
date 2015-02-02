@@ -34,6 +34,8 @@ public class EditAction extends AbstractPickerAction {
 
     private static final long serialVersionUID = 1L;
 
+    public static final String KEY = "changesInEditor";
+
     /** The panel from which the data source editor has been opened. */
     private final JPanel panel;
 
@@ -78,7 +80,7 @@ public class EditAction extends AbstractPickerAction {
             if (dataSourceList.getSize() > 0) {
                 dataSourceList.setSelectedItem(dataSourceList.getElementAt(0));
             }
-            firePropertyChange("editChanges", null, null);
+            firePropertyChange(KEY, null, null);
         }
     }
 }
