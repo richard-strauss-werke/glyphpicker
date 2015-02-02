@@ -24,7 +24,7 @@ public class i18nTest {
                 i18n.getString("UserCollectionLoader.couldNotCreateFolder"),
                 "xxx"));
         assertEquals("Loading data ...",
-                i18n.getString("ContainerPanel.loading"));
+                i18n.getString("TabPanel.loading"));
     }
 
     /**
@@ -38,7 +38,7 @@ public class i18nTest {
                 i18n.getString("UserCollectionLoader.couldNotCreateFolder"),
                 "xxx"));
         assertEquals("Lade Daten ...",
-                i18n.getString("ContainerPanel.loading"));
+                i18n.getString("TabPanel.loading"));
     }
 
 }

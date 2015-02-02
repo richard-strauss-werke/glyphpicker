@@ -39,7 +39,7 @@ import com.aerhard.oxygen.plugin.glyphpicker.model.Config;
 import com.aerhard.oxygen.plugin.glyphpicker.model.DataSource;
 import com.aerhard.oxygen.plugin.glyphpicker.model.DataSourceList;
 import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinition;
-import com.aerhard.oxygen.plugin.glyphpicker.view.ContainerPanel;
+import com.aerhard.oxygen.plugin.glyphpicker.view.TabPanel;
 
 /**
  * The browser tab controller.
@@ -64,7 +64,7 @@ public class BrowserController extends TabController {
      * @param panel the browser tab's container panel
      * @param config the plugin config
      */
-    public BrowserController(ContainerPanel panel, Config config) {
+    public BrowserController(TabPanel panel, Config config) {
 
         super(panel, config.getBrowserSearchFieldScopeIndex(), config
                 .getBrowserViewIndex());
@@ -102,7 +102,7 @@ public class BrowserController extends TabController {
         selectionDependentActions.add(insertAction);
 
         selectionModel
-                .addListSelectionListener(new GlyphSelectionChangeHandler(panel
+                .addListSelectionListener(new GlyphSelectionChangeHandler(tabPanel
                         .getInfoLabel(), sortedList, filterList,
                         selectionDependentActions));
 
@@ -155,7 +155,7 @@ public class BrowserController extends TabController {
         cancelTeiLoadWorker();
         cancelBitmapLoadWorker();
 
-        panel.setMask(true);
+        tabPanel.setMask(true);
 
         teiLoadWorker = new TeiLoadWorker(dataSource);
 
@@ -180,7 +180,7 @@ public class BrowserController extends TabController {
      */
     private void showNoDataSourceMessage() {
         JOptionPane.showMessageDialog(
-                panel,
+                tabPanel,
                 ResourceBundle.getBundle("GlyphPicker").getString(
                         this.getClass().getSimpleName() + ".noDataSource"));
         glyphList.clear();
@@ -209,7 +209,7 @@ public class BrowserController extends TabController {
         table.scrollRectToVisible(new Rectangle(0, 0));
         list.scrollRectToVisible(new Rectangle(0, 0));
 
-        panel.setMask(false);
+        tabPanel.setMask(false);
 
         if (data != null) {
 
@@ -223,7 +223,7 @@ public class BrowserController extends TabController {
                 dataSourceList.setFirstIndex(index);
             }
         }
-
+        pcs.firePropertyChange("dataLoaded", null, this);
     }
 
     /* (non-Javadoc)

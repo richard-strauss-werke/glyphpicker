@@ -145,6 +145,7 @@ public class AutoCompleteController {
 
             @Override
             public void itemStateChanged(ItemEvent e) {
+
                 if (e.getStateChange() == ItemEvent.SELECTED) {
                     String item = (String) e.getItem();
                     PropertySelector selector = autoCompleteScope.get(item);

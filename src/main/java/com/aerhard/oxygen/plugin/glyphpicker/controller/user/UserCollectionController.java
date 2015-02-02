@@ -39,7 +39,7 @@ import com.aerhard.oxygen.plugin.glyphpicker.controller.action.SaveAction;
 import com.aerhard.oxygen.plugin.glyphpicker.model.Config;
 import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinition;
 import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinitions;
-import com.aerhard.oxygen.plugin.glyphpicker.view.ContainerPanel;
+import com.aerhard.oxygen.plugin.glyphpicker.view.TabPanel;
 
 /**
  * The user collection tab controller.
@@ -79,7 +79,7 @@ public class UserCollectionController extends TabController {
      * @param workspace
      *            the workspace
      */
-    public UserCollectionController(ContainerPanel panel, Config config,
+    public UserCollectionController(TabPanel panel, Config config,
             Properties properties, StandalonePluginWorkspace workspace) {
 
         super(panel, config.getUserSearchFieldScopeIndex(), config
@@ -148,7 +148,7 @@ public class UserCollectionController extends TabController {
         selectionDependentActions.add(moveDownAction);
 
         selectionModel
-                .addListSelectionListener(new GlyphSelectionChangeHandler(panel
+                .addListSelectionListener(new GlyphSelectionChangeHandler(tabPanel
                         .getInfoLabel(), sortedList, filterList,
                         selectionDependentActions));
 
@@ -172,7 +172,8 @@ public class UserCollectionController extends TabController {
      * Loads the user collection data.
      */
     public void loadData() {
-        panel.setMask(true);
+        tabPanel.setMask(true);
+        final UserCollectionController thisController = this;
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
@@ -185,7 +186,9 @@ public class UserCollectionController extends TabController {
                 startBitmapLoadWorker(data);
 
                 glyphList.addAll(data);
-                panel.setMask(false);
+                tabPanel.setMask(false);
+
+                pcs.firePropertyChange("dataLoaded", null, thisController);
             }
         });
     }

@@ -16,7 +16,7 @@
 package com.aerhard.oxygen.plugin.glyphpicker.controller.action;
 
 import java.awt.event.ActionEvent;
-import com.aerhard.oxygen.plugin.glyphpicker.view.ContainerPanel;
+import com.aerhard.oxygen.plugin.glyphpicker.view.TabPanel;
 import com.aerhard.oxygen.plugin.glyphpicker.view.GlyphGrid;
 import com.aerhard.oxygen.plugin.glyphpicker.view.GlyphTable;
 
@@ -28,7 +28,7 @@ public class ChangeViewAction extends AbstractPickerAction {
     private static final long serialVersionUID = 1L;
 
     /** The panel containing table and list view. */
-    private final ContainerPanel panel;
+    private final TabPanel panel;
     
     /** The table component. */
     private final GlyphTable table;
@@ -46,7 +46,7 @@ public class ChangeViewAction extends AbstractPickerAction {
      * @param table the table component
      * @param list the list component
      */
-    public ChangeViewAction(ContainerPanel panel, GlyphTable table,
+    public ChangeViewAction(TabPanel panel, GlyphTable table,
             GlyphGrid list) {
         super(className, "/images/grid.png");
         this.panel = panel;

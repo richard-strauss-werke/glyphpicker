@@ -16,7 +16,7 @@
 
 package com.aerhard.oxygen.plugin.glyphpicker.controller;
 
-import java.awt.Dimension;
+import java.awt.*;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.KeyAdapter;
@@ -46,7 +46,7 @@ import com.aerhard.oxygen.plugin.glyphpicker.controller.action.SortAction;
 import com.aerhard.oxygen.plugin.glyphpicker.controller.autocomplete.AutoCompleteController;
 import com.aerhard.oxygen.plugin.glyphpicker.controller.bitmap.BitmapLoadWorker;
 import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinition;
-import com.aerhard.oxygen.plugin.glyphpicker.view.ContainerPanel;
+import com.aerhard.oxygen.plugin.glyphpicker.view.TabPanel;
 import com.aerhard.oxygen.plugin.glyphpicker.view.ControlPanel;
 import com.aerhard.oxygen.plugin.glyphpicker.view.GlyphGrid;
 import com.aerhard.oxygen.plugin.glyphpicker.view.GlyphTable;
@@ -59,66 +59,96 @@ import com.aerhard.oxygen.plugin.glyphpicker.view.renderer.GlyphRendererAdapter;
  */
 public abstract class TabController implements PropertyChangeListener {
 
-    /** The pixel height and width of a rendered glyph. */
+    /**
+     * The pixel height and width of a rendered glyph.
+     */
     public static final int LIST_ITEM_SIZE = 40;
 
-    /** The property change support. */
+    /**
+     * The property change support.
+     */
     protected final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
 
-    /** The glyph list. */
+    /**
+     * The glyph list.
+     */
     protected final EventList<GlyphDefinition> glyphList = new BasicEventList<>();
-    
-    /** The sorted glyph list. */
+
+    /**
+     * The sorted glyph list.
+     */
     protected final SortedList<GlyphDefinition> sortedList = new SortedList<>(
             glyphList, null);
 
-    /** The filtered glyph list. */
+    /**
+     * The filtered glyph list.
+     */
     protected final FilterList<GlyphDefinition> filterList;
 
-    /** The glyph list's selection model. */
+    /**
+     * The glyph list's selection model.
+     */
     protected final DefaultEventSelectionModel<GlyphDefinition> selectionModel;
 
-    /** The container panel in the tab. */
-    protected final ContainerPanel panel;
+    /**
+     * The container panel in the tab.
+     */
+    protected final TabPanel tabPanel;
 
-    /** The control panel in the tab. */
+    /**
+     * The control panel in the tab.
+     */
     protected final ControlPanel controlPanel;
-    
-    /** The glyph table component. */
+
+    /**
+     * The glyph table component.
+     */
     protected final GlyphTable table;
-    
-    /** The glyph list component. */
+
+    /**
+     * The glyph list component.
+     */
     protected final GlyphGrid list;
 
-    /** The bmp load worker. */
+    /**
+     * The bmp load worker.
+     */
     protected BitmapLoadWorker bmpLoader = null;
-    
-    /** The listener to property changes in the bmp load worker. */
+
+    /**
+     * The listener to property changes in the bmp load worker.
+     */
     private PropertyChangeListener bmpListener;
-    
-    /** The auto complete controller. */
+
+    /**
+     * The auto complete controller.
+     */
     protected final AutoCompleteController autoCompleteController;
 
-    /** The action to trigger the insertion of a glyph reference into an XML document. */
+    /**
+     * The action to trigger the insertion of a glyph reference into an XML document.
+     */
     protected AbstractAction insertAction;
-    
-    /** The button to trigger the insert action. */
+
+    /**
+     * The button to trigger the insert action.
+     */
     protected HighlightButton insertBtn;
 
     /**
      * Instantiates a new tab controller.
      *
-     * @param panel The container panel in the tab
+     * @param tabPanel              The container panel in the tab
      * @param searchFieldScopeIndex the index of the auto complete scope checkbox which should be selected initially
-     * @param listViewIndex the index of the list view to show initially. Set 0 for the grid and 1 for the table component.
+     * @param listViewIndex         the index of the list view to show initially. Set 0 for the grid and 1 for the table component.
      */
     @SuppressWarnings("unchecked")
-    public TabController(final ContainerPanel panel,
-            int searchFieldScopeIndex, int listViewIndex) {
+    public TabController(final TabPanel tabPanel,
+                         int searchFieldScopeIndex, int listViewIndex) {
 
-        this.panel = panel;
+        this.tabPanel = tabPanel;
 
-        controlPanel = panel.getControlPanel();
+        controlPanel = tabPanel.getControlPanel();
 
         autoCompleteController = new AutoCompleteController(
                 searchFieldScopeIndex, controlPanel.getAutoCompleteCombo(),
@@ -146,10 +176,10 @@ public abstract class TabController implements PropertyChangeListener {
         table.setGlyphRenderer(r);
 
         if (listViewIndex == 0) {
-            panel.setListComponent(list);
+            tabPanel.setListComponent(list);
         } else {
-            panel.setListComponent(table);
-            panel.getInfoPanel().setVisible(false);
+            tabPanel.setListComponent(table);
+            tabPanel.getInfoPanel().setVisible(false);
         }
 
         selectionModel
@@ -160,7 +190,7 @@ public abstract class TabController implements PropertyChangeListener {
         controlPanel.getSortBtn().setAction(new SortAction());
 
         controlPanel.getViewBtn().setAction(
-                new ChangeViewAction(panel, table, list));
+                new ChangeViewAction(tabPanel, table, list));
 
         filterList
                 .addListEventListener(new ListEventListener<GlyphDefinition>() {
@@ -168,10 +198,8 @@ public abstract class TabController implements PropertyChangeListener {
                     public void listChanged(ListEvent<GlyphDefinition> e) {
 
                         if (filterList.size() == 0) {
-                            panel.getInfoLabel().setText(null);
-                        }
-
-                        else if (selectionModel.isSelectionEmpty()) {
+                            tabPanel.getInfoLabel().setText(null);
+                        } else if (selectionModel.isSelectionEmpty()) {
                             selectionModel.setSelectionInterval(0, 0);
                         }
 
@@ -189,9 +217,7 @@ public abstract class TabController implements PropertyChangeListener {
             public void itemStateChanged(ItemEvent e) {
                 if (e.getStateChange() == ItemEvent.SELECTED) {
                     sortedList.setComparator(new CodePointComparator());
-                }
-
-                else if (e.getStateChange() == ItemEvent.DESELECTED) {
+                } else if (e.getStateChange() == ItemEvent.DESELECTED) {
                     sortedList.setComparator(null);
                 }
             }
@@ -249,7 +275,7 @@ public abstract class TabController implements PropertyChangeListener {
             @Override
             public void propertyChange(PropertyChangeEvent e) {
                 if ("iconLoaded".equals(e.getPropertyName())) {
-                    panel.redrawIconInList(filterList
+                    tabPanel.redrawIconInList(filterList
                             .indexOf(e.getNewValue()));
                 }
             }

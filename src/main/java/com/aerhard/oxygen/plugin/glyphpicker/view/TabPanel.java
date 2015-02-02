@@ -15,32 +15,20 @@
  */
 package com.aerhard.oxygen.plugin.glyphpicker.view;
 
-import java.awt.BorderLayout;
-import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.Insets;
+import java.awt.*;
 
-import javax.swing.JComponent;
-import javax.swing.JEditorPane;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextPane;
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
 
 import com.jidesoft.swing.DefaultOverlayable;
 
-import javax.swing.UIManager;
-
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
 import java.util.ResourceBundle;
 
 /**
  * A container panel in a tab.
  */
-public class ContainerPanel extends JPanel {
+public class TabPanel extends JPanel {
 
 
     private static final long serialVersionUID = 1L;
@@ -68,7 +56,7 @@ public class ContainerPanel extends JPanel {
      *
      * @param controlPanel the control panel to be added
      */
-    public ContainerPanel(ControlPanel controlPanel) {
+    public TabPanel(ControlPanel controlPanel) {
 
         ResourceBundle i18n = ResourceBundle.getBundle("GlyphPicker");
 
@@ -91,7 +79,7 @@ public class ContainerPanel extends JPanel {
         overlayPanel.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null,
                 null));
         JLabel overlayLabel = new JLabel(
-                i18n.getString("ContainerPanel.loading"));
+                i18n.getString("TabPanel.loading"));
         overlayPanel.add(overlayLabel);
         overlayPanel.setBackground(UIManager.getColor("Panel.background"));
 

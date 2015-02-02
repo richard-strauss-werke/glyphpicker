@@ -15,6 +15,7 @@
  */
 package com.aerhard.oxygen.plugin.glyphpicker.controller.main;
 
+import java.awt.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
@@ -29,7 +30,7 @@ import com.aerhard.oxygen.plugin.glyphpicker.controller.browser.BrowserControlle
 import com.aerhard.oxygen.plugin.glyphpicker.controller.user.UserCollectionController;
 import com.aerhard.oxygen.plugin.glyphpicker.model.Config;
 import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinition;
-import com.aerhard.oxygen.plugin.glyphpicker.view.ContainerPanel;
+import com.aerhard.oxygen.plugin.glyphpicker.view.TabPanel;
 import com.aerhard.oxygen.plugin.glyphpicker.view.ControlPanel;
 import com.aerhard.oxygen.plugin.glyphpicker.view.GlyphGrid;
 import com.aerhard.oxygen.plugin.glyphpicker.view.MainPanel;
@@ -39,11 +40,15 @@ import com.aerhard.oxygen.plugin.glyphpicker.view.MainPanel;
  */
 public class MainController implements PropertyChangeListener {
 
-    /** The logger. */
+    /**
+     * The logger.
+     */
     private static final Logger LOGGER = Logger.getLogger(MainController.class
             .getName());
 
-    /** The property change support. */
+    /**
+     * The property change support.
+     */
     private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
 
     /**
@@ -64,23 +69,35 @@ public class MainController implements PropertyChangeListener {
         pcs.removePropertyChangeListener(l);
     }
 
-    /** The main panel. */
+    /**
+     * The main panel.
+     */
     private final MainPanel mainPanel;
 
-    /** The config loader. */
+    /**
+     * The config loader.
+     */
     private final ConfigLoader configLoader;
 
-    /** The browser controller. */
+    /**
+     * The browser controller.
+     */
     private final BrowserController browserController;
-    
-    /** The user collection controller. */
+
+    /**
+     * The user collection controller.
+     */
     private final UserCollectionController userCollectionController;
 
-    /** The browser panel. */
-    private final ContainerPanel browserPanel;
-    
-    /** The user collection panel. */
-    private final ContainerPanel userCollectionPanel;
+    /**
+     * The browser panel.
+     */
+    private final TabPanel browserPanel;
+
+    /**
+     * The user collection panel.
+     */
+    private final TabPanel userCollectionPanel;
 
     /**
      * Instantiates a new main controller.
@@ -102,11 +119,11 @@ public class MainController implements PropertyChangeListener {
 
         Config config = configLoader.getConfig();
 
-        browserPanel = new ContainerPanel(new ControlPanel(true));
+        browserPanel = new TabPanel(new ControlPanel(true));
         browserController = new BrowserController(browserPanel, config);
         browserController.addPropertyChangeListener(this);
 
-        userCollectionPanel = new ContainerPanel(new ControlPanel(false));
+        userCollectionPanel = new TabPanel(new ControlPanel(false));
         userCollectionController = new UserCollectionController(
                 userCollectionPanel, config, properties, workspace);
         userCollectionController.addPropertyChangeListener(this);
@@ -177,9 +194,7 @@ public class MainController implements PropertyChangeListener {
     public void propertyChange(PropertyChangeEvent e) {
         if ("insert".equals(e.getPropertyName())) {
             pcs.firePropertyChange(e);
-        }
-
-        else if ("copyToUserCollection".equals(e.getPropertyName())) {
+        } else if ("copyToUserCollection".equals(e.getPropertyName())) {
             try {
                 GlyphDefinition clone = ((GlyphDefinition) e.getNewValue())
                         .clone();
@@ -188,6 +203,16 @@ public class MainController implements PropertyChangeListener {
             } catch (CloneNotSupportedException e1) {
                 LOGGER.error(e1);
             }
+        } else if ("dataLoaded".equals(e.getPropertyName())) {
+
+            int selectedIndex = mainPanel.getTabbedPane().getSelectedIndex();
+
+            if (e.getNewValue() instanceof BrowserController && selectedIndex == 1) {
+                browserPanel.getControlPanel().getAutoCompleteCombo().requestFocusInWindow();
+            } else if (e.getNewValue() instanceof UserCollectionController && selectedIndex == 0) {
+                userCollectionPanel.getControlPanel().getAutoCompleteCombo().requestFocusInWindow();
+            }
+
         }
     }
 
