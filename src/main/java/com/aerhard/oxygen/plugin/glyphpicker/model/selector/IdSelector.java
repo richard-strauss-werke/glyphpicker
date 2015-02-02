@@ -13,21 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.aerhard.oxygen.plugin.glyphpicker.model.trans;
+package com.aerhard.oxygen.plugin.glyphpicker.model.selector;
 
 import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinition;
 
 /**
- * The Interface PropertySelector, providing a get method to return a glyph definition property.
+ * A PropertySelector returning the xml:id.
  */
-public interface PropertySelector {
+public class IdSelector implements PropertySelector {
 
-    /**
-     * Gets the value of the glyph definition property.
-     *
-     * @param d the glyph definition
-     * @return the result string
+    /* (non-Javadoc)
+     * @see com.aerhard.oxygen.plugin.glyphpicker.model.selector.PropertySelector#get(com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinition)
      */
-    String get(GlyphDefinition d);
+    @Override
+    public String get(GlyphDefinition d) {
+        return d.getId();
+    }
 
 }

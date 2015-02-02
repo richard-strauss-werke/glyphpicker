@@ -28,6 +28,7 @@ import javax.swing.JComboBox;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
+import com.aerhard.oxygen.plugin.glyphpicker.model.selector.*;
 import org.apache.log4j.Logger;
 
 import ca.odell.glazedlists.SortedList;
@@ -35,13 +36,7 @@ import ca.odell.glazedlists.UniqueList;
 import ca.odell.glazedlists.matchers.TextMatcherEditor;
 
 import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinition;
-import com.aerhard.oxygen.plugin.glyphpicker.model.trans.AllSelector;
-import com.aerhard.oxygen.plugin.glyphpicker.model.trans.CharNameSelector;
-import com.aerhard.oxygen.plugin.glyphpicker.model.trans.CodePointSelector;
-import com.aerhard.oxygen.plugin.glyphpicker.model.trans.IdSelector;
-import com.aerhard.oxygen.plugin.glyphpicker.model.trans.PropertySelector;
-import com.aerhard.oxygen.plugin.glyphpicker.model.trans.RangeSelector;
-import com.aerhard.oxygen.plugin.glyphpicker.model.trans.TransformedGlyphList;
+import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphPropertyEventList;
 
 /**
  * The auto complete controller.
@@ -187,7 +182,7 @@ public class AutoCompleteController {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                TransformedGlyphList propertyList = new TransformedGlyphList(
+                GlyphPropertyEventList propertyList = new GlyphPropertyEventList(
                         sortedList, propertySelector);
                 UniqueList<String> uniquePropertyList = new UniqueList<>(
                         propertyList);

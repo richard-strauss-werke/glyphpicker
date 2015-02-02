@@ -13,31 +13,30 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.aerhard.oxygen.plugin.glyphpicker.model.trans;
-
-import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinition;
+package com.aerhard.oxygen.plugin.glyphpicker.model;
 
 import ca.odell.glazedlists.EventList;
 import ca.odell.glazedlists.TransformedList;
 import ca.odell.glazedlists.event.ListEvent;
+import com.aerhard.oxygen.plugin.glyphpicker.model.selector.PropertySelector;
 
 /**
- * A TransformedList deriving its values by applying a PropertySelector to a glyph list.
+ * A TransformedList deriving its values by applying a PropertySelector to a GlyphDefinition event list.
  */
-public class TransformedGlyphList extends
+public class GlyphPropertyEventList extends
         TransformedList<GlyphDefinition, String> {
 
     /** The property selector. */
     private final PropertySelector propertySelector;
 
     /**
-     * Instantiates a new TransformedGlyphList.
+     * Instantiates a new GlyphPropertyEventList.
      *
      * @param source the source glyph list
      * @param propertySelector the property selector
      */
-    public TransformedGlyphList(EventList<GlyphDefinition> source,
-            PropertySelector propertySelector) {
+    public GlyphPropertyEventList(EventList<GlyphDefinition> source,
+                                  PropertySelector propertySelector) {
         super(source);
         this.propertySelector = propertySelector;
         source.addListEventListener(this);

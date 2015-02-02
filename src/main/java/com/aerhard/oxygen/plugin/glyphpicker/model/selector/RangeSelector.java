@@ -13,21 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.aerhard.oxygen.plugin.glyphpicker.model.trans;
+package com.aerhard.oxygen.plugin.glyphpicker.model.selector;
 
 import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinition;
 
 /**
- * A PropertySelector returning the code point.
+ * A PropertySelector returning the range property.
  */
-public class CodePointSelector implements PropertySelector {
+public class RangeSelector implements PropertySelector {
 
     /* (non-Javadoc)
-     * @see com.aerhard.oxygen.plugin.glyphpicker.model.trans.PropertySelector#get(com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinition)
+     * @see com.aerhard.oxygen.plugin.glyphpicker.model.selector.PropertySelector#get(com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinition)
      */
     @Override
     public String get(GlyphDefinition d) {
-        return d.getCodePointString();
+        return d.getRange();
     }
 
 }

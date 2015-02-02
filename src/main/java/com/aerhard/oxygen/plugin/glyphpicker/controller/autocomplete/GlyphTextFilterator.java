@@ -20,7 +20,7 @@ import java.util.List;
 import ca.odell.glazedlists.TextFilterator;
 
 import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinition;
-import com.aerhard.oxygen.plugin.glyphpicker.model.trans.PropertySelector;
+import com.aerhard.oxygen.plugin.glyphpicker.model.selector.PropertySelector;
 
 /**
  * A TextFilterator implementing filtering on a certain property of a

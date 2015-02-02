@@ -13,21 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.aerhard.oxygen.plugin.glyphpicker.model.trans;
+package com.aerhard.oxygen.plugin.glyphpicker.model.selector;
 
 import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinition;
 
 /**
- * A PropertySelector returning the range property.
+ * The Interface PropertySelector, providing a get method to return one or
+ * more properties of a GlyphDefinition as a single String.
  */
-public class RangeSelector implements PropertySelector {
+public interface PropertySelector {
 
-    /* (non-Javadoc)
-     * @see com.aerhard.oxygen.plugin.glyphpicker.model.trans.PropertySelector#get(com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinition)
+    /**
+     * Gets the glyph definition string.
+     *
+     * @param d the glyph definition
+     * @return the result string
      */
-    @Override
-    public String get(GlyphDefinition d) {
-        return d.getRange();
-    }
+    String get(GlyphDefinition d);
 
 }
