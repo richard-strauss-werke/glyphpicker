@@ -131,6 +131,12 @@ public class GlyphPickerPluginExtension implements
         return "<g" + ns + " ref=\"" + d.getRefString() + "\"/>";
     }
 
+    private int getNsPosition(String str) {
+
+
+        return -1;
+    }
+
     /**
      * Inserts a text fragment into a text or author editor pane.
      *

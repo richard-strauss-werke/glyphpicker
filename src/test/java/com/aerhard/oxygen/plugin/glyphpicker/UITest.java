@@ -6,14 +6,10 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.io.IOException;
+import java.io.File;
 import java.util.Locale;
-import java.util.Properties;
 
-import javax.swing.JFrame;
-import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.*;
 
 import org.apache.log4j.Logger;
 import org.junit.Test;
@@ -37,7 +33,7 @@ public class UITest {
 
     @Test
     public void testSearchDialog() {
-        LOGGER.info("UI test.");
+        LOGGER.info("UI test always passes in JUnit tests.");
     }
 
     private static void runTest() {
@@ -45,21 +41,21 @@ public class UITest {
         
         Locale.setDefault(Locale.ENGLISH);
 
-        Properties properties = new Properties();
-        try {
-            properties.load(UITest.class
-                    .getResourceAsStream("/mock.properties"));
-        } catch (IOException e) {
-            LOGGER.error("Could not read \"mock.properties\".");
+        String tempDir = System.getProperty("user.dir");
+        File tmpFolder = new File(tempDir, "tmp");
+
+        if (!((tmpFolder.exists() && tmpFolder.isDirectory()) || tmpFolder.mkdir())) {
+            LOGGER.error(String.format("Could not create tmp folder at %s", tmpFolder.toString()));
+            System.exit(-1);
         }
 
-        String oxyPropFolder = properties.getProperty("oxygen.propertyfolder");
+        String tmpFolderString = tmpFolder.toString();
 
         StandalonePluginWorkspace workspace = mock(StandalonePluginWorkspace.class);
-        when(workspace.getPreferencesDirectory()).thenReturn(oxyPropFolder);
+        when(workspace.getPreferencesDirectory()).thenReturn(tmpFolderString);
 
         JFrame frame = new JFrame("UI Test");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         frame.setPreferredSize(new Dimension(600, 600));
         
@@ -96,29 +92,20 @@ public class UITest {
     }
     
     public static void main(String[] args) {
-        
         SwingUtilities.invokeLater(new Runnable() {
             
             @Override
             public void run() {
                runTest();
-                
+
             }
         });
-        
- 
     }
 
     private static void setSystemLookAndFeel() {
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        } catch (ClassNotFoundException e) {
-            LOGGER.error(e);
-        } catch (InstantiationException e) {
-            LOGGER.error(e);
-        } catch (IllegalAccessException e) {
-            LOGGER.error(e);
-        } catch (UnsupportedLookAndFeelException e) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
             LOGGER.error(e);
         }
     }
