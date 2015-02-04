@@ -18,6 +18,8 @@ package com.aerhard.oxygen.plugin.glyphpicker;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.swing.ImageIcon;
 import javax.swing.JMenuBar;
@@ -49,20 +51,30 @@ import ro.sync.exml.workspace.api.standalone.ViewInfo;
 public class GlyphPickerPluginExtension implements
         WorkspaceAccessPluginExtension {
 
-    /** The logger. */
+    /**
+     * The logger.
+     */
     private static final Logger LOGGER = Logger
             .getLogger(GlyphPickerPluginExtension.class.getName());
 
-    /** The path of the plugin's icon. */
+    /**
+     * The path of the plugin's icon.
+     */
     private static final String PLUGIN_ICON = "/images/grid.png";
-    
-    /** The plugin's view ID in oXygen. */
+
+    /**
+     * The plugin's view ID in oXygen.
+     */
     private static final String VIEW_ID = "GlyphPicker";
 
-    /** The main controller. */
+    /**
+     * The main controller.
+     */
     private MainController mainController;
 
-    /** The main panel. */
+    /**
+     * The main panel.
+     */
     private MainPanel mainPanel;
 
     /*
@@ -122,45 +134,65 @@ public class GlyphPickerPluginExtension implements
     /**
      * Creates an XML string from a GlyphDefinition object.
      *
-     * @param d the glyph definition
+     * @param d     the glyph definition
      * @param setNs if true, the TEI namespace will be added to the XML string.
      * @return the XML string
      */
-    private String createXmlString(GlyphDefinition d, Boolean setNs) {
-        String ns = (setNs) ? " xmlns=\"http://www.tei-c.org/ns/1.0\"" : "";
-        return "<g" + ns + " ref=\"" + d.getRefString() + "\"/>";
+    public String createXmlString(GlyphDefinition d, Boolean setNs) {
+        return (setNs) ? insertNs(d.getXmlString()) : d.getXmlString();
     }
 
-    private int getNsPosition(String str) {
-
-
-        return -1;
+    /**
+     * Inserts a namespace declaration to a String
+     * @param str the input String
+     * @return the String with namespace or - if it doesn't match the pattern <[^/^>]+ or is null - the original String
+     */
+    String insertNs(String str) {
+        if (str != null && !str.isEmpty()) {
+            String ns = " xmlns=\"http://www.tei-c.org/ns/1.0\"";
+            Pattern p = Pattern.compile("(<[^/^>]+)");
+            Matcher m = p.matcher(str);
+            if (m.find()) {
+                String match = m.group();
+                String replacement;
+                int spaceIndex = match.indexOf(" ");
+                if (spaceIndex == -1) {
+                    replacement = match + ns;
+                } else {
+                    replacement = match.substring(0, spaceIndex) + ns + match.substring(spaceIndex);
+                }
+                return m.replaceFirst(replacement);
+            }
+        }
+        return str;
     }
 
     /**
      * Inserts a text fragment into a text or author editor pane.
      *
      * @param workspace oXygen's plugin workspace
-     * @param d the glyph definition
+     * @param d         the glyph definition
      */
     private void insertFragment(StandalonePluginWorkspace workspace,
-            GlyphDefinition d) {
+                                GlyphDefinition d) {
         WSEditorPage currentPage = workspace.getCurrentEditorAccess(
                 PluginWorkspace.MAIN_EDITING_AREA).getCurrentPage();
         if (currentPage instanceof WSTextEditorPage) {
             WSTextEditorPage page = (WSTextEditorPage) currentPage;
 
-            // TODO make this namespace aware
-
             page.beginCompoundUndoableEdit();
             int selectionOffset = page.getSelectionStart();
             page.deleteSelection();
+            String xmlString = createXmlString(d, false);
+            if (xmlString != null && ! xmlString.isEmpty()) {
             try {
-                page.getDocument().insertString(selectionOffset,
-                        createXmlString(d, false),
-                        javax.swing.text.SimpleAttributeSet.EMPTY);
+                    page.getDocument().insertString(selectionOffset,
+                            xmlString,
+                            javax.swing.text.SimpleAttributeSet.EMPTY);
+
             } catch (BadLocationException e) {
                 LOGGER.error(e);
+            }
             }
             page.endCompoundUndoableEdit();
 
@@ -168,6 +200,8 @@ public class GlyphPickerPluginExtension implements
             WSAuthorEditorPage page = (WSAuthorEditorPage) currentPage;
 
             AuthorAccess authorAccess = page.getAuthorAccess();
+            String xmlString = createXmlString(d, true);
+            if (xmlString != null && ! xmlString.isEmpty()) {
             try {
                 int offset = authorAccess.getEditorAccess().getCaretOffset();
                 Position endOffsetPos = null;
@@ -178,15 +212,16 @@ public class GlyphPickerPluginExtension implements
                     LOGGER.error(e1);
                 }
 
-                authorAccess.getDocumentController()
-                        .insertXMLFragmentSchemaAware(
-                                createXmlString(d, true), offset);
+                    authorAccess.getDocumentController()
+                            .insertXMLFragmentSchemaAware(
+                                    xmlString, offset);
 
                 int endOffset = endOffsetPos != null ? endOffsetPos.getOffset() - 1
                         : offset;
                 authorAccess.getEditorAccess().setCaretPosition(endOffset);
             } catch (AuthorOperationException e) {
                 LOGGER.error(e);
+            }
             }
 
         } else {

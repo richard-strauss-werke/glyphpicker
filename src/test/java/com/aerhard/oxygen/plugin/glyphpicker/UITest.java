@@ -70,7 +70,7 @@ public class UITest {
                 if ("insert".equals(e.getPropertyName())) {
                     GlyphDefinition model = (GlyphDefinition) e.getNewValue();
                     LOGGER.info("Insertion triggered: " + model.getCharName()
-                            + "\nrefString: " + model.getRefString());
+                            + "\nrefString: " + model.getXmlString());
                 }
             }
         });

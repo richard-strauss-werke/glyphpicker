@@ -237,11 +237,11 @@ public class GlyphDefinition implements Cloneable {
     }
 
     /**
-     * Gets the string to insert into the XML document as value of the ref attribute.
+     * Gets the string to insert into the XML document.
      *
      * @return the string
      */
-    public String getRefString() {
+    public String getXmlString() {
 
         String template = getDataSource().getTemplate();
 
@@ -252,7 +252,8 @@ public class GlyphDefinition implements Cloneable {
 
         return template.replaceAll("\\$\\{basePath\\}",
                 getDataSource().getBasePath()).replaceAll("\\$\\{id\\}",
-                getId());
+                getId()).replaceAll("\\$\\{cp\\}",
+                getCodePoint());
     }
 
     /* (non-Javadoc)

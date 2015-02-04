@@ -12,7 +12,7 @@
             <fontName>BravuraText</fontName>
             <glyphRenderer>bitmap</glyphRenderer>
             <sizeFactor>0.8</sizeFactor>
-            <template>${basePath}#${id}</template>
+            <template>&lt;g ref="${basePath}#${id}"/&gt;</template>
             <typeAttributeValue>smufl</typeAttributeValue>
             <subtypeAttributeValue></subtypeAttributeValue>
             <parseMapping>true</parseMapping>
@@ -23,7 +23,7 @@
             <fontName>BravuraText</fontName>
             <glyphRenderer>scaled vector</glyphRenderer>
             <sizeFactor>0.7</sizeFactor>
-            <template>${basePath}#${id}</template>
+            <template>&lt;g ref="${basePath}#${id}"/&gt;</template>
             <typeAttributeValue>smufl</typeAttributeValue>
             <subtypeAttributeValue></subtypeAttributeValue>
             <parseMapping>true</parseMapping>
@@ -34,7 +34,7 @@
             <fontName>Andron Scriptor Web</fontName>
             <glyphRenderer>bitmap</glyphRenderer>
             <sizeFactor>1.0</sizeFactor>
-            <template>#${id}</template>
+            <template>&lt;g ref="#${id}"/&gt;</template>
             <typeAttributeValue></typeAttributeValue>
             <subtypeAttributeValue>PUA</subtypeAttributeValue>
             <parseMapping>true</parseMapping>
@@ -45,7 +45,7 @@
             <fontName>Andron Scriptor Web</fontName>
             <glyphRenderer>vector</glyphRenderer>
             <sizeFactor>0.5</sizeFactor>
-            <template>#${id}</template>
+            <template>&lt;g ref="#${id}"/&gt;</template>
             <typeAttributeValue></typeAttributeValue>
             <subtypeAttributeValue>PUA</subtypeAttributeValue>
             <parseMapping>true</parseMapping>
@@ -56,7 +56,7 @@
             <fontName>BravuraText</fontName>
             <glyphRenderer>bitmap</glyphRenderer>
             <sizeFactor>0.7</sizeFactor>
-            <template>${basePath}#${id}</template>
+            <template>&lt;g ref="${basePath}#${id}"/&gt;</template>
             <typeAttributeValue>smufl</typeAttributeValue>
             <subtypeAttributeValue></subtypeAttributeValue>
             <parseMapping>true</parseMapping>
@@ -67,7 +67,7 @@
             <fontName>BravuraText</fontName>
             <glyphRenderer>scaled vector</glyphRenderer>
             <sizeFactor>0.7</sizeFactor>
-            <template>${basePath}#${id}</template>
+            <template>&lt;g ref="${basePath}#${id}"/&gt;</template>
             <typeAttributeValue>smufl</typeAttributeValue>
             <subtypeAttributeValue></subtypeAttributeValue>
             <parseMapping>true</parseMapping>
@@ -78,7 +78,7 @@
             <fontName>Andron Scriptor Web</fontName>
             <glyphRenderer>bitmap</glyphRenderer>
             <sizeFactor>1.0</sizeFactor>
-            <template>#${id}</template>
+            <template>&lt;g ref="#${id}"/&gt;</template>
             <typeAttributeValue></typeAttributeValue>
             <subtypeAttributeValue>PUA</subtypeAttributeValue>
             <parseMapping>true</parseMapping>
@@ -89,7 +89,7 @@
             <fontName>Andron Scriptor Web</fontName>
             <glyphRenderer>vector</glyphRenderer>
             <sizeFactor>0.5</sizeFactor>
-            <template>#${id}</template>
+            <template>&lt;g ref="#${id}"/&gt;</template>
             <typeAttributeValue></typeAttributeValue>
             <subtypeAttributeValue>PUA</subtypeAttributeValue>
             <parseMapping>true</parseMapping>
@@ -100,7 +100,7 @@
             <fontName>BravuraText</fontName>
             <glyphRenderer>scaled vector</glyphRenderer>
             <sizeFactor>0.5</sizeFactor>
-            <template>${basePath}#${id}</template>
+            <template>&lt;g ref="${basePath}#${id}"/&gt;</template>
             <typeAttributeValue>smufl</typeAttributeValue>
             <subtypeAttributeValue></subtypeAttributeValue>
             <parseMapping>true</parseMapping>
