@@ -9,7 +9,8 @@
     class="com.aerhard.oxygen.plugin.glyphpicker.GlyphPickerPlugin"
     classLoaderType="preferReferencedResources">
     <runtime>
-        <library name="lib/glazedlists_java15-1.9.0.jar"/>
+        <!--<library name="lib/glazedlists_java15-1.9.0.jar"/>-->
+        <library name="lib/glazedlists_java16-1.10-SNAPSHOT.jar"/>
         <library name="lib/${project.build.finalName}.jar"/>
     </runtime>
     <extension type="WorkspaceAccess" 
