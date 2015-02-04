@@ -101,6 +101,7 @@ public class TabPanel extends JPanel {
         infoLabel = new JTextPane();
         infoLabel.putClientProperty(JEditorPane.HONOR_DISPLAY_PROPERTIES, true);
         infoLabel.setEditable(false);
+        infoLabel.setFocusable(false);
         infoLabel.setContentType("text/html");
         infoLabel.setPreferredSize(new Dimension(INFO_LABEL_PREFERRED_SIZE, INFO_LABEL_PREFERRED_SIZE));
         GridBagConstraints gbcInfoLabel = new GridBagConstraints();
