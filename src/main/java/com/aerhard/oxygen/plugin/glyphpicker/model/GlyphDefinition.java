@@ -247,7 +247,7 @@ public class GlyphDefinition implements Cloneable {
 
         // if no template is specified, use default template
         if (template == null) {
-            return getDataSource().getBasePath() + "#" + getId();
+            return String.format("<g ref=\"%s#%s\"/>", getDataSource().getBasePath(), getId());
         }
 
         return template.replaceAll("\\$\\{basePath\\}",
