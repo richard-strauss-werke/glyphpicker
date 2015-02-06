@@ -46,6 +46,15 @@ public class TabFocusHandler implements ChangeListener, PropertyChangeListener {
         tabFocus.put(tabbedPane.getComponentAt(index), component);
     }
 
+    /**
+     * Gets the component to be focused in the specified container
+     * @param container the container
+     * @return the component to be focused
+     */
+    public Component getFocusComponentForContainer(Component container) {
+        return tabFocus.get(container);
+    }
+
     /*
      * (non-Javadoc)
      * 

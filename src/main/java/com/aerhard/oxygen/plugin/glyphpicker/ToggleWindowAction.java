@@ -24,6 +24,7 @@ import javax.swing.ImageIcon;
 import javax.swing.KeyStroke;
 
 import com.aerhard.oxygen.plugin.glyphpicker.controller.action.AbstractPickerAction;
+import com.aerhard.oxygen.plugin.glyphpicker.view.MainPanel;
 
 import ro.sync.exml.workspace.api.standalone.StandalonePluginWorkspace;
 
@@ -40,6 +41,8 @@ public class ToggleWindowAction extends AbstractPickerAction {
     /** The plugin's view ID in oXygen. */
     private final String viewId;
 
+    private MainPanel mainPanel;
+
     /** The name of the current class. */
     private static final String className = ToggleWindowAction.class
             .getSimpleName();
@@ -52,12 +55,13 @@ public class ToggleWindowAction extends AbstractPickerAction {
      * @param viewId The plugin's view ID in oXygen
      */
     public ToggleWindowAction(StandalonePluginWorkspace workspace,
-                              String icon, String viewId) {
+                              String icon, String viewId, MainPanel mainPanel) {
         super("GyphPicker", new ImageIcon(
                 ToggleWindowAction.class.getResource(icon)));
 
         this.workspace = workspace;
         this.viewId = viewId;
+        this.mainPanel = mainPanel;
 
         String description = I18N.getString(className + ".description");
 
@@ -73,7 +77,7 @@ public class ToggleWindowAction extends AbstractPickerAction {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (workspace.isViewShowing(viewId)) {
-            workspace.hideView(viewId);
+            mainPanel.requestFocusInWindow();
         } else {
             workspace.showView(viewId, true);
         }

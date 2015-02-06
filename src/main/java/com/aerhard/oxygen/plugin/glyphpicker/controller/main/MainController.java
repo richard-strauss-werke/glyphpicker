@@ -15,6 +15,9 @@
  */
 package com.aerhard.oxygen.plugin.glyphpicker.controller.main;
 
+import java.awt.*;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
@@ -36,6 +39,8 @@ import com.aerhard.oxygen.plugin.glyphpicker.view.TabPanel;
 import com.aerhard.oxygen.plugin.glyphpicker.view.ControlPanel;
 import com.aerhard.oxygen.plugin.glyphpicker.view.GlyphGrid;
 import com.aerhard.oxygen.plugin.glyphpicker.view.MainPanel;
+
+import javax.swing.*;
 
 /**
  * The plugin's main controller.
@@ -106,7 +111,7 @@ public class MainController implements PropertyChangeListener {
      *
      * @param workspace oXygen's plugin workspace
      */
-    public MainController(StandalonePluginWorkspace workspace) {
+    public MainController(final StandalonePluginWorkspace workspace) {
 
         Properties properties = new Properties();
         try {
@@ -134,12 +139,26 @@ public class MainController implements PropertyChangeListener {
 
         mainPanel.getTabbedPane().setSelectedIndex(config.getTabIndex());
 
-        TabFocusHandler focusHandler = new TabFocusHandler(
+        final TabFocusHandler focusHandler = new TabFocusHandler(
                 mainPanel.getTabbedPane());
         focusHandler.setTabComponentFocus(0, userCollectionPanel
                 .getControlPanel().getAutoCompleteCombo());
         focusHandler.setTabComponentFocus(1, browserPanel.getControlPanel()
                 .getAutoCompleteCombo());
+
+        mainPanel.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                JTabbedPane tabbedPane = mainPanel.getTabbedPane();
+                Component container = tabbedPane.getComponentAt(tabbedPane
+                        .getSelectedIndex());
+                Component component = focusHandler.getFocusComponentForContainer(container);
+                if (component != null) {
+                    component.requestFocusInWindow();
+                }
+            }
+        });
+
     }
 
     /**

@@ -125,7 +125,7 @@ public class GlyphPickerPluginExtension implements
                 mainMenu.getMenu(1).addSeparator();
                 mainMenu.getMenu(1).add(
                         new ToggleWindowAction(workspace, PLUGIN_ICON,
-                                VIEW_ID));
+                                VIEW_ID, mainPanel));
             }
         });
 
