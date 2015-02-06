@@ -68,11 +68,16 @@ public class BitmapLoadWorker extends
             if (isCancelled()) {
                 return null;
             }
+
+            // only load bitmaps for glyphDefinitions whose DataSource specifies a
+            // DataSource.GLYPH_BITMAP_RENDERER
             if (DataSource.GLYPH_BITMAP_RENDERER.equals(gd.getDataSource()
                     .getGlyphRenderer())) {
+
                 float factor = gd.getDataSource().getSizeFactor();
                 executorService.submit(new BitmapLoader(this, gd, Math
                         .round(size * factor)));
+
             }
         }
 
