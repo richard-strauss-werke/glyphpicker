@@ -35,6 +35,7 @@ import com.aerhard.oxygen.plugin.glyphpicker.controller.TabController;
 import com.aerhard.oxygen.plugin.glyphpicker.controller.GlyphSelectionChangeHandler;
 import com.aerhard.oxygen.plugin.glyphpicker.controller.action.AddAction;
 import com.aerhard.oxygen.plugin.glyphpicker.controller.action.InsertXmlAction;
+import com.aerhard.oxygen.plugin.glyphpicker.controller.bitmap.ImageCacheAccess;
 import com.aerhard.oxygen.plugin.glyphpicker.controller.editor.EditAction;
 import com.aerhard.oxygen.plugin.glyphpicker.model.Config;
 import com.aerhard.oxygen.plugin.glyphpicker.model.DataSource;
@@ -61,14 +62,14 @@ public class BrowserController extends TabController {
 
     /**
      * Instantiates a new BrowserController.
-     *
-     * @param panel the browser tab's container panel
+     *  @param panel the browser tab's container panel
      * @param config the plugin config
+     * @param imageCacheAccess the image cache
      */
-    public BrowserController(TabPanel panel, Config config) {
+    public BrowserController(TabPanel panel, Config config, ImageCacheAccess imageCacheAccess) {
 
-        super(panel, config.getBrowserSearchFieldScopeIndex(), config
-                .getBrowserViewIndex());
+        super(panel, config, config.getBrowserSearchFieldScopeIndex(), config
+                .getBrowserViewIndex(), imageCacheAccess);
 
         dataSourceList = config.getDataSources();
         controlPanel.getDataSourceCombo().setModel(dataSourceList);

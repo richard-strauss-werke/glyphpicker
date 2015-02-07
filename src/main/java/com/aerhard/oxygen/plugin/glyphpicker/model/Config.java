@@ -15,10 +15,8 @@
  */
 package com.aerhard.oxygen.plugin.glyphpicker.model;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.*;
+import java.io.File;
 
 /**
  * The plugin's config model.
@@ -50,6 +48,12 @@ public class Config {
     /** The data sources. */
     @XmlElement(name = "dataSources")
     private DataSourceList dataSources = null;
+
+    /**
+     * The plugin's config directory
+     */
+    @XmlTransient
+    private File configDir;
 
     /**
      * Gets the tab index.
@@ -159,4 +163,21 @@ public class Config {
         this.dataSources = dataSources;
     }
 
+    /**
+     * Gets the plugin's config directory.
+     *
+     * @return the directory
+     */
+    public File getConfigDir() {
+        return configDir;
+    }
+
+    /**
+     * Sets the plugin's config directory.
+     *
+     * @param configDir the directory
+     */
+    public void setConfigDir(File configDir) {
+        this.configDir = configDir;
+    }
 }

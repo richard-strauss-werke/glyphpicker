@@ -26,6 +26,7 @@ import javax.swing.Action;
 import javax.swing.SwingUtilities;
 
 import com.aerhard.oxygen.plugin.glyphpicker.controller.action.*;
+import com.aerhard.oxygen.plugin.glyphpicker.controller.bitmap.ImageCacheAccess;
 import ro.sync.exml.workspace.api.standalone.StandalonePluginWorkspace;
 import ca.odell.glazedlists.event.ListEvent;
 import ca.odell.glazedlists.event.ListEventListener;
@@ -85,17 +86,17 @@ public class UserCollectionController extends TabController {
 
     /**
      * Instantiates a new UserCollectionController.
-     *
-     * @param panel      the user collection tab's container panel
+     *  @param panel      the user collection tab's container panel
      * @param config     the plugin config
      * @param properties the plugin properties
      * @param workspace  the workspace
+     * @param imageCacheAccess the image cache
      */
     public UserCollectionController(TabPanel panel, Config config,
-                                    Properties properties, StandalonePluginWorkspace workspace) {
+                                    Properties properties, StandalonePluginWorkspace workspace, ImageCacheAccess imageCacheAccess) {
 
-        super(panel, config.getUserSearchFieldScopeIndex(), config
-                .getUserViewIndex());
+        super(panel, config, config.getUserSearchFieldScopeIndex(), config
+                .getUserViewIndex(), imageCacheAccess);
 
         loader = new UserCollectionLoader(workspace, properties);
 

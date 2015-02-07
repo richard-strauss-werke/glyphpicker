@@ -23,6 +23,7 @@ import javax.swing.SwingWorker;
 
 import com.aerhard.oxygen.plugin.glyphpicker.model.DataSource;
 import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinition;
+import org.apache.log4j.Logger;
 
 /**
  * A worker class for bulk loading bitmap images from a list of glyph definitions.
@@ -30,25 +31,43 @@ import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinition;
 public class BitmapLoadWorker extends
         SwingWorker<List<GlyphDefinition>, Void> {
 
-    /** The executor service. */
+    /**
+     * The logger.
+     */
+    private static final Logger LOGGER = Logger
+            .getLogger(BitmapLoadWorker.class.getName());
+
+    /**
+     * The executor service.
+     */
     private final ExecutorService executorService = Executors.newFixedThreadPool(10);
 
-    /** The glyph definitions. */
+    /**
+     * The glyph definitions.
+     */
     private final List<GlyphDefinition> glyphDefinitions;
-    
-    /** The maximum scaled height / width of the images. */
+
+    /**
+     * The maximum scaled height / width of the images.
+     */
     private final int size;
 
     /**
+     * The plugin's config directory
+     */
+    private final ImageCacheAccess imageCacheAccess;
+
+    /**
      * Instantiates a new BitmapLoadWorker.
-     *
      * @param glyphDefinitions the glyph definitions
-     * @param size The maximum scaled height / width of the images
+     * @param size             The maximum scaled height / width of the images
+     * @param imageCacheAccess         The plugin's config directory
      */
     public BitmapLoadWorker(List<GlyphDefinition> glyphDefinitions,
-            int size) {
+                            int size, ImageCacheAccess imageCacheAccess) {
         this.glyphDefinitions = glyphDefinitions;
         this.size = size;
+        this.imageCacheAccess = imageCacheAccess;
     }
 
     /**
@@ -64,24 +83,51 @@ public class BitmapLoadWorker extends
     @Override
     protected List<GlyphDefinition> doInBackground() {
 
-        for (GlyphDefinition gd : glyphDefinitions) {
+        ImageProcessor imageProcessor = new ImageProcessor();
+
+//        File cacheFolder = new File(configDir, "cache");
+//        if (!((cacheFolder.exists() && cacheFolder.isDirectory()) || cacheFolder.mkdirs())) {
+//            LOGGER.error(String.format("Could not create cache folder at %s", cacheFolder.toString()));
+//        }
+//
+//        ImageCache imageCache = new ImageCache(configDir);
+
+
+        for (GlyphDefinition d : glyphDefinitions) {
             if (isCancelled()) {
                 return null;
             }
 
-            // only load bitmaps for glyphDefinitions whose DataSource specifies a
-            // DataSource.GLYPH_BITMAP_RENDERER
-            if (DataSource.GLYPH_BITMAP_RENDERER.equals(gd.getDataSource()
-                    .getGlyphRenderer())) {
+            DataSource dataSource = d.getDataSource();
+            String relativePath = d.getUrl();
 
-                float factor = gd.getDataSource().getSizeFactor();
-                executorService.submit(new BitmapLoader(this, gd, Math
-                        .round(size * factor)));
+            // only load bitmaps for glyphDefinitions whose DataSource specifies a
+            // DataSource.GLYPH_BITMAP_RENDERER and has a graphic path
+            if (DataSource.GLYPH_BITMAP_RENDERER.equals(dataSource
+                    .getGlyphRenderer()) && relativePath != null) {
+
+                String basePath = dataSource.getBasePath();
+
+                BitmapLoader loader = (isLocalFile(basePath))
+                        ? new BitmapFileLoader(d, basePath, relativePath, imageProcessor, size)
+                        : new BitmapUrlLoader(d, basePath, relativePath, imageProcessor, size, imageCacheAccess);
+
+                executorService.submit(new BitmapLoadRunnable(this, d, loader));
 
             }
         }
 
         return null;
+    }
+
+    /**
+     * Checks if a string refers to a local file.
+     *
+     * @param path the path
+     * @return the result
+     */
+    public static Boolean isLocalFile(String path) {
+        return !path.matches("^\\w+://.*");
     }
 
 }

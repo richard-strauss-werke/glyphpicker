@@ -45,6 +45,8 @@ import com.aerhard.oxygen.plugin.glyphpicker.controller.action.InsertXmlAction;
 import com.aerhard.oxygen.plugin.glyphpicker.controller.action.SortAction;
 import com.aerhard.oxygen.plugin.glyphpicker.controller.autocomplete.AutoCompleteController;
 import com.aerhard.oxygen.plugin.glyphpicker.controller.bitmap.BitmapLoadWorker;
+import com.aerhard.oxygen.plugin.glyphpicker.controller.bitmap.ImageCacheAccess;
+import com.aerhard.oxygen.plugin.glyphpicker.model.Config;
 import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinition;
 import com.aerhard.oxygen.plugin.glyphpicker.view.TabPanel;
 import com.aerhard.oxygen.plugin.glyphpicker.view.ControlPanel;
@@ -113,6 +115,16 @@ public abstract class TabController implements PropertyChangeListener {
     protected final GlyphGrid list;
 
     /**
+     * The plugin config.
+     */
+    private final Config config;
+
+    /**
+     * The image cache
+     */
+    private final ImageCacheAccess imageCacheAccess;
+
+    /**
      * The bmp load worker.
      */
     protected BitmapLoadWorker bmpLoader = null;
@@ -139,16 +151,19 @@ public abstract class TabController implements PropertyChangeListener {
 
     /**
      * Instantiates a new tab controller.
-     *
      * @param tabPanel              The container panel in the tab
+     * @param config                The plugin config
      * @param searchFieldScopeIndex the index of the auto complete scope checkbox which should be selected initially
      * @param listViewIndex         the index of the list view to show initially. Set 0 for the grid and 1 for the table component.
+     * @param imageCacheAccess            the image cache
      */
     @SuppressWarnings("unchecked")
     public TabController(final TabPanel tabPanel,
-                         int searchFieldScopeIndex, int listViewIndex) {
+                         Config config, int searchFieldScopeIndex, int listViewIndex, ImageCacheAccess imageCacheAccess) {
 
         this.tabPanel = tabPanel;
+        this.config = config;
+        this.imageCacheAccess = imageCacheAccess;
 
         controlPanel = tabPanel.getControlPanel();
 
@@ -271,7 +286,8 @@ public abstract class TabController implements PropertyChangeListener {
      * @param data the glyph definitions containing the bitmap's paths
      */
     public void startBitmapLoadWorker(List<GlyphDefinition> data) {
-        bmpLoader = new BitmapLoadWorker(data, LIST_ITEM_SIZE);
+
+        bmpLoader = new BitmapLoadWorker(data, LIST_ITEM_SIZE, imageCacheAccess);
 
         bmpListener = new PropertyChangeListener() {
             @Override

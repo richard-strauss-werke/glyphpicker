@@ -21,12 +21,14 @@ import java.awt.event.FocusEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.io.File;
 import java.io.IOException;
 import java.util.Properties;
 
 import com.aerhard.oxygen.plugin.glyphpicker.controller.TabController;
 import com.aerhard.oxygen.plugin.glyphpicker.controller.action.AddAction;
 import com.aerhard.oxygen.plugin.glyphpicker.controller.action.InsertXmlAction;
+import com.aerhard.oxygen.plugin.glyphpicker.controller.bitmap.ImageCacheAccess;
 import org.apache.log4j.Logger;
 
 import ro.sync.exml.workspace.api.standalone.StandalonePluginWorkspace;
@@ -126,13 +128,15 @@ public class MainController implements PropertyChangeListener {
 
         Config config = configLoader.getConfig();
 
+        ImageCacheAccess imageCacheAccess = createImageCache(config);
+
         browserPanel = new TabPanel(new ControlPanel(true));
-        browserController = new BrowserController(browserPanel, config);
+        browserController = new BrowserController(browserPanel, config, imageCacheAccess);
         browserController.addPropertyChangeListener(this);
 
         userCollectionPanel = new TabPanel(new ControlPanel(false));
         userCollectionController = new UserCollectionController(
-                userCollectionPanel, config, properties, workspace);
+                userCollectionPanel, config, properties, workspace, imageCacheAccess);
         userCollectionController.addPropertyChangeListener(this);
 
         mainPanel = new MainPanel(userCollectionPanel, browserPanel);
@@ -159,6 +163,20 @@ public class MainController implements PropertyChangeListener {
             }
         });
 
+    }
+
+    /**
+     * Creates the image cache folder and the corresponding ImageCache object
+     * @param config the plugin config
+     * @return the image cache or null if no cache folder could be created
+     */
+    private ImageCacheAccess createImageCache(Config config) {
+        File cacheFolder = new File(config.getConfigDir(), "cache");
+        if ((cacheFolder.exists() && cacheFolder.isDirectory()) || cacheFolder.mkdirs()) {
+            return new ImageCacheAccess(cacheFolder);
+        }
+        LOGGER.error(String.format("Could not create image cache folder at %s", cacheFolder.toString()));
+        return null;
     }
 
     /**

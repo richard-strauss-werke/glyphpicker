@@ -26,7 +26,6 @@ import org.apache.log4j.Logger;
 
 import ro.sync.exml.workspace.api.standalone.StandalonePluginWorkspace;
 
-import com.aerhard.oxygen.plugin.glyphpicker.controller.user.UserCollectionLoader;
 import com.aerhard.oxygen.plugin.glyphpicker.model.Config;
 import com.aerhard.oxygen.plugin.glyphpicker.model.DataSourceList;
 
@@ -66,8 +65,7 @@ public class ConfigLoader {
      */
     public void save() {
         File path = new File(pathName);
-        Boolean pathExists = path.exists() || path.mkdir();
-        if (pathExists) {
+        if (path.exists() || path.mkdir()) {
             File file = new File(path, fileName);
             LOGGER.info("Storing config.");
             try {
@@ -85,8 +83,8 @@ public class ConfigLoader {
      */
     public void load() {
         config = null;
-
-        File file = new File(pathName + "/" + fileName);
+        File path = new File(pathName);
+        File file = new File(path, fileName);
 
         if (file.exists()) {
             try {
@@ -96,27 +94,32 @@ public class ConfigLoader {
             }
         } else {
             try {
-                URL resource = UserCollectionLoader.class
+                URL resource = ConfigLoader.class
                         .getResource("/config.xml");
                 config = JAXB.unmarshal(resource, Config.class);
             } catch (DataBindingException e) {
-                LOGGER.error("Error loading config.", e);
+                LOGGER.error("Error loading default config.", e);
             }
         }
 
         if (config == null) {
             LOGGER.error("Could not unmarshal config file.");
         } else {
-            DataSourceList dataSourceList = config.getDataSources();
-
-            if (dataSourceList == null) {
-                LOGGER.error("No data source list found in config.");
-                dataSourceList = new DataSourceList();
-            }
-
-            dataSourceList.init();
+            config.setConfigDir(path);
+            initDataSourceList();
         }
+    }
 
+    /**
+     * initializes the data source list in the config object
+     */
+    private void initDataSourceList() {
+        DataSourceList dataSourceList = config.getDataSources();
+        if (dataSourceList == null) {
+            LOGGER.error("No data source list found in config.");
+            dataSourceList = new DataSourceList();
+        }
+        dataSourceList.init();
     }
 
     /**
