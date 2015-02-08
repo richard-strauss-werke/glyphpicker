@@ -2338,7 +2338,7 @@ public final class CustomAutoCompleteSupport<E> {
                     final Method method = oldValue.getClass().getMethod(
                             "valueOf", VALUE_OF_SIGNATURE);
                     return method.invoke(oldValue,
-                            new Object[] { currentString });
+                            currentString);
                 } catch (Exception ex) {
                     // fail silently and return the current string
                 }

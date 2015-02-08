@@ -148,7 +148,7 @@ public class ImageCacheAccess {
         for (File f : files) {
             if (!f.delete()) {
                 success = false;
-            }; 
+            }
         }
         pcs.firePropertyChange(CACHE_CLEARED, null, success);
     }
