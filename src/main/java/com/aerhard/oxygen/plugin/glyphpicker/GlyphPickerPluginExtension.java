@@ -130,28 +130,6 @@ public class GlyphPickerPluginExtension implements
 
     }
 
-//    /**
-//     * Creates a new ToggleWindowAction and sets a PropertyChangeListener to the plugin's config object
-//     * @param workspace
-//     * @return
-//     */
-//    private Action createToggleWindowAction(StandalonePluginWorkspace workspace) {
-//        ToggleWindowAction toggleWindowAction = new ToggleWindowAction(workspace, PLUGIN_ICON,
-//                VIEW_ID, mainPanel, mainController.getConfig());
-//
-//        // TODO make the action a propertychangelistener!
-//
-////        KeyStroke keyStroke = KeyStroke.getKeyStroke(KeyEvent.VK_P, Toolkit
-////                .getDefaultToolkit().getMenuShortcutKeyMask());
-////        System.out.println(keyStroke);
-////        System.out.println(config.getShortcut());
-////        System.out.println(KeyStroke.getKeyStroke(config.getShortcut()));
-////        System.out.println(KeyStroke.getKeyStroke(null));
-//
-//
-//        return toggleWindowAction;
-//    }
-
     /**
      * Creates an XML string from a GlyphDefinition object.
      *

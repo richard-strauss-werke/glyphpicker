@@ -47,6 +47,9 @@ public class ToggleWindowAction extends AbstractPickerAction implements Property
      */
     private final String viewId;
 
+    /**
+     * The plugin's main panel.
+     */
     private MainPanel mainPanel;
 
     /**
