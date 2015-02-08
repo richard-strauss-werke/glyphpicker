@@ -35,7 +35,7 @@ public class SaveAction extends AbstractPickerAction {
     private final Set<Action> actions;
 
     /** The name of the class. */
-    private static final String className = SaveAction.class.getSimpleName();
+    private static final String CLASS_NAME = SaveAction.class.getSimpleName();
 
     /**
      * Instantiates a new save action.
@@ -44,7 +44,7 @@ public class SaveAction extends AbstractPickerAction {
      * @param actions The actions affected by this action.
      */
     public SaveAction(PropertyChangeListener listener, Set<Action> actions) {
-        super(className, "/images/disk.png");
+        super(CLASS_NAME, "/images/disk.png");
         this.addPropertyChangeListener(listener);
         this.actions = actions;
     }

@@ -43,7 +43,7 @@ public class RemoveAction extends AbstractPickerAction {
     private final GlyphGrid list;
 
     /** The name of the class. */
-    private static final String className = RemoveAction.class.getSimpleName();
+    private static final String CLASS_NAME = RemoveAction.class.getSimpleName();
 
     /**
      * Instantiates a new RemoveAction.
@@ -56,7 +56,7 @@ public class RemoveAction extends AbstractPickerAction {
     public RemoveAction(PropertyChangeListener listener,
             EventList<GlyphDefinition> glyphList,
             FilterList<GlyphDefinition> filterList, GlyphGrid list) {
-        super(className, "/images/minus.png");
+        super(CLASS_NAME, "/images/minus.png");
         this.addPropertyChangeListener(listener);
         this.glyphList = glyphList;
         this.filterList = filterList;

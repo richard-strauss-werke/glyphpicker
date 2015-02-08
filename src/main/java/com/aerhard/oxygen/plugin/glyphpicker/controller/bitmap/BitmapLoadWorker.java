@@ -23,19 +23,12 @@ import javax.swing.SwingWorker;
 
 import com.aerhard.oxygen.plugin.glyphpicker.model.DataSource;
 import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinition;
-import org.apache.log4j.Logger;
 
 /**
  * A worker class for bulk loading bitmap images from a list of glyph definitions.
  */
 public class BitmapLoadWorker extends
         SwingWorker<List<GlyphDefinition>, Void> {
-
-    /**
-     * The logger.
-     */
-    private static final Logger LOGGER = Logger
-            .getLogger(BitmapLoadWorker.class.getName());
 
     /**
      * The executor service.
@@ -84,14 +77,6 @@ public class BitmapLoadWorker extends
     protected List<GlyphDefinition> doInBackground() {
 
         ImageProcessor imageProcessor = new ImageProcessor();
-
-//        File cacheFolder = new File(configDir, "cache");
-//        if (!((cacheFolder.exists() && cacheFolder.isDirectory()) || cacheFolder.mkdirs())) {
-//            LOGGER.error(String.format("Could not create cache folder at %s", cacheFolder.toString()));
-//        }
-//
-//        ImageCache imageCache = new ImageCache(configDir);
-
 
         for (GlyphDefinition d : glyphDefinitions) {
             if (isCancelled()) {

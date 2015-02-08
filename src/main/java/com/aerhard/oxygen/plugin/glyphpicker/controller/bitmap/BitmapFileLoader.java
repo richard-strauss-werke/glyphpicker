@@ -36,16 +36,6 @@ public class BitmapFileLoader implements BitmapLoader {
             .getLogger(BitmapFileLoader.class.getName());
 
     /**
-     * The base path to the graphic.
-     */
-    private String basePath = null;
-
-    /**
-     * The path to the graphic relative to the base path.
-     */
-    private String relativePath = null;
-
-    /**
      * The image processor used to scale the image.
      */
     private final ImageProcessor imageProcessor;
@@ -75,8 +65,6 @@ public class BitmapFileLoader implements BitmapLoader {
      */
     public BitmapFileLoader(GlyphDefinition d, String basePath, String relativePath, ImageProcessor imageProcessor, int containerSize) {
         this.d = d;
-        this.basePath = basePath;
-        this.relativePath = relativePath;
         this.imageProcessor = imageProcessor;
         this.containerSize = containerSize;
 
@@ -95,6 +83,7 @@ public class BitmapFileLoader implements BitmapLoader {
         this.d = d;
         this.imageProcessor = imageProcessor;
         this.containerSize = containerSize;
+        
         this.imageFile = imageFile;
     }
 

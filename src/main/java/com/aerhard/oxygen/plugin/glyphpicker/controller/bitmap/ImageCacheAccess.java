@@ -17,6 +17,9 @@
 package com.aerhard.oxygen.plugin.glyphpicker.controller.bitmap;
 
 import javax.imageio.ImageIO;
+
+import org.apache.log4j.Logger;
+
 import java.awt.image.BufferedImage;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
@@ -31,6 +34,10 @@ import java.nio.charset.StandardCharsets;
  */
 public class ImageCacheAccess {
 
+    /** The logger. */
+    private static final Logger LOGGER = Logger.getLogger(ImageCacheAccess.class
+            .getName());
+    
     /**
      * The property change support.
      */
@@ -87,7 +94,7 @@ public class ImageCacheAccess {
         try {
             return URLEncoder.encode(url, StandardCharsets.UTF_8.name());
         } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
+            LOGGER.info(e);
         }
         return null;
     }
@@ -113,7 +120,7 @@ public class ImageCacheAccess {
             ImageIO.write(image, "png", f);
             pcs.firePropertyChange(IMAGE_STORED, null, null);
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.info(e);
         }
     }
 
@@ -134,11 +141,16 @@ public class ImageCacheAccess {
      */
     public void clear() {
         File[] files = cacheFolder.listFiles();
-        if (files == null)
+        boolean success = true;
+        if (files == null) {
             return;
-        for (File f : files)
-            f.delete();
-        pcs.firePropertyChange(CACHE_CLEARED, null, null);
+        }
+        for (File f : files) {
+            if (!f.delete()) {
+                success = false;
+            }; 
+        }
+        pcs.firePropertyChange(CACHE_CLEARED, null, success);
     }
 
 }

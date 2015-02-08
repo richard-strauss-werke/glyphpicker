@@ -26,7 +26,6 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.Position;
 
 import com.aerhard.oxygen.plugin.glyphpicker.controller.action.InsertXmlAction;
-import com.aerhard.oxygen.plugin.glyphpicker.model.Config;
 import org.apache.log4j.Logger;
 
 import com.aerhard.oxygen.plugin.glyphpicker.controller.main.MainController;
@@ -154,7 +153,7 @@ public class GlyphPickerPluginExtension implements
             if (m.find()) {
                 String match = m.group();
                 String replacement;
-                int spaceIndex = match.indexOf(" ");
+                int spaceIndex = match.indexOf(' ');
                 if (spaceIndex == -1) {
                     replacement = match + ns;
                 } else {

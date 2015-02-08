@@ -35,7 +35,7 @@ public class ReloadAction extends AbstractPickerAction {
     private final Set<Action> actions;
 
     /** The name of the class. */
-    private static final String className = ReloadAction.class.getSimpleName();
+    private static final String CLASS_NAME = ReloadAction.class.getSimpleName();
 
     /**
      * Instantiates a new ReloadAction.
@@ -44,7 +44,7 @@ public class ReloadAction extends AbstractPickerAction {
      * @param actions The actions affected by this action
      */
     public ReloadAction(PropertyChangeListener listener, Set<Action> actions) {
-        super(className, "/images/arrow-circle-225-left.png");
+        super(CLASS_NAME, "/images/arrow-circle-225-left.png");
         addPropertyChangeListener(listener);
         this.actions = actions;
     }

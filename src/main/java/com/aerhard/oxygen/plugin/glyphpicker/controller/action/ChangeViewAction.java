@@ -37,7 +37,7 @@ public class ChangeViewAction extends AbstractPickerAction {
     private final GlyphGrid list;
 
     /** The class name. */
-    private static final String className = ChangeViewAction.class.getSimpleName();
+    private static final String CLASS_NAME = ChangeViewAction.class.getSimpleName();
 
     /**
      * Instantiates a new ChangeViewAction.
@@ -48,7 +48,7 @@ public class ChangeViewAction extends AbstractPickerAction {
      */
     public ChangeViewAction(TabPanel panel, GlyphTable table,
             GlyphGrid list) {
-        super(className, "/images/grid.png");
+        super(CLASS_NAME, "/images/grid.png");
         this.panel = panel;
         this.table = table;
         this.list = list;

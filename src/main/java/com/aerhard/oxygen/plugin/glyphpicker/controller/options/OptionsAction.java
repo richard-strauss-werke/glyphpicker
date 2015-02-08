@@ -17,17 +17,12 @@ package com.aerhard.oxygen.plugin.glyphpicker.controller.options;
 
 import com.aerhard.oxygen.plugin.glyphpicker.controller.action.AbstractPickerAction;
 import com.aerhard.oxygen.plugin.glyphpicker.controller.bitmap.ImageCacheAccess;
-import com.aerhard.oxygen.plugin.glyphpicker.controller.editor.DataSourceEditorController;
 import com.aerhard.oxygen.plugin.glyphpicker.model.Config;
-import com.aerhard.oxygen.plugin.glyphpicker.model.DataSource;
-import com.aerhard.oxygen.plugin.glyphpicker.model.DataSourceList;
-import com.aerhard.oxygen.plugin.glyphpicker.view.editor.DataSourceEditor;
 import com.aerhard.oxygen.plugin.glyphpicker.view.options.OptionsEditor;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeListener;
-import java.util.List;
 
 /**
  * An action to open the data source editor and process the results if editing
@@ -45,7 +40,7 @@ public class OptionsAction extends AbstractPickerAction {
     /**
      * The name of the class.
      */
-    private static final String className = OptionsAction.class.getSimpleName();
+    private static final String CLASS_NAME = OptionsAction.class.getSimpleName();
 
     /**
      * the ImageCacheAccess object
@@ -65,7 +60,7 @@ public class OptionsAction extends AbstractPickerAction {
      * @param imageCacheAccess the ImageCacheAccess object
      */
     public OptionsAction(PropertyChangeListener listener, Config config, JPanel panel, ImageCacheAccess imageCacheAccess) {
-        super(className, "/images/gear.png");
+        super(CLASS_NAME, "/images/gear.png");
         addPropertyChangeListener(listener);
         this.panel = panel;
         this.imageCacheAccess = imageCacheAccess;

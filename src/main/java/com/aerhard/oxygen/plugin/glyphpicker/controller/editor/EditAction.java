@@ -44,7 +44,7 @@ public class EditAction extends AbstractPickerAction {
     private final DataSourceList dataSourceList;
 
     /** The name of the class. */
-    private static final String className = EditAction.class.getSimpleName();
+    private static final String CLASS_NAME = EditAction.class.getSimpleName();
 
     /**
      * Instantiates a new EditAction.
@@ -58,7 +58,7 @@ public class EditAction extends AbstractPickerAction {
      */
     public EditAction(PropertyChangeListener listener, JPanel panel,
             DataSourceList dataSourceList) {
-        super(className, "/images/database--pencil.png");
+        super(CLASS_NAME, "/images/database--pencil.png");
         addPropertyChangeListener(listener);
         this.panel = panel;
         this.dataSourceList = dataSourceList;

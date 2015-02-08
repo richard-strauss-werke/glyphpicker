@@ -16,9 +16,7 @@
 
 package com.aerhard.oxygen.plugin.glyphpicker;
 
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
-import java.awt.event.KeyEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
@@ -55,7 +53,7 @@ public class ToggleWindowAction extends AbstractPickerAction implements Property
     /**
      * The name of the current class.
      */
-    private static final String className = ToggleWindowAction.class
+    private static final String CLASS_NAME = ToggleWindowAction.class
             .getSimpleName();
 
     /**
@@ -74,7 +72,7 @@ public class ToggleWindowAction extends AbstractPickerAction implements Property
         this.viewId = viewId;
         this.mainPanel = mainPanel;
 
-        String description = I18N.getString(className + ".description");
+        String description = I18N.getString(CLASS_NAME + ".description");
 
         putValue(SHORT_DESCRIPTION, description);
         putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(config.getShortcut()));

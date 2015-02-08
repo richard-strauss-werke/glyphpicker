@@ -25,13 +25,13 @@ public class SortAction extends AbstractPickerAction {
     private static final long serialVersionUID = 1L;
 
     /** The name of the class. */
-    private static final String className = SortAction.class.getSimpleName();
+    private static final String CLASS_NAME = SortAction.class.getSimpleName();
 
     /**
      * Instantiates a new SortAction.
      */
     public SortAction() {
-        super(className, "/images/sort-number.png");
+        super(CLASS_NAME, "/images/sort-number.png");
     }
 
     /* (non-Javadoc)

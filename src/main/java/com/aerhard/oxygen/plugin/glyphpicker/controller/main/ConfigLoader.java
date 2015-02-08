@@ -15,13 +15,10 @@
  */
 package com.aerhard.oxygen.plugin.glyphpicker.controller.main;
 
-import java.awt.*;
-import java.awt.event.KeyEvent;
 import java.io.File;
 import java.net.URL;
 import java.util.Properties;
 
-import javax.swing.*;
 import javax.xml.bind.DataBindingException;
 import javax.xml.bind.JAXB;
 

@@ -116,11 +116,6 @@ public abstract class TabController implements PropertyChangeListener {
     protected final GlyphGrid list;
 
     /**
-     * The plugin config.
-     */
-    private final Config config;
-
-    /**
      * The image cache access
      */
     private final ImageCacheAccess imageCacheAccess;
@@ -151,16 +146,6 @@ public abstract class TabController implements PropertyChangeListener {
     protected HighlightButton insertBtn;
 
     /**
-     * The action to open the options dialog.
-     */
-    protected AbstractAction optionsAction;
-
-//    /**
-//     * The button to open the options dialog.
-//     */
-//    protected JideButton optionsBtn;
-
-    /**
      * Instantiates a new tab controller.
      * @param tabPanel              The container panel in the tab
      * @param config                The plugin config
@@ -173,7 +158,6 @@ public abstract class TabController implements PropertyChangeListener {
                          Config config, int searchFieldScopeIndex, int listViewIndex, ImageCacheAccess imageCacheAccess) {
 
         this.tabPanel = tabPanel;
-        this.config = config;
         this.imageCacheAccess = imageCacheAccess;
 
         controlPanel = tabPanel.getControlPanel();

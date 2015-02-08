@@ -13,12 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.aerhard.oxygen.plugin.glyphpicker.model;
+package com.aerhard.oxygen.plugin.glyphpicker.model.selector;
 
 import ca.odell.glazedlists.EventList;
 import ca.odell.glazedlists.TransformedList;
 import ca.odell.glazedlists.event.ListEvent;
-import com.aerhard.oxygen.plugin.glyphpicker.model.selector.PropertySelector;
+
+import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinition;
 
 /**
  * A TransformedList deriving its values by applying a PropertySelector to a GlyphDefinition event list.

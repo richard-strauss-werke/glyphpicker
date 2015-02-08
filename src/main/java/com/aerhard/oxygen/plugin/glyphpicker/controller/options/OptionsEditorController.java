@@ -170,10 +170,7 @@ public class OptionsEditorController {
          */
         @Override
         public void actionPerformed(ActionEvent e) {
-
             imageCacheAccess.clear();
-
-//            setEnabled(false);
         }
     }
 }

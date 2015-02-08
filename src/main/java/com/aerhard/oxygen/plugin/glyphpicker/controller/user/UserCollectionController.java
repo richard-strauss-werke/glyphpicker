@@ -82,7 +82,7 @@ public class UserCollectionController extends TabController {
     private Set<Action> syncDependentActions = new HashSet<>();
 
     /** The set of actions whose activation depends on whether there is a list selection or not. */
-    Set<Action> selectionDependentActions = new HashSet<>();
+    private Set<Action> selectionDependentActions = new HashSet<>();
 
     /**
      * Instantiates a new UserCollectionController.

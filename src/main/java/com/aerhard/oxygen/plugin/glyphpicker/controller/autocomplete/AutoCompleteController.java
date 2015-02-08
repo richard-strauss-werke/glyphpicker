@@ -29,6 +29,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
 import com.aerhard.oxygen.plugin.glyphpicker.model.selector.*;
+
 import org.apache.log4j.Logger;
 
 import ca.odell.glazedlists.SortedList;
@@ -36,7 +37,6 @@ import ca.odell.glazedlists.UniqueList;
 import ca.odell.glazedlists.matchers.TextMatcherEditor;
 
 import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinition;
-import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphPropertyEventList;
 
 /**
  * The auto complete controller.

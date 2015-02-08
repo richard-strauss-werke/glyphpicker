@@ -109,7 +109,7 @@ public class BitmapUrlLoader implements BitmapLoader {
 
             String imageNameInCache;
             if (imageCacheAccess != null) {
-                imageNameInCache = imageCacheAccess.createCacheFileName(imagePath);
+                imageNameInCache = ImageCacheAccess.createCacheFileName(imagePath);
                 File cachedImageFile = imageCacheAccess.getFile(imageNameInCache);
                 if (cachedImageFile != null) {
                     BitmapFileLoader f = new BitmapFileLoader(d, cachedImageFile, imageProcessor, containerSize);
@@ -130,7 +130,6 @@ public class BitmapUrlLoader implements BitmapLoader {
                     // save the original image instead of the scaled image so the image cache
                     // doesn't have to be cleared when a new bitmap size ratio is provided by
                     // the user:
-                    // imageCache.writeImage(toBufferedImage(scaledImage), imageNameInCache);
                     imageCacheAccess.writeImage(bi, imageNameInCache);
                 }
 

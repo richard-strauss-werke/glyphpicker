@@ -25,7 +25,6 @@ import java.util.ResourceBundle;
 
 import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinition;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class DescriptionRenderer.
  */
@@ -38,22 +37,23 @@ public class DescriptionRenderer extends JLabel implements TableCellRenderer {
     public static final int BORDER_WIDTH = 4;
 
     /** The Constant i18n. */
-    private static final ResourceBundle i18n = ResourceBundle
+    private static final ResourceBundle I18N
+    = ResourceBundle
             .getBundle("GlyphPicker");
     
     /** The Constant className. */
-    private static final String className = DescriptionRenderer.class.getSimpleName();
+    private static final String CLASS_NAME = DescriptionRenderer.class.getSimpleName();
 
     /** The Constant CODEPOINT_LABEL. */
-    private static final String CODEPOINT_LABEL = i18n.getString(className
+    private static final String CODEPOINT_LABEL = I18N.getString(CLASS_NAME
             + ".codepoint");
     
     /** The Constant RANGE_LABEL. */
-    private static final String RANGE_LABEL = i18n.getString(className
+    private static final String RANGE_LABEL = I18N.getString(CLASS_NAME
             + ".range");
     
     /** The Constant XML_ID_LABEL. */
-    private static final String XML_ID_LABEL = i18n.getString(className
+    private static final String XML_ID_LABEL = I18N.getString(CLASS_NAME
             + ".xmlId");
 
     /**
