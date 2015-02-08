@@ -17,18 +17,13 @@
 package com.aerhard.oxygen.plugin.glyphpicker.controller;
 
 import java.awt.*;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.List;
 
-import javax.swing.AbstractAction;
+import javax.swing.*;
 
 import ca.odell.glazedlists.BasicEventList;
 import ca.odell.glazedlists.EventList;
@@ -237,17 +232,22 @@ public abstract class TabController implements PropertyChangeListener {
             }
         });
 
-        initKeyAndMouseListeners();
-
-    }
-
-    /**
-     * Initializes the keyboard and mouse listeners.
-     */
-    private void initKeyAndMouseListeners() {
         insertAction = new InsertXmlAction(this, selectionModel);
         insertAction.setEnabled(false);
         insertBtn = new HighlightButton(insertAction);
+
+        initMouseListeners();
+
+        setEnterKeyAction(list);
+        setEnterKeyAction(table);
+        setEnterKeyAction((JComponent) controlPanel.getAutoCompleteCombo().getEditor()
+                .getEditorComponent());
+    }
+
+    /**
+     * Initializes the mouse listeners.
+     */
+    private void initMouseListeners() {
 
         MouseAdapter mouseAdapter = new MouseAdapter() {
             @Override
@@ -258,23 +258,24 @@ public abstract class TabController implements PropertyChangeListener {
                 }
             }
         };
-
-        table.addMouseListener(mouseAdapter);
         list.addMouseListener(mouseAdapter);
+        table.addMouseListener(mouseAdapter);
+    }
 
-        KeyAdapter enterKeyAdapter = new KeyAdapter() {
-            public void keyReleased(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                    insertBtn.highlight();
-                    insertAction.actionPerformed(null);
-                }
+    /**
+     * Associated the enter key with the InsertXmlAction in a component.
+     * @param component the component
+     */
+    private void setEnterKeyAction(JComponent component) {
+        component.getInputMap().put(KeyStroke.getKeyStroke("ENTER"),
+                "insert");
+        component.getActionMap().put("insert", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                insertBtn.highlight();
+                insertAction.actionPerformed(null);
             }
-        };
-
-        table.addKeyListener(enterKeyAdapter);
-        list.addKeyListener(enterKeyAdapter);
-        controlPanel.getAutoCompleteCombo().getEditor()
-                .getEditorComponent().addKeyListener(enterKeyAdapter);
+        });
     }
 
     /**
