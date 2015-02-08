@@ -13,55 +13,59 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.aerhard.oxygen.plugin.glyphpicker.controller.autocomplete;
+package com.aerhard.oxygen.plugin.glyphpicker.controller.options;
 
-import javax.swing.SwingUtilities;
+import com.aerhard.oxygen.plugin.glyphpicker.model.Config;
+import org.apache.log4j.Logger;
+
+import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.text.BadLocationException;
 
-import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinition;
-
-import ca.odell.glazedlists.matchers.TextMatcherEditor;
-
 /**
- * A TextMatcherEditor handling glyph list filtering triggered by changes in the
- * autocomplete combo's editor box.
+ * A DocumentListener handling updates to the shortcut text field
  */
-public class GlyphSelect extends TextMatcherEditor<GlyphDefinition> implements
-        DocumentListener {
+public class ShortcutFieldInputHandler implements DocumentListener {
+
+    /** The logger. */
+    private static final Logger LOGGER = Logger
+            .getLogger(ShortcutFieldInputHandler.class.getName());
+
+    /**
+     * the plugin config
+     */
+    private final Config config;
+
+    /**
+     * The apply-shortcut button
+     */
+    private final Action applyShortcutAction;
 
     /**
      * Instantiates a new GlyphSelect object.
+     * @param config the plugin config
+     * @param applyShortcutAction the apply-shortcut button
      */
-    public GlyphSelect() {
-        setMode(TextMatcherEditor.CONTAINS);
+    public ShortcutFieldInputHandler(Config config, Action applyShortcutAction) {
+        this.config = config;
+        this.applyShortcutAction = applyShortcutAction;
     }
 
     /**
-     * Perform update.
+     * Enables the apply-shortcut action if the shortcut text field text doesn't match the shortcut in the config object.
+     * Disables the action if it matches.
      *
      * @param e
-     *            the event
+     *            the document event
      */
-    public void performUpdate(final DocumentEvent e) {
-
-        String q;
+    public void updateAction(final DocumentEvent e) {
         try {
-            q = e.getDocument().getText(0, e.getDocument().getLength());
+            String text = e.getDocument().getText(0, e.getDocument().getLength());
+            applyShortcutAction.setEnabled(!text.equals(config.getShortcut()));
         } catch (BadLocationException e1) {
-            q = "";
+            LOGGER.info(e);
         }
-
-        final String query = q;
-
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                setFilterText(new String[] { query });
-            }
-        });
-
     }
 
     /*
@@ -82,7 +86,7 @@ public class GlyphSelect extends TextMatcherEditor<GlyphDefinition> implements
      */
     @Override
     public void insertUpdate(DocumentEvent e) {
-        performUpdate(e);
+        updateAction(e);
     }
 
     /*
@@ -93,6 +97,6 @@ public class GlyphSelect extends TextMatcherEditor<GlyphDefinition> implements
      */
     @Override
     public void removeUpdate(DocumentEvent e) {
-        performUpdate(e);
+        updateAction(e);
     }
 }

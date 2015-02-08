@@ -15,10 +15,13 @@
  */
 package com.aerhard.oxygen.plugin.glyphpicker.controller.main;
 
+import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.io.File;
 import java.net.URL;
 import java.util.Properties;
 
+import javax.swing.*;
 import javax.xml.bind.DataBindingException;
 import javax.xml.bind.JAXB;
 
@@ -97,6 +100,9 @@ public class ConfigLoader {
                 URL resource = ConfigLoader.class
                         .getResource("/config.xml");
                 config = JAXB.unmarshal(resource, Config.class);
+
+                setDefaultShortcut();
+
             } catch (DataBindingException e) {
                 LOGGER.error("Error loading default config.", e);
             }
@@ -108,6 +114,16 @@ public class ConfigLoader {
             config.setConfigDir(path);
             initDataSourceList();
         }
+    }
+
+    /**
+     * Sets the default shortcut whose modifier depends on the OS
+     */
+    private void setDefaultShortcut() {
+        String shortcutModifier = (System.getProperty("os.name")
+                .toLowerCase().contains("mac")) ? "meta" : "ctrl";
+
+        config.setShortcut(shortcutModifier + " P");
     }
 
     /**

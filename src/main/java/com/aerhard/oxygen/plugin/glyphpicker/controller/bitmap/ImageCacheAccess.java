@@ -18,6 +18,8 @@ package com.aerhard.oxygen.plugin.glyphpicker.controller.bitmap;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -28,6 +30,39 @@ import java.nio.charset.StandardCharsets;
  * A class providing access methods to the image cache
  */
 public class ImageCacheAccess {
+
+    /**
+     * The property change support.
+     */
+    private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
+
+    /**
+     * Adds a property change listener.
+     *
+     * @param l the listener to add
+     */
+    public void addPropertyChangeListener(PropertyChangeListener l) {
+        pcs.addPropertyChangeListener(l);
+    }
+
+    /**
+     * Removes a property change listener.
+     *
+     * @param l the listener to remove
+     */
+    public void removePropertyChangeListener(PropertyChangeListener l) {
+        pcs.removePropertyChangeListener(l);
+    }
+
+    /**
+     * The property change event key fired after writing an image to the cache
+     */
+    public static final String IMAGE_STORED = "imageWritten";
+
+    /**
+     * The property change event key fired after clearing the cache
+     */
+    public static final String CACHE_CLEARED = "cacheCleared";
 
     /**
      * The image cache folder
@@ -76,9 +111,22 @@ public class ImageCacheAccess {
         try {
             File f = new File(cacheFolder, imageNameInCache);
             ImageIO.write(image, "png", f);
+            pcs.firePropertyChange(IMAGE_STORED, null, null);
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * Returns the number of files in the image cache
+     * @return the number of files
+     */
+    public int getSize() {
+        File[] files = cacheFolder.listFiles();
+        if (files == null) {
+            return -1;
+        }
+        return files.length;
     }
 
     /**
@@ -90,6 +138,7 @@ public class ImageCacheAccess {
             return;
         for (File f : files)
             f.delete();
+        pcs.firePropertyChange(CACHE_CLEARED, null, null);
     }
 
 }

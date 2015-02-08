@@ -46,6 +46,9 @@ public class ControlPanel extends JPanel {
     
     /** The edit button. */
     private JButton editBtn;
+
+    /** The options button. */
+    private final JButton optionsBtn;
     
     /** The view button. */
     private final JButton viewBtn;
@@ -106,6 +109,11 @@ public class ControlPanel extends JPanel {
         viewBtn.setHorizontalTextPosition(SwingConstants.CENTER);
         toolBar.add(viewBtn);
 
+        optionsBtn = new JideButton();
+        optionsBtn.setVerticalTextPosition(SwingConstants.BOTTOM);
+        optionsBtn.setHorizontalTextPosition(SwingConstants.CENTER);
+        toolBar.add(optionsBtn);
+
         if (setDataSourceCombo) {
 
             row++;
@@ -134,21 +142,21 @@ public class ControlPanel extends JPanel {
 
             dataSourceCombo = new JComboBox<>();
             dataSourceCombo.setEditable(false);
-            GridBagConstraints gbcPathCombo = new GridBagConstraints();
-            gbcPathCombo.weightx = 1.0;
-            gbcPathCombo.fill = GridBagConstraints.BOTH;
-            gbcPathCombo.insets = new Insets(5, 5, 5, 3);
-            gbcPathCombo.gridx = 0;
-            gbcPathCombo.gridy = 0;
-            dataSourcePanel.add(dataSourceCombo, gbcPathCombo);
+            GridBagConstraints gbcDataSourceCombo = new GridBagConstraints();
+            gbcDataSourceCombo.weightx = 1.0;
+            gbcDataSourceCombo.fill = GridBagConstraints.BOTH;
+            gbcDataSourceCombo.insets = new Insets(5, 5, 5, 3);
+            gbcDataSourceCombo.gridx = 0;
+            gbcDataSourceCombo.gridy = 0;
+            dataSourcePanel.add(dataSourceCombo, gbcDataSourceCombo);
 
             editBtn = new JideButton();
-            GridBagConstraints gbcBrowserButtonLoad = new GridBagConstraints();
-            gbcBrowserButtonLoad.insets = new Insets(4, 5, 4, 5);
-            gbcBrowserButtonLoad.fill = GridBagConstraints.BOTH;
-            gbcBrowserButtonLoad.gridx = 1;
-            gbcBrowserButtonLoad.gridy = 0;
-            dataSourcePanel.add(editBtn, gbcBrowserButtonLoad);
+            GridBagConstraints gbcEditButton = new GridBagConstraints();
+            gbcEditButton.insets = new Insets(4, 5, 4, 5);
+            gbcEditButton.fill = GridBagConstraints.BOTH;
+            gbcEditButton.gridx = 1;
+            gbcEditButton.gridy = 0;
+            dataSourcePanel.add(editBtn, gbcEditButton);
         }
 
         row++;
@@ -254,6 +262,15 @@ public class ControlPanel extends JPanel {
      */
     public JComboBox<String> getAutoCompleteCombo() {
         return autoCompleteCombo;
+    }
+
+    /**
+     * Gets the options button.
+     *
+     * @return the options button
+     */
+    public JButton getOptionsBtn() {
+        return optionsBtn;
     }
 
     /**

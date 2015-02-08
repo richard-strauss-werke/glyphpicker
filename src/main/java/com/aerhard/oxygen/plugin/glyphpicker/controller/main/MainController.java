@@ -79,6 +79,11 @@ public class MainController implements PropertyChangeListener {
     }
 
     /**
+     * The plugin's config
+     */
+    private final Config config;
+
+    /**
      * The main panel.
      */
     private final MainPanel mainPanel;
@@ -126,7 +131,7 @@ public class MainController implements PropertyChangeListener {
         configLoader = new ConfigLoader(workspace, properties);
         configLoader.load();
 
-        Config config = configLoader.getConfig();
+        config = configLoader.getConfig();
 
         ImageCacheAccess imageCacheAccess = createImageCache(config);
 
@@ -180,12 +185,12 @@ public class MainController implements PropertyChangeListener {
     }
 
     /**
-     * Gets the config loader.
+     * Gets the plugin's config.
      *
-     * @return the config loader
+     * @return the plugin's config
      */
-    public ConfigLoader getConfigLoader() {
-        return configLoader;
+    public Config getConfig() {
+        return config;
     }
 
     /**
@@ -209,7 +214,6 @@ public class MainController implements PropertyChangeListener {
      * Saves config and user collection data.
      */
     public void saveData() {
-        Config config = getConfigLoader().getConfig();
         config.setTabIndex(mainPanel.getTabbedPane().getSelectedIndex());
         config.setBrowserSearchFieldScopeIndex(browserPanel.getControlPanel()
                 .getAutoCompleteScopeCombo().getSelectedIndex());
@@ -222,7 +226,7 @@ public class MainController implements PropertyChangeListener {
         config.setUserViewIndex((userCollectionPanel.getListComponent() instanceof GlyphGrid) ? 0
                 : 1);
 
-        getConfigLoader().save();
+        configLoader.save();
         userCollectionController.saveData();
     }
 

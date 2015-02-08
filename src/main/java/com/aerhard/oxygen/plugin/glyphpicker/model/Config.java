@@ -16,6 +16,8 @@
 package com.aerhard.oxygen.plugin.glyphpicker.model;
 
 import javax.xml.bind.annotation.*;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.io.File;
 
 /**
@@ -24,6 +26,12 @@ import java.io.File;
 @XmlRootElement(name = "config")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Config {
+
+    /** The plugin's shortcut in oXygen, for possible values see
+     * http://docs.oracle.com/javase/7/docs/api/javax/swing/KeyStroke.html#getKeyStroke%28java.lang.String%29
+     */
+    @XmlElement
+    private String shortcut;
 
     /** The tab index. */
     @XmlElement
@@ -54,6 +62,57 @@ public class Config {
      */
     @XmlTransient
     private File configDir;
+
+    /**
+     * The change event key of the shortcut property
+     */
+    @XmlTransient
+    public static final String SHORTCUT_KEY = "shortcut";
+
+    /**
+     * The property change support.
+     */
+    @XmlTransient
+    private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
+
+    /**
+     * Adds a property change listener.
+     *
+     * @param l the listener to add
+     */
+    public void addPropertyChangeListener(PropertyChangeListener l) {
+        pcs.addPropertyChangeListener(l);
+    }
+
+    /**
+     * Removes a property change listener.
+     *
+     * @param l the listener to remove
+     */
+    public void removePropertyChangeListener(PropertyChangeListener l) {
+        pcs.removePropertyChangeListener(l);
+    }
+
+
+    /**
+     * Gets the plugin's shortcut in oXygen.
+     *
+     * @return the shortcut
+     */
+    public String getShortcut() {
+        return shortcut;
+    }
+
+    /**
+     * Sets the plugin's shortcut in oXygen.
+     *
+     * @param shortcut the shortcut
+     */
+    public void setShortcut(String shortcut) {
+        String oldShortcut = this.shortcut;
+        this.shortcut = shortcut;
+        pcs.firePropertyChange(SHORTCUT_KEY, oldShortcut, shortcut);
+    }
 
     /**
      * Gets the tab index.

@@ -21,12 +21,12 @@ import java.beans.PropertyChangeListener;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import javax.swing.ImageIcon;
-import javax.swing.JMenuBar;
+import javax.swing.*;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Position;
 
 import com.aerhard.oxygen.plugin.glyphpicker.controller.action.InsertXmlAction;
+import com.aerhard.oxygen.plugin.glyphpicker.model.Config;
 import org.apache.log4j.Logger;
 
 import com.aerhard.oxygen.plugin.glyphpicker.controller.main.MainController;
@@ -123,13 +123,34 @@ public class GlyphPickerPluginExtension implements
             @Override
             public void customizeMainMenu(JMenuBar mainMenu) {
                 mainMenu.getMenu(1).addSeparator();
-                mainMenu.getMenu(1).add(
-                        new ToggleWindowAction(workspace, PLUGIN_ICON,
-                                VIEW_ID, mainPanel));
+                mainMenu.getMenu(1).add(new ToggleWindowAction(workspace, PLUGIN_ICON,
+                        VIEW_ID, mainPanel, mainController.getConfig()));
             }
         });
 
     }
+
+//    /**
+//     * Creates a new ToggleWindowAction and sets a PropertyChangeListener to the plugin's config object
+//     * @param workspace
+//     * @return
+//     */
+//    private Action createToggleWindowAction(StandalonePluginWorkspace workspace) {
+//        ToggleWindowAction toggleWindowAction = new ToggleWindowAction(workspace, PLUGIN_ICON,
+//                VIEW_ID, mainPanel, mainController.getConfig());
+//
+//        // TODO make the action a propertychangelistener!
+//
+////        KeyStroke keyStroke = KeyStroke.getKeyStroke(KeyEvent.VK_P, Toolkit
+////                .getDefaultToolkit().getMenuShortcutKeyMask());
+////        System.out.println(keyStroke);
+////        System.out.println(config.getShortcut());
+////        System.out.println(KeyStroke.getKeyStroke(config.getShortcut()));
+////        System.out.println(KeyStroke.getKeyStroke(null));
+//
+//
+//        return toggleWindowAction;
+//    }
 
     /**
      * Creates an XML string from a GlyphDefinition object.

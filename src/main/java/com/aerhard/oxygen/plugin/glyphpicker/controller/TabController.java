@@ -46,6 +46,7 @@ import com.aerhard.oxygen.plugin.glyphpicker.controller.action.SortAction;
 import com.aerhard.oxygen.plugin.glyphpicker.controller.autocomplete.AutoCompleteController;
 import com.aerhard.oxygen.plugin.glyphpicker.controller.bitmap.BitmapLoadWorker;
 import com.aerhard.oxygen.plugin.glyphpicker.controller.bitmap.ImageCacheAccess;
+import com.aerhard.oxygen.plugin.glyphpicker.controller.options.OptionsAction;
 import com.aerhard.oxygen.plugin.glyphpicker.model.Config;
 import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinition;
 import com.aerhard.oxygen.plugin.glyphpicker.view.TabPanel;
@@ -120,7 +121,7 @@ public abstract class TabController implements PropertyChangeListener {
     private final Config config;
 
     /**
-     * The image cache
+     * The image cache access
      */
     private final ImageCacheAccess imageCacheAccess;
 
@@ -148,6 +149,16 @@ public abstract class TabController implements PropertyChangeListener {
      * The button to trigger the insert action.
      */
     protected HighlightButton insertBtn;
+
+    /**
+     * The action to open the options dialog.
+     */
+    protected AbstractAction optionsAction;
+
+//    /**
+//     * The button to open the options dialog.
+//     */
+//    protected JideButton optionsBtn;
 
     /**
      * Instantiates a new tab controller.
@@ -203,6 +214,8 @@ public abstract class TabController implements PropertyChangeListener {
                 .setSelectionMode(DefaultEventSelectionModel.SINGLE_SELECTION);
         list.setSelectionModel(selectionModel);
         table.setSelectionModel(selectionModel);
+
+        controlPanel.getOptionsBtn().setAction(new OptionsAction(this, config, tabPanel, imageCacheAccess));
 
         controlPanel.getSortBtn().setAction(new SortAction());
 
