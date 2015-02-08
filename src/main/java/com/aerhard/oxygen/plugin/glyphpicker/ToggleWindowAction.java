@@ -77,7 +77,7 @@ public class ToggleWindowAction extends AbstractPickerAction implements Property
         String description = I18N.getString(className + ".description");
 
         putValue(SHORT_DESCRIPTION, description);
-        putValue(Action.ACCELERATOR_KEY, config.getShortcut());
+        putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(config.getShortcut()));
 
         // listen to changes of the shortcut field of the config object
         config.addPropertyChangeListener(this);
@@ -101,7 +101,7 @@ public class ToggleWindowAction extends AbstractPickerAction implements Property
     @Override
     public void propertyChange(PropertyChangeEvent e) {
         if (Config.SHORTCUT_KEY.equals(e.getPropertyName())) {
-            putValue(Action.ACCELERATOR_KEY, e.getNewValue());
+            putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke((String) e.getNewValue()));
         }
     }
 }
