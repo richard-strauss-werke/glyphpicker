@@ -12,11 +12,11 @@ from a web server or from the file system.
 
 #### Features
 
-- Pre-configured connection to the MUFI and SMuFL glyph definitions
 - Font- and image-based glyph rendering
-- Template-based reference insertion
-- Glyph insertion both in oXygen's Text and Author mode
+- Template engine for customized XML output
+- Support of oXygen's Text and Author mode
 - Search facilities
+- SOON Pre-configured access to glyph definitions provided by the SMuFL Browser and ENRICH gBank webservices 
 
 #### Requirements
 
