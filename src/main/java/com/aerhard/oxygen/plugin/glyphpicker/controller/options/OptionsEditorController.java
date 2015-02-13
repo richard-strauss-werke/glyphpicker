@@ -19,6 +19,7 @@ import com.aerhard.oxygen.plugin.glyphpicker.controller.action.AbstractPickerAct
 import com.aerhard.oxygen.plugin.glyphpicker.controller.bitmap.ImageCacheAccess;
 import com.aerhard.oxygen.plugin.glyphpicker.model.Config;
 import com.aerhard.oxygen.plugin.glyphpicker.view.options.OptionsEditor;
+import ro.sync.ui.Icons;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -85,6 +86,7 @@ public class OptionsEditorController {
         updateCacheActionState(imageCacheAccess.getSize());
 
         contentPane.getApplyShortcutButton().setAction(applyShortcutAction);
+
         contentPane.getClearCacheButton().setAction(clearCacheAction);
 
         contentPane.getShortcutTextField().getDocument().addDocumentListener(
@@ -137,7 +139,7 @@ public class OptionsEditorController {
          * Instantiates a new ApplyShortcutAction.
          */
         private ApplyShortcutAction() {
-            super(ApplyShortcutAction.class.getSimpleName());
+            super(ApplyShortcutAction.class.getSimpleName(), Icons.ACCEPT_CHANGE_MENU);
             setEnabled(false);
         }
 
@@ -162,7 +164,7 @@ public class OptionsEditorController {
          * Instantiates a new ClearCacheAction.
          */
         private ClearCacheAction() {
-            super(ClearCacheAction.class.getSimpleName());
+            super(ClearCacheAction.class.getSimpleName(), Icons.REMOVE_FROM_DISK_MENU);
         }
 
         /* (non-Javadoc)

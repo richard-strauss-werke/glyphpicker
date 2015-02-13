@@ -24,6 +24,7 @@ import ca.odell.glazedlists.EventList;
 
 import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinition;
 import com.aerhard.oxygen.plugin.glyphpicker.view.GlyphGrid;
+import ro.sync.ui.Icons;
 
 /**
  * An action to move a glyph definition down in the list.
@@ -53,8 +54,7 @@ public class MoveDownAction extends AbstractPickerAction {
      */
     public MoveDownAction(PropertyChangeListener listener,
             EventList<GlyphDefinition> glyphList, GlyphGrid list) {
-        super(I18N.getString(CLASS_NAME + ".label"), new ImageIcon(
-                MoveDownAction.class.getResource("/images/arrow-270.png")));
+        super(I18N.getString(CLASS_NAME + ".label"), Icons.getIcon(Icons.MOVE_DOWN_MENU));
 
         this.addPropertyChangeListener(listener);
         this.glyphList = glyphList;

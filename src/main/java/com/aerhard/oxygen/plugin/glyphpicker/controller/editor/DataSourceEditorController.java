@@ -30,12 +30,14 @@ import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import com.jidesoft.swing.ButtonStyle;
 import org.apache.log4j.Logger;
 
 import com.aerhard.oxygen.plugin.glyphpicker.controller.action.AbstractPickerAction;
 import com.aerhard.oxygen.plugin.glyphpicker.model.DataSource;
 import com.aerhard.oxygen.plugin.glyphpicker.view.editor.DataSourceEditor;
 import com.jidesoft.swing.JideButton;
+import ro.sync.ui.Icons;
 
 /**
  * The controller of the data source editor window.
@@ -94,9 +96,17 @@ public class DataSourceEditorController implements PropertyChangeListener {
         this.contentPane = contentPane;
         this.parentPanel = parentPanel;
 
-        contentPane.getListButtonPane().add(new JideButton(new NewAction(this)));
-        contentPane.getListButtonPane().add(new JideButton(cloneAction));
-        contentPane.getListButtonPane().add(new JideButton(deleteAction));
+        JideButton addButton = new JideButton(new NewAction(this));
+        addButton.setHideActionText(true);
+        contentPane.getListButtonPane().add(addButton);
+
+        JideButton cloneButton = new JideButton(cloneAction);
+        cloneButton.setHideActionText(true);
+        contentPane.getListButtonPane().add(cloneButton);
+
+        JideButton deleteButton = new JideButton(deleteAction);
+        deleteButton.setHideActionText(true);
+        contentPane.getListButtonPane().add(deleteButton);
 
         glyphRendererLabels.add(DataSource.GLYPH_BITMAP_RENDERER);
         glyphRendererLabels.add(DataSource.GLYPH_VECTOR_RENDERER);
@@ -124,7 +134,7 @@ public class DataSourceEditorController implements PropertyChangeListener {
          * @param listener the property change listener to be added to this action
          */
         private NewAction(PropertyChangeListener listener) {
-            super(NewAction.class.getSimpleName());
+            super(NewAction.class.getSimpleName(), Icons.ADD);
             addPropertyChangeListener(listener);
         }
 
@@ -158,7 +168,7 @@ public class DataSourceEditorController implements PropertyChangeListener {
          * @param listener the property change listener to be added to this action
          */
         private CloneAction(PropertyChangeListener listener) {
-            super(CloneAction.class.getSimpleName());
+            super(CloneAction.class.getSimpleName(), Icons.COPY_MENU);
             addPropertyChangeListener(listener);
             setEnabled(false);
         }
@@ -199,7 +209,7 @@ public class DataSourceEditorController implements PropertyChangeListener {
          * @param listener the property change listener to be added to this action
          */
         private DeleteAction(PropertyChangeListener listener) {
-            super(DeleteAction.class.getSimpleName());
+            super(DeleteAction.class.getSimpleName(), Icons.REMOVE_MENU);
             addPropertyChangeListener(listener);
             setEnabled(false);
         }

@@ -15,6 +15,8 @@
  */
 package com.aerhard.oxygen.plugin.glyphpicker.controller.action;
 
+import ro.sync.ui.Icons;
+
 import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeListener;
 import java.util.Set;
@@ -44,7 +46,7 @@ public class ReloadAction extends AbstractPickerAction {
      * @param actions The actions affected by this action
      */
     public ReloadAction(PropertyChangeListener listener, Set<Action> actions) {
-        super(CLASS_NAME, "/images/arrow-circle-225-left.png");
+        super(CLASS_NAME, Icons.REFRESH);
         addPropertyChangeListener(listener);
         this.actions = actions;
     }

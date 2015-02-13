@@ -22,6 +22,7 @@ import ca.odell.glazedlists.FilterList;
 
 import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinition;
 import com.aerhard.oxygen.plugin.glyphpicker.view.GlyphGrid;
+import ro.sync.ui.Icons;
 
 /**
  * An action which removes the selected item from a glyph list model.
@@ -56,7 +57,7 @@ public class RemoveAction extends AbstractPickerAction {
     public RemoveAction(PropertyChangeListener listener,
             EventList<GlyphDefinition> glyphList,
             FilterList<GlyphDefinition> filterList, GlyphGrid list) {
-        super(CLASS_NAME, "/images/minus.png");
+        super(CLASS_NAME, Icons.REMOVE_MENU);
         this.addPropertyChangeListener(listener);
         this.glyphList = glyphList;
         this.filterList = filterList;

@@ -20,6 +20,7 @@ import java.beans.PropertyChangeListener;
 import ca.odell.glazedlists.swing.DefaultEventSelectionModel;
 
 import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinition;
+import ro.sync.ui.Icons;
 
 /**
  * An action to trigger the insertion of a glyph reference into an XML document.
@@ -45,7 +46,7 @@ public class InsertXmlAction extends AbstractPickerAction {
      */
     public InsertXmlAction(PropertyChangeListener listener,
             DefaultEventSelectionModel<GlyphDefinition> selectionModel) {
-        super(CLASS_NAME, "/images/tick.png");
+        super(CLASS_NAME, Icons.ADD_FILE_PROJECT_MENU);
 
         addPropertyChangeListener(listener);
         this.selectionModel = selectionModel;

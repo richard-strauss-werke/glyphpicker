@@ -26,7 +26,7 @@ import java.io.IOException;
 import java.util.Properties;
 
 import com.aerhard.oxygen.plugin.glyphpicker.controller.TabController;
-import com.aerhard.oxygen.plugin.glyphpicker.controller.action.AddAction;
+import com.aerhard.oxygen.plugin.glyphpicker.controller.action.CopyAction;
 import com.aerhard.oxygen.plugin.glyphpicker.controller.action.InsertXmlAction;
 import com.aerhard.oxygen.plugin.glyphpicker.controller.bitmap.ImageCacheAccess;
 import org.apache.log4j.Logger;
@@ -237,7 +237,7 @@ public class MainController implements PropertyChangeListener {
     public void propertyChange(PropertyChangeEvent e) {
         if (InsertXmlAction.KEY.equals(e.getPropertyName())) {
             pcs.firePropertyChange(e);
-        } else if (AddAction.KEY.equals(e.getPropertyName())) {
+        } else if (CopyAction.KEY.equals(e.getPropertyName())) {
             try {
                 GlyphDefinition clone = ((GlyphDefinition) e.getNewValue())
                         .clone();

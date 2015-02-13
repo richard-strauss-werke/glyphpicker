@@ -15,6 +15,8 @@
  */
 package com.aerhard.oxygen.plugin.glyphpicker.controller.action;
 
+import ro.sync.ui.Icons;
+
 import java.awt.event.ActionEvent;
 
 /**
@@ -31,7 +33,7 @@ public class SortAction extends AbstractPickerAction {
      * Instantiates a new SortAction.
      */
     public SortAction() {
-        super(CLASS_NAME, "/images/sort-number.png");
+        super(CLASS_NAME, Icons.SORT_ASCENDING_MENU);
     }
 
     /* (non-Javadoc)

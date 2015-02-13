@@ -16,6 +16,8 @@
 
 package com.aerhard.oxygen.plugin.glyphpicker.controller.action;
 
+import ro.sync.ui.Icons;
+
 import java.util.ResourceBundle;
 
 import javax.swing.AbstractAction;
@@ -65,11 +67,13 @@ public abstract class AbstractPickerAction extends AbstractAction {
      *            description and mnemonic string in the language resource
      *            bundle
      * @param icon
-     *            the path to the action's icon
+     *            the icon path; may be one of the constants defined in ro.sync.ui.Icons
      */
     public AbstractPickerAction(String className, String icon) {
-        super(I18N.getString(className + ".label"), new ImageIcon(
-                AbstractPickerAction.class.getResource(icon)));
+//        super(I18N.getString(className + ".label"), new ImageIcon(
+//                AbstractPickerAction.class.getResource(icon)));
+
+        super(I18N.getString(className + ".label"), Icons.getIcon(icon));
 
         String description = I18N.getString(className + ".description");
         String mnemonic = I18N.getString(className + ".mnemonic");

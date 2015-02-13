@@ -33,7 +33,7 @@ import javax.swing.JOptionPane;
 
 import com.aerhard.oxygen.plugin.glyphpicker.controller.TabController;
 import com.aerhard.oxygen.plugin.glyphpicker.controller.GlyphSelectionChangeHandler;
-import com.aerhard.oxygen.plugin.glyphpicker.controller.action.AddAction;
+import com.aerhard.oxygen.plugin.glyphpicker.controller.action.CopyAction;
 import com.aerhard.oxygen.plugin.glyphpicker.controller.action.InsertXmlAction;
 import com.aerhard.oxygen.plugin.glyphpicker.controller.bitmap.ImageCacheAccess;
 import com.aerhard.oxygen.plugin.glyphpicker.controller.editor.EditAction;
@@ -76,6 +76,7 @@ public class BrowserController extends TabController {
 
         controlPanel.getEditBtn().setAction(
                 new EditAction(this, panel, dataSourceList));
+        controlPanel.getEditBtn().setHideActionText(true);
 
         setAdditionalActions();
 
@@ -89,7 +90,7 @@ public class BrowserController extends TabController {
     private void setAdditionalActions() {
         controlPanel.addToToolbar(insertBtn, 0);
 
-        addAction = new AddAction(this, selectionModel);
+        addAction = new CopyAction(this, selectionModel);
         addAction.setEnabled(false);
         controlPanel.addToToolbar(addAction, 1);
     }
@@ -233,7 +234,7 @@ public class BrowserController extends TabController {
      */
     @Override
     public void propertyChange(PropertyChangeEvent e) {
-        if (AddAction.KEY.equals(e.getPropertyName())
+        if (CopyAction.KEY.equals(e.getPropertyName())
                 || InsertXmlAction.KEY.equals(e.getPropertyName())) {
             pcs.firePropertyChange(e);
         }

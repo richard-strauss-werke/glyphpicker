@@ -25,6 +25,7 @@ import com.aerhard.oxygen.plugin.glyphpicker.controller.action.AbstractPickerAct
 import com.aerhard.oxygen.plugin.glyphpicker.model.DataSource;
 import com.aerhard.oxygen.plugin.glyphpicker.model.DataSourceList;
 import com.aerhard.oxygen.plugin.glyphpicker.view.editor.DataSourceEditor;
+import ro.sync.ui.Icons;
 
 /**
  * An action to open the data source editor and process the results if editing
@@ -58,7 +59,7 @@ public class EditAction extends AbstractPickerAction {
      */
     public EditAction(PropertyChangeListener listener, JPanel panel,
             DataSourceList dataSourceList) {
-        super(CLASS_NAME, "/images/database--pencil.png");
+        super(CLASS_NAME, Icons.OPTIONS_SHORTCUT_CENTERED);
         addPropertyChangeListener(listener);
         this.panel = panel;
         this.dataSourceList = dataSourceList;
