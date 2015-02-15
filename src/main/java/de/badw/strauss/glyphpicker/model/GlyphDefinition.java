@@ -121,18 +121,30 @@ public class GlyphDefinition implements Cloneable {
      * @return the code point string
      */
     public String getCodePointString() {
-
         if (codePoint != null) {
             StringBuilder sb = new StringBuilder();
             for (Character c : codePoint.toCharArray()) {
-                sb.append("U+");
-                sb.append(String.format("%X", (int) c));
-                sb.append(" ");
+                sb.append(String.format("U+%X ", (int) c));
             }
             return sb.toString();
         }
         return null;
+    }
 
+    /**
+     * Formats the code points as numeric character references "&#xYYYY;".
+     *
+     * @return the code point string
+     */
+    public String getNumericCharRef() {
+        if (codePoint != null) {
+            StringBuilder sb = new StringBuilder();
+            for (Character c : codePoint.toCharArray()) {
+                sb.append(String.format("&#x%X;", (int) c));
+            }
+            return sb.toString();
+        }
+        return null;
     }
 
     /**
@@ -266,10 +278,11 @@ public class GlyphDefinition implements Cloneable {
             return String.format("<g ref=\"%s#%s\"/>", getDataSource().getBasePath(), getId());
         }
 
-        return template.replaceAll("\\$\\{basePath\\}",
-                getDataSource().getBasePath()).replaceAll("\\$\\{id\\}",
-                getId()).replaceAll("\\$\\{cp\\}",
-                getCodePoint());
+        return template
+                .replaceAll("\\$\\{basePath\\}", getDataSource().getBasePath())
+                .replaceAll("\\$\\{id\\}", getId())
+                .replaceAll("\\$\\{cp\\}", getCodePoint())
+                .replaceAll("\\$\\{num\\}", getNumericCharRef());
     }
 
     /* (non-Javadoc)
