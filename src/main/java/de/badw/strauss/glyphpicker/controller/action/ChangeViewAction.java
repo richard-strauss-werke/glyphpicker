@@ -70,7 +70,7 @@ public class ChangeViewAction extends AbstractPickerAction {
     @Override
     public void actionPerformed(ActionEvent e) {
 
-        boolean restoreFocus = panel.getListComponent().hasFocus();
+        boolean shouldRequestFocus = panel.getListComponent().hasFocus();
 
         if (panel.getListComponent() instanceof GlyphGrid) {
             // NB get the old component's top row before the component
@@ -90,7 +90,7 @@ public class ChangeViewAction extends AbstractPickerAction {
             list.setTopVisibleRow(row);
         }
 
-        if (restoreFocus) {
+        if (shouldRequestFocus) {
             panel.getListComponent().requestFocusInWindow();
         }
     }
