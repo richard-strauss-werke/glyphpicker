@@ -189,8 +189,8 @@ public class GlyphPickerPluginExtension implements
     /**
      * Inserts a text fragment into a text editor page.
      *
-     * @param d         the glyph definition from which the text fragment is created
-     * @param page      the editor page
+     * @param d    the glyph definition from which the text fragment is created
+     * @param page the editor page
      */
     private void insertIntoTextEditorPage(GlyphDefinition d, WSTextEditorPage page) {
 

@@ -101,9 +101,8 @@ public class ControlPanel extends JPanel {
 
         toolBar.setMargin(new Insets(0, 8, 0, 8));
         toolBar.setBorder(BorderFactory.createCompoundBorder(
-                        BorderFactory.createMatteBorder(0, 0, 1, 0, UIManager.getColor("Panel.background").darker()),
-                        BorderFactory.createEmptyBorder(4, 8, 4, 8))
-        );
+                BorderFactory.createMatteBorder(0, 0, 1, 0, UIManager.getColor("Panel.background").darker()),
+                BorderFactory.createEmptyBorder(4, 8, 4, 8)));
 
         GridBagConstraints gbcToolBar = new GridBagConstraints();
         gbcToolBar.fill = GridBagConstraints.HORIZONTAL;
@@ -141,12 +140,15 @@ public class ControlPanel extends JPanel {
         optionsBtn.setHorizontalTextPosition(SwingConstants.CENTER);
         toolBar.add(optionsBtn);
 
-
         if (setDataSourceCombo) {
             toolBar.add(Box.createHorizontalGlue());
+            JLabel sourceLabel = new JLabel(i18n.getString(className
+                    + ".source") + ":");
+            sourceLabel.setBorder(BorderFactory.createEmptyBorder(0,6,0,6));
+            toolBar.add(sourceLabel);
 
             dataSourceCombo = new JComboBox<>();
-            dataSourceCombo.setPreferredSize(new Dimension(180, dataSourceCombo.getPreferredSize().height));
+            dataSourceCombo.setPreferredSize(new Dimension(150, dataSourceCombo.getPreferredSize().height));
             dataSourceCombo.setEditable(false);
             toolBar.add(dataSourceCombo);
 
