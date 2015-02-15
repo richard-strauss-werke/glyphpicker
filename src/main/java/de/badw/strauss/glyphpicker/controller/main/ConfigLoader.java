@@ -126,7 +126,7 @@ public class ConfigLoader {
      */
     private void setDefaultShortcut() {
         String shortcutModifier = (System.getProperty("os.name")
-                .toLowerCase().contains("mac")) ? "meta" : "ctrl";
+                .toLowerCase().contains("mac")) ? "meta option" : "ctrl alt";
 
         config.setShortcut(shortcutModifier + " P");
     }
