@@ -46,7 +46,7 @@ public class GlyphDefinition implements Cloneable {
     private String charName;
 
     /**
-     * The characters container or referenced in `<mapping>`.
+     * The characters contained or referenced in `<mapping>`.
      */
     @XmlElement(name = "mapping")
     private String mappedChars;
