@@ -76,7 +76,7 @@ public class GlyphTextRenderer extends GlyphRenderer {
             setFont(font);
         }
 
-        setText(gd.getCodePoint());
+        setText(gd.getMappedChars());
 
         configureBackground(isSelected);
 

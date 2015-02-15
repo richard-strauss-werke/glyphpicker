@@ -118,7 +118,7 @@ public class DescriptionRenderer extends JLabel implements TableCellRenderer {
             sb.append("<nobr><b>").append(d.getCharName()).append("</b></nobr><br>");
         }
 
-        if (d.getCodePoint() != null) {
+        if (d.getMappedChars() != null) {
             sb.append("<nobr>").append(CODEPOINT_LABEL).append(": ").append(d.getCodePointString()).append("</nobr><br>");
         }
 

@@ -34,8 +34,8 @@ public class CodePointComparator implements Comparator<GlyphDefinition>,
      */
     public int compare(GlyphDefinition glyphA, GlyphDefinition glyphB) {
 
-        String aString = glyphA.getCodePoint();
-        String bString = glyphB.getCodePoint();
+        String aString = glyphA.getMappedChars();
+        String bString = glyphB.getMappedChars();
 
         return (aString != null && bString != null) ? aString
                 .compareToIgnoreCase(bString) : -1;

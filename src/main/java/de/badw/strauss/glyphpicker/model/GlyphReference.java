@@ -41,7 +41,7 @@ public class GlyphReference {
     private String targetId;
 
     /**
-     * The string length of this reference's code points.
+     * The string length of this reference's mapped characters.
      */
     @XmlAttribute(name = "length")
     private String length;

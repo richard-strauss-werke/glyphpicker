@@ -441,7 +441,7 @@ public class TeiXmlHandler extends DefaultHandler {
         if ("charName".equals(qName)) {
             currentGlyphDefinition.setCharName(textContent.toString());
         } else if (inMapping && "mapping".equals(qName)) {
-            currentGlyphDefinition.setCodePoint(mappingParser.parse(textContent
+            currentGlyphDefinition.setMappedChars(mappingParser.parse(textContent
                     .toString()));
 
             if (!currentGlyphReferences.isEmpty()) {
@@ -510,17 +510,17 @@ public class TeiXmlHandler extends DefaultHandler {
 
         for (GlyphDefinition r : referencingGlyphDefinitions) {
             int offset = 0;
-            StringBuilder sb = new StringBuilder(r.getCodePoint());
+            StringBuilder sb = new StringBuilder(r.getMappedChars());
             for (GlyphReference ref : r.getGlyphReferences()) {
                 GlyphDefinition target = ref.getTarget();
                 if (target != null) {
-                    String additionalString = target.getCodePoint();
+                    String additionalString = target.getMappedChars();
                     ref.incrementIndex(offset);
                     sb.insert(ref.getIndex(), additionalString);
                     offset += additionalString.length();
                 }
             }
-            r.setCodePoint(sb.toString());
+            r.setMappedChars(sb.toString());
         }
     }
 

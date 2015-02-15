@@ -101,7 +101,7 @@ public class DataSource implements Cloneable {
     private String subtypeAttributeValue = null;
 
     /**
-     * Indicates if the string in <mapping> needs to be parsed in order to obtain code points.
+     * Indicates if the string in <mapping> needs to be parsed in order to obtain the actual characters.
      */
     @XmlElement(name = "parseMapping")
     private boolean parseMapping = false;

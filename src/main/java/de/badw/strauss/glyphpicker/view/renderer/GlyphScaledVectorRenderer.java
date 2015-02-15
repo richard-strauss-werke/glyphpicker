@@ -92,7 +92,7 @@ public class GlyphScaledVectorRenderer extends GlyphRenderer {
      */
     public Component getRendererComponent(GlyphDefinition gd, boolean isSelected) {
 
-        ch = gd.getCodePoint();
+        ch = gd.getMappedChars();
         fontName = gd.getDataSource().getFontName();
 
         factor = gd.getDataSource().getSizeFactor();

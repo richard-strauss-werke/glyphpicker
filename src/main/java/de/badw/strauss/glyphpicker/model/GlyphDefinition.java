@@ -46,10 +46,10 @@ public class GlyphDefinition implements Cloneable {
     private String charName;
 
     /**
-     * The code point.
+     * The characters container or referenced in `<mapping>`.
      */
     @XmlElement(name = "mapping")
-    private String codePoint;
+    private String mappedChars;
 
     /**
      * The url.
@@ -107,23 +107,23 @@ public class GlyphDefinition implements Cloneable {
     }
 
     /**
-     * Gets the code point.
+     * Gets the mapped characters.
      *
-     * @return the code point
+     * @return the mapped characters
      */
-    public String getCodePoint() {
-        return codePoint;
+    public String getMappedChars() {
+        return mappedChars;
     }
 
     /**
-     * Formats the code points as Strings "U+xxxx".
+     * Formats the mapped characters as Strings "U+xxxx".
      *
-     * @return the code point string
+     * @return the formatted string
      */
     public String getCodePointString() {
-        if (codePoint != null) {
+        if (mappedChars != null) {
             StringBuilder sb = new StringBuilder();
-            for (Character c : codePoint.toCharArray()) {
+            for (Character c : mappedChars.toCharArray()) {
                 sb.append(String.format("U+%X ", (int) c));
             }
             return sb.toString();
@@ -132,14 +132,14 @@ public class GlyphDefinition implements Cloneable {
     }
 
     /**
-     * Formats the code points as numeric character references "&#xYYYY;".
+     * Formats the mapped characters as numeric character references "&#xYYYY;".
      *
-     * @return the code point string
+     * @return the formatted string
      */
     public String getNumericCharRef() {
-        if (codePoint != null) {
+        if (mappedChars != null) {
             StringBuilder sb = new StringBuilder();
-            for (Character c : codePoint.toCharArray()) {
+            for (Character c : mappedChars.toCharArray()) {
                 sb.append(String.format("&#x%X;", (int) c));
             }
             return sb.toString();
@@ -148,12 +148,12 @@ public class GlyphDefinition implements Cloneable {
     }
 
     /**
-     * Sets the code point.
+     * Sets the mapped characters.
      *
-     * @param codePoint the new code point
+     * @param mappedChars the mapped characters
      */
-    public void setCodePoint(String codePoint) {
-        this.codePoint = codePoint;
+    public void setMappedChars(String mappedChars) {
+        this.mappedChars = mappedChars;
     }
 
     /**
@@ -273,7 +273,7 @@ public class GlyphDefinition implements Cloneable {
 
         String template = getDataSource().getTemplate();
 
-        // if no template is specified, use default template
+        // use a default template if no template is specified
         if (template == null) {
             return String.format("<g ref=\"%s#%s\"/>", getDataSource().getBasePath(), getId());
         }
@@ -281,7 +281,7 @@ public class GlyphDefinition implements Cloneable {
         return template
                 .replaceAll("\\$\\{basePath\\}", getDataSource().getBasePath())
                 .replaceAll("\\$\\{id\\}", getId())
-                .replaceAll("\\$\\{char\\}", getCodePoint())
+                .replaceAll("\\$\\{char\\}", getMappedChars())
                 .replaceAll("\\$\\{num\\}", getNumericCharRef());
     }
 
