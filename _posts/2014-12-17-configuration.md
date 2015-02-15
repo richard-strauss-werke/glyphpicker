@@ -42,7 +42,8 @@ Specifies in which way the glyph data should be inserted into the document. You 
 
 - ${basePath}: equals the content of the `path` field
 - ${id}: the xml:id of the glyph definition
-- ${cp}: the glyph's codepoints
+- ${char}: the characters contained or referenced in the `<mapping>` element of `<char>`
+- ${num}: numeric character references
 
 Examples:
 
