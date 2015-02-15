@@ -28,26 +28,34 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class GlyphReference {
 
-    /** The string index of this reference's <g> attribute in its <mapping> parent. */
+    /**
+     * The string index of this reference's <g> attribute in its <mapping> parent.
+     */
     @XmlAttribute(name = "n")
     private int index;
 
-    /** The target id. */
+    /**
+     * The target id.
+     */
     @XmlAttribute(name = "ref")
     private String targetId;
 
-    /** The string length of this reference's code points. */
+    /**
+     * The string length of this reference's code points.
+     */
     @XmlAttribute(name = "length")
     private String length;
 
-    /** The referenced glyph definition. */
+    /**
+     * The referenced glyph definition.
+     */
     @XmlTransient
     private GlyphDefinition target = null;
 
     /**
      * Instantiates a new glyphRef object.
      *
-     * @param index The string index of this reference's <g> attribute in its <mapping> parent
+     * @param index    The string index of this reference's <g> attribute in its <mapping> parent
      * @param targetId The target id
      */
     public GlyphReference(int index, String targetId) {

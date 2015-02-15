@@ -39,14 +39,15 @@ public class GlyphRendererAdapter extends JLabel implements TableCellRenderer,
 
     private static final long serialVersionUID = 1L;
 
-    /** The GlyphRenderer objects. */
+    /**
+     * The GlyphRenderer objects.
+     */
     private final Map<String, GlyphRenderer> glyphRenderers = new HashMap<>();
 
     /**
      * Instantiates a new GlyphRendererAdapter.
      *
-     * @param container
-     *            the container
+     * @param container the container
      */
     public GlyphRendererAdapter(JComponent container) {
         setText(null);
@@ -81,7 +82,7 @@ public class GlyphRendererAdapter extends JLabel implements TableCellRenderer,
      * .swing.JTable, java.lang.Object, boolean, boolean, int, int)
      */
     public Component getTableCellRendererComponent(JTable table, Object value,
-            boolean isSelected, boolean hasFocus, int row, int column) {
+                                                   boolean isSelected, boolean hasFocus, int row, int column) {
         if (value != null) {
             GlyphDefinition glyphDefinition = ((GlyphDefinition) value);
             GlyphRenderer renderer = glyphRenderers.get(glyphDefinition
@@ -104,7 +105,7 @@ public class GlyphRendererAdapter extends JLabel implements TableCellRenderer,
      */
     @Override
     public Component getListCellRendererComponent(JList<?> list, Object value,
-            int index, boolean isSelected, boolean cellHasFocus) {
+                                                  int index, boolean isSelected, boolean cellHasFocus) {
         if (value != null) {
             GlyphDefinition glyphDefinition = ((GlyphDefinition) value);
             GlyphRenderer renderer = glyphRenderers.get(glyphDefinition

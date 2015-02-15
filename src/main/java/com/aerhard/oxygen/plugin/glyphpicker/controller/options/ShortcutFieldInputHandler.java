@@ -28,7 +28,9 @@ import javax.swing.text.BadLocationException;
  */
 public class ShortcutFieldInputHandler implements DocumentListener {
 
-    /** The logger. */
+    /**
+     * The logger.
+     */
     private static final Logger LOGGER = Logger
             .getLogger(ShortcutFieldInputHandler.class.getName());
 
@@ -44,7 +46,8 @@ public class ShortcutFieldInputHandler implements DocumentListener {
 
     /**
      * Instantiates a new GlyphSelect object.
-     * @param config the plugin config
+     *
+     * @param config              the plugin config
      * @param applyShortcutAction the apply-shortcut button
      */
     public ShortcutFieldInputHandler(Config config, Action applyShortcutAction) {
@@ -56,8 +59,7 @@ public class ShortcutFieldInputHandler implements DocumentListener {
      * Enables the apply-shortcut action if the shortcut text field text doesn't match the shortcut in the config object.
      * Disables the action if it matches.
      *
-     * @param e
-     *            the document event
+     * @param e the document event
      */
     public void updateAction(final DocumentEvent e) {
         try {

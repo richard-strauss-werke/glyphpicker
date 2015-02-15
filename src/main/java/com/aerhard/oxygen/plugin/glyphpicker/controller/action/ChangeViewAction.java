@@ -16,6 +16,7 @@
 package com.aerhard.oxygen.plugin.glyphpicker.controller.action;
 
 import java.awt.event.ActionEvent;
+
 import com.aerhard.oxygen.plugin.glyphpicker.view.TabPanel;
 import com.aerhard.oxygen.plugin.glyphpicker.view.GlyphGrid;
 import com.aerhard.oxygen.plugin.glyphpicker.view.GlyphTable;
@@ -24,19 +25,27 @@ import com.aerhard.oxygen.plugin.glyphpicker.view.GlyphTable;
  * An action to toggle between grid and table view.
  */
 public class ChangeViewAction extends AbstractPickerAction {
-    
+
     private static final long serialVersionUID = 1L;
 
-    /** The panel containing table and list view. */
+    /**
+     * The panel containing table and list view.
+     */
     private final TabPanel panel;
-    
-    /** The table component. */
+
+    /**
+     * The table component.
+     */
     private final GlyphTable table;
-    
-    /** The list component. */
+
+    /**
+     * The list component.
+     */
     private final GlyphGrid list;
 
-    /** The class name. */
+    /**
+     * The class name.
+     */
     private static final String CLASS_NAME = ChangeViewAction.class.getSimpleName();
 
     /**
@@ -44,10 +53,10 @@ public class ChangeViewAction extends AbstractPickerAction {
      *
      * @param panel The panel containing table and list view
      * @param table the table component
-     * @param list the list component
+     * @param list  the list component
      */
     public ChangeViewAction(TabPanel panel, GlyphTable table,
-            GlyphGrid list) {
+                            GlyphGrid list) {
         super(CLASS_NAME, "/images/grid.png");
         this.panel = panel;
         this.table = table;

@@ -17,14 +17,15 @@ public class TabFocusHandler implements ChangeListener, PropertyChangeListener {
      */
     private final Map<Component, Component> tabFocus = new HashMap<>();
 
-    /** The tabbed pane. */
+    /**
+     * The tabbed pane.
+     */
     private final JTabbedPane tabbedPane;
 
     /**
      * Instantiates a new TabFocusHandler.
      *
-     * @param tabbedPane
-     *            the tabbed pane
+     * @param tabbedPane the tabbed pane
      */
     public TabFocusHandler(JTabbedPane tabbedPane) {
         this.tabbedPane = tabbedPane;
@@ -37,10 +38,8 @@ public class TabFocusHandler implements ChangeListener, PropertyChangeListener {
     /**
      * Sets the focus in tab with the provided index to the provided component.
      *
-     * @param index
-     *            the index
-     * @param component
-     *            the component
+     * @param index     the index
+     * @param component the component
      */
     public void setTabComponentFocus(int index, Component component) {
         tabFocus.put(tabbedPane.getComponentAt(index), component);
@@ -48,6 +47,7 @@ public class TabFocusHandler implements ChangeListener, PropertyChangeListener {
 
     /**
      * Gets the component to be focused in the specified container
+     *
      * @param container the container
      * @return the component to be focused
      */

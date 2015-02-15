@@ -32,24 +32,32 @@ import java.util.ResourceBundle;
 public class MainPanel extends JPanel {
 
     private static final long serialVersionUID = 1L;
-    
-    /** The tabbed pane. */
+
+    /**
+     * The tabbed pane.
+     */
     private final JTabbedPane tabbedPane;
 
-    /** The main panel's border width. */
-    private static final int MAIN_BORDER_WIDTH = 8;
-    
-    /** The minimum width. */
+    /**
+     * The main panel's border width.
+     */
+    private static final int MAIN_BORDER_THICKNESS = 2;
+
+    /**
+     * The minimum width.
+     */
     private static final int MIN_WIDTH = 200;
-    
-    /** The minimum height. */
+
+    /**
+     * The minimum height.
+     */
     private static final int MIN_HEIGHT = 200;
 
     /**
      * Instantiates a new main panel.
      *
      * @param userCollectionPanel the user collection panel
-     * @param browserPanel the browser panel
+     * @param browserPanel        the browser panel
      */
     public MainPanel(JComponent userCollectionPanel, JComponent browserPanel) {
 
@@ -59,8 +67,8 @@ public class MainPanel extends JPanel {
         setLayout(new BorderLayout(0, 0));
 
         tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-        tabbedPane.setBorder(new EmptyBorder(MAIN_BORDER_WIDTH,
-                MAIN_BORDER_WIDTH, MAIN_BORDER_WIDTH, MAIN_BORDER_WIDTH));
+        tabbedPane.setBorder(new EmptyBorder(MAIN_BORDER_THICKNESS,
+                MAIN_BORDER_THICKNESS, MAIN_BORDER_THICKNESS, MAIN_BORDER_THICKNESS));
 
         String userCollectionLabel = i18n.getString(className
                 + ".userCollection");
@@ -71,7 +79,7 @@ public class MainPanel extends JPanel {
                 KeyStroke.getKeyStroke(userCollectionLabel.substring(0, 1))
                         .getKeyCode());
 
-        String dataSourcesLabel = i18n.getString(className + ".dataSources");
+        String dataSourcesLabel = i18n.getString(className + ".allCharacters");
         tabbedPane.addTab(null, null, browserPanel, null);
         tabbedPane.setTabComponentAt(1, new HighlightLabel(
                 createHtmlLabel(dataSourcesLabel)));

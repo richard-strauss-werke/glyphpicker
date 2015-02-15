@@ -46,8 +46,8 @@ public class BitmapFileLoader implements BitmapLoader {
     private final GlyphDefinition d;
 
     /**
-    * The bitmap container's size
-     * */
+     * The bitmap container's size
+     */
     private final int containerSize;
 
     /**
@@ -57,11 +57,12 @@ public class BitmapFileLoader implements BitmapLoader {
 
     /**
      * Instantiates a new bitmap file loader.
-     * @param d             The glyph definition
-     * @param basePath        The base path to the graphic
-     * @param relativePath    The path to the graphic relative to the base path
+     *
+     * @param d              The glyph definition
+     * @param basePath       The base path to the graphic
+     * @param relativePath   The path to the graphic relative to the base path
      * @param imageProcessor The image processor used to scale the image
-     * @param containerSize   The bitmap container's size
+     * @param containerSize  The bitmap container's size
      */
     public BitmapFileLoader(GlyphDefinition d, String basePath, String relativePath, ImageProcessor imageProcessor, int containerSize) {
         this.d = d;
@@ -74,16 +75,17 @@ public class BitmapFileLoader implements BitmapLoader {
 
     /**
      * Instantiates a new bitmap file loader.
-     * @param d             The glyph definition
-     * @param imageFile     The image file
+     *
+     * @param d              The glyph definition
+     * @param imageFile      The image file
      * @param imageProcessor The image processor used to scale the image
-     * @param containerSize   The bitmap container's size
+     * @param containerSize  The bitmap container's size
      */
     public BitmapFileLoader(GlyphDefinition d, File imageFile, ImageProcessor imageProcessor, int containerSize) {
         this.d = d;
         this.imageProcessor = imageProcessor;
         this.containerSize = containerSize;
-        
+
         this.imageFile = imageFile;
     }
 

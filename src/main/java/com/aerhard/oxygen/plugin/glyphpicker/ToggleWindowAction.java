@@ -48,7 +48,7 @@ public class ToggleWindowAction extends AbstractPickerAction implements Property
     /**
      * The plugin's main panel.
      */
-    private MainPanel mainPanel;
+    private final MainPanel mainPanel;
 
     /**
      * The name of the current class.
@@ -58,10 +58,11 @@ public class ToggleWindowAction extends AbstractPickerAction implements Property
 
     /**
      * Instantiates a new ToggleWindowAction.
-     *  @param workspace oXygen's plugin workspace
+     *
+     * @param workspace oXygen's plugin workspace
      * @param icon      The plugin's icon
      * @param viewId    The plugin's view ID in oXygen
-     * @param config
+     * @param config    The plugin config
      */
     public ToggleWindowAction(StandalonePluginWorkspace workspace,
                               String icon, String viewId, MainPanel mainPanel, Config config) {

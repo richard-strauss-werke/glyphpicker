@@ -26,10 +26,14 @@ import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinition;
  */
 public class GlyphTableFormat implements TableFormat<GlyphDefinition> {
 
-    /** The glyph column label. */
+    /**
+     * The glyph column label.
+     */
     private final String glyphLabel;
-    
-    /** The description column label. */
+
+    /**
+     * The description column label.
+     */
     private final String descriptionLabel;
 
     /**

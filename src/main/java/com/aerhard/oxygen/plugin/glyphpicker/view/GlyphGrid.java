@@ -34,7 +34,9 @@ public class GlyphGrid extends JList<GlyphDefinition> {
 
     private static final long serialVersionUID = 1L;
 
-    /** The item size. */
+    /**
+     * The item size.
+     */
     private int size = 0;
 
     /**
@@ -64,7 +66,7 @@ public class GlyphGrid extends JList<GlyphDefinition> {
      * A ComponentAdapter to adjust the row / columns count when the component is resized.
      */
     private class ResizeAdapter extends ComponentAdapter {
-        
+
         /* (non-Javadoc)
          * @see java.awt.event.ComponentAdapter#componentResized(java.awt.event.ComponentEvent)
          */

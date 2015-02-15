@@ -61,9 +61,10 @@ public class OptionsEditorController {
 
     /**
      * Initializes a new OptionsEditorController
-     * @param contentPane the content pane of the the editor popup
-     * @param parentPanel the panel
-     * @param config the plugin's config
+     *
+     * @param contentPane      the content pane of the the editor popup
+     * @param parentPanel      the panel
+     * @param config           the plugin's config
      * @param imageCacheAccess the panel from which the window has been opened
      */
     public OptionsEditorController(final OptionsEditor contentPane, JPanel parentPanel, Config config, final ImageCacheAccess imageCacheAccess) {
@@ -74,7 +75,7 @@ public class OptionsEditorController {
 
     }
 
-    public String load() {
+    public void load() {
 
         contentPane.getShortcutTextField().setText(config.getShortcut());
         contentPane.updateCacheItemCount(imageCacheAccess.getSize());
@@ -99,9 +100,7 @@ public class OptionsEditorController {
                     int imageCacheSize = imageCacheAccess.getSize();
                     contentPane.updateCacheItemCount(imageCacheSize);
                     updateCacheActionState(imageCacheSize);
-                }
-
-                else if (ImageCacheAccess.CACHE_CLEARED.equals(e.getPropertyName())) {
+                } else if (ImageCacheAccess.CACHE_CLEARED.equals(e.getPropertyName())) {
                     contentPane.updateCacheItemCount(0);
                     updateCacheActionState(0);
                 }
@@ -117,7 +116,6 @@ public class OptionsEditorController {
 
         imageCacheAccess.removePropertyChangeListener(imageCacheListener);
 
-        return null;
     }
 
     private void updateCacheActionState(int imageCacheSize) {

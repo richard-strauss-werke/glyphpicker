@@ -52,14 +52,20 @@ import com.icl.saxon.aelfred.SAXParserFactoryImpl;
  */
 public class TeiLoadWorker extends SwingWorker<List<GlyphDefinition>, Void> {
 
-    /** The logger. */
+    /**
+     * The logger.
+     */
     private static final Logger LOGGER = Logger.getLogger(TeiLoadWorker.class
             .getName());
 
-    /** The data source object providing the loading parameters. */
+    /**
+     * The data source object providing the loading parameters.
+     */
     private final DataSource dataSource;
 
-    /** The loading result, a list of GlyphDefinition objects. */
+    /**
+     * The loading result, a list of GlyphDefinition objects.
+     */
     private List<GlyphDefinition> result = null;
 
     /**
@@ -71,10 +77,14 @@ public class TeiLoadWorker extends SwingWorker<List<GlyphDefinition>, Void> {
         return result;
     }
 
-    /** The SAX parser. */
+    /**
+     * The SAX parser.
+     */
     private SAXParser parser;
 
-    /** The i18n resource bundle. */
+    /**
+     * The i18n resource bundle.
+     */
     private final ResourceBundle i18n;
 
     /**
@@ -135,12 +145,12 @@ public class TeiLoadWorker extends SwingWorker<List<GlyphDefinition>, Void> {
     private Boolean isLocalFile(String path) {
         return (!path.matches("^\\w+://.*"));
     }
-    
+
 
     /**
      * Loads TEI data from a URL.
      *
-     * @param user the user
+     * @param user     the user
      * @param password the password
      * @return the resulting GlyphDefinition list
      */
@@ -168,7 +178,7 @@ public class TeiLoadWorker extends SwingWorker<List<GlyphDefinition>, Void> {
 
         return null;
     }
-    
+
     /**
      * The XML response handler.
      */
@@ -229,7 +239,7 @@ public class TeiLoadWorker extends SwingWorker<List<GlyphDefinition>, Void> {
         }
         return null;
     }
-    
+
     /**
      * Triggers parsing of the XML input stream.
      *

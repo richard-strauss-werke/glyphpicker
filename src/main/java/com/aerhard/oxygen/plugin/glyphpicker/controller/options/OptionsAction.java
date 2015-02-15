@@ -54,8 +54,9 @@ public class OptionsAction extends AbstractPickerAction {
 
     /**
      * Instantiates a new EditAction.
-     *  @param listener         the property change listener to be added to this action
-     * @param config            The plugin's config
+     *
+     * @param listener         the property change listener to be added to this action
+     * @param config           The plugin's config
      * @param panel            The panel from which the data source editor has been opened
      * @param imageCacheAccess the ImageCacheAccess object
      */

@@ -27,13 +27,15 @@ import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinition;
 public class GlyphPropertyEventList extends
         TransformedList<GlyphDefinition, String> {
 
-    /** The property selector. */
+    /**
+     * The property selector.
+     */
     private final PropertySelector propertySelector;
 
     /**
      * Instantiates a new GlyphPropertyEventList.
      *
-     * @param source the source glyph list
+     * @param source           the source glyph list
      * @param propertySelector the property selector
      */
     public GlyphPropertyEventList(EventList<GlyphDefinition> source,
@@ -60,7 +62,9 @@ public class GlyphPropertyEventList extends
         updates.forwardEvent(listChanges);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     protected boolean isWritable() {
         return false;
     }

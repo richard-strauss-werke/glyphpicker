@@ -41,8 +41,7 @@ public class GlyphSelect extends TextMatcherEditor<GlyphDefinition> implements
     /**
      * Perform update.
      *
-     * @param e
-     *            the event
+     * @param e the event
      */
     public void performUpdate(final DocumentEvent e) {
 
@@ -58,7 +57,7 @@ public class GlyphSelect extends TextMatcherEditor<GlyphDefinition> implements
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                setFilterText(new String[] { query });
+                setFilterText(new String[]{query});
             }
         });
 

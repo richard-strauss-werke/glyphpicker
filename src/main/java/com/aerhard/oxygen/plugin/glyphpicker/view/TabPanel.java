@@ -32,23 +32,35 @@ public class TabPanel extends JPanel {
 
 
     private static final long serialVersionUID = 1L;
-    
-    /** The preferred height and width of the info label component. */
+
+    /**
+     * The preferred height and width of the info label component.
+     */
     private static final int INFO_LABEL_PREFERRED_SIZE = 90;
 
-    /** The scroll pane. */
+    /**
+     * The scroll pane.
+     */
     private final JScrollPane jPane;
-    
-    /** The scroll pane's overlayable. */
+
+    /**
+     * The scroll pane's overlayable.
+     */
     private final DefaultOverlayable overlayable;
-    
-    /** The info label. */
+
+    /**
+     * The info label.
+     */
     private final JTextPane infoLabel;
 
-    /** The info panel containing the info label. */
+    /**
+     * The info panel containing the info label.
+     */
     private final JPanel infoPanel;
 
-    /** The control panel. */
+    /**
+     * The control panel.
+     */
     private final ControlPanel controlPanel;
 
     /**
@@ -68,16 +80,18 @@ public class TabPanel extends JPanel {
 
         JPanel tablePanel = new JPanel();
         add(tablePanel, BorderLayout.CENTER);
-        tablePanel.setBorder(new EmptyBorder(11, 8, 7, 8));
-        tablePanel.setLayout(new BorderLayout(0, 6));
+
+        tablePanel.setBorder(new EmptyBorder(11, 8, 8, 8));
+
+        tablePanel.setLayout(new BorderLayout(0, 8));
 
         jPane = new JScrollPane();
         jPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        jPane.setBorder(new EtchedBorder());
+
+        jPane.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null,
+                null));
 
         JPanel overlayPanel = new JPanel();
-        overlayPanel.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null,
-                null));
         JLabel overlayLabel = new JLabel(
                 i18n.getString("TabPanel.loading"));
         overlayPanel.add(overlayLabel);
@@ -90,10 +104,10 @@ public class TabPanel extends JPanel {
         infoPanel.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
         infoPanel.setBackground(UIManager.getColor("TextField.background"));
         GridBagLayout gblInfoPanel = new GridBagLayout();
-        gblInfoPanel.columnWidths = new int[] { 210, 14, 0 };
-        gblInfoPanel.rowHeights = new int[] { 0, 0 };
-        gblInfoPanel.columnWeights = new double[] { 1.0, 0.0, Double.MIN_VALUE };
-        gblInfoPanel.rowWeights = new double[] { 0.0, 0.0 };
+        gblInfoPanel.columnWidths = new int[]{210, 14, 0};
+        gblInfoPanel.rowHeights = new int[]{0, 0};
+        gblInfoPanel.columnWeights = new double[]{1.0, 0.0, Double.MIN_VALUE};
+        gblInfoPanel.rowWeights = new double[]{0.0, 0.0};
         infoPanel.setLayout(gblInfoPanel);
 
         tablePanel.add(infoPanel, BorderLayout.SOUTH);
@@ -181,9 +195,7 @@ public class TabPanel extends JPanel {
             if (listComponent instanceof GlyphGrid) {
                 ((GlyphGrid) listComponent).repaint(((GlyphGrid) listComponent)
                         .getCellBounds(index, index));
-            }
-
-            else if (listComponent instanceof GlyphTable) {
+            } else if (listComponent instanceof GlyphTable) {
                 ((GlyphTable) listComponent)
                         .repaint(((GlyphTable) listComponent).getCellRect(
                                 index, 0, true));

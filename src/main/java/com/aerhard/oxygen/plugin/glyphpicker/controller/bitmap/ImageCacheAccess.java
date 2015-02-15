@@ -34,10 +34,12 @@ import java.nio.charset.StandardCharsets;
  */
 public class ImageCacheAccess {
 
-    /** The logger. */
+    /**
+     * The logger.
+     */
     private static final Logger LOGGER = Logger.getLogger(ImageCacheAccess.class
             .getName());
-    
+
     /**
      * The property change support.
      */
@@ -87,6 +89,7 @@ public class ImageCacheAccess {
 
     /**
      * Creates a cache file name for the specified url
+     *
      * @param url the url
      * @return the file name or null if no file name could be created
      */
@@ -101,6 +104,7 @@ public class ImageCacheAccess {
 
     /**
      * Gets a file from the cache folder
+     *
      * @param imageNameInCache the name of the image in the cache
      * @return the file or null if the file doesn't exist
      */
@@ -111,7 +115,8 @@ public class ImageCacheAccess {
 
     /**
      * Write a buffered image to the image cache on dist
-     * @param image the image
+     *
+     * @param image            the image
      * @param imageNameInCache the name of the image in the cache
      */
     public void writeImage(BufferedImage image, String imageNameInCache) {
@@ -126,6 +131,7 @@ public class ImageCacheAccess {
 
     /**
      * Returns the number of files in the image cache
+     *
      * @return the number of files
      */
     public int getSize() {

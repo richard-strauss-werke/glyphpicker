@@ -30,7 +30,6 @@ import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-import com.jidesoft.swing.ButtonStyle;
 import org.apache.log4j.Logger;
 
 import com.aerhard.oxygen.plugin.glyphpicker.controller.action.AbstractPickerAction;
@@ -44,41 +43,65 @@ import ro.sync.ui.Icons;
  */
 public class DataSourceEditorController implements PropertyChangeListener {
 
-    /** The logger. */
+    /**
+     * The logger.
+     */
     private static final Logger LOGGER = Logger
             .getLogger(DataSourceEditorController.class.getName());
-    
-    /** The percentage factor. */
+
+    /**
+     * The percentage factor.
+     */
     private static final float PERCENTAGE_FACTOR = 100f;
 
-    /** The name of the "listEditingOccurred" change property. */
+    /**
+     * The name of the "listEditingOccurred" change property.
+     */
     public static final String LIST_EDITING_OCCURRED = "listEditingOccurred";
 
-    /** The window's content pane. */
+    /**
+     * The window's content pane.
+     */
     private final DataSourceEditor contentPane;
-    
-    /** The panel from which the window has been opened. */
+
+    /**
+     * The panel from which the window has been opened.
+     */
     private final JPanel parentPanel;
 
-    /** The display modes added to the display mode JCombo. */
+    /**
+     * The display modes added to the display mode JCombo.
+     */
     private final List<String> glyphRendererLabels = new ArrayList<>();
 
-    /** The clone action. */
+    /**
+     * The clone action.
+     */
     private final CloneAction cloneAction;
-    
-    /** The delete action. */
+
+    /**
+     * The delete action.
+     */
     private final DeleteAction deleteAction;
 
-    /** Indicates if there have been changes to the data source list. */
+    /**
+     * Indicates if there have been changes to the data source list.
+     */
     private boolean listEditingOccurred = false;
 
-    /** The list model. */
+    /**
+     * The list model.
+     */
     private DefaultListModel<DataSource> listModel;
-    
-    /** The current data source. */
+
+    /**
+     * The current data source.
+     */
     private DataSource currentDataSource = null;
 
-    /** The i18n resource bundle. */
+    /**
+     * The i18n resource bundle.
+     */
     private final ResourceBundle i18n = ResourceBundle.getBundle("GlyphPicker");
 
     /**
@@ -88,7 +111,7 @@ public class DataSourceEditorController implements PropertyChangeListener {
      * @param parentPanel The panel from which the window has been opened
      */
     public DataSourceEditorController(DataSourceEditor contentPane,
-            JPanel parentPanel) {
+                                      JPanel parentPanel) {
 
         cloneAction = new CloneAction(this);
         deleteAction = new DeleteAction(this);
@@ -125,7 +148,7 @@ public class DataSourceEditorController implements PropertyChangeListener {
      * An action to create a new data source record.
      */
     private final class NewAction extends AbstractPickerAction {
-        
+
         private static final long serialVersionUID = 1L;
 
         /**
@@ -159,7 +182,7 @@ public class DataSourceEditorController implements PropertyChangeListener {
      * An action to clone the selected data source.
      */
     private final class CloneAction extends AbstractPickerAction {
-        
+
         private static final long serialVersionUID = 1L;
 
         /**
@@ -200,7 +223,7 @@ public class DataSourceEditorController implements PropertyChangeListener {
      * An action to delete the selected data source.
      */
     private final class DeleteAction extends AbstractPickerAction {
-        
+
         private static final long serialVersionUID = 1L;
 
         /**
@@ -298,7 +321,7 @@ public class DataSourceEditorController implements PropertyChangeListener {
      */
     private class DataSourceListSelectionListener implements
             ListSelectionListener {
-        
+
         /* (non-Javadoc)
          * @see javax.swing.event.ListSelectionListener#valueChanged(javax.swing.event.ListSelectionEvent)
          */
@@ -410,9 +433,7 @@ public class DataSourceEditorController implements PropertyChangeListener {
         if (DataSourceEditor.FORM_EDITING_OCCURRED.equals(e.getPropertyName())) {
             updateCurrentModelFromForm();
             listEditingOccurred = true;
-        }
-
-        else if (LIST_EDITING_OCCURRED.equals(e.getPropertyName())) {
+        } else if (LIST_EDITING_OCCURRED.equals(e.getPropertyName())) {
             listEditingOccurred = true;
         }
 

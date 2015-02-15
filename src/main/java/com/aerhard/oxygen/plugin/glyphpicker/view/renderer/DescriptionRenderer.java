@@ -30,29 +30,43 @@ import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinition;
  */
 public class DescriptionRenderer extends JLabel implements TableCellRenderer {
 
-    /** The Constant serialVersionUID. */
+    /**
+     * The Constant serialVersionUID.
+     */
     private static final long serialVersionUID = 1L;
 
-    /** The Constant BORDER_WIDTH. */
-    public static final int BORDER_WIDTH = 4;
+    /**
+     * The Constant BORDER_WIDTH.
+     */
+    public static final int BORDER_THICKNESS = 4;
 
-    /** The Constant i18n. */
+    /**
+     * The Constant i18n.
+     */
     private static final ResourceBundle I18N
-    = ResourceBundle
+            = ResourceBundle
             .getBundle("GlyphPicker");
-    
-    /** The Constant className. */
+
+    /**
+     * The Constant className.
+     */
     private static final String CLASS_NAME = DescriptionRenderer.class.getSimpleName();
 
-    /** The Constant CODEPOINT_LABEL. */
+    /**
+     * The Constant CODEPOINT_LABEL.
+     */
     private static final String CODEPOINT_LABEL = I18N.getString(CLASS_NAME
             + ".codepoint");
-    
-    /** The Constant RANGE_LABEL. */
+
+    /**
+     * The Constant RANGE_LABEL.
+     */
     private static final String RANGE_LABEL = I18N.getString(CLASS_NAME
             + ".range");
-    
-    /** The Constant XML_ID_LABEL. */
+
+    /**
+     * The Constant XML_ID_LABEL.
+     */
     private static final String XML_ID_LABEL = I18N.getString(CLASS_NAME
             + ".xmlId");
 
@@ -60,15 +74,15 @@ public class DescriptionRenderer extends JLabel implements TableCellRenderer {
      * Instantiates a new description renderer.
      */
     public DescriptionRenderer() {
-        setBorder(new EmptyBorder(BORDER_WIDTH, BORDER_WIDTH, BORDER_WIDTH,
-                BORDER_WIDTH));
+        setBorder(new EmptyBorder(BORDER_THICKNESS, BORDER_THICKNESS, BORDER_THICKNESS,
+                BORDER_THICKNESS));
     }
 
     /* (non-Javadoc)
      * @see javax.swing.table.TableCellRenderer#getTableCellRendererComponent(javax.swing.JTable, java.lang.Object, boolean, boolean, int, int)
      */
     public Component getTableCellRendererComponent(JTable table, Object value,
-            boolean isSelected, boolean hasFocus, int row, int column) {
+                                                   boolean isSelected, boolean hasFocus, int row, int column) {
 
         if (value == null) {
             setText("");

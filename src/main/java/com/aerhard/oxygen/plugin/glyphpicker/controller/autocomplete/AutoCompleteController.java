@@ -43,17 +43,25 @@ import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinition;
  */
 public class AutoCompleteController {
 
-    /** The logger. */
+    /**
+     * The logger.
+     */
     private static final Logger LOGGER = Logger
             .getLogger(AutoCompleteController.class.getName());
 
-    /** Maps PropertySelector labels to PropertySelector objects. */
+    /**
+     * Maps PropertySelector labels to PropertySelector objects.
+     */
     private final Map<String, PropertySelector> autoCompleteScope = new LinkedHashMap<>();
 
-    /** GlazedLists' modified auto complete support. */
+    /**
+     * GlazedLists' modified auto complete support.
+     */
     private CustomAutoCompleteSupport<String> autoCompleteSupport = null;
 
-    /** The auto complete combo component. */
+    /**
+     * The auto complete combo component.
+     */
     private final JComboBox<String> autoCompleteCombo;
 
     /**
@@ -62,24 +70,22 @@ public class AutoCompleteController {
      */
     private final GlyphSelect glyphSelect = new GlyphSelect();
 
-    /** The sorted list model. */
+    /**
+     * The sorted list model.
+     */
     private final SortedList<GlyphDefinition> sortedList;
 
     /**
      * Instantiates a new AutoCompleteController.
      *
-     * @param scopeIndex
-     *            the index of the auto complete scope combo's item to be selected initially
-     * @param autoCompleteCombo
-     *            the auto complete combo component
-     * @param scopeCombo
-     *            the scope combo component
-     * @param sortedList
-     *            the sorted list model
+     * @param scopeIndex        the index of the auto complete scope combo's item to be selected initially
+     * @param autoCompleteCombo the auto complete combo component
+     * @param scopeCombo        the scope combo component
+     * @param sortedList        the sorted list model
      */
     public AutoCompleteController(int scopeIndex,
-            JComboBox<String> autoCompleteCombo, JComboBox<String> scopeCombo,
-            SortedList<GlyphDefinition> sortedList) {
+                                  JComboBox<String> autoCompleteCombo, JComboBox<String> scopeCombo,
+                                  SortedList<GlyphDefinition> sortedList) {
 
         this.autoCompleteCombo = autoCompleteCombo;
         this.sortedList = sortedList;
@@ -124,13 +130,11 @@ public class AutoCompleteController {
     /**
      * Initializes the auto complete scope combo component.
      *
-     * @param scopeIndex
-     *            the index of the auto complete scope combo's item to be selected initially
-     * @param scopeCombo
-     *            the scope combo component
+     * @param scopeIndex the index of the auto complete scope combo's item to be selected initially
+     * @param scopeCombo the scope combo component
      */
     private void initAutoCompleteScopeCombo(int scopeIndex,
-            JComboBox<String> scopeCombo) {
+                                            JComboBox<String> scopeCombo) {
         DefaultComboBoxModel<String> autoCompleteScopeModel = new DefaultComboBoxModel<>();
 
         for (String property : autoCompleteScope.keySet()) {
@@ -164,8 +168,7 @@ public class AutoCompleteController {
     /**
      * Gets a propertySelector from the autoCompleteScope by index.
      *
-     * @param index
-     *            the index
+     * @param index the index
      * @return the propertySelector
      */
     public final PropertySelector getPropertySelectorByIndex(int index) {
@@ -176,8 +179,7 @@ public class AutoCompleteController {
     /**
      * Sets the auto complete support implementing the supplied PropertySelector.
      *
-     * @param propertySelector
-     *            the property selector object
+     * @param propertySelector the property selector object
      */
     private void setAutoCompleteSupport(final PropertySelector propertySelector) {
         SwingUtilities.invokeLater(new Runnable() {

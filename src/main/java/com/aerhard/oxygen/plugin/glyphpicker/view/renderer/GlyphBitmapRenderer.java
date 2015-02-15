@@ -31,7 +31,9 @@ public class GlyphBitmapRenderer extends GlyphRenderer {
 
     private static final long serialVersionUID = 1L;
 
-    /** The background color of list items which haven't been loaded yet. */
+    /**
+     * The background color of list items which haven't been loaded yet.
+     */
     private final Color emptyColor = UIManager
             .getColor("TextField.inactiveBackground");
 

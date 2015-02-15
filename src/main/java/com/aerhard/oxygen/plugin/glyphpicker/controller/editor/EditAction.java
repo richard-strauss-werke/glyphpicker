@@ -35,30 +35,35 @@ public class EditAction extends AbstractPickerAction {
 
     private static final long serialVersionUID = 1L;
 
-    /** The key of the action. */
+    /**
+     * The key of the action.
+     */
     public static final String KEY = "changesInEditor";
 
-    /** The panel from which the data source editor has been opened. */
+    /**
+     * The panel from which the data source editor has been opened.
+     */
     private final JPanel panel;
 
-    /** The original data source list. */
+    /**
+     * The original data source list.
+     */
     private final DataSourceList dataSourceList;
 
-    /** The name of the class. */
+    /**
+     * The name of the class.
+     */
     private static final String CLASS_NAME = EditAction.class.getSimpleName();
 
     /**
      * Instantiates a new EditAction.
      *
-     * @param listener
-     *            the property change listener to be added to this action
-     * @param panel
-     *            The panel from which the data source editor has been opened
-     * @param dataSourceList
-     *            The original data source list
+     * @param listener       the property change listener to be added to this action
+     * @param panel          The panel from which the data source editor has been opened
+     * @param dataSourceList The original data source list
      */
     public EditAction(PropertyChangeListener listener, JPanel panel,
-            DataSourceList dataSourceList) {
+                      DataSourceList dataSourceList) {
         super(CLASS_NAME, Icons.OPTIONS_SHORTCUT_CENTERED);
         addPropertyChangeListener(listener);
         this.panel = panel;

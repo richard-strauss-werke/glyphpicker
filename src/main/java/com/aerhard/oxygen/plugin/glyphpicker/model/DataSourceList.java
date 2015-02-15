@@ -32,17 +32,23 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class DataSourceList extends AbstractListModel<String> implements
         ComboBoxModel<String> {
-    
+
     private static final long serialVersionUID = 1L;
 
-    /** The maximum number of items in the list. */
+    /**
+     * The maximum number of items in the list.
+     */
     private static final int ITEM_MAX = 20;
 
-    /** The selected item. */
+    /**
+     * The selected item.
+     */
     @XmlTransient
     private Object selectedItem;
 
-    /** The data sources. */
+    /**
+     * The data sources.
+     */
     @XmlElement(name = "dataSource")
     private List<DataSource> data;
 

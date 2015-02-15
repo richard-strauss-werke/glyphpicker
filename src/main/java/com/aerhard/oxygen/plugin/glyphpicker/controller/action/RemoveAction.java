@@ -17,6 +17,7 @@ package com.aerhard.oxygen.plugin.glyphpicker.controller.action;
 
 import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeListener;
+
 import ca.odell.glazedlists.EventList;
 import ca.odell.glazedlists.FilterList;
 
@@ -28,35 +29,45 @@ import ro.sync.ui.Icons;
  * An action which removes the selected item from a glyph list model.
  */
 public class RemoveAction extends AbstractPickerAction {
-    
+
     private static final long serialVersionUID = 1L;
 
-    /** The key of the action. */
+    /**
+     * The key of the action.
+     */
     public static final String KEY = "remove";
 
-    /** The glyph list model. */
+    /**
+     * The glyph list model.
+     */
     private final EventList<GlyphDefinition> glyphList;
-    
-    /** The filter list model. */
+
+    /**
+     * The filter list model.
+     */
     private final FilterList<GlyphDefinition> filterList;
-    
-    /** The list component. */
+
+    /**
+     * The list component.
+     */
     private final GlyphGrid list;
 
-    /** The name of the class. */
+    /**
+     * The name of the class.
+     */
     private static final String CLASS_NAME = RemoveAction.class.getSimpleName();
 
     /**
      * Instantiates a new RemoveAction.
      *
-     * @param listener the property change listener to be added to this action
-     * @param glyphList the glyph list model
+     * @param listener   the property change listener to be added to this action
+     * @param glyphList  the glyph list model
      * @param filterList the filter list model
-     * @param list the list component
+     * @param list       the list component
      */
     public RemoveAction(PropertyChangeListener listener,
-            EventList<GlyphDefinition> glyphList,
-            FilterList<GlyphDefinition> filterList, GlyphGrid list) {
+                        EventList<GlyphDefinition> glyphList,
+                        FilterList<GlyphDefinition> filterList, GlyphGrid list) {
         super(CLASS_NAME, Icons.REMOVE_MENU);
         this.addPropertyChangeListener(listener);
         this.glyphList = glyphList;

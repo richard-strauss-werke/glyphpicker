@@ -39,8 +39,10 @@ import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinition;
 public class GlyphTextRenderer extends GlyphRenderer {
 
     private static final long serialVersionUID = 1L;
-    
-    /** The font attributes. */
+
+    /**
+     * The font attributes.
+     */
     private final Map<TextAttribute, Integer> attr;
 
     /**

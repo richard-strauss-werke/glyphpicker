@@ -38,33 +38,37 @@ import com.aerhard.oxygen.plugin.glyphpicker.view.renderer.DescriptionRenderer;
  */
 public class GlyphSelectionChangeHandler implements ListSelectionListener {
 
-    /** The panel containing the glyph info in grid view. */
+    /**
+     * The panel containing the glyph info in grid view.
+     */
     private final JTextPane infoLabel;
 
-    /** The actions affected by selection changes. */
+    /**
+     * The actions affected by selection changes.
+     */
     private final Set<Action> actions;
 
-    /** The filtered glyph list. */
+    /**
+     * The filtered glyph list.
+     */
     private final FilterList<GlyphDefinition> filterList;
 
-    /** The sorted glyph list. */
+    /**
+     * The sorted glyph list.
+     */
     private final SortedList<GlyphDefinition> sortedList;
 
     /**
      * Instantiates a new GlyphSelectionChangeHandler.
      *
-     * @param infoLabel
-     *            The panel containing the glyph info in grid view
-     * @param sortedList
-     *            The sorted glyph list
-     * @param filterList
-     *            The filtered glyph list
-     * @param actions
-     *            The actions affected by selection changes
+     * @param infoLabel  The panel containing the glyph info in grid view
+     * @param sortedList The sorted glyph list
+     * @param filterList The filtered glyph list
+     * @param actions    The actions affected by selection changes
      */
     public GlyphSelectionChangeHandler(JTextPane infoLabel,
-            SortedList<GlyphDefinition> sortedList,
-            FilterList<GlyphDefinition> filterList, Set<Action> actions) {
+                                       SortedList<GlyphDefinition> sortedList,
+                                       FilterList<GlyphDefinition> filterList, Set<Action> actions) {
         this.infoLabel = infoLabel;
         this.sortedList = sortedList;
         this.filterList = filterList;
@@ -109,13 +113,11 @@ public class GlyphSelectionChangeHandler implements ListSelectionListener {
     /**
      * Adjust the affected actions to the glyph selection change.
      *
-     * @param enableActions
-     *            indicates if the actions should be enabled or disabled
-     * @param model
-     *            the selection event's origin model
+     * @param enableActions indicates if the actions should be enabled or disabled
+     * @param model         the selection event's origin model
      */
     private void adjustActions(Boolean enableActions,
-            DefaultEventSelectionModel<GlyphDefinition> model) {
+                               DefaultEventSelectionModel<GlyphDefinition> model) {
         boolean isSortingOrFiltering = sortedList.getComparator() != null
                 || sortedList.size() > filterList.size();
 
@@ -124,18 +126,12 @@ public class GlyphSelectionChangeHandler implements ListSelectionListener {
             if (isSortingOrFiltering
                     && (action instanceof MoveUpAction || action instanceof MoveDownAction)) {
                 action.setEnabled(false);
-            }
-
-            else if (action instanceof MoveUpAction && model.isSelectedIndex(0)) {
+            } else if (action instanceof MoveUpAction && model.isSelectedIndex(0)) {
                 action.setEnabled(false);
-            }
-
-            else if (action instanceof MoveDownAction
+            } else if (action instanceof MoveDownAction
                     && model.isSelectedIndex(filterList.size() - 1)) {
                 action.setEnabled(false);
-            }
-
-            else {
+            } else {
                 action.setEnabled(enableActions);
             }
         }

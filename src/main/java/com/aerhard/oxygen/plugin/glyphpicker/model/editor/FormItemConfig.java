@@ -21,17 +21,21 @@ import javax.swing.JComponent;
  * A class providing config information about form controls in the editor window.
  */
 public class FormItemConfig {
-    
-    /** The form control's component. */
+
+    /**
+     * The form control's component.
+     */
     private final JComponent component;
-    
-    /** The form control's label. */
+
+    /**
+     * The form control's label.
+     */
     private final String label;
 
     /**
      * Instantiates a new FormItemConfig.
      *
-     * @param label the label
+     * @param label     the label
      * @param component the component
      */
     public FormItemConfig(String label, JComponent component) {

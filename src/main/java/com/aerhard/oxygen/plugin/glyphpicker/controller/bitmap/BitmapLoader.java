@@ -22,6 +22,7 @@ interface BitmapLoader {
 
     /**
      * Gets an image icon.
+     *
      * @return the image icon
      */
     GlyphBitmapIcon getImage();

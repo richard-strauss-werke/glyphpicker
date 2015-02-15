@@ -59,52 +59,84 @@ public class DataSourceEditor extends JPanel {
 
     private static final long serialVersionUID = 1L;
 
-    /** The name of the "formEditingOccurred" property. */
+    /**
+     * The name of the "formEditingOccurred" property.
+     */
     public static final String FORM_EDITING_OCCURRED = "formEditingOccurred";
 
-    /** The component's preferred width. */
+    /**
+     * The component's preferred width.
+     */
     private static final int PREFERRED_WIDTH = 600;
-    
-    /** The component's preferred height. */
+
+    /**
+     * The component's preferred height.
+     */
     private static final int PREFERRED_HEIGHT = 400;
 
-    /** The list component. */
+    /**
+     * The list component.
+     */
     private final JList<DataSource> list;
 
-    /** The label's text field. */
+    /**
+     * The label's text field.
+     */
     private final JTextField labelTextField;
-    
-    /** The path's text field. */
+
+    /**
+     * The path's text field.
+     */
     private final JTextField pathTextField;
-    
-    /** The font name's text field. */
+
+    /**
+     * The font name's text field.
+     */
     private final JTextField fontNameTextField;
-    
-    /** The display mode's combo. */
+
+    /**
+     * The display mode's combo.
+     */
     private final JComboBox<String> glyphRendererCombo;
-    
-    /** The size's text field. */
+
+    /**
+     * The size's text field.
+     */
     private final JTextField sizeTextField;
-    
-    /** The template's text field. */
+
+    /**
+     * The template's text field.
+     */
     private final JTextField templateTextField;
-    
-    /** The mapping type attribute's text field. */
+
+    /**
+     * The mapping type attribute's text field.
+     */
     private final JTextField typeAttributeTextField;
-    
-    /** The mapping subtype attribute's text field. */
+
+    /**
+     * The mapping subtype attribute's text field.
+     */
     private final JTextField subtypeAttributeTextField;
-    
-    /** The "parse mapping" check box. */
+
+    /**
+     * The "parse mapping" check box.
+     */
     private final JCheckBox parseMappingCheckBox;
-    
-    /** The button pane containing list form controls. */
+
+    /**
+     * The button pane containing list form controls.
+     */
     private final JPanel listButtonPane;
-    
-    /** The form panel. */
+
+    /**
+     * The form panel.
+     */
     private final JPanel formPanel;
 
-    /** A list of form item config objects. */
+    /**
+     * A list of form item config objects.
+     */
     private final List<FormItemConfig> formItemConfigList = new ArrayList<>();
 
     /**
@@ -122,7 +154,7 @@ public class DataSourceEditor extends JPanel {
         JPanel listPanel = new JPanel();
         listPanel.setBorder(new CompoundBorder(new TitledBorder(UIManager
                 .getBorder("TitledBorder.border"), i18n.getString(className
-                + ".dataSources"), TitledBorder.LEADING, TitledBorder.TOP,
+                + ".sources"), TitledBorder.LEADING, TitledBorder.TOP,
                 null, new Color(0, 0, 0)), new EmptyBorder(8, 8, 8, 8)));
         add(listPanel, BorderLayout.WEST);
         listPanel.setLayout(new BorderLayout(0, 0));
@@ -142,11 +174,11 @@ public class DataSourceEditor extends JPanel {
                 new Color(0, 0, 0)), new EmptyBorder(8, 8, 8, 8)));
         add(formPanel);
         GridBagLayout gbl = new GridBagLayout();
-        gbl.columnWidths = new int[] { 102, 46 };
-        gbl.rowHeights = new int[] { 20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-        gbl.columnWeights = new double[] { 0.0, 1.0 };
-        gbl.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
-                0.0, Double.MIN_VALUE };
+        gbl.columnWidths = new int[]{102, 46};
+        gbl.rowHeights = new int[]{20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+        gbl.columnWeights = new double[]{0.0, 1.0};
+        gbl.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+                0.0, Double.MIN_VALUE};
         formPanel.setLayout(gbl);
 
         labelTextField = new JTextField();
@@ -195,9 +227,9 @@ public class DataSourceEditor extends JPanel {
         }
     }
 
-/**
- * A DocumentListener added to the form text fields, firing the change event of the property FORM_EDITING_OCCURRED
- */
+    /**
+     * A DocumentListener added to the form text fields, firing the change event of the property FORM_EDITING_OCCURRED
+     */
     private class TextFieldEditingListener implements DocumentListener {
 
         /* (non-Javadoc)
@@ -229,7 +261,7 @@ public class DataSourceEditor extends JPanel {
      * An ActionListener added to the form combo, firing the change event of the property FORM_EDITING_OCCURRED
      */
     private class ComboChangeListener implements ActionListener {
-        
+
         /* (non-Javadoc)
          * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
          */
@@ -243,7 +275,7 @@ public class DataSourceEditor extends JPanel {
      * Adds a component to the form panel.
      *
      * @param index the component's index
-     * @param eci the FormItemConfig object specifying the component's properties
+     * @param eci   the FormItemConfig object specifying the component's properties
      */
     private void addToFormPanel(int index, FormItemConfig eci) {
         JLabel label = new JLabel(eci.getLabel());
@@ -259,14 +291,10 @@ public class DataSourceEditor extends JPanel {
             ((JTextField) component).setColumns(10);
             ((JTextField) component).getDocument().addDocumentListener(
                     new TextFieldEditingListener());
-        }
-
-        else if (component instanceof JComboBox) {
+        } else if (component instanceof JComboBox) {
             ((JComboBox<?>) component)
                     .addActionListener(new ComboChangeListener());
-        }
-
-        else if (component instanceof JCheckBox) {
+        } else if (component instanceof JCheckBox) {
             ((JCheckBox) component)
                     .addActionListener(new ComboChangeListener());
         }

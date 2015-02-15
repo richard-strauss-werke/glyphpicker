@@ -172,6 +172,7 @@ public class MainController implements PropertyChangeListener {
 
     /**
      * Creates the image cache folder and the corresponding ImageCache object
+     *
      * @param config the plugin config
      * @return the image cache or null if no cache folder could be created
      */

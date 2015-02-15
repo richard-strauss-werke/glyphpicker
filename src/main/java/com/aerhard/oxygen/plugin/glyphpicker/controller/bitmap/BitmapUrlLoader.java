@@ -80,12 +80,12 @@ public class BitmapUrlLoader implements BitmapLoader {
     /**
      * Instantiates a new bitmap file loader.
      *
-     * @param d              The glyph definition
-     * @param basePath       The base path to the graphic
-     * @param relativePath   The path to the graphic relative to the base path
-     * @param imageProcessor The image processor used to scale the image
-     * @param containerSize  The bitmap container's size
-     * @param imageCacheAccess     The image cache
+     * @param d                The glyph definition
+     * @param basePath         The base path to the graphic
+     * @param relativePath     The path to the graphic relative to the base path
+     * @param imageProcessor   The image processor used to scale the image
+     * @param containerSize    The bitmap container's size
+     * @param imageCacheAccess The image cache
      */
     public BitmapUrlLoader(GlyphDefinition d, String basePath, String relativePath,
                            ImageProcessor imageProcessor, int containerSize, ImageCacheAccess imageCacheAccess) {
@@ -127,7 +127,7 @@ public class BitmapUrlLoader implements BitmapLoader {
 
                 if (imageCacheAccess != null) {
 
-                    // save the original image instead of the scaled image so the image cache
+                    // NB: saves the original image instead of the scaled image so the image cache
                     // doesn't have to be cleared when a new bitmap size ratio is provided by
                     // the user:
                     imageCacheAccess.writeImage(bi, imageNameInCache);
@@ -177,22 +177,6 @@ public class BitmapUrlLoader implements BitmapLoader {
             httpClient.getConnectionManager().shutdown();
         }
         return null;
-    }
-
-    /**
-     * Converts an Image to a BufferedImage
-     *
-     * @param img The Image to be converted
-     * @return The converted BufferedImage
-     * @deprecated
-     */
-    public static BufferedImage toBufferedImage(Image img) {
-        BufferedImage bi = new BufferedImage(img.getWidth(null), img.getHeight(null),
-                BufferedImage.TYPE_INT_ARGB);
-        Graphics2D g = bi.createGraphics();
-        g.drawImage(img, 0, 0, null);
-        g.dispose();
-        return bi;
     }
 
 }

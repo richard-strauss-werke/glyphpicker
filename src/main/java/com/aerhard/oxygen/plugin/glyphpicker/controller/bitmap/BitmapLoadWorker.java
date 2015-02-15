@@ -52,9 +52,10 @@ public class BitmapLoadWorker extends
 
     /**
      * Instantiates a new BitmapLoadWorker.
+     *
      * @param glyphDefinitions the glyph definitions
      * @param size             The maximum scaled height / width of the images
-     * @param imageCacheAccess         The plugin's config directory
+     * @param imageCacheAccess The plugin's config directory
      */
     public BitmapLoadWorker(List<GlyphDefinition> glyphDefinitions,
                             int size, ImageCacheAccess imageCacheAccess) {

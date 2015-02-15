@@ -28,13 +28,17 @@ import javax.swing.Timer;
 public class HighlightLabel extends JLabel {
 
     private static final long serialVersionUID = 1L;
-    
-    /** The original foreground. */
+
+    /**
+     * The original foreground.
+     */
     private Color originalForeground = null;
 
-    /** The duration of the highlighting. */
+    /**
+     * The duration of the highlighting.
+     */
     private static final int DURATION = 300;
-    
+
     /**
      * Instantiates a new HighlightLabel.
      *

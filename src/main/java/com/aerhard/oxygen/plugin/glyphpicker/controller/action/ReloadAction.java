@@ -27,23 +27,29 @@ import javax.swing.Action;
  * An action to reload the list model.
  */
 public class ReloadAction extends AbstractPickerAction {
-    
+
     private static final long serialVersionUID = 1L;
 
-    /** The key of the action. */
+    /**
+     * The key of the action.
+     */
     public static final String KEY = "reload";
 
-    /** The actions affected by this action. */
+    /**
+     * The actions affected by this action.
+     */
     private final Set<Action> actions;
 
-    /** The name of the class. */
+    /**
+     * The name of the class.
+     */
     private static final String CLASS_NAME = ReloadAction.class.getSimpleName();
 
     /**
      * Instantiates a new ReloadAction.
      *
      * @param listener the property change listener to be added to this action
-     * @param actions The actions affected by this action
+     * @param actions  The actions affected by this action
      */
     public ReloadAction(PropertyChangeListener listener, Set<Action> actions) {
         super(CLASS_NAME, Icons.REFRESH);

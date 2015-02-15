@@ -34,27 +34,35 @@ import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinitions;
  */
 public class UserCollectionLoader {
 
-    /** The logger. */
+    /**
+     * The logger.
+     */
     private static final Logger LOGGER = Logger
             .getLogger(UserCollectionLoader.class.getName());
 
-    /** The folder path to the user collection data file. */
+    /**
+     * The folder path to the user collection data file.
+     */
     private final String pathName;
-    
-    /** The name of the user collection data file. */
+
+    /**
+     * The name of the user collection data file.
+     */
     private final String fileName;
 
-    /** The i18n resource bundle. */
+    /**
+     * The i18n resource bundle.
+     */
     private final ResourceBundle i18n;
 
     /**
      * Instantiates a new UserCollectionLoader.
      *
-     * @param workspace oXygen's plugin workspace
+     * @param workspace  oXygen's plugin workspace
      * @param properties the plugin's properties
      */
     public UserCollectionLoader(StandalonePluginWorkspace workspace,
-            Properties properties) {
+                                Properties properties) {
 
         i18n = ResourceBundle.getBundle("GlyphPicker");
 

@@ -33,36 +33,52 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class GlyphDefinition implements Cloneable {
 
-    /** The id. */
+    /**
+     * The id.
+     */
     @XmlAttribute(name = "id", namespace = "http://www.w3.org/XML/1998/namespace")
     private String id;
 
-    /** The char name. */
+    /**
+     * The char name.
+     */
     @XmlElement(name = "charName")
     private String charName;
 
-    /** The code point. */
+    /**
+     * The code point.
+     */
     @XmlElement(name = "mapping")
     private String codePoint;
 
-    /** The url. */
+    /**
+     * The url.
+     */
     @XmlElement(name = "graphic")
     private String url;
 
-    /** The range. */
+    /**
+     * The range.
+     */
     @XmlElement(name = "range")
     private String range;
 
-    /** The glyph references in the relevant <mapping> of the glyph definition. */
+    /**
+     * The glyph references in the relevant <mapping> of the glyph definition.
+     */
     @XmlElement(name = "g")
     @XmlElementWrapper(name = "glyphReferences")
     private List<GlyphReference> glyphReferences = null;
 
-    /** The data source in which the current glyph definition originates. */
+    /**
+     * The data source in which the current glyph definition originates.
+     */
     @XmlElement(name = "dataSource")
     private DataSource dataSource;
 
-    /** The icon component. */
+    /**
+     * The icon component.
+     */
     @XmlTransient
     private ImageIcon icon = null;
 

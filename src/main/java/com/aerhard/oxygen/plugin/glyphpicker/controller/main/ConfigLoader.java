@@ -34,27 +34,35 @@ import com.aerhard.oxygen.plugin.glyphpicker.model.DataSourceList;
  */
 public class ConfigLoader {
 
-    /** The logger. */
+    /**
+     * The logger.
+     */
     private static final Logger LOGGER = Logger.getLogger(ConfigLoader.class
             .getName());
 
-    /** The folder path to the config file. */
+    /**
+     * The folder path to the config file.
+     */
     private final String pathName;
-    
-    /** The name of the config file. */
+
+    /**
+     * The name of the config file.
+     */
     private final String fileName;
-    
-    /** The config object. */
+
+    /**
+     * The config object.
+     */
     private Config config = null;
 
     /**
      * Instantiates a new ConfigLoader.
      *
-     * @param workspace oXygen's plugin workspace
+     * @param workspace  oXygen's plugin workspace
      * @param properties the plugin's properties file
      */
     public ConfigLoader(StandalonePluginWorkspace workspace,
-            Properties properties) {
+                        Properties properties) {
         pathName = workspace.getPreferencesDirectory() + "/"
                 + properties.getProperty("config.path");
         fileName = properties.getProperty("config.filename");

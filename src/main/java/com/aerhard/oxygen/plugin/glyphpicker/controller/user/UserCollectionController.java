@@ -21,9 +21,7 @@ import java.util.List;
 import java.util.Properties;
 import java.util.Set;
 
-import javax.swing.AbstractAction;
-import javax.swing.Action;
-import javax.swing.SwingUtilities;
+import javax.swing.*;
 
 import com.aerhard.oxygen.plugin.glyphpicker.controller.action.*;
 import com.aerhard.oxygen.plugin.glyphpicker.controller.bitmap.ImageCacheAccess;
@@ -44,31 +42,6 @@ import com.aerhard.oxygen.plugin.glyphpicker.view.TabPanel;
 public class UserCollectionController extends TabController {
 
     /**
-     * The save action.
-     */
-    private AbstractAction saveAction;
-
-    /**
-     * The reload action.
-     */
-    private AbstractAction reloadAction;
-
-    /**
-     * The remove action.
-     */
-    private AbstractAction removeAction;
-
-    /**
-     * The move-up action.
-     */
-    private MoveUpAction moveUpAction;
-
-    /**
-     * The move-down action.
-     */
-    private MoveDownAction moveDownAction;
-
-    /**
      * The user collection data loader.
      */
     private final UserCollectionLoader loader;
@@ -78,18 +51,28 @@ public class UserCollectionController extends TabController {
      */
     private boolean listInSync = true;
 
-    /** The set of actions whose activation depends on the sync status of memory / disk lists. */
-    private Set<Action> syncDependentActions = new HashSet<>();
+    /**
+     * The set of actions whose activation depends on the sync status of memory / disk lists.
+     */
+    private final Set<Action> syncDependentActions = new HashSet<>();
 
-    /** The set of actions whose activation depends on whether there is a list selection or not. */
-    private Set<Action> selectionDependentActions = new HashSet<>();
+    /**
+     * The set of actions whose activation depends on whether there is a list selection or not.
+     */
+    private final Set<Action> selectionDependentActions = new HashSet<>();
+
+    /**
+     * The move-down action
+     */
+    private MoveDownAction moveDownAction;
 
     /**
      * Instantiates a new UserCollectionController.
-     *  @param panel      the user collection tab's container panel
-     * @param config     the plugin config
-     * @param properties the plugin properties
-     * @param workspace  the workspace
+     *
+     * @param panel            the user collection tab's container panel
+     * @param config           the plugin config
+     * @param properties       the plugin properties
+     * @param workspace        the workspace
      * @param imageCacheAccess the image cache
      */
     public UserCollectionController(TabPanel panel, Config config,
@@ -111,27 +94,29 @@ public class UserCollectionController extends TabController {
      */
     private void setAdditionalActions() {
 
-        controlPanel.addToToolbar(insertBtn, 0);
+        int position = 2;
 
-        removeAction = new RemoveAction(this, glyphList, filterList, list);
-        removeAction.setEnabled(false);
-        controlPanel.addToToolbar(removeAction, 1);
-
-        moveUpAction = new MoveUpAction(this, glyphList, list);
+        MoveUpAction moveUpAction = new MoveUpAction(this, glyphList, list);
         moveUpAction.setEnabled(false);
-        controlPanel.addToToolbar(moveUpAction, 2);
+        controlPanel.addToToolbar(moveUpAction, position++);
 
         moveDownAction = new MoveDownAction(this, glyphList, list);
         moveDownAction.setEnabled(false);
-        controlPanel.addToToolbar(moveDownAction, 3);
+        controlPanel.addToToolbar(moveDownAction, position++);
 
-        saveAction = new SaveAction(this, syncDependentActions);
+        AbstractAction removeAction = new RemoveAction(this, glyphList, filterList, list);
+        removeAction.setEnabled(false);
+        controlPanel.addToToolbar(removeAction, position++);
+
+        controlPanel.addToToolbar(new JToolBar.Separator(null), position++);
+
+        AbstractAction saveAction = new SaveAction(this, syncDependentActions);
         saveAction.setEnabled(false);
-        controlPanel.addToToolbar(saveAction, 4);
+        controlPanel.addToToolbar(saveAction, position++);
 
-        reloadAction = new ReloadAction(this, syncDependentActions);
+        AbstractAction reloadAction = new ReloadAction(this, syncDependentActions);
         reloadAction.setEnabled(false);
-        controlPanel.addToToolbar(reloadAction, 5);
+        controlPanel.addToToolbar(reloadAction, position);
 
         syncDependentActions.add(saveAction);
         syncDependentActions.add(reloadAction);
@@ -210,11 +195,16 @@ public class UserCollectionController extends TabController {
     /**
      * Adds a glyph definition to the user collection.
      *
-     * @param d the glyh definition to add
+     * @param d the glyph definition to add
      */
     public void addGlyphDefinition(GlyphDefinition d) {
         setListInSync(false);
         glyphList.add(d);
+        if (glyphList.size() == 2
+                && selectionModel.isSelectedIndex(0)
+                ) {
+            moveDownAction.setEnabled(true);
+        }
     }
 
     /*

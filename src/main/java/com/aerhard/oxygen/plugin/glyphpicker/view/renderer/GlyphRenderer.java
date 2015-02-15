@@ -32,16 +32,24 @@ public abstract class GlyphRenderer extends JLabel {
 
     private static final long serialVersionUID = 1L;
 
-    /** The container's selection background. */
+    /**
+     * The container's selection background.
+     */
     private Color containerSelectionBackground;
-    
-    /** The container's selection foreground. */
+
+    /**
+     * The container's selection foreground.
+     */
     private Color containerSelectionForeground;
-    
-    /** The container's background. */
+
+    /**
+     * The container's background.
+     */
     private Color containerBackground;
-    
-    /** The container's foreground. */
+
+    /**
+     * The container's foreground.
+     */
     private Color containerForeground;
 
     /**
@@ -74,12 +82,12 @@ public abstract class GlyphRenderer extends JLabel {
     /**
      * Gets the renderer component to display the provided glyph definition.
      *
-     * @param d the glyph definition
+     * @param d          the glyph definition
      * @param isSelected the is selected
      * @return the renderer component
      */
     public abstract Component getRendererComponent(GlyphDefinition d,
-            boolean isSelected);
+                                                   boolean isSelected);
 
     /**
      * Sets the component's background based on the value of isSelected.

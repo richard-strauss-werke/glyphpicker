@@ -49,7 +49,6 @@ import com.aerhard.oxygen.plugin.glyphpicker.view.ControlPanel;
 import com.aerhard.oxygen.plugin.glyphpicker.view.GlyphGrid;
 import com.aerhard.oxygen.plugin.glyphpicker.view.GlyphTable;
 import com.aerhard.oxygen.plugin.glyphpicker.view.GlyphTableFormat;
-import com.aerhard.oxygen.plugin.glyphpicker.view.HighlightButton;
 import com.aerhard.oxygen.plugin.glyphpicker.view.renderer.GlyphRendererAdapter;
 
 /**
@@ -133,20 +132,16 @@ public abstract class TabController implements PropertyChangeListener {
     /**
      * The action to trigger the insertion of a glyph reference into an XML document.
      */
-    protected AbstractAction insertAction;
-
-    /**
-     * The button to trigger the insert action.
-     */
-    protected HighlightButton insertBtn;
+    protected final AbstractAction insertAction;
 
     /**
      * Instantiates a new tab controller.
+     *
      * @param tabPanel              The container panel in the tab
      * @param config                The plugin config
      * @param searchFieldScopeIndex the index of the auto complete scope checkbox which should be selected initially
      * @param listViewIndex         the index of the list view to show initially. Set 0 for the grid and 1 for the table component.
-     * @param imageCacheAccess            the image cache
+     * @param imageCacheAccess      the image cache
      */
     @SuppressWarnings("unchecked")
     public TabController(final TabPanel tabPanel,
@@ -234,7 +229,7 @@ public abstract class TabController implements PropertyChangeListener {
 
         insertAction = new InsertXmlAction(this, selectionModel);
         insertAction.setEnabled(false);
-        insertBtn = new HighlightButton(insertAction);
+        controlPanel.getInsertBtn().setAction(insertAction);
 
         initMouseListeners();
 
@@ -253,7 +248,6 @@ public abstract class TabController implements PropertyChangeListener {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (e.getClickCount() == 2) {
-                    insertBtn.highlight();
                     insertAction.actionPerformed(null);
                 }
             }
@@ -264,18 +258,13 @@ public abstract class TabController implements PropertyChangeListener {
 
     /**
      * Associated the enter key with the InsertXmlAction in a component.
+     *
      * @param component the component
      */
     private void setEnterKeyAction(JComponent component) {
         component.getInputMap().put(KeyStroke.getKeyStroke("ENTER"),
                 "insert");
-        component.getActionMap().put("insert", new AbstractAction() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                insertBtn.highlight();
-                insertAction.actionPerformed(null);
-            }
-        });
+        component.getActionMap().put("insert", insertAction);
     }
 
     /**

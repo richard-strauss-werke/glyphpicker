@@ -17,6 +17,7 @@ package com.aerhard.oxygen.plugin.glyphpicker.controller.action;
 
 import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeListener;
+
 import ca.odell.glazedlists.swing.DefaultEventSelectionModel;
 
 import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinition;
@@ -26,27 +27,33 @@ import ro.sync.ui.Icons;
  * An action to trigger the insertion of a glyph reference into an XML document.
  */
 public class InsertXmlAction extends AbstractPickerAction {
-    
+
     private static final long serialVersionUID = 1L;
 
-    /** The key of the action. */
+    /**
+     * The key of the action.
+     */
     public static final String KEY = "insert";
 
-    /** The event selection model. */
+    /**
+     * The event selection model.
+     */
     private final DefaultEventSelectionModel<GlyphDefinition> selectionModel;
 
-    /** The name of the class. */
+    /**
+     * The name of the class.
+     */
     private static final String CLASS_NAME = InsertXmlAction.class.getSimpleName();
 
     /**
      * Instantiates a new InsertXmlAction.
      *
-     * @param listener the property change listener to be added to this action
+     * @param listener       the property change listener to be added to this action
      * @param selectionModel the event selection model
      */
     public InsertXmlAction(PropertyChangeListener listener,
-            DefaultEventSelectionModel<GlyphDefinition> selectionModel) {
-        super(CLASS_NAME, Icons.ADD_FILE_PROJECT_MENU);
+                           DefaultEventSelectionModel<GlyphDefinition> selectionModel) {
+        super(CLASS_NAME, Icons.INSERT_FROM_CHARACTERS_MAP_MENU);
 
         addPropertyChangeListener(listener);
         this.selectionModel = selectionModel;

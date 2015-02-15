@@ -32,21 +32,24 @@ public abstract class AbstractPickerAction extends AbstractAction {
 
     private static final long serialVersionUID = 1L;
 
-    /** The Constant i18n resource bundle. */
+    /**
+     * The Constant i18n resource bundle.
+     */
     protected static final ResourceBundle I18N = ResourceBundle
             .getBundle("GlyphPicker");
 
-    /** The OS dependent name of the Option / Alt key. */
+    /**
+     * The OS dependent name of the Option / Alt key.
+     */
     static final String MODIFIER_NAME = (System.getProperty("os.name")
             .toLowerCase().contains("mac")) ? "Option" : "Alt";
 
     /**
      * Instantiates a new AbstractPickerAction.
      *
-     * @param className
-     *            the name of the subclass; used to identify the action's label,
-     *            description and mnemonic string in the language resource
-     *            bundle
+     * @param className the name of the subclass; used to identify the action's label,
+     *                  description and mnemonic string in the language resource
+     *                  bundle
      */
     public AbstractPickerAction(String className) {
         super(I18N.getString(className + ".label"));
@@ -62,12 +65,10 @@ public abstract class AbstractPickerAction extends AbstractAction {
     /**
      * Instantiates a new AbstractPickerAction.
      *
-    * @param className
-     *            the name of the subclass; used to identify the action's label,
-     *            description and mnemonic string in the language resource
-     *            bundle
-     * @param icon
-     *            the icon path; may be one of the constants defined in ro.sync.ui.Icons
+     * @param className the name of the subclass; used to identify the action's label,
+     *                  description and mnemonic string in the language resource
+     *                  bundle
+     * @param icon      the icon path; may be one of the constants defined in ro.sync.ui.Icons
      */
     public AbstractPickerAction(String className, String icon) {
 //        super(I18N.getString(className + ".label"), new ImageIcon(
@@ -86,10 +87,8 @@ public abstract class AbstractPickerAction extends AbstractAction {
     /**
      * Instantiates a new AbstractPickerAction.
      *
-     * @param label
-     *            the action's label
-     * @param icon
-     *            the action's icon
+     * @param label the action's label
+     * @param icon  the action's icon
      */
     public AbstractPickerAction(String label, ImageIcon icon) {
         super(label, icon);

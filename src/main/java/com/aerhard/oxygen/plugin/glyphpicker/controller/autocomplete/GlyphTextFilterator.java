@@ -28,14 +28,15 @@ import com.aerhard.oxygen.plugin.glyphpicker.model.selector.PropertySelector;
  */
 public class GlyphTextFilterator implements TextFilterator<GlyphDefinition> {
 
-    /** The property selector. */
+    /**
+     * The property selector.
+     */
     private final PropertySelector propertySelector;
 
     /**
      * Instantiates a new GlyphTextFilterator.
      *
-     * @param propertySelector
-     *            the property selector
+     * @param propertySelector the property selector
      */
     public GlyphTextFilterator(PropertySelector propertySelector) {
         this.propertySelector = propertySelector;

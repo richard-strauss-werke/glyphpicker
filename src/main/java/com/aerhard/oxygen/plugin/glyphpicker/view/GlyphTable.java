@@ -38,23 +38,35 @@ public class GlyphTable extends JTable {
 
 
     private static final long serialVersionUID = 1L;
-    
-    /** The preferred width of the first column. */
+
+    /**
+     * The preferred width of the first column.
+     */
     private static final int COL_1_PREFERRED_WIDTH = 70;
-    
-    /** The minimum width of the first column. */
+
+    /**
+     * The minimum width of the first column.
+     */
     private static final int COL_1_MIN_WIDTH = 30;
-    
-    /** The preferred width of the second column. */
+
+    /**
+     * The preferred width of the second column.
+     */
     private static final int COL_2_PREFERRED_WIDTH = 600;
-    
-    /** The minimum width of the second column. */
+
+    /**
+     * The minimum width of the second column.
+     */
     private static final int COL_2_MIN_WIDTH = 10;
 
-    /** The glyph renderer. */
+    /**
+     * The glyph renderer.
+     */
     private TableCellRenderer glyphRenderer;
-    
-    /** The glyph description renderer. */
+
+    /**
+     * The glyph description renderer.
+     */
     private final TableCellRenderer glyphDescriptionRenderer;
 
     /**

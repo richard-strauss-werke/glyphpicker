@@ -23,10 +23,12 @@ import java.awt.event.ActionEvent;
  * An action to trigger sorting of a glyph list model.
  */
 public class SortAction extends AbstractPickerAction {
-    
+
     private static final long serialVersionUID = 1L;
 
-    /** The name of the class. */
+    /**
+     * The name of the class.
+     */
     private static final String CLASS_NAME = SortAction.class.getSimpleName();
 
     /**

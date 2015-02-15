@@ -27,33 +27,46 @@ import java.io.File;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Config {
 
-    /** The plugin's shortcut in oXygen, for possible values see
+    /**
+     * The plugin's shortcut in oXygen, for possible values see
      * http://docs.oracle.com/javase/7/docs/api/javax/swing/KeyStroke.html#getKeyStroke%28java.lang.String%29
      */
     @XmlElement
     private String shortcut;
 
-    /** The tab index. */
+    /**
+     * The tab index.
+     */
     @XmlElement
     private int tabIndex = 1;
 
-    /** The user search field scope index. */
+    /**
+     * The user search field scope index.
+     */
     @XmlElement
     private int userSearchFieldScopeIndex = 0;
 
-    /** The browser search field scope index. */
+    /**
+     * The browser search field scope index.
+     */
     @XmlElement
     private int browserSearchFieldScopeIndex = 0;
 
-    /** The user view index. */
+    /**
+     * The user view index.
+     */
     @XmlElement
     private int userViewIndex = 0;
 
-    /** The browser view index. */
+    /**
+     * The browser view index.
+     */
     @XmlElement
     private int browserViewIndex = 0;
 
-    /** The data sources. */
+    /**
+     * The data sources.
+     */
     @XmlElement(name = "dataSources")
     private DataSourceList dataSources = null;
 

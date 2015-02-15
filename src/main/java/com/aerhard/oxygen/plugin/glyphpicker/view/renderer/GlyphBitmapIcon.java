@@ -25,15 +25,17 @@ import javax.swing.ImageIcon;
 public class GlyphBitmapIcon extends ImageIcon {
 
     private static final long serialVersionUID = 1L;
-    
-    /** The height and width. */
+
+    /**
+     * The height and width.
+     */
     private final int size;
 
     /**
      * Instantiates a new GlyphBitmapIcon.
      *
      * @param image the image
-     * @param size the size
+     * @param size  the size
      */
     public GlyphBitmapIcon(Image image, int size) {
         super(image);

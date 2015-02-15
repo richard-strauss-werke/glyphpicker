@@ -30,11 +30,13 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlRootElement(name = "charDecl")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class GlyphDefinitions {
-    
+
     @XmlTransient
     private static final long serialVersionUID = 1L;
 
-    /** The glyph definition list. */
+    /**
+     * The glyph definition list.
+     */
     @XmlElement(name = "char")
     private List<GlyphDefinition> data = new ArrayList<>();
 

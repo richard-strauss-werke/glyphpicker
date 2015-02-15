@@ -15,21 +15,11 @@
  */
 package com.aerhard.oxygen.plugin.glyphpicker.view;
 
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
+import java.awt.*;
 import java.util.ResourceBundle;
 
-import javax.swing.Action;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JComponent;
-import javax.swing.JPanel;
-import javax.swing.SwingConstants;
-import javax.swing.border.EmptyBorder;
+import javax.swing.*;
 import javax.swing.border.TitledBorder;
-import javax.swing.JToolBar;
-import javax.swing.Box;
 
 import com.jidesoft.swing.JideButton;
 import com.jidesoft.swing.JideToggleButton;
@@ -40,29 +30,50 @@ import com.jidesoft.swing.JideToggleButton;
 public class ControlPanel extends JPanel {
 
     private static final long serialVersionUID = 1L;
-    
-    /** The data source combo. */
+
+    /**
+     * The data source combo.
+     */
     private JComboBox<String> dataSourceCombo;
-    
-    /** The edit button. */
+
+    /**
+     * The edit button.
+     */
+    private final JideButton insertBtn;
+
+    /**
+     * The edit button.
+     */
     private JButton editBtn;
 
-    /** The options button. */
+    /**
+     * The options button.
+     */
     private final JButton optionsBtn;
-    
-    /** The view button. */
+
+    /**
+     * The view button.
+     */
     private final JButton viewBtn;
-    
-    /** The sort button. */
+
+    /**
+     * The sort button.
+     */
     private final JideToggleButton sortBtn;
-    
-    /** The auto complete combo. */
+
+    /**
+     * The auto complete combo.
+     */
     private final JComboBox<String> autoCompleteCombo;
-    
-    /** The auto complete scope combo. */
+
+    /**
+     * The auto complete scope combo.
+     */
     private final JComboBox<String> autoCompleteScopeCombo;
-    
-    /** The toolbar. */
+
+    /**
+     * The toolbar.
+     */
     private final JToolBar toolBar;
 
     /**
@@ -75,88 +86,74 @@ public class ControlPanel extends JPanel {
         ResourceBundle i18n = ResourceBundle.getBundle("GlyphPicker");
         String className = this.getClass().getSimpleName();
 
-        setBorder(new EmptyBorder(0, 8, 0, 8));
-
         int row = 0;
 
         GridBagLayout gridBagLayout = new GridBagLayout();
-        gridBagLayout.columnWidths = new int[] { 62, 199, 55, 55 };
-        gridBagLayout.rowHeights = new int[] { 0, 0, 0, 0 };
-        gridBagLayout.columnWeights = new double[] { 0.0, 1.0, 0.0, 0.0 };
-        gridBagLayout.rowWeights = new double[] { 0.0, Double.MIN_VALUE, 0.0,
-                0.0 };
+        gridBagLayout.columnWidths = new int[]{62, 199, 55, 71};
+        gridBagLayout.rowHeights = new int[]{0, 0, 0, 0};
+        gridBagLayout.columnWeights = new double[]{0.0, 1.0, 0.0, 0.0};
+        gridBagLayout.rowWeights = new double[]{0.0, Double.MIN_VALUE, 0.0,
+                0.0};
         setLayout(gridBagLayout);
 
         toolBar = new JToolBar();
         toolBar.setFloatable(false);
+
+        toolBar.setMargin(new Insets(0, 8, 0, 8));
+        toolBar.setBorder(BorderFactory.createCompoundBorder(
+                        BorderFactory.createMatteBorder(0, 0, 1, 0, UIManager.getColor("Panel.background").darker()),
+                        BorderFactory.createEmptyBorder(4, 8, 4, 8))
+        );
+
         GridBagConstraints gbcToolBar = new GridBagConstraints();
         gbcToolBar.fill = GridBagConstraints.HORIZONTAL;
         gbcToolBar.gridwidth = 4;
-        gbcToolBar.insets = new Insets(5, 0, 5, 5);
+        gbcToolBar.insets = new Insets(0, 0, 8, 0);
         gbcToolBar.gridx = 0;
         gbcToolBar.gridy = row;
         add(toolBar, gbcToolBar);
 
-        toolBar.add(Box.createHorizontalGlue());
+        insertBtn = new JideButton();
+        insertBtn.setHideActionText(true);
+        toolBar.add(insertBtn);
+
+        toolBar.addSeparator();
+
+        toolBar.addSeparator();
 
         sortBtn = new JideToggleButton();
+        sortBtn.setHideActionText(true);
         sortBtn.setVerticalTextPosition(SwingConstants.BOTTOM);
         sortBtn.setHorizontalTextPosition(SwingConstants.CENTER);
         toolBar.add(sortBtn);
 
         viewBtn = new JideButton();
+        viewBtn.setHideActionText(true);
         viewBtn.setVerticalTextPosition(SwingConstants.BOTTOM);
         viewBtn.setHorizontalTextPosition(SwingConstants.CENTER);
         toolBar.add(viewBtn);
 
+        toolBar.addSeparator();
+
         optionsBtn = new JideButton();
+        optionsBtn.setHideActionText(true);
         optionsBtn.setVerticalTextPosition(SwingConstants.BOTTOM);
         optionsBtn.setHorizontalTextPosition(SwingConstants.CENTER);
         toolBar.add(optionsBtn);
 
+
         if (setDataSourceCombo) {
-
-            row++;
-
-            JPanel dataSourcePanel = new JPanel();
-
-            dataSourcePanel.setBorder(new TitledBorder(null, i18n
-                    .getString(className + ".dataSource"),
-                    TitledBorder.LEADING, TitledBorder.TOP, null, null));
-
-            GridBagConstraints gbcDataSourcePanel = new GridBagConstraints();
-            gbcDataSourcePanel.anchor = GridBagConstraints.WEST;
-            gbcDataSourcePanel.fill = GridBagConstraints.HORIZONTAL;
-            gbcDataSourcePanel.gridwidth = 4;
-            gbcDataSourcePanel.insets = new Insets(0, 0, 5, 0);
-            gbcDataSourcePanel.gridx = 0;
-            gbcDataSourcePanel.gridy = row;
-            add(dataSourcePanel, gbcDataSourcePanel);
-
-            GridBagLayout panelLayout = new GridBagLayout();
-            panelLayout.columnWidths = new int[] { 311, 24 };
-            panelLayout.rowHeights = new int[] { 0 };
-            panelLayout.columnWeights = new double[] { 1.0, 0.0 };
-            panelLayout.rowWeights = new double[] { 0.0 };
-            dataSourcePanel.setLayout(panelLayout);
+            toolBar.add(Box.createHorizontalGlue());
 
             dataSourceCombo = new JComboBox<>();
+            dataSourceCombo.setPreferredSize(new Dimension(180, dataSourceCombo.getPreferredSize().height));
             dataSourceCombo.setEditable(false);
-            GridBagConstraints gbcDataSourceCombo = new GridBagConstraints();
-            gbcDataSourceCombo.weightx = 1.0;
-            gbcDataSourceCombo.fill = GridBagConstraints.BOTH;
-            gbcDataSourceCombo.insets = new Insets(5, 5, 5, 3);
-            gbcDataSourceCombo.gridx = 0;
-            gbcDataSourceCombo.gridy = 0;
-            dataSourcePanel.add(dataSourceCombo, gbcDataSourceCombo);
+            toolBar.add(dataSourceCombo);
 
             editBtn = new JideButton();
-            GridBagConstraints gbcEditButton = new GridBagConstraints();
-            gbcEditButton.insets = new Insets(4, 5, 4, 5);
-            gbcEditButton.fill = GridBagConstraints.BOTH;
-            gbcEditButton.gridx = 1;
-            gbcEditButton.gridy = 0;
-            dataSourcePanel.add(editBtn, gbcEditButton);
+            toolBar.add(editBtn);
+        } else {
+            toolBar.add(Box.createHorizontalGlue());
         }
 
         row++;
@@ -171,16 +168,16 @@ public class ControlPanel extends JPanel {
         gbcSearchPanel.anchor = GridBagConstraints.WEST;
         gbcSearchPanel.fill = GridBagConstraints.HORIZONTAL;
         gbcSearchPanel.gridwidth = 4;
-        gbcSearchPanel.insets = new Insets(0, 0, 0, 0);
+        gbcSearchPanel.insets = new Insets(0, 6, 0, 6);
         gbcSearchPanel.gridx = 0;
         gbcSearchPanel.gridy = row;
         add(searchPanel, gbcSearchPanel);
 
         GridBagLayout panelLayout = new GridBagLayout();
-        panelLayout.columnWidths = new int[] { 55, 311 };
-        panelLayout.rowHeights = new int[] { 0 };
-        panelLayout.columnWeights = new double[] { 0.0, 1.0 };
-        panelLayout.rowWeights = new double[] { 0.0 };
+        panelLayout.columnWidths = new int[]{55, 311};
+        panelLayout.rowHeights = new int[]{0};
+        panelLayout.columnWeights = new double[]{0.0, 1.0};
+        panelLayout.rowWeights = new double[]{0.0};
         searchPanel.setLayout(panelLayout);
 
         autoCompleteScopeCombo = new JComboBox<>();
@@ -209,7 +206,7 @@ public class ControlPanel extends JPanel {
      * Adds a new component at the specified index to the toolbar.
      *
      * @param component the component
-     * @param index the index
+     * @param index     the index
      */
     public void addToToolbar(JComponent component, int index) {
         toolBar.add(component, index);
@@ -219,13 +216,23 @@ public class ControlPanel extends JPanel {
      * Adds a new JideButton with the specified action at the specified index to the toolbar.
      *
      * @param action the action
-     * @param index the index
+     * @param index  the index
      */
     public void addToToolbar(Action action, int index) {
         JideButton button = new JideButton(action);
+        button.setHideActionText(true);
         button.setVerticalTextPosition(SwingConstants.BOTTOM);
         button.setHorizontalTextPosition(SwingConstants.CENTER);
         toolBar.add(button, index);
+    }
+
+    /**
+     * Gets the insert button.
+     *
+     * @return the insert button
+     */
+    public JideButton getInsertBtn() {
+        return insertBtn;
     }
 
     /**

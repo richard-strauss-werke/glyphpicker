@@ -17,6 +17,7 @@ package com.aerhard.oxygen.plugin.glyphpicker.controller.action;
 
 import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeListener;
+
 import ca.odell.glazedlists.swing.DefaultEventSelectionModel;
 
 import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinition;
@@ -30,22 +31,26 @@ public class CopyAction extends AbstractPickerAction {
 
     private static final long serialVersionUID = 1L;
 
-    /** The key of the action. */
+    /**
+     * The key of the action.
+     */
     public static final String KEY = "copyToUserCollection";
 
-    /** The event selection model. */
+    /**
+     * The event selection model.
+     */
     private final DefaultEventSelectionModel<GlyphDefinition> selectionModel;
 
-    /** The name of the class. */
+    /**
+     * The name of the class.
+     */
     private static final String CLASS_NAME = CopyAction.class.getSimpleName();
 
     /**
      * Instantiates a new CopyAction.
      *
-     * @param listener
-     *            the property change listener to be added to this action
-     * @param selectionModel
-     *            the event selection model
+     * @param listener       the property change listener to be added to this action
+     * @param selectionModel the event selection model
      */
     public CopyAction(PropertyChangeListener listener,
                       DefaultEventSelectionModel<GlyphDefinition> selectionModel) {

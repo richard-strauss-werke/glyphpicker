@@ -35,51 +35,76 @@ import com.icl.saxon.aelfred.DefaultHandler;
  */
 public class TeiXmlHandler extends DefaultHandler {
 
-    /** The logger. */
+    /**
+     * The logger.
+     */
     private static final Logger LOGGER = Logger.getLogger(TeiXmlHandler.class
             .getName());
 
-    /** indicates ancestor-or-self::char. */
+    /**
+     * indicates ancestor-or-self::char.
+     */
     private Boolean inChar = false;
 
-    /** indicates ancestor-or-self::mapping. */
+    /**
+     * indicates ancestor-or-self::mapping.
+     */
     private Boolean inMapping = false;
 
-    /** The resulting glyph definitions. */
+    /**
+     * The resulting glyph definitions.
+     */
     private final List<GlyphDefinition> glyphDefinitions = new ArrayList<>();
 
-    /** An element stack of all ancestors and the current element. */
+    /**
+     * An element stack of all ancestors and the current element.
+     */
     private final Stack<String> elementStack = new Stack<>();
 
-    /** The list of all glyph references in the current mapping. */
+    /**
+     * The list of all glyph references in the current mapping.
+     */
     private List<GlyphReference> currentGlyphReferences = new ArrayList<>();
 
-    /** A list of the glyph definitions with glyph references in <mapping>. */
+    /**
+     * A list of the glyph definitions with glyph references in <mapping>.
+     */
     private final List<GlyphDefinition> referencingGlyphDefinitions = new ArrayList<>();
 
-    /** The current glyph definition. */
+    /**
+     * The current glyph definition.
+     */
     private GlyphDefinition currentGlyphDefinition;
 
-    /** The range property. */
+    /**
+     * The range property.
+     */
     private String range = "";
 
-    /** The data source providing handler parameters. */
+    /**
+     * The data source providing handler parameters.
+     */
     private final DataSource dataSource;
 
-    /** A string buffer for the text content of elements. */
+    /**
+     * A string buffer for the text content of elements.
+     */
     private final StringBuffer textContent = new StringBuffer();
 
-    /** The mapping matcher. */
+    /**
+     * The mapping matcher.
+     */
     private final MappingMatcher mappingMatcher;
 
-    /** The mapping parser. */
+    /**
+     * The mapping parser.
+     */
     private final MappingParser mappingParser;
 
     /**
      * Instantiates a new TeiXmlHandler.
      *
-     * @param dataSource
-     *            The data source providing handler parameters
+     * @param dataSource The data source providing handler parameters
      */
     public TeiXmlHandler(DataSource dataSource) {
         this.dataSource = dataSource;
@@ -123,8 +148,7 @@ public class TeiXmlHandler extends DefaultHandler {
         /**
          * Matches.
          *
-         * @param attrs
-         *            the attrs
+         * @param attrs the attrs
          * @return true, if successful
          */
         boolean matches(Attributes attrs);
@@ -135,19 +159,21 @@ public class TeiXmlHandler extends DefaultHandler {
      */
     public static class MappingSingleMatcher implements MappingMatcher {
 
-        /** The key. */
+        /**
+         * The key.
+         */
         private final String key;
 
-        /** The value. */
+        /**
+         * The value.
+         */
         private final String value;
 
         /**
          * Instantiates a new MappingSingleMatcher.
          *
-         * @param key
-         *            the key = attribute name
-         * @param value
-         *            the value = attribute value
+         * @param key   the key = attribute name
+         * @param value the value = attribute value
          */
         public MappingSingleMatcher(String key, String value) {
             this.key = key;
@@ -172,32 +198,36 @@ public class TeiXmlHandler extends DefaultHandler {
      */
     public static class MappingDoubleMatcher implements MappingMatcher {
 
-        /** The first attribute's name. */
+        /**
+         * The first attribute's name.
+         */
         private final String key1;
 
-        /** The first attribute's value. */
+        /**
+         * The first attribute's value.
+         */
         private final String value1;
 
-        /** The second attribute's name. */
+        /**
+         * The second attribute's name.
+         */
         private final String key2;
 
-        /** The second attribute's value. */
+        /**
+         * The second attribute's value.
+         */
         private final String value2;
 
         /**
          * Instantiates a new MappingDoubleMatcher.
          *
-         * @param key1
-         *            the first attribute's name
-         * @param value1
-         *            the first attribute's value
-         * @param key2
-         *            the second attribute's name
-         * @param value2
-         *            the second attribute's value
+         * @param key1   the first attribute's name
+         * @param value1 the first attribute's value
+         * @param key2   the second attribute's name
+         * @param value2 the second attribute's value
          */
         public MappingDoubleMatcher(String key1, String value1, String key2,
-                String value2) {
+                                    String value2) {
             this.key1 = key1;
             this.value1 = value1;
             this.key2 = key2;
@@ -244,8 +274,7 @@ public class TeiXmlHandler extends DefaultHandler {
         /**
          * Parses the specified string to a new string.
          *
-         * @param str
-         *            the input string
+         * @param str the input string
          * @return the output string
          */
         String parse(String str);
@@ -313,25 +342,19 @@ public class TeiXmlHandler extends DefaultHandler {
      */
     @Override
     public void startElement(String uri, String localName, String qName,
-            Attributes attrs) throws SAXException {
+                             Attributes attrs) throws SAXException {
 
         if (inChar) {
             onStartElementInChar(qName, attrs);
-        }
-
-        else if ("char".equals(qName) || "glyph".equals(qName)) {
+        } else if ("char".equals(qName) || "glyph".equals(qName)) {
             currentGlyphDefinition = new GlyphDefinition();
             currentGlyphDefinition.setId(attrs.getValue("xml:id"));
             currentGlyphDefinition.setRange(range);
             currentGlyphDefinition.setDataSource(dataSource);
             inChar = true;
-        }
-
-        else if ("charDecl".equals(qName)) {
+        } else if ("charDecl".equals(qName)) {
             range = "";
-        }
-
-        else if ("desc".equals(qName)) {
+        } else if ("desc".equals(qName)) {
             textContent.setLength(0);
         }
 
@@ -341,10 +364,8 @@ public class TeiXmlHandler extends DefaultHandler {
     /**
      * Handles element starts within <char> elements.
      *
-     * @param qName
-     *            the qName
-     * @param attrs
-     *            the attributes
+     * @param qName the qName
+     * @param attrs the attributes
      */
     private void onStartElementInChar(String qName, Attributes attrs) {
         if ("charName".equals(qName) || "mapping".equals(qName)
@@ -354,13 +375,9 @@ public class TeiXmlHandler extends DefaultHandler {
             if ("mapping".equals(qName) && mappingMatcher.matches(attrs)) {
                 inMapping = true;
             }
-        }
-
-        else if ("graphic".equals(qName)) {
+        } else if ("graphic".equals(qName)) {
             currentGlyphDefinition.setUrl(attrs.getValue("url"));
-        }
-
-        else if ("g".equals(qName) && inMapping) {
+        } else if ("g".equals(qName) && inMapping) {
             String targetId = attrs.getValue("ref");
 
             currentGlyphReferences.add(new GlyphReference(textContent.length(), targetId
@@ -382,8 +399,7 @@ public class TeiXmlHandler extends DefaultHandler {
     /**
      * Checks if the parent element's name matches the provided string.
      *
-     * @param qName
-     *            the name
+     * @param qName the name
      * @return true, if it matches
      */
     private boolean isParent(String qName) {
@@ -406,14 +422,10 @@ public class TeiXmlHandler extends DefaultHandler {
             } else if (isParent("char")) {
                 currentGlyphDefinition.setCharName(textContent.toString());
             }
-        }
-
-        else if ("char".equals(qName) || "glyph".equals(qName)) {
+        } else if ("char".equals(qName) || "glyph".equals(qName)) {
             glyphDefinitions.add(currentGlyphDefinition);
             inChar = false;
-        }
-
-        else if (inChar) {
+        } else if (inChar) {
             onEndElementInChar(qName);
         }
 
@@ -423,15 +435,12 @@ public class TeiXmlHandler extends DefaultHandler {
     /**
      * Handles element ends within <char> elements.
      *
-     * @param qName
-     *            the qName
+     * @param qName the qName
      */
     private void onEndElementInChar(String qName) {
         if ("charName".equals(qName)) {
             currentGlyphDefinition.setCharName(textContent.toString());
-        }
-
-        else if (inMapping && "mapping".equals(qName)) {
+        } else if (inMapping && "mapping".equals(qName)) {
             currentGlyphDefinition.setCodePoint(mappingParser.parse(textContent
                     .toString()));
 
@@ -478,8 +487,7 @@ public class TeiXmlHandler extends DefaultHandler {
      * Searches for referenced glyph definitions by their ID and adds them to
      * the referring glyph definition.
      *
-     * @param ids
-     *            the ids
+     * @param ids the ids
      */
     private void setReferencedTargets(Map<String, GlyphDefinition> ids) {
         for (GlyphDefinition r : referencingGlyphDefinitions) {

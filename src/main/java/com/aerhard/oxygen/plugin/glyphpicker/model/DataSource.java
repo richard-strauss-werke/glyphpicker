@@ -27,54 +27,82 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class DataSource implements Cloneable {
 
-    /** The default glyph display size factor. */
+    /**
+     * The default glyph display size factor.
+     */
     private static final float DEFAULT_SIZE_FACTOR = 0.5f;
-    
-    /** The text glyph renderer code. */
+
+    /**
+     * The text glyph renderer code.
+     */
     public static final String GLYPH_TEXT_RENDERER = "text";
 
-    /** The vector glyph renderer code. */
+    /**
+     * The vector glyph renderer code.
+     */
     public static final String GLYPH_VECTOR_RENDERER = "vector";
 
-    /** The scaled vector glyph renderer code. */
+    /**
+     * The scaled vector glyph renderer code.
+     */
     public static final String GLYPH_SCALED_VECTOR_RENDERER = "scaled vector";
-    
-    /** The bitmap glyph renderer code. */
+
+    /**
+     * The bitmap glyph renderer code.
+     */
     public static final String GLYPH_BITMAP_RENDERER = "bitmap";
 
-    /** The label. */
+    /**
+     * The label.
+     */
     @XmlElement(name = "label")
     private String label;
-    
-    /** The base path. */
+
+    /**
+     * The base path.
+     */
     @XmlElement(name = "basePath")
     private String basePath;
-    
-    /** The font name. */
+
+    /**
+     * The font name.
+     */
     @XmlElement(name = "fontName")
     private String fontName;
-    
-    /** The display mode. */
+
+    /**
+     * The display mode.
+     */
     @XmlElement(name = "glyphRenderer")
     private String glyphRenderer;
-    
-    /** The size factor. */
+
+    /**
+     * The size factor.
+     */
     @XmlElement(name = "sizeFactor")
     private Float sizeFactor = DEFAULT_SIZE_FACTOR;
-    
-    /** The template. */
+
+    /**
+     * The template.
+     */
     @XmlElement(name = "template")
     private String template = "";
-    
-    /** The value of the type attribute to be matched to get the relevant mapping element. */
+
+    /**
+     * The value of the type attribute to be matched to get the relevant mapping element.
+     */
     @XmlElement(name = "typeAttributeValue")
     private String typeAttributeValue = null;
-    
-    /** The value of the subtype attribute to be matched to get the relevant mapping element. */
+
+    /**
+     * The value of the subtype attribute to be matched to get the relevant mapping element.
+     */
     @XmlElement(name = "subtypeAttributeValue")
     private String subtypeAttributeValue = null;
-    
-    /** Indicates if the string in <mapping> needs to be parsed in order to obtain code points. */
+
+    /**
+     * Indicates if the string in <mapping> needs to be parsed in order to obtain code points.
+     */
     @XmlElement(name = "parseMapping")
     private boolean parseMapping = false;
 

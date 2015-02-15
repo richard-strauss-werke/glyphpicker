@@ -30,9 +30,8 @@ public class GlyphPickerPlugin extends Plugin {
 
     /**
      * Constructs the plugin.
-     * 
-     * @param descriptor
-     *            The plugin descriptor
+     *
+     * @param descriptor The plugin descriptor
      */
     public GlyphPickerPlugin(PluginDescriptor descriptor) {
         super(descriptor);
@@ -45,7 +44,7 @@ public class GlyphPickerPlugin extends Plugin {
 
     /**
      * Gets the plugin instance.
-     * 
+     *
      * @return the shared plugin instance.
      */
     public static GlyphPickerPlugin getInstance() {

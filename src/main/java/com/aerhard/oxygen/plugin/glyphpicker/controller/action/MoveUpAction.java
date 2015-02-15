@@ -18,7 +18,6 @@ package com.aerhard.oxygen.plugin.glyphpicker.controller.action;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.beans.PropertyChangeListener;
-import javax.swing.ImageIcon;
 
 import ca.odell.glazedlists.EventList;
 
@@ -30,30 +29,38 @@ import ro.sync.ui.Icons;
  * An action to move a glyph definition up in the list.
  */
 public class MoveUpAction extends AbstractPickerAction {
-    
+
     private static final long serialVersionUID = 1L;
 
-    /** The key of the action. */
+    /**
+     * The key of the action.
+     */
     public static final String KEY = "moveUp";
 
-    /** The glyph list model. */
+    /**
+     * The glyph list model.
+     */
     private final EventList<GlyphDefinition> glyphList;
-    
-    /** The list component. */
+
+    /**
+     * The list component.
+     */
     private final GlyphGrid list;
 
-    /** The name of the class. */
+    /**
+     * The name of the class.
+     */
     private static final String CLASS_NAME = MoveUpAction.class.getSimpleName();
 
     /**
      * Instantiates a new MoveUpAction.
      *
-     * @param listener the property change listener to be added to this action
+     * @param listener  the property change listener to be added to this action
      * @param glyphList the glyph list model
-     * @param list the list component
+     * @param list      the list component
      */
     public MoveUpAction(PropertyChangeListener listener,
-            EventList<GlyphDefinition> glyphList, GlyphGrid list) {
+                        EventList<GlyphDefinition> glyphList, GlyphGrid list) {
         super(I18N.getString(CLASS_NAME + ".label"), Icons.getIcon(Icons.MOVE_UP_MENU));
 
         this.addPropertyChangeListener(listener);

@@ -26,7 +26,7 @@ import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinition;
  */
 public class CodePointComparator implements Comparator<GlyphDefinition>,
         Serializable {
-    
+
     private static final long serialVersionUID = 1L;
 
     /* (non-Javadoc)

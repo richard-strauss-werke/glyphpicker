@@ -142,6 +142,7 @@ public class GlyphPickerPluginExtension implements
 
     /**
      * Inserts a namespace declaration to a String
+     *
      * @param str the input String
      * @return the String with namespace or - if it doesn't match the pattern <[^/^>]+ or is null - the original String
      */
@@ -176,30 +177,51 @@ public class GlyphPickerPluginExtension implements
         WSEditorPage currentPage = workspace.getCurrentEditorAccess(
                 PluginWorkspace.MAIN_EDITING_AREA).getCurrentPage();
         if (currentPage instanceof WSTextEditorPage) {
-            WSTextEditorPage page = (WSTextEditorPage) currentPage;
+            insertIntoTextEditorPage(d, (WSTextEditorPage) currentPage);
+        } else if (currentPage instanceof WSAuthorEditorPage) {
+            InsertIntoAuthorPage(d, (WSAuthorEditorPage) currentPage);
+        } else {
+            workspace
+                    .showErrorMessage("No editor pane found to insert the glyph.");
+        }
+    }
 
-            page.beginCompoundUndoableEdit();
-            int selectionOffset = page.getSelectionStart();
-            page.deleteSelection();
-            String xmlString = createXmlString(d, false);
-            if (xmlString != null && ! xmlString.isEmpty()) {
+    /**
+     * Inserts a text fragment into a text editor page.
+     *
+     * @param d         the glyph definition from which the text fragment is created
+     * @param page      the editor page
+     */
+    private void insertIntoTextEditorPage(GlyphDefinition d, WSTextEditorPage page) {
+
+        page.beginCompoundUndoableEdit();
+        int selectionOffset = page.getSelectionStart();
+        page.deleteSelection();
+        String xmlString = createXmlString(d, false);
+        if (xmlString != null && !xmlString.isEmpty()) {
             try {
-                    page.getDocument().insertString(selectionOffset,
-                            xmlString,
-                            javax.swing.text.SimpleAttributeSet.EMPTY);
+                page.getDocument().insertString(selectionOffset,
+                        xmlString,
+                        javax.swing.text.SimpleAttributeSet.EMPTY);
 
             } catch (BadLocationException e) {
                 LOGGER.error(e);
             }
-            }
-            page.endCompoundUndoableEdit();
+        }
+        page.endCompoundUndoableEdit();
+    }
 
-        } else if (currentPage instanceof WSAuthorEditorPage) {
-            WSAuthorEditorPage page = (WSAuthorEditorPage) currentPage;
+    /**
+     * Inserts a text fragment into a author editor page.
+     *
+     * @param d         the glyph definition from which the text fragment is created
+     * @param page      the editor page
+     */
+    private void InsertIntoAuthorPage(GlyphDefinition d, WSAuthorEditorPage page) {
 
-            AuthorAccess authorAccess = page.getAuthorAccess();
-            String xmlString = createXmlString(d, true);
-            if (xmlString != null && ! xmlString.isEmpty()) {
+        AuthorAccess authorAccess = page.getAuthorAccess();
+        String xmlString = createXmlString(d, true);
+        if (xmlString != null && !xmlString.isEmpty()) {
             try {
                 int offset = authorAccess.getEditorAccess().getCaretOffset();
                 Position endOffsetPos = null;
@@ -210,9 +232,9 @@ public class GlyphPickerPluginExtension implements
                     LOGGER.error(e1);
                 }
 
-                    authorAccess.getDocumentController()
-                            .insertXMLFragmentSchemaAware(
-                                    xmlString, offset);
+                authorAccess.getDocumentController()
+                        .insertXMLFragmentSchemaAware(
+                                xmlString, offset);
 
                 int endOffset = endOffsetPos != null ? endOffsetPos.getOffset() - 1
                         : offset;
@@ -220,13 +242,7 @@ public class GlyphPickerPluginExtension implements
             } catch (AuthorOperationException e) {
                 LOGGER.error(e);
             }
-            }
-
-        } else {
-            workspace
-                    .showErrorMessage("No editor pane found to insert the glyph.");
         }
-
     }
 
     /*

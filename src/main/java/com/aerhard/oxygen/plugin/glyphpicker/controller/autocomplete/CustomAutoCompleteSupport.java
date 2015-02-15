@@ -45,12 +45,12 @@ import javax.swing.text.*;
  * This class {@link #install}s support for filtering and autocompletion into a
  * standard {@link JComboBox}. It also acts as a factory class for
  * {@link #createTableCellEditor creating autocompleting table cell editors}.
- *
+ * <p/>
  * <p>
  * All autocompletion behaviour provided is meant to mimic the functionality of
  * the Firefox address field. To be explicit, the following is a list of
  * expected behaviours which are installed:
- *
+ * <p/>
  * <p>
  * <strong>Typing into the ComboBox Editor</strong>
  * <ol>
@@ -79,7 +79,7 @@ import javax.swing.text.*;
  * rather than delete it. Attempting to delete all text results in a beep unless
  * the autcomplete support has been configured to not beep.
  * </ol>
- *
+ * <p/>
  * <strong>Clicking on the Arrow Button</strong>
  * <ol>
  * <li>clicking the arrow button when the popup is invisible causes the popup to
@@ -87,7 +87,7 @@ import javax.swing.text.*;
  * <li>clicking the arrow button when the popup is visible causes the popup to
  * be hidden
  * </ol>
- *
+ * <p/>
  * <strong>Sizing the ComboBox Popup</strong>
  * <ol>
  * <li>the popup is always <strong>at least</strong> as wide as the
@@ -98,7 +98,7 @@ import javax.swing.text.*;
  * to display between 0 and {@link JComboBox#getMaximumRowCount()} rows before
  * scrolling the popup
  * </ol>
- *
+ * <p/>
  * <strong>JComboBox ActionEvents</strong>
  * <p>
  * A single {@link ActionEvent} is fired from the JComboBox in these situations:
@@ -109,7 +109,7 @@ import javax.swing.text.*;
  * <li>the JComboBox loses focus and contains a value that does not appear in
  * the ComboBoxModel
  * </ol>
- *
+ * <p/>
  * <strong>Null Values in the ComboBoxModel</strong>
  * <p>
  * <code>null</code> values located in the ComboBoxModel are considered
@@ -117,7 +117,7 @@ import javax.swing.text.*;
  * terms.<br>
  * <br>
  * </p>
- *
+ * <p/>
  * <strong>ComboBoxEditor Focus</strong>
  * <ol>
  * <li>the text in the ComboBoxEditor is selected if
@@ -125,7 +125,7 @@ import javax.swing.text.*;
  * <li>the JPopupMenu is hidden when the ComboBoxEditor loses focus if
  * {@link #getHidesPopupOnFocusLost()} returns <tt>true</tt>
  * </ol>
- *
+ * <p/>
  * <strong>Extracting String Values</strong>
  * <p>
  * Each value in the ComboBoxModel must be converted to a String for many
@@ -137,11 +137,11 @@ import javax.swing.text.*;
  * object which is used to do all converting back and forth between Strings and
  * ComboBoxModel objects.
  * </p>
- *
- * <p>
+ * <p/>
+ * <p/>
  * In order to achieve all of the autocompletion and filtering behaviour, the
  * following occurs when {@link #install} is called:
- *
+ * <p/>
  * <ul>
  * <li>the JComboBox will be made editable
  * <li>the JComboBox will have a custom ComboBoxModel installed on it containing
@@ -151,17 +151,17 @@ import javax.swing.text.*;
  * <li>the JTextField which is the editor component for the JComboBox will have
  * a DocumentFilter installed on its backing Document
  * </ul>
- *
+ * <p/>
  * The strategy of this support class is to alter all of the objects which
  * influence the behaviour of the JComboBox in one single context. With that
  * achieved, it greatly reduces the cross-functional communication required to
  * customize the behaviour of JComboBox for filtering and autocompletion.
- *
- * <p>
+ * <p/>
+ * <p/>
  * <strong><font color="#FF0000">Warning:</font></strong> This class must be
  * mutated from the Swing Event Dispatch Thread. Failure to do so will result in
  * an {@link IllegalStateException} thrown from any one of:
- *
+ * <p/>
  * <ul>
  * <li> {@link #install(JComboBox, EventList)}
  * <li> {@link #install(JComboBox, EventList, TextFilterator)}
@@ -184,8 +184,10 @@ import javax.swing.text.*;
 public final class CustomAutoCompleteSupport<E> {
     private static final ParsePosition PARSE_POSITION = new ParsePosition(0);
     @SuppressWarnings("rawtypes")
-    private static final Class[] VALUE_OF_SIGNATURE = { String.class };
-    /** Marker object for indicating "not found". */
+    private static final Class[] VALUE_OF_SIGNATURE = {String.class};
+    /**
+     * Marker object for indicating "not found".
+     */
     private static final Object NOT_FOUND = new Object();
     //
     // These member variables control behaviour of the autocompletion support
@@ -224,16 +226,26 @@ public final class CustomAutoCompleteSupport<E> {
     //
     // These are member variables for convenience
     //
-    /** The comboBox being decorated with autocomplete functionality. */
+    /**
+     * The comboBox being decorated with autocomplete functionality.
+     */
     @SuppressWarnings("rawtypes")
     private JComboBox comboBox;
-    /** The popup menu of the decorated comboBox. */
+    /**
+     * The popup menu of the decorated comboBox.
+     */
     private JPopupMenu popupMenu;
-    /** The popup that wraps the popupMenu of the decorated comboBox. */
+    /**
+     * The popup that wraps the popupMenu of the decorated comboBox.
+     */
     private ComboPopup popup;
-    /** The arrow button that invokes the popup. */
+    /**
+     * The arrow button that invokes the popup.
+     */
     private JButton arrowButton;
-    /** The model backing the comboBox. */
+    /**
+     * The model backing the comboBox.
+     */
     private final AutoCompleteComboBoxModel comboBoxModel;
     /**
      * The custom renderer installed on the comboBox or <code>null</code> if one
@@ -241,9 +253,13 @@ public final class CustomAutoCompleteSupport<E> {
      */
     @SuppressWarnings("rawtypes")
     private final ListCellRenderer renderer;
-    /** The EventList which holds the items present in the comboBoxModel. */
+    /**
+     * The EventList which holds the items present in the comboBoxModel.
+     */
     private final EventList<E> items;
-    /** The FilterList which filters the items present in the comboBoxModel. */
+    /**
+     * The FilterList which filters the items present in the comboBoxModel.
+     */
     private final FilterList<E> filteredItems;
     /**
      * A single-element EventList for storing the optional first element,
@@ -265,7 +281,9 @@ public final class CustomAutoCompleteSupport<E> {
      * vice versa.
      */
     private final Format format;
-    /** The MatcherEditor driving the FilterList behind the comboBoxModel. */
+    /**
+     * The MatcherEditor driving the FilterList behind the comboBoxModel.
+     */
     private final TextMatcherEditor<E> filterMatcherEditor;
     /**
      * The custom ComboBoxEditor that does NOT assume that the text value can be
@@ -273,15 +291,25 @@ public final class CustomAutoCompleteSupport<E> {
      * assume that, but we decorate it and remove that assumption)
      */
     private FormatComboBoxEditor comboBoxEditor;
-    /** The textfield which acts as the editor of the comboBox. */
+    /**
+     * The textfield which acts as the editor of the comboBox.
+     */
     private JTextField comboBoxEditorComponent;
-    /** The Document backing the comboBoxEditorComponent. */
+    /**
+     * The Document backing the comboBoxEditorComponent.
+     */
     private AbstractDocument document;
-    /** A DocumentFilter that controls edits to the document. */
+    /**
+     * A DocumentFilter that controls edits to the document.
+     */
     private final AutoCompleteFilter documentFilter = new AutoCompleteFilter();
-    /** The last prefix specified by the user. */
+    /**
+     * The last prefix specified by the user.
+     */
     private String prefix = "";
-    /** The Matcher that decides if a ComboBoxModel element is filtered out. */
+    /**
+     * The Matcher that decides if a ComboBoxModel element is filtered out.
+     */
     private Matcher<String> filterMatcher = Matchers.trueMatcher();
     /**
      * <tt>true</tt> while processing a text change to the
@@ -345,7 +373,9 @@ public final class CustomAutoCompleteSupport<E> {
      * on the new.
      */
     private final DocumentWatcher documentWatcher = new DocumentWatcher();
-    /** Watches for changes of the ComboBoxModel and reports them as violations. */
+    /**
+     * Watches for changes of the ComboBoxModel and reports them as violations.
+     */
     private final ModelWatcher modelWatcher = new ModelWatcher();
     /**
      * Watches for changes of the ComboBoxUI and reinstalls the autocompletion
@@ -382,7 +412,7 @@ public final class CustomAutoCompleteSupport<E> {
      * be ignored. In general, the only time we should toggle the state of a
      * popup is due to a users keystroke (and not programmatically setting the
      * selected item, for example).
-     *
+     * <p/>
      * When the JComboBox is used within a TableCellEditor, this value is ALWAYS
      * false, since we MUST accept keystrokes, even when they are passed second
      * hand to the JComboBox after it has been installed as the cell editor (as
@@ -400,19 +430,27 @@ public final class CustomAutoCompleteSupport<E> {
     // Values present before {@link #install} executes - and are restored when
     // {@link @uninstall} executes
     //
-    /** The original setting of the editable field on the comboBox. */
+    /**
+     * The original setting of the editable field on the comboBox.
+     */
     private final boolean originalComboBoxEditable;
-    /** The original model installed on the comboBox. */
+    /**
+     * The original model installed on the comboBox.
+     */
     @SuppressWarnings("rawtypes")
     private ComboBoxModel originalModel;
-    /** The original ListCellRenderer installed on the comboBox. */
+    /**
+     * The original ListCellRenderer installed on the comboBox.
+     */
     @SuppressWarnings("rawtypes")
     private ListCellRenderer originalRenderer;
     //
     // Values present before {@link #decorateCurrentUI} executes - and are
     // restored when {@link @undecorateOriginalUI} executes
     //
-    /** The original Actions associated with the up and down arrow keys. */
+    /**
+     * The original Actions associated with the up and down arrow keys.
+     */
     private Action originalSelectNextAction;
     private Action originalSelectPreviousAction;
     private Action originalSelectNext2Action;
@@ -430,18 +468,14 @@ public final class CustomAutoCompleteSupport<E> {
      * are used to convert ComboBoxModel elements to Strings and back again for
      * various functions like filtering, editing, and rendering.
      *
-     * @param comboBox
-     *            the {@link JComboBox} to decorate with autocompletion
-     * @param items
-     *            the objects to display in the <code>comboBox</code>
-     * @param filterator
-     *            extracts searchable text strings from each item
-     * @param format
-     *            converts combobox elements into strings and vice versa
+     * @param comboBox   the {@link JComboBox} to decorate with autocompletion
+     * @param items      the objects to display in the <code>comboBox</code>
+     * @param filterator extracts searchable text strings from each item
+     * @param format     converts combobox elements into strings and vice versa
      */
-    @SuppressWarnings({ "rawtypes", "unchecked" })
+    @SuppressWarnings({"rawtypes", "unchecked"})
     private CustomAutoCompleteSupport(JComboBox comboBox, EventList<E> items,
-            TextFilterator<? super E> filterator, Format format) {
+                                      TextFilterator<? super E> filterator, Format format) {
         this.comboBox = comboBox;
         this.originalComboBoxEditable = comboBox.isEditable();
         this.originalModel = comboBox.getModel();
@@ -514,7 +548,7 @@ public final class CustomAutoCompleteSupport<E> {
      * currently installed on the given <code>comboBox</code>. This is the only
      * technique we can rely on to prevent the <code>comboBox</code> from
      * broadcasting {@link ActionEvent}s at inappropriate times.
-     *
+     * <p/>
      * This method is the logical inverse of {@link #registerAllActionListeners}
      * .
      */
@@ -530,13 +564,13 @@ public final class CustomAutoCompleteSupport<E> {
     /**
      * A convenience method to register all of the given <code>listeners</code>
      * with the given <code>comboBox</code>.
-     *
+     * <p/>
      * This method is the logical inverse of
      * {@link #unregisterAllActionListeners}.
      */
     @SuppressWarnings("rawtypes")
     private static void registerAllActionListeners(JComboBox comboBox,
-            ActionListener[] listeners) {
+                                                   ActionListener[] listeners) {
         for (int i = 0; i < listeners.length; i++)
             comboBox.addActionListener(listeners[i]);
     }
@@ -697,32 +731,29 @@ public final class CustomAutoCompleteSupport<E> {
      * The support object is returned so that the caller may invoke
      * {@link #uninstall} at some later time to remove the autocompletion
      * features.
-     *
-     * <p>
+     * <p/>
+     * <p/>
      * This method assumes that the <code>items</code> can be converted into
      * reasonable String representations via {@link Object#toString()}.
-     *
-     * <p>
+     * <p/>
+     * <p/>
      * The following must be true in order to successfully install support for
      * autocompletion on a {@link JComboBox}:
-     *
+     * <p/>
      * <ul>
      * <li>The JComboBox must use a {@link JTextField} as its editor component
      * <li>The JTextField must use an {@link AbstractDocument} as its model
      * </ul>
      *
-     * @param comboBox
-     *            the {@link JComboBox} to decorate with autocompletion
-     * @param items
-     *            the objects to display in the <code>comboBox</code>
+     * @param comboBox the {@link JComboBox} to decorate with autocompletion
+     * @param items    the objects to display in the <code>comboBox</code>
      * @return an instance of the support class providing autocomplete features
-     * @throws IllegalStateException
-     *             if this method is called from any Thread other than the Swing
-     *             Event Dispatch Thread
+     * @throws IllegalStateException if this method is called from any Thread other than the Swing
+     *                               Event Dispatch Thread
      */
     @SuppressWarnings("rawtypes")
     public static <E> CustomAutoCompleteSupport<E> install(JComboBox comboBox,
-            EventList<E> items) {
+                                                           EventList<E> items) {
         return install(comboBox, items, null);
     }
 
@@ -732,42 +763,38 @@ public final class CustomAutoCompleteSupport<E> {
      * The support object is returned so that the caller may invoke
      * {@link #uninstall} at some later time to remove the autocompletion
      * features.
-     *
-     * <p>
+     * <p/>
+     * <p/>
      * This method assumes that the <code>items</code> can be converted into
      * reasonable String representations via {@link Object#toString()}.
-     *
-     * <p>
+     * <p/>
+     * <p/>
      * The <code>filterator</code> will be used to extract searchable text
      * strings from each of the <code>items</code>. A <code>null</code>
      * filterator implies the item's toString() method should be used when
      * filtering it.
-     *
-     * <p>
+     * <p/>
+     * <p/>
      * The following must be true in order to successfully install support for
      * autocompletion on a {@link JComboBox}:
-     *
+     * <p/>
      * <ul>
      * <li>The JComboBox must use a {@link JTextField} as its editor component
      * <li>The JTextField must use an {@link AbstractDocument} as its model
      * </ul>
      *
-     * @param comboBox
-     *            the {@link JComboBox} to decorate with autocompletion
-     * @param items
-     *            the objects to display in the <code>comboBox</code>
-     * @param filterator
-     *            extracts searchable text strings from each item;
-     *            <code>null</code> implies the item's toString() method should
-     *            be used when filtering it
+     * @param comboBox   the {@link JComboBox} to decorate with autocompletion
+     * @param items      the objects to display in the <code>comboBox</code>
+     * @param filterator extracts searchable text strings from each item;
+     *                   <code>null</code> implies the item's toString() method should
+     *                   be used when filtering it
      * @return an instance of the support class providing autocomplete features
-     * @throws IllegalStateException
-     *             if this method is called from any Thread other than the Swing
-     *             Event Dispatch Thread
+     * @throws IllegalStateException if this method is called from any Thread other than the Swing
+     *                               Event Dispatch Thread
      */
     @SuppressWarnings("rawtypes")
     public static <E> CustomAutoCompleteSupport<E> install(JComboBox comboBox,
-            EventList<E> items, TextFilterator<? super E> filterator) {
+                                                           EventList<E> items, TextFilterator<? super E> filterator) {
         return install(comboBox, items, filterator, null);
     }
 
@@ -777,70 +804,65 @@ public final class CustomAutoCompleteSupport<E> {
      * The support object is returned so that the caller may invoke
      * {@link #uninstall} at some later time to remove the autocompletion
      * features.
-     *
-     * <p>
+     * <p/>
+     * <p/>
      * This method uses the given <code>format</code> to convert the given
      * <code>items</code> into Strings and back again. In other words, this
      * method does <strong>NOT</strong> rely on {@link Object#toString()} to
      * produce a reasonable String representation of each item. Likewise, it
      * does not rely on the existence of a valueOf(String) method for creating
      * items out of Strings as is the default behaviour of JComboBox.
-     *
-     * <p>
+     * <p/>
+     * <p/>
      * It can be assumed that the only methods called on the given
      * <code>format</code> are:
      * <ul>
      * <li>{@link Format#format(Object)}
      * <li>{@link Format#parseObject(String, ParsePosition)}
      * </ul>
-     *
-     * <p>
+     * <p/>
+     * <p/>
      * As a convenience, this method will install a custom
      * {@link ListCellRenderer} on the <code>comboBox</code> that displays the
      * String value returned by the <code>format</code>. Though this is only
      * done if the given <code>format</code> is not <code>null</code> and if the
      * <code>comboBox</code> does not already use a custom renderer.
-     *
-     * <p>
+     * <p/>
+     * <p/>
      * The <code>filterator</code> will be used to extract searchable text
      * strings from each of the <code>items</code>. A <code>null</code>
      * filterator implies one of two default strategies will be used. If the
      * <code>format</code> is not null then the String value returned from the
      * <code>format</code> object will be used when filtering a given item.
      * Otherwise, the item's toString() method will be used when it is filtered.
-     *
-     * <p>
+     * <p/>
+     * <p/>
      * The following must be true in order to successfully install support for
      * autocompletion on a {@link JComboBox}:
-     *
+     * <p/>
      * <ul>
      * <li>The JComboBox must use a {@link JTextField} as its editor component
      * <li>The JTextField must use an {@link AbstractDocument} as its model
      * </ul>
      *
-     * @param comboBox
-     *            the {@link JComboBox} to decorate with autocompletion
-     * @param items
-     *            the objects to display in the <code>comboBox</code>
-     * @param filterator
-     *            extracts searchable text strings from each item. If the
-     *            <code>format</code> is not null then the String value returned
-     *            from the <code>format</code> object will be used when
-     *            filtering a given item. Otherwise, the item's toString()
-     *            method will be used when it is filtered.
-     * @param format
-     *            a Format object capable of converting <code>items</code> into
-     *            Strings and back. <code>null</code> indicates the standard
-     *            JComboBox methods of converting are acceptable.
+     * @param comboBox   the {@link JComboBox} to decorate with autocompletion
+     * @param items      the objects to display in the <code>comboBox</code>
+     * @param filterator extracts searchable text strings from each item. If the
+     *                   <code>format</code> is not null then the String value returned
+     *                   from the <code>format</code> object will be used when
+     *                   filtering a given item. Otherwise, the item's toString()
+     *                   method will be used when it is filtered.
+     * @param format     a Format object capable of converting <code>items</code> into
+     *                   Strings and back. <code>null</code> indicates the standard
+     *                   JComboBox methods of converting are acceptable.
      * @return an instance of the support class providing autocomplete features
-     * @throws IllegalStateException
-     *             if this method is called from any Thread other than the Swing
-     *             Event Dispatch Thread
+     * @throws IllegalStateException if this method is called from any Thread other than the Swing
+     *                               Event Dispatch Thread
      */
     @SuppressWarnings("rawtypes")
     public static <E> CustomAutoCompleteSupport<E> install(JComboBox comboBox,
-            EventList<E> items, TextFilterator<? super E> filterator,
-            Format format) {
+                                                           EventList<E> items, TextFilterator<? super E> filterator,
+                                                           Format format) {
         checkAccessThread();
         final Component editorComponent = comboBox.getEditor()
                 .getEditorComponent();
@@ -864,9 +886,8 @@ public final class CustomAutoCompleteSupport<E> {
      * will be included in the {@link IllegalStateException} that is throw out
      * of this method after the autocompletion support is uninstalled.
      *
-     * @param message
-     *            a message to the programmer explaining the environmental
-     *            invariant that was violated
+     * @param message a message to the programmer explaining the environmental
+     *                invariant that was violated
      */
     private void throwIllegalStateException(String message) {
         final String exceptionMsg = message
@@ -930,16 +951,14 @@ public final class CustomAutoCompleteSupport<E> {
      * If <code>correctCase</code> is <tt>true</tt>, user specified strings will
      * be converted to the case of the element they match. Otherwise they will
      * be left unaltered.
-     *
-     * <p>
+     * <p/>
+     * <p/>
      * Note: this flag only has meeting when strict mode is turned off. When
      * strict mode is on, case is corrected regardless of this setting.
      *
+     * @throws IllegalStateException if this method is called from any Thread other than the Swing
+     *                               Event Dispatch Thread
      * @see #setStrict(boolean)
-     *
-     * @throws IllegalStateException
-     *             if this method is called from any Thread other than the Swing
-     *             Event Dispatch Thread
      */
     public void setCorrectsCase(boolean correctCase) {
         checkAccessThread();
@@ -959,16 +978,14 @@ public final class CustomAutoCompleteSupport<E> {
      * appearing within the ComboBoxModel. If it is <tt>true</tt> each keystroke
      * must continue to match some value in the ComboBoxModel or it will be
      * discarded.
-     *
-     * <p>
+     * <p/>
+     * <p/>
      * Note: When strict mode is enabled, all user input is corrected to the
      * case of the autocompletion term, regardless of the correctsCase setting.
      *
+     * @throws IllegalStateException if this method is called from any Thread other than the Swing
+     *                               Event Dispatch Thread
      * @see #setCorrectsCase(boolean)
-     *
-     * @throws IllegalStateException
-     *             if this method is called from any Thread other than the Swing
-     *             Event Dispatch Thread
      */
     public void setStrict(boolean strict) {
         checkAccessThread();
@@ -1024,14 +1041,11 @@ public final class CustomAutoCompleteSupport<E> {
      * Sets the policy for indicating strict-mode violations to the user by way
      * of a beep sound.
      *
-     * @param beepOnStrictViolation
-     *            <tt>true</tt> if a beep sound should be played when the user
-     *            attempts to violate the strict invariant; <tt>false</tt> if no
-     *            beep sound should be played
-     *
-     * @throws IllegalStateException
-     *             if this method is called from any Thread other than the Swing
-     *             Event Dispatch Thread
+     * @param beepOnStrictViolation <tt>true</tt> if a beep sound should be played when the user
+     *                              attempts to violate the strict invariant; <tt>false</tt> if no
+     *                              beep sound should be played
+     * @throws IllegalStateException if this method is called from any Thread other than the Swing
+     *                               Event Dispatch Thread
      */
     public void setBeepOnStrictViolation(boolean beepOnStrictViolation) {
         checkAccessThread();
@@ -1052,9 +1066,8 @@ public final class CustomAutoCompleteSupport<E> {
      * <tt>false</tt> the selection state of the editor is not effected by focus
      * changes.
      *
-     * @throws IllegalStateException
-     *             if this method is called from any Thread other than the Swing
-     *             Event Dispatch Thread
+     * @throws IllegalStateException if this method is called from any Thread other than the Swing
+     *                               Event Dispatch Thread
      */
     public void setSelectsTextOnFocusGain(boolean selectsTextOnFocusGain) {
         checkAccessThread();
@@ -1078,9 +1091,8 @@ public final class CustomAutoCompleteSupport<E> {
      * lost because of a KeyEvent (e.g. tabbing to the next focusable component)
      * then the popup menu remains visible.
      *
-     * @throws IllegalStateException
-     *             if this method is called from any Thread other than the Swing
-     *             Event Dispatch Thread
+     * @throws IllegalStateException if this method is called from any Thread other than the Swing
+     *                               Event Dispatch Thread
      */
     public void setHidesPopupOnFocusLost(boolean hidesPopupOnFocusLost) {
         checkAccessThread();
@@ -1092,18 +1104,18 @@ public final class CustomAutoCompleteSupport<E> {
      * filtered. This method will return one of
      * {@link TextMatcherEditor#CONTAINS} or
      * {@link TextMatcherEditor#STARTS_WITH}.
-     *
-     * <p>
+     * <p/>
+     * <p/>
      * {@link TextMatcherEditor#CONTAINS} indicates elements of the
      * {@link ComboBoxModel} are matched when they contain the text entered by
      * the user.
-     *
-     * <p>
+     * <p/>
+     * <p/>
      * {@link TextMatcherEditor#STARTS_WITH} indicates elements of the
      * {@link ComboBoxModel} are matched when they start with the text entered
      * by the user.
-     *
-     * <p>
+     * <p/>
+     * <p/>
      * In both modes, autocompletion only occurs when a given item starts with
      * user-specified text. The filter mode only affects the filtering aspect of
      * autocomplete support.
@@ -1118,10 +1130,8 @@ public final class CustomAutoCompleteSupport<E> {
      * {@link TextMatcherEditor#CONTAINS} or
      * {@link TextMatcherEditor#STARTS_WITH}.
      *
-     * @throws IllegalStateException
-     *             if this method is called from any Thread other than the Swing
-     *             Event Dispatch Thread
-     *
+     * @throws IllegalStateException if this method is called from any Thread other than the Swing
+     *                               Event Dispatch Thread
      * @see #getFilterMode()
      */
     public void setFilterMode(int mode) {
@@ -1146,10 +1156,8 @@ public final class CustomAutoCompleteSupport<E> {
      * {@link TextMatcherEditor#NORMALIZED_STRATEGY} or the Unicode strategy of
      * the ICU4J extension.
      *
-     * @throws IllegalStateException
-     *             if this method is called from any Thread other than the Swing
-     *             Event Dispatch Thread
-     *
+     * @throws IllegalStateException if this method is called from any Thread other than the Swing
+     *                               Event Dispatch Thread
      * @see #getTextMatchingStrategy()
      */
     public void setTextMatchingStrategy(Object strategy) {
@@ -1185,8 +1193,7 @@ public final class CustomAutoCompleteSupport<E> {
      * "no selection" or "blank". This value is always present and is not
      * filtered away during autocompletion.
      *
-     * @param item
-     *            the first value to present in the {@link ComboBoxModel}
+     * @param item the first value to present in the {@link ComboBoxModel}
      */
     public void setFirstItem(E item) {
         checkAccessThread();
@@ -1208,7 +1215,7 @@ public final class CustomAutoCompleteSupport<E> {
      * {@link ComboBoxModel} or <tt>null</tt> if no first item has been set.
      *
      * @return the special first value presented in the {@link ComboBoxModel} or
-     *         <tt>null</tt> if no first item has been set
+     * <tt>null</tt> if no first item has been set
      */
     public E getFirstItem() {
         firstItem.getReadWriteLock().readLock().lock();
@@ -1225,7 +1232,7 @@ public final class CustomAutoCompleteSupport<E> {
      * set.
      *
      * @return the special first value presented in the {@link ComboBoxModel} or
-     *         <tt>null</tt> if no first item has been set
+     * <tt>null</tt> if no first item has been set
      */
     public E removeFirstItem() {
         checkAccessThread();
@@ -1244,9 +1251,8 @@ public final class CustomAutoCompleteSupport<E> {
      * installed and altering the behaviour of the combo box; <tt>false</tt> if
      * it has been {@link #uninstall}ed.
      *
-     * @throws IllegalStateException
-     *             if this method is called from any Thread other than the Swing
-     *             Event Dispatch Thread
+     * @throws IllegalStateException if this method is called from any Thread other than the Swing
+     *                               Event Dispatch Thread
      */
     public boolean isInstalled() {
         checkAccessThread();
@@ -1261,9 +1267,8 @@ public final class CustomAutoCompleteSupport<E> {
      * autocompletion was installed, and it will be available for garbage
      * collection independently of the {@link EventList} of items.
      *
-     * @throws IllegalStateException
-     *             if this method is called from any Thread other than the Swing
-     *             Event Dispatch Thread
+     * @throws IllegalStateException if this method is called from any Thread other than the Swing
+     *                               Event Dispatch Thread
      */
     @SuppressWarnings("unchecked")
     public void uninstall() {
@@ -1305,8 +1310,7 @@ public final class CustomAutoCompleteSupport<E> {
      * This method updates the value which filters the items in the
      * ComboBoxModel.
      *
-     * @param newFilter
-     *            the new value by which to filter the item
+     * @param newFilter the new value by which to filter the item
      */
     private void applyFilter(String newFilter) {
         // break out early if we're flagged to ignore filter updates for the
@@ -1319,7 +1323,7 @@ public final class CustomAutoCompleteSupport<E> {
         final ActionListener[] listeners = unregisterAllActionListeners(comboBox);
         isFiltering = true;
         try {
-            filterMatcherEditor.setFilterText(new String[] { newFilter });
+            filterMatcherEditor.setFilterText(new String[]{newFilter});
         } finally {
             isFiltering = false;
             registerAllActionListeners(comboBox, listeners);
@@ -1338,7 +1342,7 @@ public final class CustomAutoCompleteSupport<E> {
             filterMatcher = Matchers.trueMatcher();
         else
             filterMatcher = new TextMatcher<String>(
-                    new SearchTerm[] { new SearchTerm(prefix) },
+                    new SearchTerm[]{new SearchTerm(prefix)},
                     GlazedLists.toStringTextFilterator(),
                     TextMatcherEditor.STARTS_WITH, getTextMatchingStrategy());
     }
@@ -1364,8 +1368,8 @@ public final class CustomAutoCompleteSupport<E> {
      * the given <code>value</code> can be found, then the item is returned. If
      * an exact match cannot be found, the first term that <strong>starts
      * with</strong> the given <code>value</code> is returned.
-     *
-     * <p>
+     * <p/>
+     * <p/>
      * If no exact or partial match can be located, <code>null</code> is
      * returned.
      */
@@ -1374,7 +1378,7 @@ public final class CustomAutoCompleteSupport<E> {
         // determine if our value is empty
         final boolean prefixIsEmpty = "".equals(value);
         final Matcher<String> valueMatcher = new TextMatcher<String>(
-                new SearchTerm[] { new SearchTerm(value) },
+                new SearchTerm[]{new SearchTerm(value)},
                 GlazedLists.toStringTextFilterator(),
                 TextMatcherEditor.STARTS_WITH, getTextMatchingStrategy());
         Object partialMatchItem = NOT_FOUND;
@@ -1472,7 +1476,7 @@ public final class CustomAutoCompleteSupport<E> {
     private class AutoCompleteFilter extends DocumentFilter {
         @Override
         public void replace(FilterBypass filterBypass, int offset, int length,
-                String string, AttributeSet attributeSet)
+                            String string, AttributeSet attributeSet)
                 throws BadLocationException {
             if (doNotChangeDocument)
                 return;
@@ -1498,7 +1502,7 @@ public final class CustomAutoCompleteSupport<E> {
 
         @Override
         public void insertString(FilterBypass filterBypass, int offset,
-                String string, AttributeSet attributeSet)
+                                 String string, AttributeSet attributeSet)
                 throws BadLocationException {
             if (doNotChangeDocument)
                 return;
@@ -1531,7 +1535,7 @@ public final class CustomAutoCompleteSupport<E> {
          * This method generically post processes changes to the ComboBox
          * editor's Document. The generic algorithm, regardless of the type of
          * change, is as follows:
-         *
+         * <p/>
          * <ol>
          * <li>save the prefix as the user has entered it
          * <li>filter the combo box items against the prefix
@@ -1542,9 +1546,9 @@ public final class CustomAutoCompleteSupport<E> {
          */
         @SuppressWarnings("unused")
         private void postProcessDocumentChange(FilterBypass filterBypass,
-                AttributeSet attributeSet, String valueBeforeEdit,
-                int selectionStart, int selectionEnd,
-                boolean allowPartialAutoCompletionTerm)
+                                               AttributeSet attributeSet, String valueBeforeEdit,
+                                               int selectionStart, int selectionEnd,
+                                               boolean allowPartialAutoCompletionTerm)
                 throws BadLocationException {
             // break out early if we're flagged to not post process the Document
             // change
@@ -1597,8 +1601,8 @@ public final class CustomAutoCompleteSupport<E> {
          */
         @SuppressWarnings("unused")
         private void selectAutoCompleteTerm(FilterBypass filterBypass,
-                AttributeSet attributeSet, Object selectedItemBeforeEdit,
-                boolean allowPartialAutoCompletionTerm)
+                                            AttributeSet attributeSet, Object selectedItemBeforeEdit,
+                                            boolean allowPartialAutoCompletionTerm)
                 throws BadLocationException {
             // break out early if we're flagged to ignore attempts to
             // autocomplete
@@ -1663,7 +1667,7 @@ public final class CustomAutoCompleteSupport<E> {
                 // select the autocompletion term
                 final boolean silently = isTableCellEditor
                         || GlazedListsImpl.equal(selectedItemBeforeEdit,
-                                matchString);
+                        matchString);
                 selectItem(matchIndex, silently);
                 if (autoCompleteTermIsExactMatch) {
                     // if the term matched the original text exactly, return the
@@ -1713,13 +1717,13 @@ public final class CustomAutoCompleteSupport<E> {
     /**
      * Select the item at the given <code>index</code>. This method behaves
      * differently in strict mode vs. non-strict mode.
-     *
-     * <p>
+     * <p/>
+     * <p/>
      * In strict mode, the selected index must always be valid, so using the
      * down arrow key on the last item or the up arrow key on the first item
      * simply wraps the selection to the opposite end of the model.
-     *
-     * <p>
+     * <p/>
+     * <p/>
      * In non-strict mode, the selected index can be -1 (no selection), so we
      * allow -1 to mean "adjust the value of the ComboBoxEditor to be the user's
      * text" and only wrap to the end of the model when -2 is reached. In short,
@@ -1972,7 +1976,7 @@ public final class CustomAutoCompleteSupport<E> {
             }
         }
 
-        @SuppressWarnings({ "rawtypes", "unchecked" })
+        @SuppressWarnings({"rawtypes", "unchecked"})
         private Dimension getPrototypeSize(Object prototypeValue) {
             // get the renderer responsible for drawing the prototype value
             ListCellRenderer renderer = comboBox.getRenderer();
@@ -2076,7 +2080,7 @@ public final class CustomAutoCompleteSupport<E> {
      * compromise, since the editor continues to retain a valid value from the
      * ComboBoxModel, but the user may type a key at any point to replace the
      * selection with another valid entry.
-     *
+     * <p/>
      * This KeyListener also makes up for a bug in normal JComboBox when
      * handling the enter key. Specifically, hitting enter in an stock JComboBox
      * that is editable produces <strong>TWO</strong> ActionEvents. When the
@@ -2259,7 +2263,7 @@ public final class CustomAutoCompleteSupport<E> {
         @SuppressWarnings("rawtypes")
         @Override
         public Component getListCellRendererComponent(JList list, Object value,
-                int index, boolean isSelected, boolean cellHasFocus) {
+                                                      int index, boolean isSelected, boolean cellHasFocus) {
             String string = convertToString(value);
             // JLabels require some text before they can correctly determine
             // their height, so we convert "" to " "
@@ -2275,7 +2279,7 @@ public final class CustomAutoCompleteSupport<E> {
      * Object.toString() is the proper way to convert values from the
      * ComboBoxModel into Strings for the ComboBoxEditor's component. It uses
      * convertToString(E) instead.
-     *
+     * <p/>
      * We implement the UIResource interface here so that changes in the UI
      * delegate of the JComboBox will *replace* this ComboBoxEditor with one
      * that is correct for the new L&F. We will then react to the change of UI
@@ -2300,9 +2304,9 @@ public final class CustomAutoCompleteSupport<E> {
 
         /**
          * BasicComboBoxEditor defines this method to call:
-         *
+         * <p/>
          * editor.setText(anObject.toString());
-         *
+         * <p/>
          * we intercept and replace it with our own String conversion logic to
          * remain consistent throughout.
          */
@@ -2413,38 +2417,35 @@ public final class CustomAutoCompleteSupport<E> {
      * which adapts an autocompleting {@link JComboBox} for use as a Table Cell
      * Editor. The values within the table column are used as autocompletion
      * terms within the {@link ComboBoxModel}.
-     *
-     * <p>
+     * <p/>
+     * <p/>
      * This version of <code>createTableCellEditor</code> assumes that the
      * values stored in the TableModel at the given <code>columnIndex</code> are
      * all {@link Comparable}, and that the natural ordering defined by those
      * {@link Comparable} values also determines which are duplicates (and thus
      * can safely be removed) and which are unique (and thus must remain in the
      * {@link ComboBoxModel}).
-     *
-     * <p>
+     * <p/>
+     * <p/>
      * Note that this factory method is only appropriate for use when the values
      * in the {@link ComboBoxModel} should be the unique set of values in a
      * table column. If some other list of values will be used then
      * {@link #createTableCellEditor(EventList)} is the appropriate factory
      * method to use.
-     *
-     * <p>
+     * <p/>
+     * <p/>
      * If the appearance or function of the autocompleting {@link JComboBox} is
      * to be customized, it can be retrieved using
      * {@link AutoCompleteCellEditor#getComponent()}.
      *
-     * @param tableFormat
-     *            specifies how each row object within a table is broken apart
-     *            into column values
-     * @param tableData
-     *            the {@link EventList} backing the TableModel
-     * @param columnIndex
-     *            the index of the column for which to return a
-     *            {@link AutoCompleteCellEditor}
+     * @param tableFormat specifies how each row object within a table is broken apart
+     *                    into column values
+     * @param tableData   the {@link EventList} backing the TableModel
+     * @param columnIndex the index of the column for which to return a
+     *                    {@link AutoCompleteCellEditor}
      * @return a {@link AutoCompleteCellEditor} which contains an autocompleting
-     *         combobox whose contents remain consistent with the data in the
-     *         table column at the given <code>columnIndex</code>
+     * combobox whose contents remain consistent with the data in the
+     * table column at the given <code>columnIndex</code>
      */
     public static <E> AutoCompleteCellEditor<E> createTableCellEditor(
             TableFormat<E> tableFormat, EventList<E> tableData, int columnIndex) {
@@ -2457,43 +2458,39 @@ public final class CustomAutoCompleteSupport<E> {
      * which adapts an autocompleting {@link JComboBox} for use as a Table Cell
      * Editor. The values within the table column are used as autocompletion
      * terms within the {@link ComboBoxModel}.
-     *
-     * <p>
+     * <p/>
+     * <p/>
      * This version of <code>createTableCellEditor</code> makes no assumption
      * about the values stored in the TableModel at the given
      * <code>columnIndex</code>. Instead, it uses the given
      * <code>uniqueComparator</code> to determine which values are duplicates
      * (and thus can safely be removed) and which are unique (and thus must
      * remain in the {@link ComboBoxModel}).
-     *
-     * <p>
+     * <p/>
+     * <p/>
      * Note that this factory method is only appropriate for use when the values
      * in the {@link ComboBoxModel} should be the unique set of values in a
      * table column. If some other list of values will be used then
      * {@link #createTableCellEditor(EventList)} is the appropriate factory
      * method to use.
-     *
-     * <p>
+     * <p/>
+     * <p/>
      * If the appearance or function of the autocompleting {@link JComboBox} is
      * to be customized, it can be retrieved using
      * {@link AutoCompleteCellEditor#getComponent()}.
      *
-     * @param uniqueComparator
-     *            the {@link Comparator} that strips away duplicate elements
-     *            from the {@link ComboBoxModel}
-     * @param tableFormat
-     *            specifies how each row object within a table is broken apart
-     *            into column values
-     * @param tableData
-     *            the {@link EventList} backing the TableModel
-     * @param columnIndex
-     *            the index of the column for which to return a
-     *            {@link AutoCompleteCellEditor}
+     * @param uniqueComparator the {@link Comparator} that strips away duplicate elements
+     *                         from the {@link ComboBoxModel}
+     * @param tableFormat      specifies how each row object within a table is broken apart
+     *                         into column values
+     * @param tableData        the {@link EventList} backing the TableModel
+     * @param columnIndex      the index of the column for which to return a
+     *                         {@link AutoCompleteCellEditor}
      * @return a {@link AutoCompleteCellEditor} which contains an autocompleting
-     *         combobox whose contents remain consistent with the data in the
-     *         table column at the given <code>columnIndex</code>
+     * combobox whose contents remain consistent with the data in the
+     * table column at the given <code>columnIndex</code>
      */
-    @SuppressWarnings({ "rawtypes", "unchecked" })
+    @SuppressWarnings({"rawtypes", "unchecked"})
     public static <E> AutoCompleteCellEditor<E> createTableCellEditor(
             Comparator uniqueComparator, TableFormat<E> tableFormat,
             EventList<E> tableData, int columnIndex) {
@@ -2513,18 +2510,17 @@ public final class CustomAutoCompleteSupport<E> {
      * which adapts an autocompleting {@link JComboBox} for use as a Table Cell
      * Editor. The values within the <code>source</code> are used as
      * autocompletion terms within the {@link ComboBoxModel}.
-     *
-     * <p>
+     * <p/>
+     * <p/>
      * If the appearance or function of the autocompleting {@link JComboBox} is
      * to be customized, it can be retrieved using
      * {@link AutoCompleteCellEditor#getComponent()}.
      *
-     * @param source
-     *            the source of data for the JComboBox within the table cell
-     *            editor
+     * @param source the source of data for the JComboBox within the table cell
+     *               editor
      * @return a {@link AutoCompleteCellEditor} which contains an autocompleting
-     *         combobox whose model contents are determined by the given
-     *         <code>source</code>
+     * combobox whose model contents are determined by the given
+     * <code>source</code>
      */
     @SuppressWarnings("rawtypes")
     public static <E> AutoCompleteCellEditor<E> createTableCellEditor(
@@ -2548,7 +2544,7 @@ public final class CustomAutoCompleteSupport<E> {
      * {@link DefaultCellEditor}. It customizes the behaviour of a JComboBox to
      * make it more appropriate for use as a TableCellEditor. Specifically it
      * adds the following:
-     *
+     * <p/>
      * <ul>
      * <li>key presses which start table cell edits are also respected by the
      * JTextField
@@ -2557,7 +2553,7 @@ public final class CustomAutoCompleteSupport<E> {
      * editing stops
      * </ul>
      */
-    @SuppressWarnings({ "serial", "rawtypes" })
+    @SuppressWarnings({"serial", "rawtypes"})
     private static final class TableCellComboBox extends JComboBox implements
             FocusListener {
         public TableCellComboBox() {
@@ -2574,12 +2570,12 @@ public final class CustomAutoCompleteSupport<E> {
          * This method is a complete hack, but is necessary to achieve the
          * desired behaviour when using an autocompleting JComboBox in a
          * TableCellEditor.
-         *
+         * <p/>
          * The problem is that when cell editing begins due to a keystroke,
          * ideally the ComboBoxPopup should be displayed in a filtered state.
          * But, the FocusListener installed by BasicComboBoxUI actually hides
          * the ComboBoxPopup due to some phantom focusLost event we receive.
-         *
+         * <p/>
          * To solve the problem, we rip out the FocusListener installed by the
          * BasicComboBoxUI and replace it with our own that does NOT hide the
          * popup when this JComboBox loses focus. That's with us since losing
@@ -2587,7 +2583,7 @@ public final class CustomAutoCompleteSupport<E> {
          * so the entire editor is about to be removed.
          */
         private static void replaceUIDelegateFocusListener(Component c,
-                FocusListener replacement) {
+                                                           FocusListener replacement) {
             // remove all FocusListeners that appear to be installed by the
             // UIdelegate
             final FocusListener[] focusListeners = c.getFocusListeners();
@@ -2642,7 +2638,7 @@ public final class CustomAutoCompleteSupport<E> {
          * TableCellEditor. It gives the component a chance to process the
          * KeyEvent. For example, a JTextField will honour the keystroke and add
          * the letter to its Document.
-         *
+         * <p/>
          * Editable JComboBoxes don't provide that expected behaviour out of the
          * box, so we override this method with logic that gives the editor
          * component of the JComboBox a chance to respond to the keystroke that
@@ -2650,7 +2646,7 @@ public final class CustomAutoCompleteSupport<E> {
          */
         @Override
         protected boolean processKeyBinding(KeyStroke ks, KeyEvent e,
-                int condition, boolean pressed) {
+                                            int condition, boolean pressed) {
             // let the textfield have a crack at processing the KeyEvent
             final TableCellTextField tableCellTextField = (TableCellTextField) getEditor()
                     .getEditorComponent();
@@ -2672,8 +2668,8 @@ public final class CustomAutoCompleteSupport<E> {
          * This method is called by Swing when installing this JComboBox as a
          * TableCellEditor. It ensures that focus will return to the JTable when
          * the cell edit is complete.
-         *
-         * <p>
+         * <p/>
+         * <p/>
          * We override this method to ensure that if the JTextField acting as
          * the editor of the JComboBox has focus when the cell edit is complete,
          * focus is returned to the JTable in that case as well.
@@ -2704,7 +2700,7 @@ public final class CustomAutoCompleteSupport<E> {
          * This custom JTextField exists solely to make
          * {@link #processKeyBinding} a public method so that it can be called
          * from {@link TableCellComboBox#processKeyBinding}.
-         *
+         * <p/>
          * This custom JTextField is only used when creating an autocompleting
          * TableCellEditor via
          * {@link CustomAutoCompleteSupport#createTableCellEditor}.
@@ -2742,15 +2738,15 @@ public final class CustomAutoCompleteSupport<E> {
             /**
              * We override this method to make it public so that it can be
              * called from {@link TableCellComboBox#processKeyBinding}.
-             *
-             * <p>
+             * <p/>
+             * <p/>
              * This allows the keystroke which begins a table cell edit to also
              * contribute a character to this JTextField, thus mimicing the
              * behaviour of normal editable JTextField table cell editors.
              */
             @Override
             public boolean processKeyBinding(KeyStroke ks, KeyEvent e,
-                    int condition, boolean pressed) {
+                                             int condition, boolean pressed) {
                 return super.processKeyBinding(ks, e, condition, pressed);
             }
         }
@@ -2767,7 +2763,7 @@ public final class CustomAutoCompleteSupport<E> {
         private final int columnIndex;
 
         public TableColumnValueFunction(TableFormat<E> tableFormat,
-                int columnIndex) {
+                                        int columnIndex) {
             this.tableFormat = tableFormat;
             this.columnIndex = columnIndex;
         }

@@ -47,6 +47,7 @@ public class BitmapLoadRunnable implements Runnable {
 
     /**
      * Instantiates a new bitmap loader.
+     *
      * @param worker          The worker from which the bitmap loader has been called
      * @param glyphDefinition The glyph definition containing the path to the bmp
      * @param loader          The BitmapLoader loading the image

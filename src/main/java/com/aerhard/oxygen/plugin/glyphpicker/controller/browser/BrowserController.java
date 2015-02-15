@@ -48,22 +48,31 @@ import com.aerhard.oxygen.plugin.glyphpicker.view.TabPanel;
  */
 public class BrowserController extends TabController {
 
-    /** The list of all data sources. */
+    /**
+     * The list of all data sources.
+     */
     private final DataSourceList dataSourceList;
 
-    /** The add action. */
+    /**
+     * The add action.
+     */
     private AbstractAction addAction;
 
-    /** The worker loading glyph definitions from a document or online resource. */
+    /**
+     * The worker loading glyph definitions from a document or online resource.
+     */
     private TeiLoadWorker teiLoadWorker = null;
-    
-    /** A property change listener attached to the teiLoadWorker. */
+
+    /**
+     * A property change listener attached to the teiLoadWorker.
+     */
     private PropertyChangeListener teiLoadListener;
 
     /**
      * Instantiates a new BrowserController.
-     *  @param panel the browser tab's container panel
-     * @param config the plugin config
+     *
+     * @param panel            the browser tab's container panel
+     * @param config           the plugin config
      * @param imageCacheAccess the image cache
      */
     public BrowserController(TabPanel panel, Config config, ImageCacheAccess imageCacheAccess) {
@@ -88,11 +97,9 @@ public class BrowserController extends TabController {
      * Sets the browser panel's additional actions.
      */
     private void setAdditionalActions() {
-        controlPanel.addToToolbar(insertBtn, 0);
-
         addAction = new CopyAction(this, selectionModel);
         addAction.setEnabled(false);
-        controlPanel.addToToolbar(addAction, 1);
+        controlPanel.addToToolbar(addAction, 2);
     }
 
     /**
@@ -237,9 +244,7 @@ public class BrowserController extends TabController {
         if (CopyAction.KEY.equals(e.getPropertyName())
                 || InsertXmlAction.KEY.equals(e.getPropertyName())) {
             pcs.firePropertyChange(e);
-        }
-
-        else if (EditAction.KEY.equals(e.getPropertyName())) {
+        } else if (EditAction.KEY.equals(e.getPropertyName())) {
             loadData();
         }
 

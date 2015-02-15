@@ -40,22 +40,34 @@ import com.aerhard.oxygen.plugin.glyphpicker.model.GlyphDefinition;
  */
 public class GlyphScaledVectorRenderer extends GlyphRenderer {
 
-    /** The Constant serialVersionUID. */
+    /**
+     * The Constant serialVersionUID.
+     */
     private static final long serialVersionUID = 1L;
 
-    /** The font name. */
+    /**
+     * The font name.
+     */
     private String fontName = null;
 
-    /** The scaling factor. */
+    /**
+     * The scaling factor.
+     */
     private float factor = 0.73f;
 
-    /** The font render context. */
+    /**
+     * The font render context.
+     */
     private final FontRenderContext frc;
 
-    /** The characters to render. */
+    /**
+     * The characters to render.
+     */
     private String ch = null;
 
-    /** The font attributes. */
+    /**
+     * The font attributes.
+     */
     private final Map<TextAttribute, Integer> attr;
 
     /**
@@ -107,8 +119,8 @@ public class GlyphScaledVectorRenderer extends GlyphRenderer {
     /**
      * Draws a glyph to the component.
      *
-     * @param g2 the graphic context
-     * @param text the text
+     * @param g2       the graphic context
+     * @param text     the text
      * @param fontName the font name
      */
     private void drawGlyph(Graphics2D g2, String text, String fontName) {
