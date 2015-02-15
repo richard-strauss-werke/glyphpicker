@@ -64,7 +64,7 @@ public class EditAction extends AbstractPickerAction {
      */
     public EditAction(PropertyChangeListener listener, JPanel panel,
                       DataSourceList dataSourceList) {
-        super(CLASS_NAME, Icons.OPTIONS_SHORTCUT_CENTERED);
+        super(CLASS_NAME, Icons.WRENCH);
         addPropertyChangeListener(listener);
         this.panel = panel;
         this.dataSourceList = dataSourceList;

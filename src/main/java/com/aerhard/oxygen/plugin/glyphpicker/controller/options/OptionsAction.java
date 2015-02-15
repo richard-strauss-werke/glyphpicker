@@ -19,6 +19,7 @@ import com.aerhard.oxygen.plugin.glyphpicker.controller.action.AbstractPickerAct
 import com.aerhard.oxygen.plugin.glyphpicker.controller.bitmap.ImageCacheAccess;
 import com.aerhard.oxygen.plugin.glyphpicker.model.Config;
 import com.aerhard.oxygen.plugin.glyphpicker.view.options.OptionsEditor;
+import ro.sync.ui.Icons;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -61,7 +62,7 @@ public class OptionsAction extends AbstractPickerAction {
      * @param imageCacheAccess the ImageCacheAccess object
      */
     public OptionsAction(PropertyChangeListener listener, Config config, JPanel panel, ImageCacheAccess imageCacheAccess) {
-        super(CLASS_NAME, "/images/gear.png");
+        super(CLASS_NAME, Icons.OPTIONS_SHORTCUT_CENTERED);
         addPropertyChangeListener(listener);
         this.panel = panel;
         this.imageCacheAccess = imageCacheAccess;
