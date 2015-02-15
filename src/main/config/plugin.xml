@@ -1,12 +1,12 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plugin SYSTEM "../plugin.dtd">
 <plugin
-    id="com.aerhard.oxygen.plugin.glyphpicker"
+    id="de.badw.strauss.glyphpicker"
     name="${project.name}"
     description="GlyphPicker Plugin for TEI"
     version="${project.version}"
     vendor="Alexander Erhard"
-    class="com.aerhard.oxygen.plugin.glyphpicker.GlyphPickerPlugin"
+    class="de.badw.strauss.glyphpicker.GlyphPickerPlugin"
     classLoaderType="preferReferencedResources">
     <runtime>
         <!--<library name="lib/glazedlists_java15-1.9.0.jar"/>-->
@@ -14,6 +14,6 @@
         <library name="lib/${project.build.finalName}.jar"/>
     </runtime>
     <extension type="WorkspaceAccess" 
-    class="com.aerhard.oxygen.plugin.glyphpicker.GlyphPickerPluginExtension"/>
+    class="de.badw.strauss.glyphpicker.GlyphPickerPluginExtension"/>
     <view id="GlyphPicker" initialSide="EAST" initialRow="0"/>
 </plugin> 
