@@ -281,7 +281,7 @@ public class GlyphDefinition implements Cloneable {
         return template
                 .replaceAll("\\$\\{basePath\\}", getDataSource().getBasePath())
                 .replaceAll("\\$\\{id\\}", getId())
-                .replaceAll("\\$\\{cp\\}", getCodePoint())
+                .replaceAll("\\$\\{char\\}", getCodePoint())
                 .replaceAll("\\$\\{num\\}", getNumericCharRef());
     }
 
