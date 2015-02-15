@@ -146,10 +146,10 @@ public class MainController implements PropertyChangeListener {
 
         mainPanel = new MainPanel(userCollectionPanel, browserPanel);
 
-        mainPanel.getTabbedPane().setSelectedIndex(config.getTabIndex());
+        final JTabbedPane tabbedPane = mainPanel.getTabbedPane();
+        tabbedPane.setSelectedIndex(config.getTabIndex());
 
-        final TabFocusHandler focusHandler = new TabFocusHandler(
-                mainPanel.getTabbedPane());
+        final TabFocusHandler focusHandler = new TabFocusHandler(tabbedPane);
         focusHandler.setTabComponentFocus(0, userCollectionPanel
                 .getControlPanel().getAutoCompleteCombo());
         focusHandler.setTabComponentFocus(1, browserPanel.getControlPanel()
@@ -158,7 +158,6 @@ public class MainController implements PropertyChangeListener {
         mainPanel.addFocusListener(new FocusAdapter() {
             @Override
             public void focusGained(FocusEvent e) {
-                JTabbedPane tabbedPane = mainPanel.getTabbedPane();
                 Component container = tabbedPane.getComponentAt(tabbedPane
                         .getSelectedIndex());
                 Component component = focusHandler.getFocusComponentForContainer(container);
