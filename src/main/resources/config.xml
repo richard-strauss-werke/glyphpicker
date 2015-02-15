@@ -96,11 +96,22 @@
         </dataSource>
         <dataSource>
             <label>Edirom SMuFL Browser (localhost, glyph)</label>
-            <basePath>http://localhost:8080/exist/apps/smufl-browser/list/</basePath>
+            <basePath>http://localhost:8080/exist/apps/smufl-browser/index.xml</basePath>
             <fontName>BravuraText</fontName>
             <glyphRenderer>scaled vector</glyphRenderer>
-            <sizeFactor>0.5</sizeFactor>
-            <template>&lt;g ref="${basePath}#${id}"/&gt;</template>
+            <sizeFactor>0.7</sizeFactor>
+            <template>&lt;g ref="http://edirom.de/smufl-browser/${id}.xml"/&gt;</template>
+            <typeAttributeValue>smufl</typeAttributeValue>
+            <subtypeAttributeValue></subtypeAttributeValue>
+            <parseMapping>true</parseMapping>
+        </dataSource>
+        <dataSource>
+            <label>Edirom SMuFL Browser (localhost, bitmap)</label>
+            <basePath>http://localhost:8080/exist/apps/smufl-browser/index.xml</basePath>
+            <fontName>BravuraText</fontName>
+            <glyphRenderer>bitmap</glyphRenderer>
+            <sizeFactor>0.7</sizeFactor>
+            <template>&lt;g ref="http://edirom.de/smufl-browser/${id}.xml"/&gt;</template>
             <typeAttributeValue>smufl</typeAttributeValue>
             <subtypeAttributeValue></subtypeAttributeValue>
             <parseMapping>true</parseMapping>
