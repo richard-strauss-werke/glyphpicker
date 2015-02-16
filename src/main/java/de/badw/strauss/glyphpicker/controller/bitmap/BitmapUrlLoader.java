@@ -48,6 +48,11 @@ public class BitmapUrlLoader implements BitmapLoader {
             .getLogger(BitmapFileLoader.class.getName());
 
     /**
+     * The get parameters to be added to the http request
+     */
+    private static final String REQUEST_PARAMETER_STRING = "?size=low";
+
+    /**
      * The base path to the graphic.
      */
     private final String basePath;
@@ -119,7 +124,7 @@ public class BitmapUrlLoader implements BitmapLoader {
                 imageNameInCache = null;
             }
 
-            BufferedImage bi = getImageFromUrl("guest", "guest", imagePath);
+            BufferedImage bi = getImageFromUrl("guest", "guest", imagePath + REQUEST_PARAMETER_STRING);
             if (bi != null) {
                 int scaledSize = Math
                         .round(containerSize * d.getDataSource().getSizeFactor());

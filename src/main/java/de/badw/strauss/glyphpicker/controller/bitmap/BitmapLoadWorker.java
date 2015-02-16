@@ -44,9 +44,14 @@ public class BitmapLoadWorker extends
     public static final String ICON_LOADED = "iconLoaded";
 
     /**
+     * The size of the thread pool.
+     */
+    private static final int THREAD_POOL_SIZE = 10;
+
+    /**
      * The executor service.
      */
-    private final ExecutorService executorService = Executors.newFixedThreadPool(10);
+    private final ExecutorService executorService = Executors.newFixedThreadPool(THREAD_POOL_SIZE);
 
     /**
      * The glyph definitions.
