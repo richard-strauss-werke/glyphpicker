@@ -279,7 +279,7 @@ public abstract class TabController implements PropertyChangeListener {
         bmpListener = new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent e) {
-                if ("iconLoaded".equals(e.getPropertyName())) {
+                if (BitmapLoadWorker.ICON_LOADED.equals(e.getPropertyName())) {
                     tabPanel.redrawIconInList(filterList
                             .indexOf(e.getNewValue()));
                 }

@@ -69,7 +69,7 @@ public class BitmapLoadRunnable implements Runnable {
                 GlyphBitmapIcon icon = loader.getImage();
                 if (icon != null) {
                     glyphDefinition.setIcon(icon);
-                    worker.firePropertyChange("iconLoaded", null,
+                    worker.firePropertyChange(BitmapLoadWorker.ICON_LOADED, null,
                             glyphDefinition);
                 }
             } catch (Exception e) {

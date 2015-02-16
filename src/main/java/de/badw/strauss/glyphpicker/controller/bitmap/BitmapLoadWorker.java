@@ -18,17 +18,30 @@ package de.badw.strauss.glyphpicker.controller.bitmap;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 import javax.swing.SwingWorker;
 
 import de.badw.strauss.glyphpicker.model.DataSource;
 import de.badw.strauss.glyphpicker.model.GlyphDefinition;
+import org.apache.log4j.Logger;
 
 /**
  * A worker class for bulk loading bitmap images from a list of glyph definitions.
  */
 public class BitmapLoadWorker extends
         SwingWorker<List<GlyphDefinition>, Void> {
+
+    /**
+     * The logger.
+     */
+    private static final Logger LOGGER = Logger.getLogger(BitmapLoadWorker.class
+            .getName());
+
+    /**
+     * The key of the property change event after a icon has been loaded
+     */
+    public static final String ICON_LOADED = "iconLoaded";
 
     /**
      * The executor service.
@@ -101,6 +114,13 @@ public class BitmapLoadWorker extends
                 executorService.submit(new BitmapLoadRunnable(this, d, loader));
 
             }
+        }
+
+        executorService.shutdown();
+        try {
+            executorService.awaitTermination(Long.MAX_VALUE, TimeUnit.NANOSECONDS);
+        } catch (InterruptedException e) {
+            LOGGER.info(e);
         }
 
         return null;
