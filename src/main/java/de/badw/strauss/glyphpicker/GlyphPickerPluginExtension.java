@@ -67,6 +67,11 @@ public class GlyphPickerPluginExtension implements
     private static final String VIEW_ID = "GlyphPicker";
 
     /**
+     * The plugin title.
+     */
+    private static final String TITLE = "GlyphPicker";
+
+    /**
      * The main controller.
      */
     private MainController mainController;
@@ -108,7 +113,7 @@ public class GlyphPickerPluginExtension implements
                 if (VIEW_ID.equals(viewInfo.getViewID())) {
 
                     viewInfo.setComponent(mainPanel);
-                    viewInfo.setTitle("GlyphPicker");
+                    viewInfo.setTitle(TITLE);
 
                     // TODO use custom icon
                     viewInfo.setIcon(new ImageIcon(

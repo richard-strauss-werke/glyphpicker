@@ -34,12 +34,10 @@ import de.badw.strauss.glyphpicker.model.GlyphDefinition;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.StatusLine;
-import org.apache.http.auth.UsernamePasswordCredentials;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpResponseException;
 import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.auth.BasicScheme;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.log4j.Logger;
 import org.xml.sax.SAXException;
@@ -133,7 +131,7 @@ public class TeiLoadWorker extends SwingWorker<List<GlyphDefinition>, Void> {
     public List<GlyphDefinition> loadData() {
         String path = dataSource.getBasePath();
         return (isLocalFile(path)) ? loadDataFromFile()
-                : loadDataFromUrl("guest", "guest");
+                : loadDataFromUrl();
     }
 
     /**
@@ -150,17 +148,12 @@ public class TeiLoadWorker extends SwingWorker<List<GlyphDefinition>, Void> {
     /**
      * Loads TEI data from a URL.
      *
-     * @param user     the user
-     * @param password the password
      * @return the resulting GlyphDefinition list
      */
-    public List<GlyphDefinition> loadDataFromUrl(String user, String password) {
+    public List<GlyphDefinition> loadDataFromUrl() {
         DefaultHttpClient httpClient = new DefaultHttpClient();
         try {
             HttpGet httpGet = new HttpGet(dataSource.getBasePath());
-            httpGet.addHeader(BasicScheme.authenticate(
-                    new UsernamePasswordCredentials(user, password), "UTF-8",
-                    false));
             return httpClient.execute(httpGet, new XMLResponseHandler());
         } catch (IOException e) {
             JOptionPane.showMessageDialog(

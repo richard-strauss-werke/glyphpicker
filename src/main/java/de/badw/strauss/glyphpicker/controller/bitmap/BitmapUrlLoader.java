@@ -20,9 +20,7 @@ import de.badw.strauss.glyphpicker.view.renderer.GlyphBitmapIcon;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.StatusLine;
-import org.apache.http.auth.UsernamePasswordCredentials;
 import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.auth.BasicScheme;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 import org.apache.log4j.Logger;
@@ -124,7 +122,7 @@ public class BitmapUrlLoader implements BitmapLoader {
                 imageNameInCache = null;
             }
 
-            BufferedImage bi = getImageFromUrl("guest", "guest", imagePath + REQUEST_PARAMETER_STRING);
+            BufferedImage bi = getImageFromUrl(imagePath + REQUEST_PARAMETER_STRING);
             if (bi != null) {
                 int scaledSize = Math
                         .round(containerSize * d.getDataSource().getSizeFactor());
@@ -149,20 +147,14 @@ public class BitmapUrlLoader implements BitmapLoader {
     /**
      * Gets an image from a URL.
      *
-     * @param user     the user name
-     * @param password the password
      * @param url      the url
      * @return the image from the url
      */
-    public BufferedImage getImageFromUrl(String user, String password,
-                                         String url) {
+    public BufferedImage getImageFromUrl(String url) {
         HttpResponse response;
         DefaultHttpClient httpClient = new DefaultHttpClient();
         try {
             HttpGet httpGet = new HttpGet(url);
-            httpGet.addHeader(BasicScheme.authenticate(
-                    new UsernamePasswordCredentials(user, password), "UTF-8",
-                    false));
             response = httpClient.execute(httpGet);
 
             StatusLine statusLine = response.getStatusLine();

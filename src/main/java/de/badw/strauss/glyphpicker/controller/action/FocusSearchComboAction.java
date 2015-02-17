@@ -22,7 +22,7 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 
 /**
- * An action to focus the search text field of a panel.
+ * An action to focus the search combo of a tab panel.
  */
 public class FocusSearchComboAction extends AbstractPickerAction {
 
@@ -39,7 +39,7 @@ public class FocusSearchComboAction extends AbstractPickerAction {
     private final JComboBox<?> autoCompleteCombo;
 
     /**
-     * Instantiates a new SortAction.
+     * Instantiates a new FocusSearchComboAction.
      *
      * @param panel The container tab panel
      */

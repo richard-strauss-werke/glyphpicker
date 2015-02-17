@@ -158,6 +158,7 @@ public class MainController implements PropertyChangeListener {
         mainPanel.addFocusListener(new FocusAdapter() {
             @Override
             public void focusGained(FocusEvent e) {
+                JOptionPane.showMessageDialog(mainPanel, e.getOppositeComponent().getClass().getName());
                 Component container = tabbedPane.getComponentAt(tabbedPane
                         .getSelectedIndex());
                 Component component = focusHandler.getFocusComponentForContainer(container);
@@ -172,7 +173,7 @@ public class MainController implements PropertyChangeListener {
     }
 
     /**
-     * Sets an accelerator ctrl+index / command+index for a specified index in a JTabbedPane
+     * Sets the accelerator ctrl + tab index / command + tab index for a specified index in a JTabbedPane
      * @param tabbedPane the tabbed pane
      * @param actualIndex the actual index, starting with 0
      */
