@@ -137,23 +137,107 @@ public class GlyphPickerPluginExtension implements
     }
 
     /**
-     * Creates an XML string from a GlyphDefinition object.
+     * Inserts a text fragment into a text or author editor pane.
      *
-     * @param d     the glyph definition
-     * @param setNs if true, the TEI namespace will be added to the XML string.
-     * @return the XML string
+     * @param workspace oXygen's plugin workspace
+     * @param d         the glyph definition
      */
-    public String createXmlString(GlyphDefinition d, Boolean setNs) {
-        return (setNs) ? insertNs(d.getXmlString()) : d.getXmlString();
+    private void insertFragment(StandalonePluginWorkspace workspace,
+                                GlyphDefinition d) {
+        WSEditorPage currentPage = workspace.getCurrentEditorAccess(
+                PluginWorkspace.MAIN_EDITING_AREA).getCurrentPage();
+        if (currentPage instanceof WSTextEditorPage) {
+            insertIntoTextEditorPage(d.getXmlString(), (WSTextEditorPage) currentPage);
+        } else if (currentPage instanceof WSAuthorEditorPage) {
+            insertIntoAuthorPage(d.getXmlString(), (WSAuthorEditorPage) currentPage);
+        } else {
+            JOptionPane.showMessageDialog(mainPanel, "No editor pane found to insert the glyph.");
+        }
+        if (mainController.getConfig().shouldTransferFocusAfterInsert()) {
+            transferFocus();
+        }
     }
 
     /**
-     * Inserts a namespace declaration to a String
-     *
-     * @param str the input String
-     * @return the String with namespace or - if it doesn't match the pattern <[^/^>]+ or is null - the original String
+     * transfers the focus of the GlyphPicker panel to the previously focused component
      */
-    String insertNs(String str) {
+    private void transferFocus() {
+        // TODO find the parent component, get action map, trigger event
+        try {
+            Robot robot = new Robot();
+            robot.keyPress(KeyEvent.VK_ESCAPE);
+        } catch (AWTException e) {
+            JOptionPane.showMessageDialog(mainPanel, e.toString());
+        }
+    }
+
+    /**
+     * Inserts a text fragment into a text editor page.
+     *
+     * @param str    the input string
+     * @param page the editor page
+     */
+    private void insertIntoTextEditorPage(String str, WSTextEditorPage page) {
+
+        if (str != null && !str.isEmpty()) {
+            page.beginCompoundUndoableEdit();
+            int selectionOffset = page.getSelectionStart();
+            page.deleteSelection();
+            try {
+                page.getDocument().insertString(selectionOffset,
+                        str,
+                        javax.swing.text.SimpleAttributeSet.EMPTY);
+
+            } catch (BadLocationException e) {
+                LOGGER.error(e);
+            }
+            page.endCompoundUndoableEdit();
+        }
+    }
+
+    /**
+     * Inserts a text fragment into a author editor page.
+     *
+     * @param str         the input string
+     * @param page      the editor page
+     */
+    private void insertIntoAuthorPage(String str, WSAuthorEditorPage page) {
+
+        String stringWithNs = addNamespace(str);
+
+        if (stringWithNs != null && !stringWithNs.isEmpty()) {
+            try {
+                AuthorAccess authorAccess = page.getAuthorAccess();
+
+                if (authorAccess.getEditorAccess().hasSelection()) {
+                    authorAccess.getEditorAccess().deleteSelection();
+                }
+
+                int offset = authorAccess.getEditorAccess().getCaretOffset();
+                Position endOffsetPos = null;
+                    endOffsetPos = authorAccess.getDocumentController()
+                            .createPositionInContent(offset + 1);
+
+                authorAccess.getDocumentController().insertXMLFragment(stringWithNs, offset);
+
+                int endOffset = endOffsetPos != null ? endOffsetPos.getOffset() - 1
+                        : offset;
+                authorAccess.getEditorAccess().setCaretPosition(endOffset);
+            } catch (BadLocationException e1) {
+                LOGGER.error(e1);
+            } catch (AuthorOperationException e) {
+                LOGGER.error(e);
+            }
+        }
+    }
+
+    /**
+     * Adds a namespace declaration to a string.
+     *
+     * @param str     the input string
+     * @return the string with added namespace or - if it doesn't match the pattern <[^/^>]+ or is null - the original string
+     */
+    public String addNamespace(String str) {
         if (str != null && !str.isEmpty()) {
             String ns = " xmlns=\"http://www.tei-c.org/ns/1.0\"";
             Pattern p = Pattern.compile("(<[^/^>]+)");
@@ -171,100 +255,6 @@ public class GlyphPickerPluginExtension implements
             }
         }
         return str;
-    }
-
-    /**
-     * Inserts a text fragment into a text or author editor pane.
-     *
-     * @param workspace oXygen's plugin workspace
-     * @param d         the glyph definition
-     */
-    private void insertFragment(StandalonePluginWorkspace workspace,
-                                GlyphDefinition d) {
-        WSEditorPage currentPage = workspace.getCurrentEditorAccess(
-                PluginWorkspace.MAIN_EDITING_AREA).getCurrentPage();
-        if (currentPage instanceof WSTextEditorPage) {
-            insertIntoTextEditorPage(d, (WSTextEditorPage) currentPage);
-        } else if (currentPage instanceof WSAuthorEditorPage) {
-            InsertIntoAuthorPage(d, (WSAuthorEditorPage) currentPage);
-        } else {
-            JOptionPane.showMessageDialog(mainPanel, "No editor pane found to insert the glyph.");
-        }
-        if (mainController.getConfig().shouldTransferFocusAfterInsert()) {
-            transferFocus();
-        }
-    }
-
-    /**
-     * transfers the focus of the GlyphPicker panel to the previously focused component
-     */
-    private void transferFocus() {
-        // TODO
-        try {
-            Robot robot = new Robot();
-            robot.keyPress(KeyEvent.VK_ESCAPE);
-        } catch (AWTException e) {
-            JOptionPane.showMessageDialog(mainPanel, e.toString());
-        }
-    }
-
-    /**
-     * Inserts a text fragment into a text editor page.
-     *
-     * @param d    the glyph definition from which the text fragment is created
-     * @param page the editor page
-     */
-    private void insertIntoTextEditorPage(GlyphDefinition d, WSTextEditorPage page) {
-
-        page.beginCompoundUndoableEdit();
-        int selectionOffset = page.getSelectionStart();
-        page.deleteSelection();
-        String xmlString = createXmlString(d, false);
-        if (xmlString != null && !xmlString.isEmpty()) {
-            try {
-                page.getDocument().insertString(selectionOffset,
-                        xmlString,
-                        javax.swing.text.SimpleAttributeSet.EMPTY);
-
-            } catch (BadLocationException e) {
-                LOGGER.error(e);
-            }
-        }
-        page.endCompoundUndoableEdit();
-    }
-
-    /**
-     * Inserts a text fragment into a author editor page.
-     *
-     * @param d         the glyph definition from which the text fragment is created
-     * @param page      the editor page
-     */
-    private void InsertIntoAuthorPage(GlyphDefinition d, WSAuthorEditorPage page) {
-
-        AuthorAccess authorAccess = page.getAuthorAccess();
-        String xmlString = createXmlString(d, true);
-        if (xmlString != null && !xmlString.isEmpty()) {
-            try {
-                int offset = authorAccess.getEditorAccess().getCaretOffset();
-                Position endOffsetPos = null;
-                try {
-                    endOffsetPos = authorAccess.getDocumentController()
-                            .createPositionInContent(offset + 1);
-                } catch (BadLocationException e1) {
-                    LOGGER.error(e1);
-                }
-
-                authorAccess.getDocumentController()
-                        .insertXMLFragmentSchemaAware(
-                                xmlString, offset);
-
-                int endOffset = endOffsetPos != null ? endOffsetPos.getOffset() - 1
-                        : offset;
-                authorAccess.getEditorAccess().setCaretPosition(endOffset);
-            } catch (AuthorOperationException e) {
-                LOGGER.error(e);
-            }
-        }
     }
 
     /*

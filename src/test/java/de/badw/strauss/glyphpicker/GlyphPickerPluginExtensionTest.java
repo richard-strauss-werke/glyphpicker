@@ -34,7 +34,7 @@ public class GlyphPickerPluginExtensionTest {
         tests.put("&#xE001;", "&#xE001;");
 
         for (String key : tests.keySet()) {
-            String result = ext.insertNs(key);
+            String result = ext.addNamespace(key);
             assertEquals(tests.get(key), result);
         }
     }
