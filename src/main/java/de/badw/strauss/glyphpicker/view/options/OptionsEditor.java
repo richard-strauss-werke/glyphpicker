@@ -14,11 +14,6 @@ public class OptionsEditor extends JPanel {
     private static final int PREFERRED_WIDTH = 350;
 
     /**
-     * The component's preferred height.
-     */
-    private static final int PREFERRED_HEIGHT = 70;
-
-    /**
      * The text field to edit the shortcut
      */
     private final JTextField shortcutTextField;
@@ -48,12 +43,15 @@ public class OptionsEditor extends JPanel {
      */
     private final String cacheCountLabelSuffixPlural;
 
+    /**
+     * A checkbox to adjust the tranferFocusOnInsert option
+     */
+    private final JCheckBox transferFocusCheckBox;
+
     public OptionsEditor() {
 
         ResourceBundle i18n = ResourceBundle.getBundle("GlyphPicker");
         String className = this.getClass().getSimpleName();
-
-        setPreferredSize(new Dimension(PREFERRED_WIDTH, PREFERRED_HEIGHT));
 
         GridBagLayout gbl = new GridBagLayout();
         gbl.columnWidths = new int[]{102, 46, 46};
@@ -113,6 +111,27 @@ public class OptionsEditor extends JPanel {
         gbcCacheButton.gridx = 2;
         gbcCacheButton.gridy = 1;
         add(clearCacheButton, gbcCacheButton);
+
+
+        JLabel restoreFocusLabel = new JLabel(i18n.getString(className + ".transferFocusLabel"));
+        GridBagConstraints gbcRestoreFocusLabel = new GridBagConstraints();
+        gbcRestoreFocusLabel.insets = new Insets(4, 5, 4, 5);
+        gbcRestoreFocusLabel.fill = GridBagConstraints.BOTH;
+        gbcRestoreFocusLabel.gridwidth=2;
+        gbcRestoreFocusLabel.gridx = 0;
+        gbcRestoreFocusLabel.gridy = 2;
+        add(restoreFocusLabel, gbcRestoreFocusLabel);
+
+        transferFocusCheckBox = new JCheckBox();
+        GridBagConstraints gbcRestoreFocusCheckBox = new GridBagConstraints();
+        gbcRestoreFocusCheckBox.insets = new Insets(4, 5, 4, 5);
+        gbcRestoreFocusCheckBox.fill = GridBagConstraints.BOTH;
+        gbcRestoreFocusCheckBox.gridx = 2;
+        gbcRestoreFocusCheckBox.gridy = 2;
+        add(transferFocusCheckBox, gbcRestoreFocusCheckBox);
+
+
+        setPreferredSize(new Dimension(PREFERRED_WIDTH, getPreferredSize().height));
     }
 
     /**
@@ -150,6 +169,16 @@ public class OptionsEditor extends JPanel {
      */
     public JButton getClearCacheButton() {
         return clearCacheButton;
+    }
+
+
+    /**
+     * Gets the restore-focus check box
+     *
+     * @return the check box
+     */
+    public JCheckBox getTransferFocusCheckBox() {
+        return transferFocusCheckBox;
     }
 
 }

@@ -23,6 +23,8 @@ import ro.sync.ui.Icons;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ResourceBundle;
@@ -92,6 +94,20 @@ public class OptionsEditorController {
 
         contentPane.getShortcutTextField().getDocument().addDocumentListener(
                 new ShortcutFieldInputHandler(config, applyShortcutAction));
+
+        contentPane.getTransferFocusCheckBox().setSelected(config.shouldTransferFocusAfterInsert());
+
+        contentPane.getTransferFocusCheckBox().addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if (ItemEvent.SELECTED == e.getStateChange()) {
+                    config.setTransferFocusAfterInsert(true);
+                } else if (ItemEvent.DESELECTED == e.getStateChange()) {
+                    config.setTransferFocusAfterInsert(false);
+                }
+            }
+        });
+
 
         PropertyChangeListener imageCacheListener = new PropertyChangeListener() {
             @Override

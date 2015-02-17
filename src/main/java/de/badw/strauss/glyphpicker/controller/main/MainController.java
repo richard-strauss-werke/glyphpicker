@@ -158,7 +158,9 @@ public class MainController implements PropertyChangeListener {
         mainPanel.addFocusListener(new FocusAdapter() {
             @Override
             public void focusGained(FocusEvent e) {
-                JOptionPane.showMessageDialog(mainPanel, e.getOppositeComponent().getClass().getName());
+
+//                JOptionPane.showMessageDialog(mainPanel, e.getOppositeComponent().getClass().getName());
+
                 Component container = tabbedPane.getComponentAt(tabbedPane
                         .getSelectedIndex());
                 Component component = focusHandler.getFocusComponentForContainer(container);

@@ -35,7 +35,13 @@ public class Config {
     private String shortcut;
 
     /**
-     * The tab index.
+     * Indicates if the previous component's focus should be restored when a glyph gets inserted.
+     */
+    @XmlElement
+    private boolean transferFocusAfterInsert = true;
+
+    /**
+     * The tab index to select when the plug-in window is shown the first time in a session.
      */
     @XmlElement
     private int tabIndex = 1;
@@ -125,6 +131,22 @@ public class Config {
         String oldShortcut = this.shortcut;
         this.shortcut = shortcut;
         pcs.firePropertyChange(SHORTCUT_KEY, oldShortcut, shortcut);
+    }
+
+    /**
+     * Indicates if the previous component's focus should be restored when a glyph gets inserted.
+     * @return the value of removeFocusOnInsert
+     */
+    public boolean shouldTransferFocusAfterInsert() {
+        return transferFocusAfterInsert;
+    }
+
+    /**
+     * Specifies if the previous component's focus should be restored when a glyph gets inserted.
+     * @param transferFocusAfterInsert
+     */
+    public void setTransferFocusAfterInsert(boolean transferFocusAfterInsert) {
+        this.transferFocusAfterInsert = transferFocusAfterInsert;
     }
 
     /**

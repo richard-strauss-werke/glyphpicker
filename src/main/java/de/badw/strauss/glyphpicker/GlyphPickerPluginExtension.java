@@ -16,6 +16,8 @@
 
 package de.badw.strauss.glyphpicker;
 
+import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.regex.Matcher;
@@ -186,8 +188,23 @@ public class GlyphPickerPluginExtension implements
         } else if (currentPage instanceof WSAuthorEditorPage) {
             InsertIntoAuthorPage(d, (WSAuthorEditorPage) currentPage);
         } else {
-            workspace
-                    .showErrorMessage("No editor pane found to insert the glyph.");
+            JOptionPane.showMessageDialog(mainPanel, "No editor pane found to insert the glyph.");
+        }
+        if (mainController.getConfig().shouldTransferFocusAfterInsert()) {
+            transferFocus();
+        }
+    }
+
+    /**
+     * transfers the focus of the GlyphPicker panel to the previously focused component
+     */
+    private void transferFocus() {
+        // TODO
+        try {
+            Robot robot = new Robot();
+            robot.keyPress(KeyEvent.VK_ESCAPE);
+        } catch (AWTException e) {
+            JOptionPane.showMessageDialog(mainPanel, e.toString());
         }
     }
 
