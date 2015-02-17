@@ -64,35 +64,22 @@ public abstract class AbstractPickerAction extends AbstractAction {
      * @param className the name of the subclass; used to identify the action's label,
      *                  description and mnemonic string in the language resource
      *                  bundle
+     * @param icon      the icon path; may be one of the constants defined in ro.sync.ui.Icons
      */
-    public AbstractPickerAction(String className) {
-        super(I18N.getString(className + ".label"));
-
+    public AbstractPickerAction(String className, String icon) {
+        super(I18N.getString(className + ".label"), Icons.getIcon(icon));
         String description = I18N.getString(className + ".description");
-        String mnemonic = I18N.getString(className + ".mnemonic");
-
-        putValue(SHORT_DESCRIPTION, description + " (" + MODIFIER_NAME + "+"
-                + mnemonic + ")");
-        putValue(MNEMONIC_KEY, KeyStroke.getKeyStroke(mnemonic).getKeyCode());
+        putValue(SHORT_DESCRIPTION, description);
     }
 
     /**
      * Instantiates a new AbstractPickerAction.
      *
-     * @param className the name of the subclass; used to identify the action's label,
-     *                  description and mnemonic string in the language resource
-     *                  bundle
-     * @param icon      the icon path; may be one of the constants defined in ro.sync.ui.Icons
+     * @param accelerator   the keyboard accelerator string in Windows / Linux nomenclature
      */
-    public AbstractPickerAction(String className, String icon) {
-//        super(I18N.getString(className + ".label"), new ImageIcon(
-//                AbstractPickerAction.class.getResource(icon)));
-
-        super(I18N.getString(className + ".label"), Icons.getIcon(icon));
-
-        String description = I18N.getString(className + ".description");
-
-        putValue(SHORT_DESCRIPTION, description);
+    public AbstractPickerAction(String accelerator) {
+        String osIndependentAccelerator = (IS_MAC) ? accelerator.replace("ctrl", "command") : accelerator;
+        putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke(osIndependentAccelerator));
     }
 
     /**

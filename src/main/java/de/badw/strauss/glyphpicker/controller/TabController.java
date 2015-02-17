@@ -36,6 +36,7 @@ import ca.odell.glazedlists.swing.DefaultEventSelectionModel;
 import ca.odell.glazedlists.swing.DefaultEventTableModel;
 
 import de.badw.strauss.glyphpicker.controller.action.ChangeViewAction;
+import de.badw.strauss.glyphpicker.controller.action.FocusSearchComboAction;
 import de.badw.strauss.glyphpicker.controller.action.InsertXmlAction;
 import de.badw.strauss.glyphpicker.controller.action.SortAction;
 import de.badw.strauss.glyphpicker.controller.autocomplete.AutoCompleteController;
@@ -50,7 +51,6 @@ import de.badw.strauss.glyphpicker.view.GlyphGrid;
 import de.badw.strauss.glyphpicker.view.GlyphTable;
 import de.badw.strauss.glyphpicker.view.GlyphTableFormat;
 import de.badw.strauss.glyphpicker.view.renderer.GlyphRendererAdapter;
-import org.apache.log4j.Logger;
 
 /**
  * An abstract controller of a tab panel.
@@ -229,6 +229,8 @@ public abstract class TabController implements PropertyChangeListener {
         insertAction.setEnabled(false);
         controlPanel.getInsertBtn().setAction(insertAction);
 
+        new FocusSearchComboAction(tabPanel);
+        
         initMouseListeners();
 
         setEnterKeyAction(list);
