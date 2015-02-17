@@ -24,12 +24,12 @@ The GlyphPicker plugin requires oXygen v15.0 or higher.
 
 #### Update site
 
-`http://aerhard.github.io/glyphpicker/update/latest.xml`
+`http://richard-strauss-werke.github.io/glyphpicker/update/latest.xml`
 
 #### Developers
 
-Fork or clone the source code at https://github.com/aerhard/glyphpicker
+Fork or clone the source code at https://github.com/richard-strauss-werke/glyphpicker
 
 #### Issues
 
-To report an issue, please visit the project's GitHub page at https://github.com/aerhard/glyphpicker
+To report an issue, please visit the project's GitHub page at https://github.com/richard-strauss-werke/glyphpicker

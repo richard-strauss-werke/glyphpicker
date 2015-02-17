@@ -9,7 +9,7 @@ subtitle: 'TEI-based glyph table plugin for oXygen'
 navigation: 2
 
 # URL to source code, used in _includes/footer.html
-codeurl: 'https://github.com/aerhard/glyphpicker'
+codeurl: 'https://github.com/richard-strauss-werke/glyphpicker'
 
 # Default categories (in order) to appear in the navigation
 sections: [
