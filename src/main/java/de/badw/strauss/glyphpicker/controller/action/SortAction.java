@@ -15,8 +15,11 @@
  */
 package de.badw.strauss.glyphpicker.controller.action;
 
+import com.jidesoft.swing.JideToggleButton;
+import de.badw.strauss.glyphpicker.view.TabPanel;
 import ro.sync.ui.Icons;
 
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 
 /**
@@ -32,10 +35,20 @@ public class SortAction extends AbstractPickerAction {
     private static final String CLASS_NAME = SortAction.class.getSimpleName();
 
     /**
-     * Instantiates a new SortAction.
+     * the toggle button from which the toggle state is read
      */
-    public SortAction() {
-        super(CLASS_NAME, Icons.SORT_ASCENDING_MENU);
+    private final JideToggleButton button;
+
+    /**
+     * Instantiates a new SortAction.
+     *
+     * @param panel The container tab panel
+     * @param button the toggle button from which the toggle state is read
+     */
+    public SortAction(TabPanel panel, JideToggleButton button) {
+        super(CLASS_NAME, Icons.SORT_ASCENDING_MENU, "ctrl O");
+        this.button = button;
+        bindAcceleratorToComponent(this, panel);
     }
 
     /* (non-Javadoc)
@@ -43,5 +56,11 @@ public class SortAction extends AbstractPickerAction {
      */
     @Override
     public void actionPerformed(ActionEvent e) {
+        // select the button *only* if the action has been triggered by pressing the accelerator
+        // combination
+        if (e.getActionCommand() != null) {
+            button.setSelected(!button.isSelected());
+        };
+
     }
 }

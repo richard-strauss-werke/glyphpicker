@@ -23,6 +23,7 @@ import ca.odell.glazedlists.FilterList;
 
 import de.badw.strauss.glyphpicker.model.GlyphDefinition;
 import de.badw.strauss.glyphpicker.view.GlyphGrid;
+import de.badw.strauss.glyphpicker.view.TabPanel;
 import ro.sync.ui.Icons;
 
 /**
@@ -60,19 +61,21 @@ public class RemoveAction extends AbstractPickerAction {
     /**
      * Instantiates a new RemoveAction.
      *
+     * @param panel The container tab panel
      * @param listener   the property change listener to be added to this action
      * @param glyphList  the glyph list model
      * @param filterList the filter list model
      * @param list       the list component
      */
-    public RemoveAction(PropertyChangeListener listener,
+    public RemoveAction(TabPanel panel, PropertyChangeListener listener,
                         EventList<GlyphDefinition> glyphList,
                         FilterList<GlyphDefinition> filterList, GlyphGrid list) {
-        super(CLASS_NAME, Icons.REMOVE_MENU);
+        super(CLASS_NAME, Icons.REMOVE_MENU, "ctrl D");
         this.addPropertyChangeListener(listener);
         this.glyphList = glyphList;
         this.filterList = filterList;
         this.list = list;
+        bindAcceleratorToComponent(this, panel);
     }
 
     /* (non-Javadoc)

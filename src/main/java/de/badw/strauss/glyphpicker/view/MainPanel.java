@@ -73,34 +73,14 @@ public class MainPanel extends JPanel {
         String userCollectionLabel = i18n.getString(className
                 + ".userCollection");
         tabbedPane.addTab(null, null, userCollectionPanel, null);
-        tabbedPane.setTabComponentAt(0, new HighlightLabel(
-                createHtmlLabel(userCollectionLabel)));
-        tabbedPane.setMnemonicAt(0,
-                KeyStroke.getKeyStroke(userCollectionLabel.substring(0, 1))
-                        .getKeyCode());
+        tabbedPane.setTabComponentAt(0, new HighlightLabel(userCollectionLabel));
 
         String dataSourcesLabel = i18n.getString(className + ".allCharacters");
         tabbedPane.addTab(null, null, browserPanel, null);
-        tabbedPane.setTabComponentAt(1, new HighlightLabel(
-                createHtmlLabel(dataSourcesLabel)));
-        tabbedPane.setMnemonicAt(1,
-                KeyStroke.getKeyStroke(dataSourcesLabel.substring(0, 1))
-                        .getKeyCode());
+        tabbedPane.setTabComponentAt(1, new HighlightLabel(dataSourcesLabel));
 
         add(tabbedPane, BorderLayout.CENTER);
         setMinimumSize(new Dimension(MIN_WIDTH, MIN_HEIGHT));
-    }
-
-    /**
-     * Creates a html string for a tab component's label.
-     *
-     * @param text the input string
-     * @return the resulting html string
-     */
-    private String createHtmlLabel(String text) {
-        return "<html><span style=\"text-decoration:underline\">"
-                + text.substring(0, 1) + "</span>" + text.substring(1)
-                + "</html>";
     }
 
     /**

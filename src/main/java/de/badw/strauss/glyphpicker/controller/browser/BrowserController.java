@@ -97,7 +97,7 @@ public class BrowserController extends TabController {
      * Sets the browser panel's additional actions.
      */
     private void setAdditionalActions() {
-        addAction = new CopyAction(this, selectionModel);
+        addAction = new CopyAction(tabPanel, this, selectionModel);
         addAction.setEnabled(false);
         controlPanel.addToToolbar(addAction, 2);
     }

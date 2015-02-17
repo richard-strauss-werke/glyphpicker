@@ -58,10 +58,11 @@ public class ChangeViewAction extends AbstractPickerAction {
      */
     public ChangeViewAction(TabPanel panel, GlyphTable table,
                             GlyphGrid list) {
-        super(CLASS_NAME, Icons.TABLE_MENU);
+        super(CLASS_NAME, Icons.TABLE_MENU, "ctrl T");
         this.panel = panel;
         this.table = table;
         this.list = list;
+        bindAcceleratorToComponent(this, panel);
     }
 
     /* (non-Javadoc)

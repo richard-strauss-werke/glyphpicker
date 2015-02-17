@@ -96,25 +96,25 @@ public class UserCollectionController extends TabController {
 
         int position = 2;
 
-        MoveUpAction moveUpAction = new MoveUpAction(this, glyphList, list);
+        MoveUpAction moveUpAction = new MoveUpAction(tabPanel, this, glyphList, list);
         moveUpAction.setEnabled(false);
         controlPanel.addToToolbar(moveUpAction, position++);
 
-        moveDownAction = new MoveDownAction(this, glyphList, list);
+        moveDownAction = new MoveDownAction(tabPanel, this, glyphList, list);
         moveDownAction.setEnabled(false);
         controlPanel.addToToolbar(moveDownAction, position++);
 
-        AbstractAction removeAction = new RemoveAction(this, glyphList, filterList, list);
+        AbstractAction removeAction = new RemoveAction(tabPanel, this, glyphList, filterList, list);
         removeAction.setEnabled(false);
         controlPanel.addToToolbar(removeAction, position++);
 
         controlPanel.addToToolbar(new JToolBar.Separator(null), position++);
 
-        AbstractAction saveAction = new SaveAction(this, syncDependentActions);
+        AbstractAction saveAction = new SaveAction(tabPanel, this, syncDependentActions);
         saveAction.setEnabled(false);
         controlPanel.addToToolbar(saveAction, position++);
 
-        AbstractAction reloadAction = new ReloadAction(this, syncDependentActions);
+        AbstractAction reloadAction = new ReloadAction(tabPanel, this, syncDependentActions);
         reloadAction.setEnabled(false);
         controlPanel.addToToolbar(reloadAction, position);
 

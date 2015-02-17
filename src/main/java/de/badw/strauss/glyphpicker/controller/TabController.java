@@ -50,6 +50,7 @@ import de.badw.strauss.glyphpicker.view.GlyphGrid;
 import de.badw.strauss.glyphpicker.view.GlyphTable;
 import de.badw.strauss.glyphpicker.view.GlyphTableFormat;
 import de.badw.strauss.glyphpicker.view.renderer.GlyphRendererAdapter;
+import org.apache.log4j.Logger;
 
 /**
  * An abstract controller of a tab panel.
@@ -132,7 +133,7 @@ public abstract class TabController implements PropertyChangeListener {
     /**
      * The action to trigger the insertion of a glyph reference into an XML document.
      */
-    protected final AbstractAction insertAction;
+    protected final Action insertAction;
 
     /**
      * Instantiates a new tab controller.
@@ -189,12 +190,9 @@ public abstract class TabController implements PropertyChangeListener {
         list.setSelectionModel(selectionModel);
         table.setSelectionModel(selectionModel);
 
-        controlPanel.getOptionsBtn().setAction(new OptionsAction(this, config, tabPanel, imageCacheAccess));
-
-        controlPanel.getSortBtn().setAction(new SortAction());
-
-        controlPanel.getViewBtn().setAction(
-                new ChangeViewAction(tabPanel, table, list));
+        controlPanel.getOptionsBtn().setAction(new OptionsAction(tabPanel, this, config, imageCacheAccess));
+        controlPanel.getSortBtn().setAction(new SortAction(tabPanel, controlPanel.getSortBtn()));
+        controlPanel.getViewBtn().setAction(new ChangeViewAction(tabPanel, table, list));
 
         filterList
                 .addListEventListener(new ListEventListener<GlyphDefinition>() {

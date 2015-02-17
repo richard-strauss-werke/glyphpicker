@@ -21,6 +21,7 @@ import java.beans.PropertyChangeListener;
 import ca.odell.glazedlists.swing.DefaultEventSelectionModel;
 
 import de.badw.strauss.glyphpicker.model.GlyphDefinition;
+import de.badw.strauss.glyphpicker.view.TabPanel;
 import ro.sync.ui.Icons;
 
 /**
@@ -49,15 +50,17 @@ public class CopyAction extends AbstractPickerAction {
     /**
      * Instantiates a new CopyAction.
      *
+     * @param panel The container tab panel
      * @param listener       the property change listener to be added to this action
      * @param selectionModel the event selection model
      */
-    public CopyAction(PropertyChangeListener listener,
+    public CopyAction(TabPanel panel, PropertyChangeListener listener,
                       DefaultEventSelectionModel<GlyphDefinition> selectionModel) {
-        super(CLASS_NAME, Icons.COPY_MENU);
+        super(CLASS_NAME, Icons.COPY_MENU, "ctrl ENTER");
 
         addPropertyChangeListener(listener);
         this.selectionModel = selectionModel;
+        bindAcceleratorToComponent(this, panel);
     }
 
     /*

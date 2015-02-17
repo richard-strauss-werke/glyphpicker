@@ -56,17 +56,18 @@ public class OptionsAction extends AbstractPickerAction {
     /**
      * Instantiates a new EditAction.
      *
+     * @param panel            The panel from which the data source editor has been opened
      * @param listener         the property change listener to be added to this action
      * @param config           The plugin's config
-     * @param panel            The panel from which the data source editor has been opened
      * @param imageCacheAccess the ImageCacheAccess object
      */
-    public OptionsAction(PropertyChangeListener listener, Config config, JPanel panel, ImageCacheAccess imageCacheAccess) {
-        super(CLASS_NAME, Icons.OPTIONS_SHORTCUT_CENTERED);
+    public OptionsAction(JPanel panel, PropertyChangeListener listener, Config config, ImageCacheAccess imageCacheAccess) {
+        super(CLASS_NAME, Icons.OPTIONS_SHORTCUT_CENTERED, "ctrl P");
         addPropertyChangeListener(listener);
         this.panel = panel;
         this.imageCacheAccess = imageCacheAccess;
         this.config = config;
+        bindAcceleratorToComponent(this, panel);
     }
 
     /*

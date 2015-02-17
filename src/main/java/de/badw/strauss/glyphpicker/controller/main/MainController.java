@@ -16,8 +16,7 @@
 package de.badw.strauss.glyphpicker.controller.main;
 
 import java.awt.*;
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
+import java.awt.event.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
@@ -26,6 +25,7 @@ import java.io.IOException;
 import java.util.Properties;
 
 import de.badw.strauss.glyphpicker.controller.TabController;
+import de.badw.strauss.glyphpicker.controller.action.AbstractPickerAction;
 import de.badw.strauss.glyphpicker.controller.action.CopyAction;
 import de.badw.strauss.glyphpicker.controller.action.InsertXmlAction;
 import de.badw.strauss.glyphpicker.controller.bitmap.ImageCacheAccess;
@@ -167,6 +167,28 @@ public class MainController implements PropertyChangeListener {
             }
         });
 
+        setTabAccelerator(tabbedPane, 0);
+        setTabAccelerator(tabbedPane, 1);
+    }
+
+    /**
+     * Sets an accelerator ctrl+index / command+index for a specified index in a JTabbedPane
+     * @param tabbedPane the tabbed pane
+     * @param actualIndex the actual index, starting with 0
+     */
+    private void setTabAccelerator(final JTabbedPane tabbedPane, final int actualIndex) {
+        int index = actualIndex + 1;
+        String actionKey = "select_tab_" + index;
+        String modifier = (AbstractPickerAction.IS_MAC) ? "command" : "ctrl";
+        System.out.println(modifier);
+        mainPanel.getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put(KeyStroke.getKeyStroke(modifier + " " + index),
+                actionKey);
+        mainPanel.getActionMap().put(actionKey, new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                tabbedPane.setSelectedIndex(actualIndex);
+            }
+        });
     }
 
     /**

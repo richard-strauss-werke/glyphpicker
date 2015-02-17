@@ -23,7 +23,10 @@ import ca.odell.glazedlists.EventList;
 
 import de.badw.strauss.glyphpicker.model.GlyphDefinition;
 import de.badw.strauss.glyphpicker.view.GlyphGrid;
+import de.badw.strauss.glyphpicker.view.TabPanel;
 import ro.sync.ui.Icons;
+
+import javax.swing.*;
 
 /**
  * An action to move a glyph definition down in the list.
@@ -55,11 +58,12 @@ public class MoveDownAction extends AbstractPickerAction {
     /**
      * Instantiates a MoveDownAction.
      *
+     * @param panel The container tab panel
      * @param listener  the property change listener to be added to this action
      * @param glyphList the glyph list model
      * @param list      the list component
      */
-    public MoveDownAction(PropertyChangeListener listener,
+    public MoveDownAction(TabPanel panel, PropertyChangeListener listener,
                           EventList<GlyphDefinition> glyphList, GlyphGrid list) {
         super(I18N.getString(CLASS_NAME + ".label"), Icons.getIcon(Icons.MOVE_DOWN_MENU));
 
@@ -69,8 +73,12 @@ public class MoveDownAction extends AbstractPickerAction {
 
         String description = I18N.getString(CLASS_NAME + ".description");
 
-        putValue(SHORT_DESCRIPTION, description + " (" + MODIFIER_NAME + "+↓)");
+        putValue(SHORT_DESCRIPTION, description + " (" + MENU_SHORTCUT_NAME + "+↓)");
         putValue(MNEMONIC_KEY, KeyEvent.VK_DOWN);
+
+        String osIndependentAccelerator = (IS_MAC) ? "command DOWN" : "ctrl DOWN";
+        putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke(osIndependentAccelerator));
+        bindAcceleratorToComponent(this, panel);
     }
 
     /* (non-Javadoc)
