@@ -33,11 +33,6 @@ public class DataSource implements Cloneable {
     private static final float DEFAULT_SIZE_FACTOR = 0.5f;
 
     /**
-     * The text glyph renderer code.
-     */
-    public static final String GLYPH_TEXT_RENDERER = "text";
-
-    /**
      * The vector glyph renderer code.
      */
     public static final String GLYPH_VECTOR_RENDERER = "vector";

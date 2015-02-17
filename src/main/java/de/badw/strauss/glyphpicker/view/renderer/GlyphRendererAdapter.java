@@ -57,8 +57,6 @@ public class GlyphRendererAdapter extends JLabel implements TableCellRenderer,
                 container));
         glyphRenderers.put(DataSource.GLYPH_BITMAP_RENDERER, new GlyphBitmapRenderer(
                 container));
-        glyphRenderers.put(DataSource.GLYPH_TEXT_RENDERER,
-                new GlyphTextRenderer(container));
     }
 
     /*

@@ -134,7 +134,6 @@ public class DataSourceEditorController implements PropertyChangeListener {
         glyphRendererLabels.add(DataSource.GLYPH_BITMAP_RENDERER);
         glyphRendererLabels.add(DataSource.GLYPH_VECTOR_RENDERER);
         glyphRendererLabels.add(DataSource.GLYPH_SCALED_VECTOR_RENDERER);
-        glyphRendererLabels.add(DataSource.GLYPH_TEXT_RENDERER);
 
         contentPane.setFormEnabled(false);
 
