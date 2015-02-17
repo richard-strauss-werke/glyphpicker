@@ -180,7 +180,6 @@ public class MainController implements PropertyChangeListener {
         int index = actualIndex + 1;
         String actionKey = "select_tab_" + index;
         String modifier = (AbstractPickerAction.IS_MAC) ? "command" : "ctrl";
-        System.out.println(modifier);
         mainPanel.getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put(KeyStroke.getKeyStroke(modifier + " " + index),
                 actionKey);
         mainPanel.getActionMap().put(actionKey, new AbstractAction() {

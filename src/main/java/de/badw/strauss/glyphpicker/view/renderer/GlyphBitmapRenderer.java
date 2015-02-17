@@ -56,7 +56,7 @@ public class GlyphBitmapRenderer extends GlyphRenderer {
 
         setIcon(gd.getIcon());
 
-        if (icon == null) {
+        if (icon == null && !isSelected) {
             setBackground(emptyColor);
         } else {
             configureBackground(isSelected);

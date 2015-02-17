@@ -174,7 +174,7 @@ public class DataSourceEditor extends JPanel {
                 new Color(0, 0, 0)), new EmptyBorder(8, 8, 8, 8)));
         add(formPanel);
         GridBagLayout gbl = new GridBagLayout();
-        gbl.columnWidths = new int[]{102, 46};
+        gbl.columnWidths = new int[]{102, 200};
         gbl.rowHeights = new int[]{20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
         gbl.columnWeights = new double[]{0.0, 1.0};
         gbl.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
