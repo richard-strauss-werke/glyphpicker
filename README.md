@@ -4,7 +4,7 @@ GlyphPicker Plugin for oXygen
 Update Site
 -----------
 
-http://aerhard.github.io/glyphpicker/update/latest.xml
+http://richard-strauss-werke.github.io/glyphpicker/update/latest.xml
 
 Build with Maven
 -----

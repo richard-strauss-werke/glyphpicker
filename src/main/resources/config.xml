@@ -19,7 +19,7 @@
         </dataSource>
         <dataSource>
             <label>SMuFL Browser (web, bitmap)</label>
-            <basePath>http://aerhard.github.io/glyphpicker/testdata/smuflBrowser/data/charDecl.xml</basePath>
+            <basePath>http://richard-strauss-werke.github.io/glyphpicker/testdata/smuflBrowser/data/charDecl.xml</basePath>
             <fontName>BravuraText</fontName>
             <glyphRenderer>bitmap</glyphRenderer>
             <sizeFactor>0.8</sizeFactor>
@@ -30,7 +30,7 @@
         </dataSource>
         <dataSource>
             <label>SMuFL Browser (web, glyph)</label>
-            <basePath>http://aerhard.github.io/glyphpicker/testdata/smuflBrowser/data/charDecl.xml</basePath>
+            <basePath>http://richard-strauss-werke.github.io/glyphpicker/testdata/smuflBrowser/data/charDecl.xml</basePath>
             <fontName>BravuraText</fontName>
             <glyphRenderer>scaled vector</glyphRenderer>
             <sizeFactor>0.7</sizeFactor>
@@ -41,7 +41,7 @@
         </dataSource>
         <dataSource>
             <label>gBank (web, bitmap)</label>
-            <basePath>http://aerhard.github.io/glyphpicker/testdata/gBankImages/gBank.xml</basePath>
+            <basePath>http://richard-strauss-werke.github.io/glyphpicker/testdata/gBankImages/gBank.xml</basePath>
             <fontName>Andron Scriptor Web</fontName>
             <glyphRenderer>bitmap</glyphRenderer>
             <sizeFactor>1.0</sizeFactor>
@@ -52,7 +52,7 @@
         </dataSource>
         <dataSource>
             <label>gBank (web, glyph)</label>
-            <basePath>http://aerhard.github.io/glyphpicker/testdata/gBankImages/gBank.xml</basePath>
+            <basePath>http://richard-strauss-werke.github.io/glyphpicker/testdata/gBankImages/gBank.xml</basePath>
             <fontName>Andron Scriptor Web</fontName>
             <glyphRenderer>vector</glyphRenderer>
             <sizeFactor>0.5</sizeFactor>
