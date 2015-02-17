@@ -12,7 +12,7 @@
             <fontName>BravuraText</fontName>
             <glyphRenderer>bitmap</glyphRenderer>
             <sizeFactor>0.8</sizeFactor>
-            <template>&lt;g ref="http://edirom.de/smufl-browser/${id}.xml</template>
+            <template>&lt;g ref="http://edirom.de/smufl-browser/${id}.xml"/&gt;</template>
             <typeAttributeValue>smufl</typeAttributeValue>
             <subtypeAttributeValue></subtypeAttributeValue>
             <parseMapping>true</parseMapping>
