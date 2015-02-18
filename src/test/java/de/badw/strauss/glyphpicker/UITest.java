@@ -40,18 +40,8 @@ public class UITest {
         
         Locale.setDefault(Locale.ENGLISH);
 
-        String tempDir = System.getProperty("user.dir");
-        File tmpFolder = new File(tempDir, "tmp");
-
-        if (!((tmpFolder.exists() && tmpFolder.isDirectory()) || tmpFolder.mkdir())) {
-            LOGGER.error(String.format("Could not create tmp folder at %s", tmpFolder.toString()));
-            System.exit(-1);
-        }
-
-        String tmpFolderString = tmpFolder.toString();
-
         StandalonePluginWorkspace workspace = mock(StandalonePluginWorkspace.class);
-        when(workspace.getPreferencesDirectory()).thenReturn(tmpFolderString);
+        when(workspace.getPreferencesDirectory()).thenReturn(TestHelper.getTempFolder());
 
         JFrame frame = new JFrame("UI Test");
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);

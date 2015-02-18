@@ -28,6 +28,12 @@ import java.io.File;
 public class Config {
 
     /**
+     * The version of the config file
+     */
+    @XmlElement
+    private String version;
+
+    /**
      * The plugin's shortcut in oXygen, for possible values see
      * http://docs.oracle.com/javase/7/docs/api/javax/swing/KeyStroke.html#getKeyStroke%28java.lang.String%29
      */
@@ -112,6 +118,21 @@ public class Config {
         pcs.removePropertyChangeListener(l);
     }
 
+    /**
+     * gets the version of the config file
+     * @return the version
+     */
+    public String getVersion() {
+        return version;
+    }
+
+    /**
+     * sets the version of the config file
+     * @param version the version
+     */
+    public void setVersion(String version) {
+        this.version = version;
+    }
 
     /**
      * Gets the plugin's shortcut in oXygen.

@@ -123,7 +123,7 @@ public class MainController implements PropertyChangeListener {
         try {
             properties.load(MainController.class
                     .getResourceAsStream("/plugin.properties"));
-        } catch (IOException e) {
+        } catch (Exception e) {
             LOGGER.error("Could not read \"plugin.properties\".");
         }
 

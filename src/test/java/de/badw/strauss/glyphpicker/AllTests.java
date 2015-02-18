@@ -5,7 +5,8 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
-@SuiteClasses({ i18nTest.class, UITest.class, GlyphPickerPluginExtensionTest.class })
+@SuiteClasses({ i18nTest.class, UITest.class, GlyphPickerPluginExtensionTest.class,
+ConfigLoaderTest.class})
 public class AllTests {
 
 }
