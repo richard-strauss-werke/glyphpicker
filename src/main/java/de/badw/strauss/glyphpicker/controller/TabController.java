@@ -224,7 +224,6 @@ public abstract class TabController implements PropertyChangeListener {
 
         insertAction = new InsertXmlAction(this, selectionModel);
         insertAction.setEnabled(false);
-        controlPanel.getInsertBtn().setAction(insertAction);
 
         new FocusSearchComboAction(tabPanel);
 

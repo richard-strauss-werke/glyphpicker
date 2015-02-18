@@ -96,7 +96,7 @@ public class BrowserController extends TabController {
     private void setAdditionalActions() {
         addAction = new CopyAction(tabPanel, this, selectionModel);
         addAction.setEnabled(false);
-        controlPanel.addToToolbar(addAction, 2);
+        controlPanel.addToToolbar(addAction, 0);
     }
 
     /**

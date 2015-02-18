@@ -92,7 +92,7 @@ public class UserCollectionController extends TabController {
      */
     private void setAdditionalActions() {
 
-        int position = 2;
+        int position = 0;
 
         MoveUpAction moveUpAction = new MoveUpAction(tabPanel, this, glyphList, list);
         moveUpAction.setEnabled(false);

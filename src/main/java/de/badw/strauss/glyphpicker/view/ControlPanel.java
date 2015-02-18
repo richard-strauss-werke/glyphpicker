@@ -38,11 +38,6 @@ public class ControlPanel extends JPanel {
     /**
      * The edit button.
      */
-    private final JideButton insertBtn;
-
-    /**
-     * The edit button.
-     */
     private JButton editBtn;
 
     /**
@@ -111,22 +106,17 @@ public class ControlPanel extends JPanel {
         gbcToolBar.gridy = row;
         add(toolBar, gbcToolBar);
 
-        insertBtn = new JideButton();
-        insertBtn.setHideActionText(true);
-        toolBar.add(insertBtn);
-
-        toolBar.addSeparator();
 
         toolBar.addSeparator();
 
         sortBtn = new JideToggleButton();
-        sortBtn.setHideActionText(true);
+//        sortBtn.setHideActionText(true);
         sortBtn.setVerticalTextPosition(SwingConstants.BOTTOM);
         sortBtn.setHorizontalTextPosition(SwingConstants.CENTER);
         toolBar.add(sortBtn);
 
         viewBtn = new JideButton();
-        viewBtn.setHideActionText(true);
+//        viewBtn.setHideActionText(true);
         viewBtn.setVerticalTextPosition(SwingConstants.BOTTOM);
         viewBtn.setHorizontalTextPosition(SwingConstants.CENTER);
         toolBar.add(viewBtn);
@@ -134,7 +124,7 @@ public class ControlPanel extends JPanel {
         toolBar.addSeparator();
 
         optionsBtn = new JideButton();
-        optionsBtn.setHideActionText(true);
+//        optionsBtn.setHideActionText(true);
         optionsBtn.setVerticalTextPosition(SwingConstants.BOTTOM);
         optionsBtn.setHorizontalTextPosition(SwingConstants.CENTER);
         toolBar.add(optionsBtn);
@@ -221,19 +211,10 @@ public class ControlPanel extends JPanel {
      */
     public void addToToolbar(Action action, int index) {
         JideButton button = new JideButton(action);
-        button.setHideActionText(true);
+//        button.setHideActionText(true);
         button.setVerticalTextPosition(SwingConstants.BOTTOM);
         button.setHorizontalTextPosition(SwingConstants.CENTER);
         toolBar.add(button, index);
-    }
-
-    /**
-     * Gets the insert button.
-     *
-     * @return the insert button
-     */
-    public JideButton getInsertBtn() {
-        return insertBtn;
     }
 
     /**
