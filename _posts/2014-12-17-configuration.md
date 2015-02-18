@@ -26,7 +26,6 @@ Specifies how glyphs of this data source should be rendered.
 - `bitmap`: Renders a bitmap image whose relative path to the XML file is specified in a <graphic> element. 
 - `vector`: Renders a glyph vector from a system font; the relative size of all glyphs is preserved.
 - `scaled vector`: Like `vector`, but each glyph is scaled to fit its list/table cell.
-- `text`: Renders the glyph as simple text with a system font; rendering quality can be inferior to `vector` / `scaled vector`.
 
 #### Font Name
 
