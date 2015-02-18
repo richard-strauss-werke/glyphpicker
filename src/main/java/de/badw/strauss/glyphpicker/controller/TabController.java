@@ -62,6 +62,11 @@ public abstract class TabController implements PropertyChangeListener {
     public static final String DATA_LOADED = "dataLoaded";
 
     /**
+     * the height of a single table row
+     */
+    private static final int TABLE_ROW_HEIGHT = 70;
+
+    /**
      * The property change support.
      */
     protected final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
@@ -172,7 +177,7 @@ public abstract class TabController implements PropertyChangeListener {
         table = new GlyphTable(tableListModel);
         r = new GlyphRendererAdapter(table);
         r.setPreferredSize(new Dimension(LIST_ITEM_SIZE, LIST_ITEM_SIZE));
-        table.setRowHeight(90);
+        table.setRowHeight(TABLE_ROW_HEIGHT);
         table.setGlyphRenderer(r);
 
         if (listViewIndex == 0) {

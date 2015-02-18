@@ -34,7 +34,7 @@ public class TabPanel extends JPanel {
     /**
      * The preferred height and width of the info label component.
      */
-    private static final int INFO_LABEL_PREFERRED_SIZE = 90;
+    private static final int INFO_LABEL_PREFERRED_SIZE = 70;
 
     /**
      * The scroll pane.
@@ -117,7 +117,7 @@ public class TabPanel extends JPanel {
         infoLabel.setContentType("text/html");
         infoLabel.setPreferredSize(new Dimension(INFO_LABEL_PREFERRED_SIZE, INFO_LABEL_PREFERRED_SIZE));
         GridBagConstraints gbcInfoLabel = new GridBagConstraints();
-        gbcInfoLabel.insets = new Insets(5, 8, 5, 8);
+        gbcInfoLabel.insets = new Insets(8, 8, 5, 8);
         gbcInfoLabel.gridwidth = 2;
         gbcInfoLabel.weightx = 1.0;
         gbcInfoLabel.fill = GridBagConstraints.HORIZONTAL;

@@ -110,7 +110,7 @@ public class DescriptionRenderer extends JLabel implements TableCellRenderer {
     public static String getHTML(GlyphDefinition d) {
         StringBuilder sb = new StringBuilder();
 
-        sb.append("<html><p>");
+        sb.append("<html>");
 
         if (d.getCharName() != null) {
             sb.append("<nobr><b>").append(d.getCharName()).append("</b></nobr><br>");
@@ -127,8 +127,6 @@ public class DescriptionRenderer extends JLabel implements TableCellRenderer {
         if (d.getId() != null) {
             sb.append("<nobr>").append(XML_ID_LABEL).append(": <em>").append(d.getId()).append("</em></nobr><br>");
         }
-
-        sb.append("</p></html>");
 
         return sb.toString();
 

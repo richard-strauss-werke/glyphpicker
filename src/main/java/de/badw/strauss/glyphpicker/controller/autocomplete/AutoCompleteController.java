@@ -104,15 +104,15 @@ public class AutoCompleteController {
         ResourceBundle i18n = ResourceBundle.getBundle("GlyphPicker");
         String className = this.getClass().getSimpleName();
 
-        autoCompleteScope.put(i18n.getString(className + ".charName"),
+        autoCompleteScope.put(i18n.getString("AutoCompleteController.charName"),
                 new CharNameSelector());
-        autoCompleteScope.put(i18n.getString(className + ".xmlId"),
+        autoCompleteScope.put(i18n.getString("AutoCompleteController.xmlId"),
                 new IdSelector());
-        autoCompleteScope.put(i18n.getString(className + ".codepoint"),
+        autoCompleteScope.put(i18n.getString("AutoCompleteController.codePoint"),
                 new CodePointSelector());
-        autoCompleteScope.put(i18n.getString(className + ".range"),
+        autoCompleteScope.put(i18n.getString("AutoCompleteController.range"),
                 new RangeSelector());
-        autoCompleteScope.put(i18n.getString(className + ".allFields"),
+        autoCompleteScope.put(i18n.getString("AutoCompleteController.allFields"),
                 new AllSelector());
     }
 
@@ -184,6 +184,7 @@ public class AutoCompleteController {
                 autoCompleteSupport = CustomAutoCompleteSupport.install(
                         autoCompleteCombo, uniquePropertyList);
                 autoCompleteSupport.setFilterMode(TextMatcherEditor.CONTAINS);
+//                autoCompleteSupport.getComboBox().getEditor().getEd
             }
         });
     }
