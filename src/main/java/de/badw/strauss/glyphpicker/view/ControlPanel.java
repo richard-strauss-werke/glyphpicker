@@ -33,7 +33,7 @@ public class ControlPanel extends JPanel {
     /**
      * The data source combo.
      */
-    private JComboBox<String> dataSourceCombo;
+    private JComboBox dataSourceCombo;
 
     /**
      * The edit button.
@@ -136,9 +136,10 @@ public class ControlPanel extends JPanel {
             dataSourceCombo = new JComboBox() {
                 @Override
                 public Dimension getMaximumSize() {
-                    return new Dimension(150, getPreferredSize().height);
+                    return new Dimension(super.getMaximumSize().width, getPreferredSize().height);
                 }
             };
+            dataSourceCombo.setPreferredSize(new Dimension(150, dataSourceCombo.getPreferredSize().height));
             dataSourceCombo.setEditable(false);
             toolBar.add(dataSourceCombo);
 
@@ -231,7 +232,7 @@ public class ControlPanel extends JPanel {
      *
      * @return the data source combo
      */
-    public JComboBox<String> getDataSourceCombo() {
+    public JComboBox getDataSourceCombo() {
         return dataSourceCombo;
     }
 
