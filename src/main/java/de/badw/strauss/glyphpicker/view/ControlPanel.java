@@ -133,8 +133,12 @@ public class ControlPanel extends JPanel {
             sourceLabel.setBorder(BorderFactory.createEmptyBorder(0, 6, 0, 6));
             toolBar.add(sourceLabel);
 
-            dataSourceCombo = new JComboBox<>();
-            dataSourceCombo.setPreferredSize(new Dimension(150, dataSourceCombo.getPreferredSize().height));
+            dataSourceCombo = new JComboBox() {
+                @Override
+                public Dimension getMaximumSize() {
+                    return new Dimension(150, getPreferredSize().height);
+                }
+            };
             dataSourceCombo.setEditable(false);
             toolBar.add(dataSourceCombo);
 
