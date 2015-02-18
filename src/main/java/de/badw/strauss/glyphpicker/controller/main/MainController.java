@@ -143,7 +143,7 @@ public class MainController implements PropertyChangeListener {
                 userCollectionPanel, config, properties, workspace, imageCacheAccess);
         userCollectionController.addPropertyChangeListener(this);
 
-        mainPanel = new MainPanel(userCollectionPanel, browserPanel);
+        mainPanel = new MainPanel(userCollectionPanel, browserPanel, AbstractPickerAction.MENU_SHORTCUT_NAME);
 
         final JTabbedPane tabbedPane = mainPanel.getTabbedPane();
         tabbedPane.setSelectedIndex(config.getTabIndex());

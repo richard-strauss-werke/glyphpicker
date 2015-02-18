@@ -49,11 +49,11 @@ public class MainPanel extends JPanel {
 
     /**
      * Instantiates a new main panel.
-     *
-     * @param userCollectionPanel the user collection panel
+     *  @param userCollectionPanel the user collection panel
      * @param browserPanel        the browser panel
+     * @param menuShortcutName  the OS dependent name of the menu shortcut
      */
-    public MainPanel(JComponent userCollectionPanel, JComponent browserPanel) {
+    public MainPanel(JComponent userCollectionPanel, JComponent browserPanel, String menuShortcutName) {
 
         ResourceBundle i18n = ResourceBundle.getBundle("GlyphPicker");
         String className = this.getClass().getSimpleName();
@@ -66,11 +66,13 @@ public class MainPanel extends JPanel {
 
         String userCollectionLabel = i18n.getString(className
                 + ".userCollection");
-        tabbedPane.addTab(null, null, userCollectionPanel, null);
+        tabbedPane.addTab(null, null, userCollectionPanel, i18n.getString(className
+                + ".userCollectionTooltip") + " ("+menuShortcutName+"+1)");
         tabbedPane.setTabComponentAt(0, new HighlightLabel(userCollectionLabel));
 
         String dataSourcesLabel = i18n.getString(className + ".allCharacters");
-        tabbedPane.addTab(null, null, browserPanel, null);
+        tabbedPane.addTab(null, null, browserPanel, i18n.getString(className
+                + ".allCharactersTooltip") + " ("+menuShortcutName+"+2)");
         tabbedPane.setTabComponentAt(1, new HighlightLabel(dataSourcesLabel));
 
         add(tabbedPane, BorderLayout.CENTER);
