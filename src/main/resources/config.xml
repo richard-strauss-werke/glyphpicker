@@ -3,8 +3,8 @@
     <version>0.9.2</version>
     <transferFocusAfterInsert>true</transferFocusAfterInsert>
     <tabIndex>1</tabIndex>
-    <userSearchFieldScopeIndex>0</userSearchFieldScopeIndex>
-    <browserSearchFieldScopeIndex>0</browserSearchFieldScopeIndex>
+    <userSearchFieldScopeIndex>4</userSearchFieldScopeIndex>
+    <browserSearchFieldScopeIndex>4</browserSearchFieldScopeIndex>
     <userViewIndex>0</userViewIndex>
     <browserViewIndex>0</browserViewIndex>
     <dataSources>
