@@ -110,13 +110,11 @@ public class ControlPanel extends JPanel {
         toolBar.addSeparator();
 
         sortBtn = new JideToggleButton();
-//        sortBtn.setHideActionText(true);
         sortBtn.setVerticalTextPosition(SwingConstants.BOTTOM);
         sortBtn.setHorizontalTextPosition(SwingConstants.CENTER);
         toolBar.add(sortBtn);
 
         viewBtn = new JideButton();
-//        viewBtn.setHideActionText(true);
         viewBtn.setVerticalTextPosition(SwingConstants.BOTTOM);
         viewBtn.setHorizontalTextPosition(SwingConstants.CENTER);
         toolBar.add(viewBtn);
@@ -124,7 +122,6 @@ public class ControlPanel extends JPanel {
         toolBar.addSeparator();
 
         optionsBtn = new JideButton();
-//        optionsBtn.setHideActionText(true);
         optionsBtn.setVerticalTextPosition(SwingConstants.BOTTOM);
         optionsBtn.setHorizontalTextPosition(SwingConstants.CENTER);
         toolBar.add(optionsBtn);
@@ -211,7 +208,6 @@ public class ControlPanel extends JPanel {
      */
     public void addToToolbar(Action action, int index) {
         JideButton button = new JideButton(action);
-//        button.setHideActionText(true);
         button.setVerticalTextPosition(SwingConstants.BOTTOM);
         button.setHorizontalTextPosition(SwingConstants.CENTER);
         toolBar.add(button, index);
