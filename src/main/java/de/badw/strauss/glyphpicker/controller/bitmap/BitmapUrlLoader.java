@@ -48,7 +48,7 @@ public class BitmapUrlLoader implements BitmapLoader {
     /**
      * The get parameters to be added to the http request
      */
-    private static final String REQUEST_PARAMETER_STRING = "?size=low";
+    private static final String REQUEST_PARAMETER_STRING = "?res=low";
 
     /**
      * The base path to the graphic.
