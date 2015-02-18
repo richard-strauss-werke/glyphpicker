@@ -60,7 +60,5 @@ public class SortAction extends AbstractPickerAction {
         if (e.getActionCommand() != null) {
             button.setSelected(!button.isSelected());
         }
-        ;
-
     }
 }

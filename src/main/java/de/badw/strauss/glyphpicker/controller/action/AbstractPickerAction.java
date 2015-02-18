@@ -117,12 +117,12 @@ public abstract class AbstractPickerAction extends AbstractAction {
     public static void bindAcceleratorToComponent(Action action, JComponent component) {
         String className = action.getClass().getName();
         Object keyStroke = action.getValue(Action.ACCELERATOR_KEY);
-        if (keyStroke != null && keyStroke instanceof KeyStroke) {
+        if (keyStroke instanceof KeyStroke) {
             component.getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put((KeyStroke) keyStroke,
                     className);
             component.getActionMap().put(className, action);
         } else {
-            LOGGER.error("Action key stroke is null or no instance of " + KeyStroke.class.getName());
+            LOGGER.error("Action key stroke is no instance of " + KeyStroke.class.getName());
         }
     }
 
