@@ -15,14 +15,10 @@
  */
 package de.badw.strauss.glyphpicker.view.renderer;
 
-import javax.swing.ImageIcon;
-import javax.swing.JComponent;
-import javax.swing.UIManager;
-
-import java.awt.Color;
-import java.awt.Component;
-
 import de.badw.strauss.glyphpicker.model.GlyphDefinition;
+
+import javax.swing.*;
+import java.awt.*;
 
 /**
  * A GlyphRenderer rendering bitmap images.

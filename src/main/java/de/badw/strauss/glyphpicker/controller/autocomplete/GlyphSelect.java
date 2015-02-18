@@ -15,14 +15,13 @@
  */
 package de.badw.strauss.glyphpicker.controller.autocomplete;
 
-import javax.swing.SwingUtilities;
+import ca.odell.glazedlists.matchers.TextMatcherEditor;
+import de.badw.strauss.glyphpicker.model.GlyphDefinition;
+
+import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.text.BadLocationException;
-
-import de.badw.strauss.glyphpicker.model.GlyphDefinition;
-
-import ca.odell.glazedlists.matchers.TextMatcherEditor;
 
 /**
  * A TextMatcherEditor handling glyph list filtering triggered by changes in the

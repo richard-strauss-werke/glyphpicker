@@ -15,7 +15,20 @@
  */
 package de.badw.strauss.glyphpicker.controller.browser;
 
-import java.awt.Rectangle;
+import de.badw.strauss.glyphpicker.controller.GlyphSelectionChangeHandler;
+import de.badw.strauss.glyphpicker.controller.TabController;
+import de.badw.strauss.glyphpicker.controller.action.CopyAction;
+import de.badw.strauss.glyphpicker.controller.action.InsertXmlAction;
+import de.badw.strauss.glyphpicker.controller.bitmap.ImageCacheAccess;
+import de.badw.strauss.glyphpicker.controller.editor.EditAction;
+import de.badw.strauss.glyphpicker.model.Config;
+import de.badw.strauss.glyphpicker.model.DataSource;
+import de.badw.strauss.glyphpicker.model.DataSourceList;
+import de.badw.strauss.glyphpicker.model.GlyphDefinition;
+import de.badw.strauss.glyphpicker.view.TabPanel;
+
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyAdapter;
@@ -26,22 +39,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Set;
-
-import javax.swing.AbstractAction;
-import javax.swing.Action;
-import javax.swing.JOptionPane;
-
-import de.badw.strauss.glyphpicker.controller.TabController;
-import de.badw.strauss.glyphpicker.controller.GlyphSelectionChangeHandler;
-import de.badw.strauss.glyphpicker.controller.action.CopyAction;
-import de.badw.strauss.glyphpicker.controller.action.InsertXmlAction;
-import de.badw.strauss.glyphpicker.controller.bitmap.ImageCacheAccess;
-import de.badw.strauss.glyphpicker.controller.editor.EditAction;
-import de.badw.strauss.glyphpicker.model.Config;
-import de.badw.strauss.glyphpicker.model.DataSource;
-import de.badw.strauss.glyphpicker.model.DataSourceList;
-import de.badw.strauss.glyphpicker.model.GlyphDefinition;
-import de.badw.strauss.glyphpicker.view.TabPanel;
 
 /**
  * The browser tab controller.

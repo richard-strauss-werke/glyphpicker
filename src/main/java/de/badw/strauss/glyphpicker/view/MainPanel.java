@@ -15,15 +15,9 @@
  */
 package de.badw.strauss.glyphpicker.view;
 
-import java.awt.BorderLayout;
-
-import javax.swing.JComponent;
-import javax.swing.JPanel;
-import javax.swing.KeyStroke;
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import javax.swing.JTabbedPane;
-
-import java.awt.Dimension;
+import java.awt.*;
 import java.util.ResourceBundle;
 
 /**

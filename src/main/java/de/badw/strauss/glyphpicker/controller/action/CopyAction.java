@@ -15,14 +15,13 @@
  */
 package de.badw.strauss.glyphpicker.controller.action;
 
-import java.awt.event.ActionEvent;
-import java.beans.PropertyChangeListener;
-
 import ca.odell.glazedlists.swing.DefaultEventSelectionModel;
-
 import de.badw.strauss.glyphpicker.model.GlyphDefinition;
 import de.badw.strauss.glyphpicker.view.TabPanel;
 import ro.sync.ui.Icons;
+
+import java.awt.event.ActionEvent;
+import java.beans.PropertyChangeListener;
 
 /**
  * An action which picks the selected glyph definition from a list and returns
@@ -50,7 +49,7 @@ public class CopyAction extends AbstractPickerAction {
     /**
      * Instantiates a new CopyAction.
      *
-     * @param panel The container tab panel
+     * @param panel          The container tab panel
      * @param listener       the property change listener to be added to this action
      * @param selectionModel the event selection model
      */

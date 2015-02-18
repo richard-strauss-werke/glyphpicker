@@ -15,7 +15,7 @@
  */
 package de.badw.strauss.glyphpicker.model.editor;
 
-import javax.swing.JComponent;
+import javax.swing.*;
 
 /**
  * A class providing config information about form controls in the editor window.
@@ -50,9 +50,9 @@ public class FormItemConfig {
      *
      * @param label     the label
      * @param component the component
-     * @param x the x coordinate of the item in the grid
-     * @param y the y coordinate of the item in the grid
-     * @param width the width of the item in the grid
+     * @param x         the x coordinate of the item in the grid
+     * @param y         the y coordinate of the item in the grid
+     * @param width     the width of the item in the grid
      */
     public FormItemConfig(String label, JComponent component, int x, int y, int width) {
         this.component = component;
@@ -64,6 +64,7 @@ public class FormItemConfig {
 
     /**
      * gets the x coordinate of the item in the grid
+     *
      * @return the x coordinate
      */
     public int getX() {
@@ -72,6 +73,7 @@ public class FormItemConfig {
 
     /**
      * gets the y coordinate of the item in the grid
+     *
      * @return the y coordinate
      */
     public int getY() {
@@ -80,6 +82,7 @@ public class FormItemConfig {
 
     /**
      * gets the width of the item in the grid
+     *
      * @return the width
      */
     public int getWidth() {

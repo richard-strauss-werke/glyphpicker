@@ -147,7 +147,7 @@ public class BitmapUrlLoader implements BitmapLoader {
     /**
      * Gets an image from a URL.
      *
-     * @param url      the url
+     * @param url the url
      * @return the image from the url
      */
     public BufferedImage getImageFromUrl(String url) {

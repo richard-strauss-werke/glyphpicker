@@ -15,12 +15,12 @@
  */
 package de.badw.strauss.glyphpicker.controller.action;
 
-import java.awt.event.ActionEvent;
-
-import de.badw.strauss.glyphpicker.view.TabPanel;
 import de.badw.strauss.glyphpicker.view.GlyphGrid;
 import de.badw.strauss.glyphpicker.view.GlyphTable;
+import de.badw.strauss.glyphpicker.view.TabPanel;
 import ro.sync.ui.Icons;
+
+import java.awt.event.ActionEvent;
 
 /**
  * An action to toggle between grid and table view.

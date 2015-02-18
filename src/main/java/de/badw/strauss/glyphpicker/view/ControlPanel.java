@@ -15,14 +15,13 @@
  */
 package de.badw.strauss.glyphpicker.view;
 
-import java.awt.*;
-import java.util.ResourceBundle;
+import com.jidesoft.swing.JideButton;
+import com.jidesoft.swing.JideToggleButton;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
-
-import com.jidesoft.swing.JideButton;
-import com.jidesoft.swing.JideToggleButton;
+import java.awt.*;
+import java.util.ResourceBundle;
 
 /**
  * The ControlPanel class.
@@ -144,7 +143,7 @@ public class ControlPanel extends JPanel {
             toolBar.add(Box.createHorizontalGlue());
             JLabel sourceLabel = new JLabel(i18n.getString(className
                     + ".source") + ":");
-            sourceLabel.setBorder(BorderFactory.createEmptyBorder(0,6,0,6));
+            sourceLabel.setBorder(BorderFactory.createEmptyBorder(0, 6, 0, 6));
             toolBar.add(sourceLabel);
 
             dataSourceCombo = new JComboBox<>();

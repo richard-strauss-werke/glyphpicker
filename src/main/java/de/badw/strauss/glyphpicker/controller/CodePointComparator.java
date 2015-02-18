@@ -16,10 +16,10 @@
 
 package de.badw.strauss.glyphpicker.controller;
 
+import de.badw.strauss.glyphpicker.model.GlyphDefinition;
+
 import java.io.Serializable;
 import java.util.Comparator;
-
-import de.badw.strauss.glyphpicker.model.GlyphDefinition;
 
 /**
  * A Comparator used to sort glyph definitions based on the value of ther codePoint property.

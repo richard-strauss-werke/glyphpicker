@@ -15,28 +15,22 @@
  */
 package de.badw.strauss.glyphpicker.controller.editor;
 
+import com.jidesoft.swing.JideButton;
+import de.badw.strauss.glyphpicker.controller.action.AbstractPickerAction;
+import de.badw.strauss.glyphpicker.model.DataSource;
+import de.badw.strauss.glyphpicker.view.editor.DataSourceEditor;
+import org.apache.log4j.Logger;
+import ro.sync.ui.Icons;
+
+import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
-
-import javax.swing.DefaultListModel;
-import javax.swing.JList;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.ListSelectionModel;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-
-import de.badw.strauss.glyphpicker.controller.action.AbstractPickerAction;
-import org.apache.log4j.Logger;
-
-import de.badw.strauss.glyphpicker.model.DataSource;
-import de.badw.strauss.glyphpicker.view.editor.DataSourceEditor;
-import com.jidesoft.swing.JideButton;
-import ro.sync.ui.Icons;
 
 /**
  * The controller of the data source editor window.

@@ -15,37 +15,16 @@
  */
 package de.badw.strauss.glyphpicker.view.editor;
 
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-
 import de.badw.strauss.glyphpicker.model.DataSource;
 import de.badw.strauss.glyphpicker.model.editor.FormItemConfig;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-
-import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
-import javax.swing.JComponent;
-import javax.swing.JList;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
-
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
-
+import javax.swing.*;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
-
-import java.awt.Component;
-
 import javax.swing.border.TitledBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
-import javax.swing.UIManager;
-
-import java.awt.Color;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -60,7 +39,7 @@ public class DataSourceEditor extends JPanel {
     private static final long serialVersionUID = 1L;
 
     /**
-     * The name of the "formEditingOccurred" property.
+     * The key of the "formEditingOccurred" event.
      */
     public static final String FORM_EDITING_OCCURRED = "formEditingOccurred";
 
@@ -178,11 +157,11 @@ public class DataSourceEditor extends JPanel {
         formPanel.setBorder(new CompoundBorder(new TitledBorder(UIManager
                 .getBorder("TitledBorder.border"), i18n.getString(className
                 + ".edit"), TitledBorder.LEADING, TitledBorder.TOP, null,
-                new Color(0, 0, 0)), new EmptyBorder(5,2,2,2)));
+                new Color(0, 0, 0)), new EmptyBorder(5, 2, 2, 2)));
         add(formPanel);
         GridBagLayout gbl = new GridBagLayout();
-        gbl.columnWidths = new int[]{100,100,100,100,100,100};
-        gbl.rowHeights = new int[]{20, 0,0,0,0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+        gbl.columnWidths = new int[]{100, 100, 100, 100, 100, 100};
+        gbl.rowHeights = new int[]{20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
         gbl.columnWeights = new double[]{1.0, 1.0, 1.0, 1.0, 1.0, 1.0};
         gbl.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
                 0.0, Double.MIN_VALUE};
@@ -285,7 +264,7 @@ public class DataSourceEditor extends JPanel {
     /**
      * Adds a component to the form panel.
      *
-     * @param config   the FormItemConfig object specifying the component's properties
+     * @param config the FormItemConfig object specifying the component's properties
      */
     private void addToFormPanel(FormItemConfig config) {
 

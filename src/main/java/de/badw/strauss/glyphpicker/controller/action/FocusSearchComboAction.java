@@ -16,7 +16,6 @@
 package de.badw.strauss.glyphpicker.controller.action;
 
 import de.badw.strauss.glyphpicker.view.TabPanel;
-import ro.sync.ui.Icons;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -27,11 +26,6 @@ import java.awt.event.ActionEvent;
 public class FocusSearchComboAction extends AbstractPickerAction {
 
     private static final long serialVersionUID = 1L;
-
-    /**
-     * The name of the class.
-     */
-    private static final String CLASS_NAME = FocusSearchComboAction.class.getSimpleName();
 
     /**
      * the auto complete combo box

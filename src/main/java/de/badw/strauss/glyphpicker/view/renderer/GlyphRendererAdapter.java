@@ -15,18 +15,12 @@
  */
 package de.badw.strauss.glyphpicker.view.renderer;
 
-import javax.swing.JComponent;
-import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.JTable;
-import javax.swing.ListCellRenderer;
-import javax.swing.table.TableCellRenderer;
-
 import de.badw.strauss.glyphpicker.model.DataSource;
 import de.badw.strauss.glyphpicker.model.GlyphDefinition;
 
-import java.awt.Component;
-import java.awt.Dimension;
+import javax.swing.*;
+import javax.swing.table.TableCellRenderer;
+import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
 

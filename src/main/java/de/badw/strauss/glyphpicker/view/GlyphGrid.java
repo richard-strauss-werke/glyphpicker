@@ -15,17 +15,12 @@
  */
 package de.badw.strauss.glyphpicker.view;
 
-import java.awt.Point;
-import java.awt.Rectangle;
+import de.badw.strauss.glyphpicker.model.GlyphDefinition;
+
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
-
-import javax.swing.JList;
-import javax.swing.JViewport;
-import javax.swing.ListModel;
-import javax.swing.ListSelectionModel;
-
-import de.badw.strauss.glyphpicker.model.GlyphDefinition;
 
 /**
  * The glyph grid component.

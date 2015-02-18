@@ -15,13 +15,12 @@
  */
 package de.badw.strauss.glyphpicker.controller.action;
 
-import java.awt.event.ActionEvent;
-import java.beans.PropertyChangeListener;
-
 import ca.odell.glazedlists.swing.DefaultEventSelectionModel;
-
 import de.badw.strauss.glyphpicker.model.GlyphDefinition;
 import ro.sync.ui.Icons;
+
+import java.awt.event.ActionEvent;
+import java.beans.PropertyChangeListener;
 
 /**
  * An action to trigger the insertion of a glyph reference into an XML document.

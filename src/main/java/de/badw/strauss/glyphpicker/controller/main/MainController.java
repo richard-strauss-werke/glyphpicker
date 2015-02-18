@@ -15,34 +15,33 @@
  */
 package de.badw.strauss.glyphpicker.controller.main;
 
+import de.badw.strauss.glyphpicker.controller.TabController;
+import de.badw.strauss.glyphpicker.controller.action.AbstractPickerAction;
+import de.badw.strauss.glyphpicker.controller.action.CopyAction;
+import de.badw.strauss.glyphpicker.controller.action.InsertXmlAction;
+import de.badw.strauss.glyphpicker.controller.bitmap.ImageCacheAccess;
+import de.badw.strauss.glyphpicker.controller.browser.BrowserController;
+import de.badw.strauss.glyphpicker.controller.user.UserCollectionController;
+import de.badw.strauss.glyphpicker.model.Config;
+import de.badw.strauss.glyphpicker.model.GlyphDefinition;
+import de.badw.strauss.glyphpicker.view.ControlPanel;
+import de.badw.strauss.glyphpicker.view.GlyphGrid;
+import de.badw.strauss.glyphpicker.view.MainPanel;
+import de.badw.strauss.glyphpicker.view.TabPanel;
+import org.apache.log4j.Logger;
+import ro.sync.exml.workspace.api.standalone.StandalonePluginWorkspace;
+
+import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.io.File;
 import java.io.IOException;
 import java.util.Properties;
-
-import de.badw.strauss.glyphpicker.controller.TabController;
-import de.badw.strauss.glyphpicker.controller.action.AbstractPickerAction;
-import de.badw.strauss.glyphpicker.controller.action.CopyAction;
-import de.badw.strauss.glyphpicker.controller.action.InsertXmlAction;
-import de.badw.strauss.glyphpicker.controller.bitmap.ImageCacheAccess;
-import org.apache.log4j.Logger;
-
-import ro.sync.exml.workspace.api.standalone.StandalonePluginWorkspace;
-
-import de.badw.strauss.glyphpicker.controller.browser.BrowserController;
-import de.badw.strauss.glyphpicker.controller.user.UserCollectionController;
-import de.badw.strauss.glyphpicker.model.Config;
-import de.badw.strauss.glyphpicker.model.GlyphDefinition;
-import de.badw.strauss.glyphpicker.view.TabPanel;
-import de.badw.strauss.glyphpicker.view.ControlPanel;
-import de.badw.strauss.glyphpicker.view.GlyphGrid;
-import de.badw.strauss.glyphpicker.view.MainPanel;
-
-import javax.swing.*;
 
 /**
  * The plugin's main controller.
@@ -176,7 +175,8 @@ public class MainController implements PropertyChangeListener {
 
     /**
      * Sets the accelerator ctrl + tab index / command + tab index for a specified index in a JTabbedPane
-     * @param tabbedPane the tabbed pane
+     *
+     * @param tabbedPane  the tabbed pane
      * @param actualIndex the actual index, starting with 0
      */
     private void setTabAccelerator(final JTabbedPane tabbedPane, final int actualIndex) {

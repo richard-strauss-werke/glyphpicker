@@ -1,10 +1,13 @@
 package de.badw.strauss.glyphpicker.controller.main;
 
-import java.awt.*;
-import java.beans.*;
-import java.util.*;
 import javax.swing.*;
-import javax.swing.event.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import java.awt.*;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Handles component focus in a JTabbedPane

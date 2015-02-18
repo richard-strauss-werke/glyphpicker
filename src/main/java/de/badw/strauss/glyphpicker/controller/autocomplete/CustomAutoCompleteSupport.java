@@ -18,18 +18,6 @@ import ca.odell.glazedlists.matchers.Matchers;
 import ca.odell.glazedlists.matchers.TextMatcherEditor;
 import ca.odell.glazedlists.swing.EventComboBoxModel;
 
-import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.EventQueue;
-import java.awt.event.*;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.lang.reflect.Method;
-import java.text.Format;
-import java.text.ParsePosition;
-import java.util.Comparator;
-import java.util.List;
-
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.event.ListDataEvent;
@@ -40,6 +28,15 @@ import javax.swing.plaf.UIResource;
 import javax.swing.plaf.basic.BasicComboBoxEditor;
 import javax.swing.plaf.basic.ComboPopup;
 import javax.swing.text.*;
+import java.awt.*;
+import java.awt.event.*;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.lang.reflect.Method;
+import java.text.Format;
+import java.text.ParsePosition;
+import java.util.Comparator;
+import java.util.List;
 
 /**
  * This class {@link #install}s support for filtering and autocompletion into a

@@ -16,10 +16,9 @@
 
 package de.badw.strauss.glyphpicker.controller.bitmap;
 
-import javax.imageio.ImageIO;
-
 import org.apache.log4j.Logger;
 
+import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;

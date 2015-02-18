@@ -15,17 +15,16 @@
  */
 package de.badw.strauss.glyphpicker.controller.editor;
 
-import java.awt.event.ActionEvent;
-import java.beans.PropertyChangeListener;
-import java.util.List;
-
-import javax.swing.JPanel;
-
 import de.badw.strauss.glyphpicker.controller.action.AbstractPickerAction;
 import de.badw.strauss.glyphpicker.model.DataSource;
 import de.badw.strauss.glyphpicker.model.DataSourceList;
 import de.badw.strauss.glyphpicker.view.editor.DataSourceEditor;
 import ro.sync.ui.Icons;
+
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.beans.PropertyChangeListener;
+import java.util.List;
 
 /**
  * An action to open the data source editor and process the results if editing

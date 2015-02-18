@@ -18,11 +18,10 @@ package de.badw.strauss.glyphpicker.controller.action;
 import de.badw.strauss.glyphpicker.view.TabPanel;
 import ro.sync.ui.Icons;
 
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeListener;
 import java.util.Set;
-
-import javax.swing.Action;
 
 /**
  * An action to reload the list model.
@@ -49,7 +48,7 @@ public class ReloadAction extends AbstractPickerAction {
     /**
      * Instantiates a new ReloadAction.
      *
-     * @param panel The container tab panel
+     * @param panel    The container tab panel
      * @param listener the property change listener to be added to this action
      * @param actions  The actions affected by this action
      */

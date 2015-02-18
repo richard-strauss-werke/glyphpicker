@@ -15,16 +15,15 @@
  */
 package de.badw.strauss.glyphpicker.controller.bitmap;
 
+import de.badw.strauss.glyphpicker.model.DataSource;
+import de.badw.strauss.glyphpicker.model.GlyphDefinition;
+import org.apache.log4j.Logger;
+
+import javax.swing.*;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
-
-import javax.swing.SwingWorker;
-
-import de.badw.strauss.glyphpicker.model.DataSource;
-import de.badw.strauss.glyphpicker.model.GlyphDefinition;
-import org.apache.log4j.Logger;
 
 /**
  * A worker class for bulk loading bitmap images from a list of glyph definitions.

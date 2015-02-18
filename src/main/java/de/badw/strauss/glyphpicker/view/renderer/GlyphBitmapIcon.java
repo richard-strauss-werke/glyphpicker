@@ -15,9 +15,8 @@
  */
 package de.badw.strauss.glyphpicker.view.renderer;
 
-import java.awt.Image;
-
-import javax.swing.ImageIcon;
+import javax.swing.*;
+import java.awt.*;
 
 /**
  * An ImageIcon with fixed dimensions.

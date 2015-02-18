@@ -15,26 +15,17 @@
  */
 package de.badw.strauss.glyphpicker.controller.autocomplete;
 
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.ResourceBundle;
-
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JComboBox;
-import javax.swing.JTextField;
-import javax.swing.SwingUtilities;
-
+import ca.odell.glazedlists.SortedList;
+import ca.odell.glazedlists.UniqueList;
+import ca.odell.glazedlists.matchers.TextMatcherEditor;
 import de.badw.strauss.glyphpicker.model.GlyphDefinition;
 import de.badw.strauss.glyphpicker.model.selector.*;
 import org.apache.log4j.Logger;
 
-import ca.odell.glazedlists.SortedList;
-import ca.odell.glazedlists.UniqueList;
-import ca.odell.glazedlists.matchers.TextMatcherEditor;
+import javax.swing.*;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.util.*;
 
 /**
  * The auto complete controller.

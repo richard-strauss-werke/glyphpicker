@@ -15,14 +15,12 @@
  */
 package de.badw.strauss.glyphpicker.view;
 
-import java.awt.*;
+import com.jidesoft.swing.DefaultOverlayable;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
-
-import com.jidesoft.swing.DefaultOverlayable;
-
+import java.awt.*;
 import java.util.ResourceBundle;
 
 /**

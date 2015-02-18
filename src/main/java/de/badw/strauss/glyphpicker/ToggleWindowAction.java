@@ -16,17 +16,15 @@
 
 package de.badw.strauss.glyphpicker;
 
-import java.awt.event.ActionEvent;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-
-import javax.swing.*;
-
 import de.badw.strauss.glyphpicker.controller.action.AbstractPickerAction;
 import de.badw.strauss.glyphpicker.model.Config;
 import de.badw.strauss.glyphpicker.view.MainPanel;
-
 import ro.sync.exml.workspace.api.standalone.StandalonePluginWorkspace;
+
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
 /**
  * An action to show or hide the GlyphPicker panel in oXygen.

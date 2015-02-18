@@ -15,12 +15,10 @@
  */
 package de.badw.strauss.glyphpicker.view;
 
-import java.awt.Color;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
-import javax.swing.JLabel;
-import javax.swing.Timer;
 
 /**
  * A JLabel which can be highlighted.

@@ -15,15 +15,10 @@
  */
 package de.badw.strauss.glyphpicker.view.renderer;
 
-import javax.swing.JComponent;
+import de.badw.strauss.glyphpicker.model.GlyphDefinition;
 
-import java.awt.Component;
-import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Rectangle;
-import java.awt.RenderingHints;
-import java.awt.Shape;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.font.FontRenderContext;
 import java.awt.font.GlyphVector;
 import java.awt.font.TextAttribute;
@@ -32,8 +27,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static java.awt.font.TextAttribute.*;
-
-import de.badw.strauss.glyphpicker.model.GlyphDefinition;
 
 /**
  * A font-based GlyphRenderer rendering scaled vectors.

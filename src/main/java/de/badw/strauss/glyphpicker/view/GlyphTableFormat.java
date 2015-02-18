@@ -15,11 +15,10 @@
  */
 package de.badw.strauss.glyphpicker.view;
 
-import java.util.ResourceBundle;
-
 import ca.odell.glazedlists.gui.TableFormat;
-
 import de.badw.strauss.glyphpicker.model.GlyphDefinition;
+
+import java.util.ResourceBundle;
 
 /**
  * A class providing information about the format of the glyph table.

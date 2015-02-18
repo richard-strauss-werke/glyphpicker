@@ -15,19 +15,16 @@
  */
 package de.badw.strauss.glyphpicker.controller.main;
 
-import java.io.File;
-import java.net.URL;
-import java.util.Properties;
+import de.badw.strauss.glyphpicker.model.Config;
+import de.badw.strauss.glyphpicker.model.DataSourceList;
+import org.apache.log4j.Logger;
+import ro.sync.exml.workspace.api.standalone.StandalonePluginWorkspace;
 
 import javax.xml.bind.DataBindingException;
 import javax.xml.bind.JAXB;
-
-import de.badw.strauss.glyphpicker.model.DataSourceList;
-import org.apache.log4j.Logger;
-
-import ro.sync.exml.workspace.api.standalone.StandalonePluginWorkspace;
-
-import de.badw.strauss.glyphpicker.model.Config;
+import java.io.File;
+import java.net.URL;
+import java.util.Properties;
 
 /**
  * Loads and saves the plugin's config.

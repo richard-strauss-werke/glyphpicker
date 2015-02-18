@@ -15,20 +15,15 @@
  */
 package de.badw.strauss.glyphpicker.controller.browser;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Stack;
-
+import com.icl.saxon.aelfred.DefaultHandler;
+import de.badw.strauss.glyphpicker.model.DataSource;
+import de.badw.strauss.glyphpicker.model.GlyphDefinition;
+import de.badw.strauss.glyphpicker.model.GlyphReference;
 import org.apache.log4j.Logger;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
-import de.badw.strauss.glyphpicker.model.DataSource;
-import de.badw.strauss.glyphpicker.model.GlyphDefinition;
-import de.badw.strauss.glyphpicker.model.GlyphReference;
-import com.icl.saxon.aelfred.DefaultHandler;
+import java.util.*;
 
 /**
  * The TEI XML handler.

@@ -117,7 +117,7 @@ public class OptionsEditor extends JPanel {
         GridBagConstraints gbcRestoreFocusLabel = new GridBagConstraints();
         gbcRestoreFocusLabel.insets = new Insets(4, 5, 4, 5);
         gbcRestoreFocusLabel.fill = GridBagConstraints.BOTH;
-        gbcRestoreFocusLabel.gridwidth=2;
+        gbcRestoreFocusLabel.gridwidth = 2;
         gbcRestoreFocusLabel.gridx = 0;
         gbcRestoreFocusLabel.gridy = 2;
         add(restoreFocusLabel, gbcRestoreFocusLabel);

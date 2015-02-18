@@ -15,15 +15,9 @@
  */
 package de.badw.strauss.glyphpicker.model;
 
+import javax.swing.*;
+import javax.xml.bind.annotation.*;
 import java.util.List;
-
-import javax.swing.AbstractListModel;
-import javax.swing.ComboBoxModel;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  * The data source combo box model.

@@ -15,15 +15,10 @@
  */
 package de.badw.strauss.glyphpicker.view.renderer;
 
-import java.awt.Color;
-import java.awt.Component;
-
-import javax.swing.JComponent;
-import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.JTable;
-
 import de.badw.strauss.glyphpicker.model.GlyphDefinition;
+
+import javax.swing.*;
+import java.awt.*;
 
 /**
  * The abstract glyph renderer class.

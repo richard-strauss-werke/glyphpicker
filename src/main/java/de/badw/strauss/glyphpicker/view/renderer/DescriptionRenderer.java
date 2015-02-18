@@ -15,15 +15,13 @@
  */
 package de.badw.strauss.glyphpicker.view.renderer;
 
-import javax.swing.JLabel;
-import javax.swing.JTable;
+import de.badw.strauss.glyphpicker.model.GlyphDefinition;
+
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.TableCellRenderer;
-
-import java.awt.Component;
+import java.awt.*;
 import java.util.ResourceBundle;
-
-import de.badw.strauss.glyphpicker.model.GlyphDefinition;
 
 /**
  * The Class DescriptionRenderer.

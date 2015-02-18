@@ -15,21 +15,14 @@
  */
 package de.badw.strauss.glyphpicker.view;
 
-import java.awt.AWTKeyStroke;
-import java.awt.Dimension;
-import java.awt.KeyboardFocusManager;
-import java.awt.Point;
-import java.awt.Rectangle;
-import java.util.HashSet;
-import java.util.Set;
+import de.badw.strauss.glyphpicker.view.renderer.DescriptionRenderer;
 
-import javax.swing.JTable;
-import javax.swing.JViewport;
-import javax.swing.KeyStroke;
+import javax.swing.*;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableModel;
-
-import de.badw.strauss.glyphpicker.view.renderer.DescriptionRenderer;
+import java.awt.*;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * The glyph table component.

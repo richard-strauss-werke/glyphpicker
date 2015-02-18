@@ -16,21 +16,18 @@
 
 package de.badw.strauss.glyphpicker.controller;
 
-import java.util.Set;
-
-import javax.swing.Action;
-import javax.swing.JTextPane;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-
 import ca.odell.glazedlists.FilterList;
 import ca.odell.glazedlists.SortedList;
 import ca.odell.glazedlists.swing.DefaultEventSelectionModel;
-
 import de.badw.strauss.glyphpicker.controller.action.MoveDownAction;
 import de.badw.strauss.glyphpicker.controller.action.MoveUpAction;
 import de.badw.strauss.glyphpicker.model.GlyphDefinition;
 import de.badw.strauss.glyphpicker.view.renderer.DescriptionRenderer;
+
+import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import java.util.Set;
 
 /**
  * A handler for selection changes in the glyph event models on which glyph

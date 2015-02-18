@@ -18,7 +18,6 @@ package de.badw.strauss.glyphpicker.model.selector;
 import ca.odell.glazedlists.EventList;
 import ca.odell.glazedlists.TransformedList;
 import ca.odell.glazedlists.event.ListEvent;
-
 import de.badw.strauss.glyphpicker.model.GlyphDefinition;
 
 /**

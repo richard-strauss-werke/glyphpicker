@@ -16,15 +16,6 @@
 
 package de.badw.strauss.glyphpicker.controller;
 
-import java.awt.*;
-import java.awt.event.*;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
-import java.util.List;
-
-import javax.swing.*;
-
 import ca.odell.glazedlists.BasicEventList;
 import ca.odell.glazedlists.EventList;
 import ca.odell.glazedlists.FilterList;
@@ -34,7 +25,6 @@ import ca.odell.glazedlists.event.ListEventListener;
 import ca.odell.glazedlists.swing.DefaultEventListModel;
 import ca.odell.glazedlists.swing.DefaultEventSelectionModel;
 import ca.odell.glazedlists.swing.DefaultEventTableModel;
-
 import de.badw.strauss.glyphpicker.controller.action.ChangeViewAction;
 import de.badw.strauss.glyphpicker.controller.action.FocusSearchComboAction;
 import de.badw.strauss.glyphpicker.controller.action.InsertXmlAction;
@@ -45,12 +35,19 @@ import de.badw.strauss.glyphpicker.controller.bitmap.ImageCacheAccess;
 import de.badw.strauss.glyphpicker.controller.options.OptionsAction;
 import de.badw.strauss.glyphpicker.model.Config;
 import de.badw.strauss.glyphpicker.model.GlyphDefinition;
-import de.badw.strauss.glyphpicker.view.TabPanel;
-import de.badw.strauss.glyphpicker.view.ControlPanel;
-import de.badw.strauss.glyphpicker.view.GlyphGrid;
-import de.badw.strauss.glyphpicker.view.GlyphTable;
-import de.badw.strauss.glyphpicker.view.GlyphTableFormat;
+import de.badw.strauss.glyphpicker.view.*;
 import de.badw.strauss.glyphpicker.view.renderer.GlyphRendererAdapter;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
+import java.util.List;
 
 /**
  * An abstract controller of a tab panel.
@@ -230,7 +227,7 @@ public abstract class TabController implements PropertyChangeListener {
         controlPanel.getInsertBtn().setAction(insertAction);
 
         new FocusSearchComboAction(tabPanel);
-        
+
         initMouseListeners();
 
         setEnterKeyAction(list);

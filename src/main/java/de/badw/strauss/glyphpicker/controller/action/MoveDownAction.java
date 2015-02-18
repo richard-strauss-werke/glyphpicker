@@ -15,18 +15,16 @@
  */
 package de.badw.strauss.glyphpicker.controller.action;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.KeyEvent;
-import java.beans.PropertyChangeListener;
-
 import ca.odell.glazedlists.EventList;
-
 import de.badw.strauss.glyphpicker.model.GlyphDefinition;
 import de.badw.strauss.glyphpicker.view.GlyphGrid;
 import de.badw.strauss.glyphpicker.view.TabPanel;
 import ro.sync.ui.Icons;
 
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
+import java.beans.PropertyChangeListener;
 
 /**
  * An action to move a glyph definition down in the list.
@@ -58,7 +56,7 @@ public class MoveDownAction extends AbstractPickerAction {
     /**
      * Instantiates a MoveDownAction.
      *
-     * @param panel The container tab panel
+     * @param panel     The container tab panel
      * @param listener  the property change listener to be added to this action
      * @param glyphList the glyph list model
      * @param list      the list component

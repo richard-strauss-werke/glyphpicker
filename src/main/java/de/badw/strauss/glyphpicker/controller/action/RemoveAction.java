@@ -15,16 +15,15 @@
  */
 package de.badw.strauss.glyphpicker.controller.action;
 
-import java.awt.event.ActionEvent;
-import java.beans.PropertyChangeListener;
-
 import ca.odell.glazedlists.EventList;
 import ca.odell.glazedlists.FilterList;
-
 import de.badw.strauss.glyphpicker.model.GlyphDefinition;
 import de.badw.strauss.glyphpicker.view.GlyphGrid;
 import de.badw.strauss.glyphpicker.view.TabPanel;
 import ro.sync.ui.Icons;
+
+import java.awt.event.ActionEvent;
+import java.beans.PropertyChangeListener;
 
 /**
  * An action which removes the selected item from a glyph list model.
@@ -61,7 +60,7 @@ public class RemoveAction extends AbstractPickerAction {
     /**
      * Instantiates a new RemoveAction.
      *
-     * @param panel The container tab panel
+     * @param panel      The container tab panel
      * @param listener   the property change listener to be added to this action
      * @param glyphList  the glyph list model
      * @param filterList the filter list model

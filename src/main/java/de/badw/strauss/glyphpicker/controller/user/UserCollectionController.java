@@ -15,26 +15,24 @@
  */
 package de.badw.strauss.glyphpicker.controller.user;
 
+import ca.odell.glazedlists.event.ListEvent;
+import ca.odell.glazedlists.event.ListEventListener;
+import de.badw.strauss.glyphpicker.controller.GlyphSelectionChangeHandler;
+import de.badw.strauss.glyphpicker.controller.TabController;
+import de.badw.strauss.glyphpicker.controller.action.*;
+import de.badw.strauss.glyphpicker.controller.bitmap.ImageCacheAccess;
+import de.badw.strauss.glyphpicker.model.Config;
+import de.badw.strauss.glyphpicker.model.GlyphDefinition;
+import de.badw.strauss.glyphpicker.model.GlyphDefinitions;
+import de.badw.strauss.glyphpicker.view.TabPanel;
+import ro.sync.exml.workspace.api.standalone.StandalonePluginWorkspace;
+
+import javax.swing.*;
 import java.beans.PropertyChangeEvent;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Properties;
 import java.util.Set;
-
-import javax.swing.*;
-
-import de.badw.strauss.glyphpicker.controller.action.*;
-import de.badw.strauss.glyphpicker.controller.bitmap.ImageCacheAccess;
-import de.badw.strauss.glyphpicker.model.GlyphDefinition;
-import de.badw.strauss.glyphpicker.model.GlyphDefinitions;
-import ro.sync.exml.workspace.api.standalone.StandalonePluginWorkspace;
-import ca.odell.glazedlists.event.ListEvent;
-import ca.odell.glazedlists.event.ListEventListener;
-
-import de.badw.strauss.glyphpicker.controller.TabController;
-import de.badw.strauss.glyphpicker.controller.GlyphSelectionChangeHandler;
-import de.badw.strauss.glyphpicker.model.Config;
-import de.badw.strauss.glyphpicker.view.TabPanel;
 
 /**
  * The user collection tab controller.

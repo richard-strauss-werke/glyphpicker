@@ -16,24 +16,11 @@
 
 package de.badw.strauss.glyphpicker;
 
-import java.awt.*;
-import java.awt.event.KeyEvent;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import javax.swing.*;
-import javax.swing.text.BadLocationException;
-import javax.swing.text.Position;
-
 import de.badw.strauss.glyphpicker.controller.action.InsertXmlAction;
 import de.badw.strauss.glyphpicker.controller.main.MainController;
 import de.badw.strauss.glyphpicker.model.GlyphDefinition;
-import org.apache.log4j.Logger;
-
 import de.badw.strauss.glyphpicker.view.MainPanel;
-
+import org.apache.log4j.Logger;
 import ro.sync.ecss.extensions.api.AuthorAccess;
 import ro.sync.ecss.extensions.api.AuthorOperationException;
 import ro.sync.exml.plugin.workspace.WorkspaceAccessPluginExtension;
@@ -45,6 +32,16 @@ import ro.sync.exml.workspace.api.standalone.MenuBarCustomizer;
 import ro.sync.exml.workspace.api.standalone.StandalonePluginWorkspace;
 import ro.sync.exml.workspace.api.standalone.ViewComponentCustomizer;
 import ro.sync.exml.workspace.api.standalone.ViewInfo;
+
+import javax.swing.*;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.Position;
+import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * The oXygen plugin extension.
@@ -174,7 +171,7 @@ public class GlyphPickerPluginExtension implements
     /**
      * Inserts a text fragment into a text editor page.
      *
-     * @param str    the input string
+     * @param str  the input string
      * @param page the editor page
      */
     private void insertIntoTextEditorPage(String str, WSTextEditorPage page) {
@@ -198,8 +195,8 @@ public class GlyphPickerPluginExtension implements
     /**
      * Inserts a text fragment into a author editor page.
      *
-     * @param str         the input string
-     * @param page      the editor page
+     * @param str  the input string
+     * @param page the editor page
      */
     private void insertIntoAuthorPage(String str, WSAuthorEditorPage page) {
 
@@ -214,19 +211,16 @@ public class GlyphPickerPluginExtension implements
                 }
 
                 int offset = authorAccess.getEditorAccess().getCaretOffset();
-                Position endOffsetPos = null;
-                    endOffsetPos = authorAccess.getDocumentController()
-                            .createPositionInContent(offset + 1);
+                Position endOffsetPos = authorAccess.getDocumentController()
+                        .createPositionInContent(offset + 1);
 
                 authorAccess.getDocumentController().insertXMLFragment(stringWithNs, offset);
 
                 int endOffset = endOffsetPos != null ? endOffsetPos.getOffset() - 1
                         : offset;
                 authorAccess.getEditorAccess().setCaretPosition(endOffset);
-            } catch (BadLocationException e1) {
+            } catch (BadLocationException | AuthorOperationException e1) {
                 LOGGER.error(e1);
-            } catch (AuthorOperationException e) {
-                LOGGER.error(e);
             }
         }
     }
@@ -234,7 +228,7 @@ public class GlyphPickerPluginExtension implements
     /**
      * Adds a namespace declaration to a string.
      *
-     * @param str     the input string
+     * @param str the input string
      * @return the string with added namespace or - if it doesn't match the pattern <[^/^>]+ or is null - the original string
      */
     public String addNamespace(String str) {

@@ -19,7 +19,6 @@ import com.jidesoft.swing.JideToggleButton;
 import de.badw.strauss.glyphpicker.view.TabPanel;
 import ro.sync.ui.Icons;
 
-import javax.swing.*;
 import java.awt.event.ActionEvent;
 
 /**
@@ -42,7 +41,7 @@ public class SortAction extends AbstractPickerAction {
     /**
      * Instantiates a new SortAction.
      *
-     * @param panel The container tab panel
+     * @param panel  The container tab panel
      * @param button the toggle button from which the toggle state is read
      */
     public SortAction(TabPanel panel, JideToggleButton button) {
@@ -60,7 +59,8 @@ public class SortAction extends AbstractPickerAction {
         // combination
         if (e.getActionCommand() != null) {
             button.setSelected(!button.isSelected());
-        };
+        }
+        ;
 
     }
 }

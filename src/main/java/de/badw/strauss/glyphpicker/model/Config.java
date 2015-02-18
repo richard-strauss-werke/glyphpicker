@@ -135,6 +135,7 @@ public class Config {
 
     /**
      * Indicates if the previous component's focus should be restored when a glyph gets inserted.
+     *
      * @return the value of removeFocusOnInsert
      */
     public boolean shouldTransferFocusAfterInsert() {
@@ -143,7 +144,8 @@ public class Config {
 
     /**
      * Specifies if the previous component's focus should be restored when a glyph gets inserted.
-     * @param transferFocusAfterInsert
+     *
+     * @param transferFocusAfterInsert indicates if the focus should be transferred
      */
     public void setTransferFocusAfterInsert(boolean transferFocusAfterInsert) {
         this.transferFocusAfterInsert = transferFocusAfterInsert;

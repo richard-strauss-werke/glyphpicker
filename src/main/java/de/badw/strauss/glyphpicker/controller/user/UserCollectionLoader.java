@@ -15,18 +15,16 @@
  */
 package de.badw.strauss.glyphpicker.controller.user;
 
+import de.badw.strauss.glyphpicker.model.GlyphDefinitions;
+import org.apache.log4j.Logger;
+import ro.sync.exml.workspace.api.standalone.StandalonePluginWorkspace;
+
+import javax.swing.*;
+import javax.xml.bind.DataBindingException;
+import javax.xml.bind.JAXB;
 import java.io.File;
 import java.util.Properties;
 import java.util.ResourceBundle;
-
-import javax.swing.JOptionPane;
-import javax.xml.bind.DataBindingException;
-import javax.xml.bind.JAXB;
-
-import de.badw.strauss.glyphpicker.model.GlyphDefinitions;
-import org.apache.log4j.Logger;
-
-import ro.sync.exml.workspace.api.standalone.StandalonePluginWorkspace;
 
 /**
  * Loads and saves the user collection data.

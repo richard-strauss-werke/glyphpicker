@@ -15,12 +15,11 @@
  */
 package de.badw.strauss.glyphpicker.controller.autocomplete;
 
-import java.util.List;
-
 import ca.odell.glazedlists.TextFilterator;
-
 import de.badw.strauss.glyphpicker.model.GlyphDefinition;
 import de.badw.strauss.glyphpicker.model.selector.PropertySelector;
+
+import java.util.List;
 
 /**
  * A TextFilterator implementing filtering on a certain property of a
