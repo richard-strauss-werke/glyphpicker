@@ -67,12 +67,17 @@ public class DataSourceEditor extends JPanel {
     /**
      * The component's preferred width.
      */
-    private static final int PREFERRED_WIDTH = 600;
+    private static final int PREFERRED_WIDTH = 650;
 
     /**
      * The component's preferred height.
      */
     private static final int PREFERRED_HEIGHT = 400;
+
+    /**
+     * The list component's preferred width;
+     */
+    private static final int PREFERRED_LIST_WIDTH = 250;
 
     /**
      * The list component.
@@ -159,6 +164,8 @@ public class DataSourceEditor extends JPanel {
         add(listPanel, BorderLayout.WEST);
         listPanel.setLayout(new BorderLayout(0, 0));
 
+        listPanel.setPreferredSize(new Dimension(PREFERRED_LIST_WIDTH, listPanel.getPreferredSize().height));
+
         listButtonPane = new JPanel();
         listPanel.add(listButtonPane, BorderLayout.SOUTH);
         listButtonPane.setAlignmentY(Component.BOTTOM_ALIGNMENT);
@@ -171,13 +178,13 @@ public class DataSourceEditor extends JPanel {
         formPanel.setBorder(new CompoundBorder(new TitledBorder(UIManager
                 .getBorder("TitledBorder.border"), i18n.getString(className
                 + ".edit"), TitledBorder.LEADING, TitledBorder.TOP, null,
-                new Color(0, 0, 0)), new EmptyBorder(8, 8, 8, 8)));
+                new Color(0, 0, 0)), new EmptyBorder(5,2,2,2)));
         add(formPanel);
         GridBagLayout gbl = new GridBagLayout();
-        gbl.columnWidths = new int[]{102, 200};
-        gbl.rowHeights = new int[]{20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-        gbl.columnWeights = new double[]{0.0, 1.0};
-        gbl.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+        gbl.columnWidths = new int[]{100,100,100,100,100,100};
+        gbl.rowHeights = new int[]{20, 0,0,0,0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+        gbl.columnWeights = new double[]{1.0, 1.0, 1.0, 1.0, 1.0, 1.0};
+        gbl.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
                 0.0, Double.MIN_VALUE};
         formPanel.setLayout(gbl);
 
@@ -192,26 +199,30 @@ public class DataSourceEditor extends JPanel {
         parseMappingCheckBox = new JCheckBox();
 
         formItemConfigList.add(new FormItemConfig(i18n.getString(className
-                + ".label"), labelTextField));
+                + ".label"), labelTextField, 0, 0, 6));
         formItemConfigList.add(new FormItemConfig(i18n.getString(className
-                + ".path"), pathTextField));
-        formItemConfigList.add(new FormItemConfig(i18n.getString(className
-                + ".fontName"), fontNameTextField));
-        formItemConfigList.add(new FormItemConfig(i18n.getString(className
-                + ".glyphRenderer"), glyphRendererCombo));
-        formItemConfigList.add(new FormItemConfig(i18n.getString(className
-                + ".glyphSize"), sizeTextField));
-        formItemConfigList.add(new FormItemConfig(i18n.getString(className
-                + ".template"), templateTextField));
-        formItemConfigList.add(new FormItemConfig(i18n.getString(className
-                + ".typeAttributeValue"), typeAttributeTextField));
-        formItemConfigList.add(new FormItemConfig(i18n.getString(className
-                + ".subtypeAttributeValue"), subtypeAttributeTextField));
-        formItemConfigList.add(new FormItemConfig(i18n.getString(className
-                + ".parseMapping"), parseMappingCheckBox));
+                + ".path"), pathTextField, 0, 1, 6));
 
-        for (int i = 0; i < formItemConfigList.size(); i++) {
-            addToFormPanel(i, formItemConfigList.get(i));
+        formItemConfigList.add(new FormItemConfig(i18n.getString(className
+                + ".glyphRenderer"), glyphRendererCombo, 0, 2, 2));
+        formItemConfigList.add(new FormItemConfig(i18n.getString(className
+                + ".glyphSize"), sizeTextField, 2, 2, 2));
+        formItemConfigList.add(new FormItemConfig(i18n.getString(className
+                + ".fontName"), fontNameTextField, 4, 2, 2));
+
+        formItemConfigList.add(new FormItemConfig(i18n.getString(className
+                + ".template"), templateTextField, 0, 3, 6));
+
+        formItemConfigList.add(new FormItemConfig(i18n.getString(className
+                + ".typeAttributeValue"), typeAttributeTextField, 0, 4, 3));
+        formItemConfigList.add(new FormItemConfig(i18n.getString(className
+                + ".subtypeAttributeValue"), subtypeAttributeTextField, 3, 4, 3));
+
+        formItemConfigList.add(new FormItemConfig(i18n.getString(className
+                + ".parseMapping"), parseMappingCheckBox, 0, 5, 3));
+
+        for (FormItemConfig formItemConfig : formItemConfigList) {
+            addToFormPanel(formItemConfig);
         }
 
     }
@@ -222,8 +233,8 @@ public class DataSourceEditor extends JPanel {
      * @param enabled the new form enabled
      */
     public void setFormEnabled(boolean enabled) {
-        for (FormItemConfig eci : formItemConfigList) {
-            eci.getComponent().setEnabled(enabled);
+        for (FormItemConfig formItemConfig : formItemConfigList) {
+            formItemConfig.getComponent().setEnabled(enabled);
         }
     }
 
@@ -274,21 +285,24 @@ public class DataSourceEditor extends JPanel {
     /**
      * Adds a component to the form panel.
      *
-     * @param index the component's index
-     * @param eci   the FormItemConfig object specifying the component's properties
+     * @param config   the FormItemConfig object specifying the component's properties
      */
-    private void addToFormPanel(int index, FormItemConfig eci) {
-        JLabel label = new JLabel(eci.getLabel());
+    private void addToFormPanel(FormItemConfig config) {
+
+        int labelY = config.getY() * 2;
+        int editorY = labelY + 1;
+
+        JLabel label = new JLabel(config.getLabel());
         GridBagConstraints gbcLabel = new GridBagConstraints();
-        gbcLabel.anchor = GridBagConstraints.EAST;
-        gbcLabel.insets = new Insets(0, 0, 5, 5);
-        gbcLabel.gridx = 0;
-        gbcLabel.gridy = index;
+        gbcLabel.anchor = GridBagConstraints.SOUTHWEST;
+        gbcLabel.insets = new Insets(8, 5, 5, 5);
+        gbcLabel.gridx = config.getX();
+        gbcLabel.gridwidth = config.getWidth();
+        gbcLabel.gridy = labelY;
         formPanel.add(label, gbcLabel);
 
-        JComponent component = eci.getComponent();
+        JComponent component = config.getComponent();
         if (component instanceof JTextField) {
-            ((JTextField) component).setColumns(10);
             ((JTextField) component).getDocument().addDocumentListener(
                     new TextFieldEditingListener());
         } else if (component instanceof JComboBox) {
@@ -300,11 +314,12 @@ public class DataSourceEditor extends JPanel {
         }
 
         GridBagConstraints gbcComponent = new GridBagConstraints();
-        gbcComponent.insets = new Insets(0, 0, 5, 0);
+        gbcComponent.insets = new Insets(0, 5, 5, 5);
         gbcComponent.fill = GridBagConstraints.HORIZONTAL;
         gbcComponent.anchor = GridBagConstraints.NORTHWEST;
-        gbcComponent.gridx = 1;
-        gbcComponent.gridy = index;
+        gbcComponent.gridx = config.getX();
+        gbcComponent.gridwidth = config.getWidth();
+        gbcComponent.gridy = editorY;
         formPanel.add(component, gbcComponent);
     }
 

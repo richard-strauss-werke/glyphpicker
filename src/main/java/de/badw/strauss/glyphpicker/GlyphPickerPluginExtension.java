@@ -162,7 +162,7 @@ public class GlyphPickerPluginExtension implements
      * transfers the focus of the GlyphPicker panel to the previously focused component
      */
     private void transferFocus() {
-        // TODO find the parent component, get action map, trigger event
+        // TODO find the parent component in oXygen, get action map, trigger event
         try {
             Robot robot = new Robot();
             robot.keyPress(KeyEvent.VK_ESCAPE);

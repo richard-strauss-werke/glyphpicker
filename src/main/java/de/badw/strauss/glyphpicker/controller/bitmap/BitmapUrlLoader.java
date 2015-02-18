@@ -151,11 +151,10 @@ public class BitmapUrlLoader implements BitmapLoader {
      * @return the image from the url
      */
     public BufferedImage getImageFromUrl(String url) {
-        HttpResponse response;
         DefaultHttpClient httpClient = new DefaultHttpClient();
         try {
             HttpGet httpGet = new HttpGet(url);
-            response = httpClient.execute(httpGet);
+            HttpResponse response = httpClient.execute(httpGet);
 
             StatusLine statusLine = response.getStatusLine();
             int statusCode = statusLine.getStatusCode();

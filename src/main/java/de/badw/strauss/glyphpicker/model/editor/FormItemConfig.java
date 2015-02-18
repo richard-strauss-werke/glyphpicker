@@ -33,15 +33,59 @@ public class FormItemConfig {
     private final String label;
 
     /**
+     * the x coordinate of the item in the grid
+     */
+    private final int x;
+    /**
+     * the y coordinate of the item in the grid
+     */
+    private final int y;
+    /**
+     * the width of the item in the grid
+     */
+    private final int width;
+
+    /**
      * Instantiates a new FormItemConfig.
      *
      * @param label     the label
      * @param component the component
+     * @param x the x coordinate of the item in the grid
+     * @param y the y coordinate of the item in the grid
+     * @param width the width of the item in the grid
      */
-    public FormItemConfig(String label, JComponent component) {
+    public FormItemConfig(String label, JComponent component, int x, int y, int width) {
         this.component = component;
         this.label = label;
+        this.x = x;
+        this.y = y;
+        this.width = width;
     }
+
+    /**
+     * gets the x coordinate of the item in the grid
+     * @return the x coordinate
+     */
+    public int getX() {
+        return x;
+    }
+
+    /**
+     * gets the y coordinate of the item in the grid
+     * @return the y coordinate
+     */
+    public int getY() {
+        return y;
+    }
+
+    /**
+     * gets the width of the item in the grid
+     * @return the width
+     */
+    public int getWidth() {
+        return width;
+    }
+
 
     /**
      * Gets the component.
