@@ -16,6 +16,7 @@
 package de.badw.strauss.glyphpicker.controller.action;
 
 import com.jidesoft.swing.JideToggleButton;
+import de.badw.strauss.glyphpicker.controller.CodePointComparator;
 import de.badw.strauss.glyphpicker.view.TabPanel;
 import ro.sync.ui.Icons;
 
@@ -57,8 +58,8 @@ public class SortAction extends AbstractPickerAction {
     public void actionPerformed(ActionEvent e) {
         // select the button *only* if the action has been triggered by pressing the accelerator
         // combination
-        if (e.getActionCommand() != null) {
-            button.setSelected(!button.isSelected());
+        if (!"Sort".equals(e.getActionCommand())) {
+            button.getModel().setSelected(!button.isSelected());
         }
     }
 }
