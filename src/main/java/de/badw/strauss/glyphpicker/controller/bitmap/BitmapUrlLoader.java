@@ -115,8 +115,10 @@ public class BitmapUrlLoader implements BitmapLoader {
                 imageNameInCache = ImageCacheAccess.createCacheFileName(imagePath);
                 File cachedImageFile = imageCacheAccess.getFile(imageNameInCache);
                 if (cachedImageFile != null) {
-                    BitmapFileLoader f = new BitmapFileLoader(d, cachedImageFile, imageProcessor, containerSize);
-                    return f.getImage();
+                    GlyphBitmapIcon iconFromFile = new BitmapFileLoader(d, cachedImageFile, imageProcessor, containerSize).getImage();
+                    if (iconFromFile != null)  {
+                        return iconFromFile;
+                    }
                 }
             } else {
                 imageNameInCache = null;
@@ -138,7 +140,7 @@ public class BitmapUrlLoader implements BitmapLoader {
 
                 return new GlyphBitmapIcon(scaledImage, scaledSize);
             }
-        } catch (MalformedURLException e) {
+        } catch (Exception e) {
             LOGGER.info(e);
         }
         return null;

@@ -117,7 +117,7 @@ public class BitmapFileLoader implements BitmapLoader {
         BufferedImage image = null;
         try {
             image = ImageIO.read(file);
-        } catch (IOException e) {
+        } catch (Exception e) {
             LOGGER.warn("\"" + file.toPath() + "\" could not be loaded. "
                     + e.getMessage());
         }
