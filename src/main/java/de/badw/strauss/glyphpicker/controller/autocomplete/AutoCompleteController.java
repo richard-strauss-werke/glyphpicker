@@ -178,13 +178,14 @@ public class AutoCompleteController {
                         sortedList, propertySelector);
                 UniqueList<String> uniquePropertyList = new UniqueList<>(
                         propertyList);
+                Object previousText = autoCompleteCombo.getEditor().getItem();
                 if (autoCompleteSupport != null) {
                     autoCompleteSupport.uninstall();
                 }
                 autoCompleteSupport = CustomAutoCompleteSupport.install(
                         autoCompleteCombo, uniquePropertyList);
                 autoCompleteSupport.setFilterMode(TextMatcherEditor.CONTAINS);
-//                autoCompleteSupport.getComboBox().getEditor().getEd
+                autoCompleteCombo.getEditor().setItem(previousText);
             }
         });
     }
