@@ -85,7 +85,6 @@ public class BitmapFileLoader implements BitmapLoader {
         this.d = d;
         this.imageProcessor = imageProcessor;
         this.containerSize = containerSize;
-
         this.imageFile = imageFile;
     }
 

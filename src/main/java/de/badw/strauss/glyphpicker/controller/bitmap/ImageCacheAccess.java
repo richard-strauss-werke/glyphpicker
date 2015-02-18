@@ -131,7 +131,7 @@ public class ImageCacheAccess {
     /**
      * Returns the number of files in the image cache
      *
-     * @return the number of files
+     * @return the number of files or -1 if the file list object is null
      */
     public int getSize() {
         File[] files = cacheFolder.listFiles();
