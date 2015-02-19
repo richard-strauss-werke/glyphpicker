@@ -56,9 +56,8 @@ public class SortAction extends AbstractPickerAction {
      */
     @Override
     public void actionPerformed(ActionEvent e) {
-        // select the button *only* if the action has been triggered by pressing the accelerator
-        // combination
-        if (!"Sort".equals(e.getActionCommand())) {
+        // adjust the button state if the button is not the source of the event
+        if (e.getSource() != button) {
             button.getModel().setSelected(!button.isSelected());
         }
     }
