@@ -16,8 +16,8 @@
 package de.badw.strauss.glyphpicker.controller.editor;
 
 import de.badw.strauss.glyphpicker.controller.action.AbstractPickerAction;
-import de.badw.strauss.glyphpicker.model.DataSource;
-import de.badw.strauss.glyphpicker.model.DataSourceList;
+import de.badw.strauss.glyphpicker.model.GlyphTable;
+import de.badw.strauss.glyphpicker.model.GlyphTableList;
 import de.badw.strauss.glyphpicker.view.editor.DataSourceEditor;
 import ro.sync.ui.Icons;
 
@@ -47,7 +47,7 @@ public class EditAction extends AbstractPickerAction {
     /**
      * The original data source list.
      */
-    private final DataSourceList dataSourceList;
+    private final GlyphTableList glyphTableList;
 
     /**
      * The name of the class.
@@ -59,14 +59,14 @@ public class EditAction extends AbstractPickerAction {
      *
      * @param listener       the property change listener to be added to this action
      * @param panel          The panel from which the data source editor has been opened
-     * @param dataSourceList The original data source list
+     * @param glyphTableList The original data source list
      */
     public EditAction(PropertyChangeListener listener, JPanel panel,
-                      DataSourceList dataSourceList) {
+                      GlyphTableList glyphTableList) {
         super(CLASS_NAME, Icons.WRENCH, "ctrl E");
         addPropertyChangeListener(listener);
         this.panel = panel;
-        this.dataSourceList = dataSourceList;
+        this.glyphTableList = glyphTableList;
         bindAcceleratorToComponent(this, panel);
     }
 
@@ -78,14 +78,14 @@ public class EditAction extends AbstractPickerAction {
      */
     @Override
     public void actionPerformed(ActionEvent e) {
-        List<DataSource> result = new DataSourceEditorController(
-                new DataSourceEditor(), panel).load(dataSourceList.getData());
+        List<GlyphTable> result = new DataSourceEditorController(
+                new DataSourceEditor(), panel).load(glyphTableList.getData());
 
         if (result != null) {
-            dataSourceList.getData().clear();
-            dataSourceList.getData().addAll(result);
-            if (dataSourceList.getSize() > 0) {
-                dataSourceList.setSelectedItem(dataSourceList.getElementAt(0));
+            glyphTableList.getData().clear();
+            glyphTableList.getData().addAll(result);
+            if (glyphTableList.getSize() > 0) {
+                glyphTableList.setSelectedItem(glyphTableList.getElementAt(0));
             }
             firePropertyChange(KEY, null, null);
         }

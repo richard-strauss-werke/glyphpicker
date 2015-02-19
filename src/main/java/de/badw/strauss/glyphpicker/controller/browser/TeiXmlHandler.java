@@ -16,7 +16,7 @@
 package de.badw.strauss.glyphpicker.controller.browser;
 
 import com.icl.saxon.aelfred.DefaultHandler;
-import de.badw.strauss.glyphpicker.model.DataSource;
+import de.badw.strauss.glyphpicker.model.GlyphTable;
 import de.badw.strauss.glyphpicker.model.GlyphDefinition;
 import de.badw.strauss.glyphpicker.model.GlyphReference;
 import org.apache.log4j.Logger;
@@ -79,7 +79,7 @@ public class TeiXmlHandler extends DefaultHandler {
     /**
      * The data source providing handler parameters.
      */
-    private final DataSource dataSource;
+    private final GlyphTable glyphTable;
 
     /**
      * A string buffer for the text content of elements.
@@ -99,15 +99,15 @@ public class TeiXmlHandler extends DefaultHandler {
     /**
      * Instantiates a new TeiXmlHandler.
      *
-     * @param dataSource The data source providing handler parameters
+     * @param glyphTable The data source providing handler parameters
      */
-    public TeiXmlHandler(DataSource dataSource) {
-        this.dataSource = dataSource;
-        String mappingTypeValue = dataSource.getTypeAttributeValue();
+    public TeiXmlHandler(GlyphTable glyphTable) {
+        this.glyphTable = glyphTable;
+        String mappingTypeValue = glyphTable.getTypeAttributeValue();
         if (mappingTypeValue == null) {
             mappingTypeValue = "";
         }
-        String mappingSubTypeValue = dataSource.getSubtypeAttributeValue();
+        String mappingSubTypeValue = glyphTable.getSubtypeAttributeValue();
         if (mappingSubTypeValue == null) {
             mappingSubTypeValue = "";
         }
@@ -127,7 +127,7 @@ public class TeiXmlHandler extends DefaultHandler {
             mappingMatcher = new MappingAllMatcher();
         }
 
-        if (dataSource.getParseMapping()) {
+        if (glyphTable.getParseMapping()) {
             mappingParser = new MappingUPlusParser();
         } else {
             mappingParser = new MappingNoParser();
@@ -345,7 +345,7 @@ public class TeiXmlHandler extends DefaultHandler {
             currentGlyphDefinition = new GlyphDefinition();
             currentGlyphDefinition.setId(attrs.getValue("xml:id"));
             currentGlyphDefinition.setRange(range);
-            currentGlyphDefinition.setDataSource(dataSource);
+            currentGlyphDefinition.setGlyphTable(glyphTable);
             inChar = true;
         } else if ("charDecl".equals(qName)) {
             range = "";

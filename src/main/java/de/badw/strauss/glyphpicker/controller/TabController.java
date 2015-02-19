@@ -212,6 +212,9 @@ public abstract class TabController implements PropertyChangeListener {
                             list.fixRowCountForVisibleColumns();
                         }
 
+
+
+
                     }
                 });
 

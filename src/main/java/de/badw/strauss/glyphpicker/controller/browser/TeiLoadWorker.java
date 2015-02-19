@@ -16,7 +16,7 @@
 package de.badw.strauss.glyphpicker.controller.browser;
 
 import com.icl.saxon.aelfred.SAXParserFactoryImpl;
-import de.badw.strauss.glyphpicker.model.DataSource;
+import de.badw.strauss.glyphpicker.model.GlyphTable;
 import de.badw.strauss.glyphpicker.model.GlyphDefinition;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -37,6 +37,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.UnknownHostException;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.concurrent.CancellationException;
@@ -56,7 +57,7 @@ public class TeiLoadWorker extends SwingWorker<List<GlyphDefinition>, Void> {
     /**
      * The data source object providing the loading parameters.
      */
-    private final DataSource dataSource;
+    private final GlyphTable glyphTable;
 
     /**
      * The loading result, a list of GlyphDefinition objects.
@@ -85,10 +86,10 @@ public class TeiLoadWorker extends SwingWorker<List<GlyphDefinition>, Void> {
     /**
      * Instantiates a new TeiLoadWorker.
      *
-     * @param dataSource The data source object providing the loading parameters
+     * @param glyphTable The data source object providing the loading parameters
      */
-    public TeiLoadWorker(DataSource dataSource) {
-        this.dataSource = dataSource;
+    public TeiLoadWorker(GlyphTable glyphTable) {
+        this.glyphTable = glyphTable;
 
         i18n = ResourceBundle.getBundle("GlyphPicker");
 
@@ -126,7 +127,7 @@ public class TeiLoadWorker extends SwingWorker<List<GlyphDefinition>, Void> {
      * @return the list
      */
     public List<GlyphDefinition> loadData() {
-        String path = dataSource.getBasePath();
+        String path = glyphTable.getBasePath();
         return (isLocalFile(path)) ? loadDataFromFile()
                 : loadDataFromUrl();
     }
@@ -150,15 +151,19 @@ public class TeiLoadWorker extends SwingWorker<List<GlyphDefinition>, Void> {
     public List<GlyphDefinition> loadDataFromUrl() {
         DefaultHttpClient httpClient = new DefaultHttpClient();
         try {
-            HttpGet httpGet = new HttpGet(dataSource.getBasePath());
+            HttpGet httpGet = new HttpGet(glyphTable.getBasePath());
             return httpClient.execute(httpGet, new XMLResponseHandler());
         } catch (IOException e) {
+            String message = String.format(
+                    i18n.getString(this.getClass().getSimpleName()
+                            + ".couldNotLoadData"),
+                    glyphTable.getBasePath());
+            if (e instanceof UnknownHostException) {
+                message += " Unknown host";
+            }
             JOptionPane.showMessageDialog(
                     null,
-                    String.format(
-                            i18n.getString(this.getClass().getSimpleName()
-                                    + ".couldNotLoadData"),
-                            dataSource.getBasePath()),
+                    message,
                     i18n.getString(this.getClass().getSimpleName() + ".error"),
                     JOptionPane.ERROR_MESSAGE);
             LOGGER.info(e);
@@ -205,7 +210,7 @@ public class TeiLoadWorker extends SwingWorker<List<GlyphDefinition>, Void> {
      */
     public List<GlyphDefinition> loadDataFromFile() {
 
-        String fileName = dataSource.getBasePath();
+        String fileName = glyphTable.getBasePath();
 
         if (fileName != null) {
             File file = new File(fileName);
@@ -238,7 +243,7 @@ public class TeiLoadWorker extends SwingWorker<List<GlyphDefinition>, Void> {
      */
     public List<GlyphDefinition> parseXmlSax(InputStream is) {
 
-        TeiXmlHandler handler = new TeiXmlHandler(dataSource);
+        TeiXmlHandler handler = new TeiXmlHandler(glyphTable);
         try {
             parser.parse(is, handler);
         } catch (SAXException | IOException e) {

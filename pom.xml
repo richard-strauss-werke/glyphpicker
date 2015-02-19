@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>de.badw.strauss.glyphpicker</groupId>
 	<packaging>jar</packaging>
-	<version>0.9.2</version>
+	<version>0.9.3</version>
 	<url>https://github.com/richard-strauss-werke/glyphpicker</url>
 	<description>oXygen XML Editor plugin for glyph reference insertion in TEI documents</description>
 	<properties>

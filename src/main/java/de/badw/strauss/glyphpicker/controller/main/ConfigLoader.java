@@ -16,7 +16,7 @@
 package de.badw.strauss.glyphpicker.controller.main;
 
 import de.badw.strauss.glyphpicker.model.Config;
-import de.badw.strauss.glyphpicker.model.DataSourceList;
+import de.badw.strauss.glyphpicker.model.GlyphTableList;
 import org.apache.log4j.Logger;
 import ro.sync.exml.workspace.api.standalone.StandalonePluginWorkspace;
 
@@ -132,12 +132,12 @@ public class ConfigLoader {
      * initializes the data source list in the config object
      */
     private void initDataSourceList() {
-        DataSourceList dataSourceList = config.getDataSources();
-        if (dataSourceList == null) {
+        GlyphTableList glyphTableList = config.getGlyphTables();
+        if (glyphTableList == null) {
             LOGGER.error("No data source list found in config.");
-            dataSourceList = new DataSourceList();
+            glyphTableList = new GlyphTableList();
         }
-        dataSourceList.init();
+        glyphTableList.init();
     }
 
     /**

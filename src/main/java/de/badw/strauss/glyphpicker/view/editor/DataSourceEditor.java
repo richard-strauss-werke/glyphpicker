@@ -15,7 +15,7 @@
  */
 package de.badw.strauss.glyphpicker.view.editor;
 
-import de.badw.strauss.glyphpicker.model.DataSource;
+import de.badw.strauss.glyphpicker.model.GlyphTable;
 import de.badw.strauss.glyphpicker.model.editor.FormItemConfig;
 
 import javax.swing.*;
@@ -61,7 +61,7 @@ public class DataSourceEditor extends JPanel {
     /**
      * The list component.
      */
-    private final JList<DataSource> list;
+    private final JList<GlyphTable> list;
 
     /**
      * The label's text field.
@@ -138,7 +138,7 @@ public class DataSourceEditor extends JPanel {
         JPanel listPanel = new JPanel();
         listPanel.setBorder(new CompoundBorder(new TitledBorder(UIManager
                 .getBorder("TitledBorder.border"), i18n.getString(className
-                + ".sources"), TitledBorder.LEADING, TitledBorder.TOP,
+                + ".tables"), TitledBorder.LEADING, TitledBorder.TOP,
                 null, new Color(0, 0, 0)), new EmptyBorder(8, 8, 8, 8)));
         add(listPanel, BorderLayout.WEST);
         listPanel.setLayout(new BorderLayout(0, 0));
@@ -178,16 +178,16 @@ public class DataSourceEditor extends JPanel {
         parseMappingCheckBox = new JCheckBox();
 
         formItemConfigList.add(new FormItemConfig(i18n.getString(className
-                + ".label"), labelTextField, 0, 0, 6));
+                + ".name"), labelTextField, 0, 0, 6));
         formItemConfigList.add(new FormItemConfig(i18n.getString(className
                 + ".path"), pathTextField, 0, 1, 6));
 
         formItemConfigList.add(new FormItemConfig(i18n.getString(className
-                + ".glyphRenderer"), glyphRendererCombo, 0, 2, 2));
+                + ".renderer"), glyphRendererCombo, 0, 2, 2));
         formItemConfigList.add(new FormItemConfig(i18n.getString(className
                 + ".glyphSize"), sizeTextField, 2, 2, 2));
         formItemConfigList.add(new FormItemConfig(i18n.getString(className
-                + ".fontName"), fontNameTextField, 4, 2, 2));
+                + ".font"), fontNameTextField, 4, 2, 2));
 
         formItemConfigList.add(new FormItemConfig(i18n.getString(className
                 + ".template"), templateTextField, 0, 3, 6));
@@ -274,7 +274,7 @@ public class DataSourceEditor extends JPanel {
         JLabel label = new JLabel(config.getLabel());
         GridBagConstraints gbcLabel = new GridBagConstraints();
         gbcLabel.anchor = GridBagConstraints.SOUTHWEST;
-        gbcLabel.insets = new Insets(8, 5, 5, 5);
+        gbcLabel.insets = new Insets(5, 5, 5, 5);
         gbcLabel.gridx = config.getX();
         gbcLabel.gridwidth = config.getWidth();
         gbcLabel.gridy = labelY;
@@ -307,7 +307,7 @@ public class DataSourceEditor extends JPanel {
      *
      * @return the list component
      */
-    public JList<DataSource> getList() {
+    public JList<GlyphTable> getList() {
         return list;
     }
 

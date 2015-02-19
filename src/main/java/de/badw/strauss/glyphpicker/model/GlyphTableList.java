@@ -22,9 +22,9 @@ import java.util.List;
 /**
  * The data source combo box model.
  */
-@XmlRootElement(name = "dataSources")
+@XmlRootElement(name = "glyphTables")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class DataSourceList extends AbstractListModel<String> implements
+public class GlyphTableList extends AbstractListModel<String> implements
         ComboBoxModel<String> {
 
     private static final long serialVersionUID = 1L;
@@ -43,13 +43,13 @@ public class DataSourceList extends AbstractListModel<String> implements
     /**
      * The data sources.
      */
-    @XmlElement(name = "dataSource")
-    private List<DataSource> data;
+    @XmlElement(name = "glyphTable")
+    private List<GlyphTable> data;
 
     /**
-     * Instantiates a new DataSourceList.
+     * Instantiates a new GlyphTableList.
      */
-    public DataSourceList() {
+    public GlyphTableList() {
     }
 
     /**
@@ -68,7 +68,7 @@ public class DataSourceList extends AbstractListModel<String> implements
      */
     public void setFirstIndex(int index) {
 
-        DataSource item = getDataSourceAt(index);
+        GlyphTable item = getDataSourceAt(index);
 
         data.add(0, item);
         for (int i = data.size() - 1; i > 0; i--) {
@@ -117,7 +117,7 @@ public class DataSourceList extends AbstractListModel<String> implements
      * @param i the index
      * @return the data source
      */
-    public DataSource getDataSourceAt(int i) {
+    public GlyphTable getDataSourceAt(int i) {
         return data.get(i);
     }
 
@@ -126,7 +126,7 @@ public class DataSourceList extends AbstractListModel<String> implements
      *
      * @return the data
      */
-    public List<DataSource> getData() {
+    public List<GlyphTable> getData() {
         return data;
     }
 

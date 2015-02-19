@@ -66,8 +66,8 @@ public class GlyphDefinition implements Cloneable {
     /**
      * The data source in which the current glyph definition originates.
      */
-    @XmlElement(name = "dataSource")
-    private DataSource dataSource;
+    @XmlElement(name = "glyphTable")
+    private GlyphTable glyphTable;
 
     /**
      * The icon component.
@@ -244,17 +244,17 @@ public class GlyphDefinition implements Cloneable {
      *
      * @return the data source
      */
-    public DataSource getDataSource() {
-        return dataSource;
+    public GlyphTable getGlyphTable() {
+        return glyphTable;
     }
 
     /**
      * Sets the data source.
      *
-     * @param dataSource the new data source
+     * @param glyphTable the new data source
      */
-    public void setDataSource(DataSource dataSource) {
-        this.dataSource = dataSource;
+    public void setGlyphTable(GlyphTable glyphTable) {
+        this.glyphTable = glyphTable;
     }
 
     /**
@@ -264,15 +264,15 @@ public class GlyphDefinition implements Cloneable {
      */
     public String getXmlString() {
 
-        String template = getDataSource().getTemplate();
+        String template = getGlyphTable().getTemplate();
 
         // use a default template if no template is specified
         if (template == null) {
-            return String.format("<g ref=\"%s#%s\"/>", getDataSource().getBasePath(), getId());
+            return String.format("<g ref=\"%s#%s\"/>", getGlyphTable().getBasePath(), getId());
         }
 
         return template
-                .replaceAll("\\$\\{basePath\\}", getDataSource().getBasePath())
+                .replaceAll("\\$\\{basePath\\}", getGlyphTable().getBasePath())
                 .replaceAll("\\$\\{id\\}", getId())
                 .replaceAll("\\$\\{char\\}", getMappedChars())
                 .replaceAll("\\$\\{num\\}", getNumericCharRef());

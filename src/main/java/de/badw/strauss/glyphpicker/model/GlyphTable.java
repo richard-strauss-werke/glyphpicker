@@ -23,9 +23,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 /**
  * A model containing data about a single data source.
  */
-@XmlRootElement(name = "dataSource")
+@XmlRootElement(name = "glyphTable")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class DataSource implements Cloneable {
+public class GlyphTable implements Cloneable {
 
     /**
      * The default glyph display size factor.
@@ -50,25 +50,25 @@ public class DataSource implements Cloneable {
     /**
      * The label.
      */
-    @XmlElement(name = "label")
+    @XmlElement(name = "name")
     private String label;
 
     /**
      * The base path.
      */
-    @XmlElement(name = "basePath")
+    @XmlElement(name = "path")
     private String basePath;
 
     /**
      * The font name.
      */
-    @XmlElement(name = "fontName")
+    @XmlElement(name = "font")
     private String fontName;
 
     /**
-     * The display mode.
+     * The glyph renderer.
      */
-    @XmlElement(name = "glyphRenderer")
+    @XmlElement(name = "renderer")
     private String glyphRenderer;
 
     /**
@@ -102,9 +102,9 @@ public class DataSource implements Cloneable {
     private boolean parseMapping = false;
 
     /**
-     * Instantiates a new DataSource.
+     * Instantiates a new GlyphTable.
      */
-    public DataSource() {
+    public GlyphTable() {
     }
 
     /**
@@ -281,7 +281,7 @@ public class DataSource implements Cloneable {
      * @see java.lang.Object#clone()
      */
     @Override
-    public DataSource clone() throws CloneNotSupportedException {
-        return (DataSource) super.clone();
+    public GlyphTable clone() throws CloneNotSupportedException {
+        return (GlyphTable) super.clone();
     }
 }

@@ -31,7 +31,6 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
 
 /**
@@ -127,7 +126,7 @@ public class BitmapUrlLoader implements BitmapLoader {
             BufferedImage bi = getImageFromUrl(imagePath + REQUEST_PARAMETER_STRING);
             if (bi != null) {
                 int scaledSize = Math
-                        .round(containerSize * d.getDataSource().getSizeFactor());
+                        .round(containerSize * d.getGlyphTable().getSizeFactor());
                 Image scaledImage = imageProcessor.scaleToBound(bi, scaledSize, scaledSize);
 
                 if (imageCacheAccess != null) {

@@ -17,7 +17,7 @@ package de.badw.strauss.glyphpicker.controller.editor;
 
 import com.jidesoft.swing.JideButton;
 import de.badw.strauss.glyphpicker.controller.action.AbstractPickerAction;
-import de.badw.strauss.glyphpicker.model.DataSource;
+import de.badw.strauss.glyphpicker.model.GlyphTable;
 import de.badw.strauss.glyphpicker.view.editor.DataSourceEditor;
 import org.apache.log4j.Logger;
 import ro.sync.ui.Icons;
@@ -86,12 +86,12 @@ public class DataSourceEditorController implements PropertyChangeListener {
     /**
      * The list model.
      */
-    private DefaultListModel<DataSource> listModel;
+    private DefaultListModel<GlyphTable> listModel;
 
     /**
      * The current data source.
      */
-    private DataSource currentDataSource = null;
+    private GlyphTable currentGlyphTable = null;
 
     /**
      * The i18n resource bundle.
@@ -125,9 +125,9 @@ public class DataSourceEditorController implements PropertyChangeListener {
         deleteButton.setHideActionText(true);
         contentPane.getListButtonPane().add(deleteButton);
 
-        glyphRendererLabels.add(DataSource.GLYPH_BITMAP_RENDERER);
-        glyphRendererLabels.add(DataSource.GLYPH_VECTOR_RENDERER);
-        glyphRendererLabels.add(DataSource.GLYPH_SCALED_VECTOR_RENDERER);
+        glyphRendererLabels.add(GlyphTable.GLYPH_BITMAP_RENDERER);
+        glyphRendererLabels.add(GlyphTable.GLYPH_VECTOR_RENDERER);
+        glyphRendererLabels.add(GlyphTable.GLYPH_SCALED_VECTOR_RENDERER);
 
         contentPane.setFormEnabled(false);
 
@@ -159,9 +159,9 @@ public class DataSourceEditorController implements PropertyChangeListener {
          */
         @Override
         public void actionPerformed(ActionEvent e) {
-            DataSource dataSource = new DataSource();
-            dataSource.setLabel(I18N.getString(NewAction.class.getSimpleName() + ".newDataSource"));
-            listModel.addElement(dataSource);
+            GlyphTable glyphTable = new GlyphTable();
+            glyphTable.setLabel(I18N.getString(NewAction.class.getSimpleName() + ".newDataSource"));
+            listModel.addElement(glyphTable);
             contentPane
                     .getList()
                     .getSelectionModel()
@@ -196,10 +196,10 @@ public class DataSourceEditorController implements PropertyChangeListener {
         public void actionPerformed(ActionEvent e) {
             int index = contentPane.getList().getSelectionModel()
                     .getAnchorSelectionIndex();
-            DataSource dataSource;
+            GlyphTable glyphTable;
             try {
-                dataSource = listModel.get(index).clone();
-                listModel.addElement(dataSource);
+                glyphTable = listModel.get(index).clone();
+                listModel.addElement(glyphTable);
                 contentPane
                         .getList()
                         .getSelectionModel()
@@ -253,12 +253,12 @@ public class DataSourceEditorController implements PropertyChangeListener {
     /**
      * Loads the data source editor window.
      *
-     * @param dataSourceList the data source list
+     * @param glyphTableList the data source list
      * @return if changes occurred, a new data source list, otherwise null
      */
-    public List<DataSource> load(List<DataSource> dataSourceList) {
+    public List<GlyphTable> load(List<GlyphTable> glyphTableList) {
 
-        initListModel(dataSourceList);
+        initListModel(glyphTableList);
         initListComponent(contentPane.getList());
 
         int result = JOptionPane.showConfirmDialog(parentPanel, contentPane,
@@ -266,7 +266,7 @@ public class DataSourceEditorController implements PropertyChangeListener {
                 JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
 
         if (result == JOptionPane.OK_OPTION && listEditingOccurred) {
-            List<DataSource> resultList = new ArrayList<>();
+            List<GlyphTable> resultList = new ArrayList<>();
             for (int i = 0; i < listModel.getSize(); i++) {
                 resultList.add(listModel.getElementAt(i));
             }
@@ -281,7 +281,7 @@ public class DataSourceEditorController implements PropertyChangeListener {
      *
      * @param list the list component
      */
-    private void initListComponent(JList<DataSource> list) {
+    private void initListComponent(JList<GlyphTable> list) {
         list.setModel(listModel);
         list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         if (listModel.size() > 0) {
@@ -295,14 +295,14 @@ public class DataSourceEditorController implements PropertyChangeListener {
     /**
      * Initializes the list model.
      *
-     * @param dataSourceList the data source list
+     * @param glyphTableList the data source list
      */
-    private void initListModel(List<DataSource> dataSourceList) {
+    private void initListModel(List<GlyphTable> glyphTableList) {
         listModel = new DefaultListModel<>();
 
         try {
-            for (DataSource dataSource : dataSourceList) {
-                listModel.addElement(dataSource.clone());
+            for (GlyphTable glyphTable : glyphTableList) {
+                listModel.addElement(glyphTable.clone());
             }
         } catch (CloneNotSupportedException e) {
             LOGGER.error(e);
@@ -331,16 +331,16 @@ public class DataSourceEditorController implements PropertyChangeListener {
      */
     private void onListSelection() {
         if (contentPane.getList().getSelectionModel().isSelectionEmpty()) {
-            currentDataSource = null;
-            setFormValues(new DataSource());
+            currentGlyphTable = null;
+            setFormValues(new GlyphTable());
             contentPane.setFormEnabled(false);
             cloneAction.setEnabled(false);
             deleteAction.setEnabled(false);
         } else {
             int index = contentPane.getList().getSelectionModel()
                     .getAnchorSelectionIndex();
-            currentDataSource = listModel.get(index);
-            setFormValues(currentDataSource);
+            currentGlyphTable = listModel.get(index);
+            setFormValues(currentGlyphTable);
             contentPane.setFormEnabled(true);
             cloneAction.setEnabled(true);
             deleteAction.setEnabled(true);
@@ -350,20 +350,20 @@ public class DataSourceEditorController implements PropertyChangeListener {
     /**
      * Sets form component's values.
      *
-     * @param dataSource the form values
+     * @param glyphTable the form values
      */
-    private void setFormValues(DataSource dataSource) {
+    private void setFormValues(GlyphTable glyphTable) {
 
         contentPane.removePropertyChangeListener(this);
 
-        contentPane.getLabelTextField().setText(dataSource.getLabel());
-        contentPane.getPathTextField().setText(dataSource.getBasePath());
-        contentPane.getFontNameTextField().setText(dataSource.getFontName());
+        contentPane.getLabelTextField().setText(glyphTable.getLabel());
+        contentPane.getPathTextField().setText(glyphTable.getBasePath());
+        contentPane.getFontNameTextField().setText(glyphTable.getFontName());
 
-        int index = glyphRendererLabels.indexOf(dataSource.getGlyphRenderer());
+        int index = glyphRendererLabels.indexOf(glyphTable.getGlyphRenderer());
         contentPane.getGlyphRendererCombo().setSelectedIndex(index);
 
-        Integer sizeFactor = Math.round(dataSource.getSizeFactor() * PERCENTAGE_FACTOR);
+        Integer sizeFactor = Math.round(glyphTable.getSizeFactor() * PERCENTAGE_FACTOR);
         String sizeFactorString;
         try {
             sizeFactorString = sizeFactor.toString();
@@ -372,13 +372,13 @@ public class DataSourceEditorController implements PropertyChangeListener {
         }
 
         contentPane.getSizeTextField().setText(sizeFactorString);
-        contentPane.getTemplateTextField().setText(dataSource.getTemplate());
+        contentPane.getTemplateTextField().setText(glyphTable.getTemplate());
         contentPane.getTypeAttributeTextField().setText(
-                dataSource.getTypeAttributeValue());
+                glyphTable.getTypeAttributeValue());
         contentPane.getSubtypeAttributeTextField().setText(
-                dataSource.getSubtypeAttributeValue());
+                glyphTable.getSubtypeAttributeValue());
         contentPane.getParseMappingCheckBox().setSelected(
-                dataSource.getParseMapping());
+                glyphTable.getParseMapping());
 
         contentPane.addPropertyChangeListener(this);
     }
@@ -387,32 +387,32 @@ public class DataSourceEditorController implements PropertyChangeListener {
      * Updates data source model from the form's values.
      */
     private void updateCurrentModelFromForm() {
-        if (currentDataSource != null) {
-            currentDataSource.setLabel(contentPane.getLabelTextField()
+        if (currentGlyphTable != null) {
+            currentGlyphTable.setLabel(contentPane.getLabelTextField()
                     .getText());
-            currentDataSource.setBasePath(contentPane.getPathTextField()
+            currentGlyphTable.setBasePath(contentPane.getPathTextField()
                     .getText());
-            currentDataSource.setFontName(contentPane.getFontNameTextField()
+            currentGlyphTable.setFontName(contentPane.getFontNameTextField()
                     .getText());
-            currentDataSource.setGlyphRenderer(glyphRendererLabels.get(contentPane
+            currentGlyphTable.setGlyphRenderer(glyphRendererLabels.get(contentPane
                     .getGlyphRendererCombo().getSelectedIndex()));
 
             try {
                 float sizeFactor = Float.parseFloat(contentPane
                         .getSizeTextField().getText() + "f") / PERCENTAGE_FACTOR;
-                currentDataSource.setSizeFactor(sizeFactor);
+                currentGlyphTable.setSizeFactor(sizeFactor);
             } catch (Exception e) {
                 LOGGER.info("Error converting size factor "
                         + contentPane.getSizeTextField().getText());
             }
 
-            currentDataSource.setTemplate(contentPane.getTemplateTextField()
+            currentGlyphTable.setTemplate(contentPane.getTemplateTextField()
                     .getText());
-            currentDataSource.setTypeAttributeValue(contentPane
+            currentGlyphTable.setTypeAttributeValue(contentPane
                     .getTypeAttributeTextField().getText());
-            currentDataSource.setSubtypeAttributeValue(contentPane
+            currentGlyphTable.setSubtypeAttributeValue(contentPane
                     .getSubtypeAttributeTextField().getText());
-            currentDataSource.setParseMapping(contentPane
+            currentGlyphTable.setParseMapping(contentPane
                     .getParseMappingCheckBox().isSelected());
         }
     }

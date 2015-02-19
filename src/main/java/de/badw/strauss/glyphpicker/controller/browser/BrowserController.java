@@ -22,8 +22,8 @@ import de.badw.strauss.glyphpicker.controller.action.InsertXmlAction;
 import de.badw.strauss.glyphpicker.controller.bitmap.ImageCacheAccess;
 import de.badw.strauss.glyphpicker.controller.editor.EditAction;
 import de.badw.strauss.glyphpicker.model.Config;
-import de.badw.strauss.glyphpicker.model.DataSource;
-import de.badw.strauss.glyphpicker.model.DataSourceList;
+import de.badw.strauss.glyphpicker.model.GlyphTable;
+import de.badw.strauss.glyphpicker.model.GlyphTableList;
 import de.badw.strauss.glyphpicker.model.GlyphDefinition;
 import de.badw.strauss.glyphpicker.view.TabPanel;
 
@@ -48,7 +48,7 @@ public class BrowserController extends TabController {
     /**
      * The list of all data sources.
      */
-    private final DataSourceList dataSourceList;
+    private final GlyphTableList glyphTableList;
 
     /**
      * The add action.
@@ -77,11 +77,11 @@ public class BrowserController extends TabController {
         super(panel, config, config.getBrowserSearchFieldScopeIndex(), config
                 .getBrowserViewIndex(), imageCacheAccess);
 
-        dataSourceList = config.getDataSources();
-        controlPanel.getDataSourceCombo().setModel(dataSourceList);
+        glyphTableList = config.getGlyphTables();
+        controlPanel.getDataSourceCombo().setModel(glyphTableList);
 
         controlPanel.getEditBtn().setAction(
-                new EditAction(this, panel, dataSourceList));
+                new EditAction(this, panel, glyphTableList));
         controlPanel.getEditBtn().setHideActionText(true);
 
         setAdditionalActions();
@@ -147,14 +147,14 @@ public class BrowserController extends TabController {
             index = 0;
         }
 
-        if (index > dataSourceList.getSize() - 1) {
+        if (index > glyphTableList.getSize() - 1) {
             showNoDataSourceMessage();
             return;
         }
 
-        DataSource dataSource = dataSourceList.getDataSourceAt(index);
+        GlyphTable glyphTable = glyphTableList.getDataSourceAt(index);
 
-        if (dataSource == null) {
+        if (glyphTable == null) {
             showNoDataSourceMessage();
             return;
         }
@@ -164,7 +164,7 @@ public class BrowserController extends TabController {
 
         tabPanel.setMask(true);
 
-        teiLoadWorker = new TeiLoadWorker(dataSource);
+        teiLoadWorker = new TeiLoadWorker(glyphTable);
 
         teiLoadListener = new PropertyChangeListener() {
             @Override
@@ -227,7 +227,7 @@ public class BrowserController extends TabController {
             // set the loading path as first item in the pathComboModel
             int index = controlPanel.getDataSourceCombo().getSelectedIndex();
             if (index != -1) {
-                dataSourceList.setFirstIndex(index);
+                glyphTableList.setFirstIndex(index);
             }
         }
         pcs.firePropertyChange(DATA_LOADED, null, this);

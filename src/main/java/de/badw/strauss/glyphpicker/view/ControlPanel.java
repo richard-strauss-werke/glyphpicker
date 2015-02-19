@@ -128,10 +128,10 @@ public class ControlPanel extends JPanel {
 
         if (setDataSourceCombo) {
             toolBar.add(Box.createHorizontalGlue());
-            JLabel sourceLabel = new JLabel(i18n.getString(className
-                    + ".source") + ":");
-            sourceLabel.setBorder(BorderFactory.createEmptyBorder(0, 6, 0, 6));
-            toolBar.add(sourceLabel);
+            JLabel tableLabel = new JLabel(i18n.getString(className
+                    + ".table") + ":");
+            tableLabel.setBorder(BorderFactory.createEmptyBorder(0, 6, 0, 6));
+            toolBar.add(tableLabel);
 
             dataSourceCombo = new JComboBox() {
                 @Override
@@ -143,8 +143,9 @@ public class ControlPanel extends JPanel {
             dataSourceCombo.setEditable(false);
             toolBar.add(dataSourceCombo);
 
+            toolBar.addSeparator(new Dimension(4,0));
+
             editBtn = new JideButton();
-            editBtn.setBorder(BorderFactory.createEmptyBorder(0, 6, 0, 0));
             toolBar.add(editBtn);
         } else {
             toolBar.add(Box.createHorizontalGlue());

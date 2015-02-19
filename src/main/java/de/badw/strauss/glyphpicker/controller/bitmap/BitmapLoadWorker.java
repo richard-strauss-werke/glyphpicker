@@ -15,7 +15,7 @@
  */
 package de.badw.strauss.glyphpicker.controller.bitmap;
 
-import de.badw.strauss.glyphpicker.model.DataSource;
+import de.badw.strauss.glyphpicker.model.GlyphTable;
 import de.badw.strauss.glyphpicker.model.GlyphDefinition;
 import org.apache.log4j.Logger;
 
@@ -101,15 +101,15 @@ public class BitmapLoadWorker extends
                 return null;
             }
 
-            DataSource dataSource = d.getDataSource();
+            GlyphTable glyphTable = d.getGlyphTable();
             String relativePath = d.getUrl();
 
-            // only load bitmaps for glyphDefinitions whose DataSource specifies a
-            // DataSource.GLYPH_BITMAP_RENDERER and has a graphic path
-            if (DataSource.GLYPH_BITMAP_RENDERER.equals(dataSource
+            // only load bitmaps for glyphDefinitions whose GlyphTable specifies a
+            // GlyphTable.GLYPH_BITMAP_RENDERER and has a graphic path
+            if (GlyphTable.GLYPH_BITMAP_RENDERER.equals(glyphTable
                     .getGlyphRenderer()) && relativePath != null) {
 
-                String basePath = dataSource.getBasePath();
+                String basePath = glyphTable.getBasePath();
 
                 BitmapLoader loader = (isLocalFile(basePath))
                         ? new BitmapFileLoader(d, basePath, relativePath, imageProcessor, size)

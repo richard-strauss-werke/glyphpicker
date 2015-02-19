@@ -22,7 +22,6 @@ import org.apache.log4j.Logger;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.IOException;
 
 /**
  * The Class BitmapLoader.
@@ -98,7 +97,7 @@ public class BitmapFileLoader implements BitmapLoader {
         BufferedImage bi = getImageFromFile(imageFile);
         if (bi != null) {
             int scaledSize = Math
-                    .round(containerSize * d.getDataSource().getSizeFactor());
+                    .round(containerSize * d.getGlyphTable().getSizeFactor());
             return new GlyphBitmapIcon(imageProcessor.scaleToBound(bi, scaledSize, scaledSize),
                     scaledSize);
         }

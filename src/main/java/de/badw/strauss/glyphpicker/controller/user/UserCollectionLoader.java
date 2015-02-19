@@ -53,6 +53,11 @@ public class UserCollectionLoader {
     private final ResourceBundle i18n;
 
     /**
+     * The plugin properties
+     */
+    private final Properties properties;
+
+    /**
      * Instantiates a new UserCollectionLoader.
      *
      * @param workspace  oXygen's plugin workspace
@@ -60,6 +65,8 @@ public class UserCollectionLoader {
      */
     public UserCollectionLoader(StandalonePluginWorkspace workspace,
                                 Properties properties) {
+
+        this.properties = properties;
 
         i18n = ResourceBundle.getBundle("GlyphPicker");
 
@@ -75,6 +82,7 @@ public class UserCollectionLoader {
      */
     public void save(GlyphDefinitions glyphDefinitions) {
         File path = new File(pathName);
+        glyphDefinitions.setVersion(properties.getProperty("config.version"));
         Boolean pathExists = path.exists() || path.mkdir();
         if (pathExists) {
             File file = new File(path, fileName);

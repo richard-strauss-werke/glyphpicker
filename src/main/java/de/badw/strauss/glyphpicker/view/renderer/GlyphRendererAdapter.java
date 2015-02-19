@@ -15,7 +15,7 @@
  */
 package de.badw.strauss.glyphpicker.view.renderer;
 
-import de.badw.strauss.glyphpicker.model.DataSource;
+import de.badw.strauss.glyphpicker.model.GlyphTable;
 import de.badw.strauss.glyphpicker.model.GlyphDefinition;
 
 import javax.swing.*;
@@ -26,7 +26,7 @@ import java.util.Map;
 
 /**
  * A glyph rendering adapter class which selects the GlyphRenderer based on the
- * glyphRenderer property of the GlyphDefinition's DataSource. .
+ * glyphRenderer property of the GlyphDefinition's GlyphTable. .
  */
 public class GlyphRendererAdapter extends JLabel implements TableCellRenderer,
         ListCellRenderer<Object> {
@@ -45,11 +45,11 @@ public class GlyphRendererAdapter extends JLabel implements TableCellRenderer,
      */
     public GlyphRendererAdapter(JComponent container) {
         setText(null);
-        glyphRenderers.put(DataSource.GLYPH_SCALED_VECTOR_RENDERER,
+        glyphRenderers.put(GlyphTable.GLYPH_SCALED_VECTOR_RENDERER,
                 new GlyphScaledVectorRenderer(container));
-        glyphRenderers.put(DataSource.GLYPH_VECTOR_RENDERER, new GlyphVectorRenderer(
+        glyphRenderers.put(GlyphTable.GLYPH_VECTOR_RENDERER, new GlyphVectorRenderer(
                 container));
-        glyphRenderers.put(DataSource.GLYPH_BITMAP_RENDERER, new GlyphBitmapRenderer(
+        glyphRenderers.put(GlyphTable.GLYPH_BITMAP_RENDERER, new GlyphBitmapRenderer(
                 container));
     }
 
@@ -78,7 +78,7 @@ public class GlyphRendererAdapter extends JLabel implements TableCellRenderer,
         if (value != null) {
             GlyphDefinition glyphDefinition = ((GlyphDefinition) value);
             GlyphRenderer renderer = glyphRenderers.get(glyphDefinition
-                    .getDataSource().getGlyphRenderer());
+                    .getGlyphTable().getGlyphRenderer());
 
             if (renderer != null) {
                 return renderer.getRendererComponent(glyphDefinition,
@@ -101,7 +101,7 @@ public class GlyphRendererAdapter extends JLabel implements TableCellRenderer,
         if (value != null) {
             GlyphDefinition glyphDefinition = ((GlyphDefinition) value);
             GlyphRenderer renderer = glyphRenderers.get(glyphDefinition
-                    .getDataSource().getGlyphRenderer());
+                    .getGlyphTable().getGlyphRenderer());
 
             if (renderer != null) {
                 return renderer.getRendererComponent(glyphDefinition,

@@ -30,6 +30,12 @@ public class GlyphDefinitions {
     private static final long serialVersionUID = 1L;
 
     /**
+     * The version of the user data
+     */
+    @XmlElement
+    private String version;
+
+    /**
      * The glyph definition list.
      */
     @XmlElement(name = "char")
@@ -48,6 +54,30 @@ public class GlyphDefinitions {
      * Instantiates a new glyph definitions.
      */
     public GlyphDefinitions() {
+    }
+
+    /**
+     * Instantiates a new glyph definitions.
+     * @param version the plugin version
+     */
+    public GlyphDefinitions(String version) {
+        this.version = version;
+    }
+
+    /**
+     * gets the version of the user data
+     * @return the version
+     */
+    public String getVersion() {
+        return version;
+    }
+
+    /**
+     * sets the version of the user data
+     * @param version the version
+     */
+    public void setVersion(String version) {
+        this.version = version;
     }
 
     /**
