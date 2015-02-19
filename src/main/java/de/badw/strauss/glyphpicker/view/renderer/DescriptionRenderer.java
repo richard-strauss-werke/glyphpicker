@@ -28,18 +28,15 @@ import java.util.ResourceBundle;
  */
 public class DescriptionRenderer extends JLabel implements TableCellRenderer {
 
-    /**
-     * The Constant serialVersionUID.
-     */
     private static final long serialVersionUID = 1L;
 
     /**
-     * The Constant BORDER_WIDTH.
+     * The thickness of the component's border.
      */
     public static final int BORDER_THICKNESS = 4;
 
     /**
-     * The Constant i18n.
+     * The internationalisation resource bundle.
      */
     private static final ResourceBundle I18N
             = ResourceBundle

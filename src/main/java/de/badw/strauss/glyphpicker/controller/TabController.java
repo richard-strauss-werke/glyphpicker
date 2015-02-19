@@ -244,7 +244,6 @@ public abstract class TabController implements PropertyChangeListener {
      * Initializes the mouse listeners.
      */
     private void initMouseListeners() {
-
         MouseAdapter mouseAdapter = new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {

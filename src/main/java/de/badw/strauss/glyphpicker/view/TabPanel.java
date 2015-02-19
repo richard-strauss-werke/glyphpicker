@@ -80,7 +80,6 @@ public class TabPanel extends JPanel {
         add(tablePanel, BorderLayout.CENTER);
 
         tablePanel.setBorder(new EmptyBorder(11, 8, 8, 8));
-
         tablePanel.setLayout(new BorderLayout(0, 8));
 
         jPane = new JScrollPane();
@@ -97,6 +96,7 @@ public class TabPanel extends JPanel {
 
         overlayable = new DefaultOverlayable(jPane, overlayPanel);
         tablePanel.add(overlayable, BorderLayout.CENTER);
+
 
         infoPanel = new JPanel();
         infoPanel.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
@@ -117,7 +117,7 @@ public class TabPanel extends JPanel {
         infoLabel.setContentType("text/html");
         infoLabel.setPreferredSize(new Dimension(INFO_LABEL_PREFERRED_SIZE, INFO_LABEL_PREFERRED_SIZE));
         GridBagConstraints gbcInfoLabel = new GridBagConstraints();
-        gbcInfoLabel.insets = new Insets(8, 8, 5, 8);
+        gbcInfoLabel.insets = new Insets(6, 8, 0, 8);
         gbcInfoLabel.gridwidth = 2;
         gbcInfoLabel.weightx = 1.0;
         gbcInfoLabel.fill = GridBagConstraints.HORIZONTAL;

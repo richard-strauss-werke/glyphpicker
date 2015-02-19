@@ -144,6 +144,7 @@ public class ControlPanel extends JPanel {
             toolBar.add(dataSourceCombo);
 
             editBtn = new JideButton();
+            editBtn.setBorder(BorderFactory.createEmptyBorder(0, 6, 0, 0));
             toolBar.add(editBtn);
         } else {
             toolBar.add(Box.createHorizontalGlue());
