@@ -27,6 +27,7 @@ public class TeiLoadWorkerTest {
      */
     @Test
     public void testLoadDataFromUrl() {
+        /*
         Properties properties = new Properties();
         try {
             properties.load(TeiLoadWorkerTest.class
@@ -48,16 +49,8 @@ public class TeiLoadWorkerTest {
 
         TeiLoadWorker w = new TeiLoadWorker(t);
         w.loadDataFromUrl();
+        */
 
-
-        /*
-        ConfigLoader c = new ConfigLoader(workspace, properties);
-        c.load();
-
-        assertEquals("The config version given in /src/main/resources/config.xml must " +
-                        "match the project version in /pom.xml", properties.getProperty("config.version"),
-                c.getConfig().getVersion());
-    */
     }
 
 }
