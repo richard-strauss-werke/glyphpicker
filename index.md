@@ -5,10 +5,8 @@ title: "GlyphPicker"
 
 # GlyphPicker
 
-The GlyphPicker oXygen plugin adds a glyph table component to oXygen, allowing to
-browse and insert glyph references into TEI documents. The glyph tables are created
-on basis of character declarations in a TEI file, which can be loaded
-from a web server or from the file system.
+The GlyphPicker oXygen plugin adds a new component to oXygen, allowing to
+browse TEI character declarations and insert glyph references into TEI documents. 
 
 #### Features
 
