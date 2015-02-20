@@ -22,6 +22,7 @@ import org.apache.http.HttpResponse;
 import org.apache.http.StatusLine;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.impl.client.SystemDefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 import org.apache.log4j.Logger;
 
@@ -152,7 +153,7 @@ public class BitmapUrlLoader implements BitmapLoader {
      * @return the image from the url
      */
     public BufferedImage getImageFromUrl(String url) {
-        DefaultHttpClient httpClient = new DefaultHttpClient();
+        SystemDefaultHttpClient httpClient = new SystemDefaultHttpClient();
         try {
             HttpGet httpGet = new HttpGet(url);
             HttpResponse response = httpClient.execute(httpGet);

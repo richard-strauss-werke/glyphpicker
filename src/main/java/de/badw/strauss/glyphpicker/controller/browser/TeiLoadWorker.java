@@ -26,6 +26,7 @@ import org.apache.http.client.HttpResponseException;
 import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.impl.client.SystemDefaultHttpClient;
 import org.apache.log4j.Logger;
 import org.xml.sax.SAXException;
 
@@ -149,7 +150,7 @@ public class TeiLoadWorker extends SwingWorker<List<GlyphDefinition>, Void> {
      * @return the resulting GlyphDefinition list
      */
     public List<GlyphDefinition> loadDataFromUrl() {
-        DefaultHttpClient httpClient = new DefaultHttpClient();
+        SystemDefaultHttpClient httpClient = new SystemDefaultHttpClient();
         try {
             HttpGet httpGet = new HttpGet(glyphTable.getBasePath());
             return httpClient.execute(httpGet, new XMLResponseHandler());
