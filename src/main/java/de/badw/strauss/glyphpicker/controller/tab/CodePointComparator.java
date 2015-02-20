@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package de.badw.strauss.glyphpicker.controller;
+package de.badw.strauss.glyphpicker.controller.tab;
 
 import de.badw.strauss.glyphpicker.model.GlyphDefinition;
 

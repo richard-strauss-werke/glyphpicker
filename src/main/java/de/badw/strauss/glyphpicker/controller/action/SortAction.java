@@ -16,7 +16,6 @@
 package de.badw.strauss.glyphpicker.controller.action;
 
 import com.jidesoft.swing.JideToggleButton;
-import de.badw.strauss.glyphpicker.controller.CodePointComparator;
 import de.badw.strauss.glyphpicker.view.TabPanel;
 import ro.sync.ui.Icons;
 

@@ -13,14 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package de.badw.strauss.glyphpicker.controller.main;
+package de.badw.strauss.glyphpicker.controller;
 
-import de.badw.strauss.glyphpicker.controller.TabController;
 import de.badw.strauss.glyphpicker.controller.action.AbstractPickerAction;
 import de.badw.strauss.glyphpicker.controller.action.CopyAction;
 import de.badw.strauss.glyphpicker.controller.action.InsertXmlAction;
-import de.badw.strauss.glyphpicker.controller.bitmap.ImageCacheAccess;
+import de.badw.strauss.glyphpicker.controller.bitmap.ImageCache;
 import de.badw.strauss.glyphpicker.controller.browser.BrowserController;
+import de.badw.strauss.glyphpicker.controller.options.PreferencesDialogAction;
+import de.badw.strauss.glyphpicker.controller.tab.AbstractTabController;
+import de.badw.strauss.glyphpicker.controller.tab.TabFocusHandler;
 import de.badw.strauss.glyphpicker.controller.user.UserCollectionController;
 import de.badw.strauss.glyphpicker.model.Config;
 import de.badw.strauss.glyphpicker.model.GlyphDefinition;
@@ -40,7 +42,6 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.io.File;
-import java.io.IOException;
 import java.util.Properties;
 
 /**
@@ -132,18 +133,25 @@ public class MainController implements PropertyChangeListener {
 
         config = configLoader.getConfig();
 
-        ImageCacheAccess imageCacheAccess = createImageCache(config);
+        ImageCache imageCache = createImageCache(config);
 
         browserPanel = new TabPanel(new ControlPanel(true));
-        browserController = new BrowserController(browserPanel, config, imageCacheAccess);
+        browserController = new BrowserController(browserPanel, config, imageCache);
         browserController.addPropertyChangeListener(this);
 
         userCollectionPanel = new TabPanel(new ControlPanel(false));
         userCollectionController = new UserCollectionController(
-                userCollectionPanel, config, properties, workspace, imageCacheAccess);
+                userCollectionPanel, config, properties, workspace, imageCache);
         userCollectionController.addPropertyChangeListener(this);
 
-        mainPanel = new MainPanel(userCollectionPanel, browserPanel, AbstractPickerAction.MENU_SHORTCUT_NAME);
+        mainPanel = new MainPanel(userCollectionPanel, browserPanel,
+                AbstractPickerAction.MENU_SHORTCUT_NAME);
+
+        PreferencesDialogAction preferencesDialogAction = new PreferencesDialogAction(mainPanel,
+                browserController, config, imageCache, browserController.getGlyphTableList());
+        browserPanel.getControlPanel().getOptionsBtn().setAction(preferencesDialogAction);
+        userCollectionPanel.getControlPanel().getOptionsBtn().setAction(preferencesDialogAction);
+
 
         final JTabbedPane tabbedPane = mainPanel.getTabbedPane();
         tabbedPane.setSelectedIndex(config.getTabIndex());
@@ -196,10 +204,10 @@ public class MainController implements PropertyChangeListener {
      * @param config the plugin config
      * @return the image cache or null if no cache folder could be created
      */
-    private ImageCacheAccess createImageCache(Config config) {
+    private ImageCache createImageCache(Config config) {
         File cacheFolder = new File(config.getConfigDir(), "cache");
         if ((cacheFolder.exists() && cacheFolder.isDirectory()) || cacheFolder.mkdirs()) {
-            return new ImageCacheAccess(cacheFolder);
+            return new ImageCache(cacheFolder);
         }
         LOGGER.error(String.format("Could not create image cache folder at %s", cacheFolder.toString()));
         return null;
@@ -267,7 +275,7 @@ public class MainController implements PropertyChangeListener {
             } catch (CloneNotSupportedException e1) {
                 LOGGER.error(e1);
             }
-        } else if (TabController.DATA_LOADED.equals(e.getPropertyName())) {
+        } else if (AbstractTabController.DATA_LOADED.equals(e.getPropertyName())) {
 
             int selectedIndex = mainPanel.getTabbedPane().getSelectedIndex();
 

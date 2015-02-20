@@ -36,11 +36,6 @@ public class ControlPanel extends JPanel {
     private JComboBox dataSourceCombo;
 
     /**
-     * The edit button.
-     */
-    private JButton editBtn;
-
-    /**
      * The options button.
      */
     private final JButton optionsBtn;
@@ -143,10 +138,6 @@ public class ControlPanel extends JPanel {
             dataSourceCombo.setEditable(false);
             toolBar.add(dataSourceCombo);
 
-            toolBar.addSeparator(new Dimension(4,0));
-
-            editBtn = new JideButton();
-            toolBar.add(editBtn);
         } else {
             toolBar.add(Box.createHorizontalGlue());
         }
@@ -218,15 +209,6 @@ public class ControlPanel extends JPanel {
         button.setVerticalTextPosition(SwingConstants.BOTTOM);
         button.setHorizontalTextPosition(SwingConstants.CENTER);
         toolBar.add(button, index);
-    }
-
-    /**
-     * Gets the edit button.
-     *
-     * @return the edit button
-     */
-    public JButton getEditBtn() {
-        return editBtn;
     }
 
     /**

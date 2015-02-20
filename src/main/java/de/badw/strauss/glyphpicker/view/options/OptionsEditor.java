@@ -3,15 +3,11 @@ package de.badw.strauss.glyphpicker.view.options;
 import com.jidesoft.swing.JideButton;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.util.ResourceBundle;
 
 public class OptionsEditor extends JPanel {
-
-    /**
-     * The component's preferred width.
-     */
-    private static final int PREFERRED_WIDTH = 350;
 
     /**
      * The text field to edit the shortcut
@@ -53,85 +49,49 @@ public class OptionsEditor extends JPanel {
         ResourceBundle i18n = ResourceBundle.getBundle("GlyphPicker");
         String className = this.getClass().getSimpleName();
 
-        GridBagLayout gbl = new GridBagLayout();
-        gbl.columnWidths = new int[]{102, 46, 46};
-        gbl.rowHeights = new int[]{20, 0};
-        gbl.columnWeights = new double[]{0.0, 1.0, 0.0};
-        gbl.rowWeights = new double[]{0.0, 0.0};
-        setLayout(gbl);
 
         cacheCountLabelSuffixSingular = i18n.getString(className + ".image");
         cacheCountLabelSuffixPlural = i18n.getString(className + ".images");
 
+        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        setBorder(new EmptyBorder(8,8,8,8));
+
+        JPanel innerPanel = new JPanel();
+
         JLabel shortcutLabel = new JLabel(i18n.getString(className + ".keyboardShortcutLabel"));
-        GridBagConstraints gbcShortcutLabel = new GridBagConstraints();
-        gbcShortcutLabel.insets = new Insets(4, 5, 4, 5);
-        gbcShortcutLabel.fill = GridBagConstraints.BOTH;
-        gbcShortcutLabel.gridx = 0;
-        gbcShortcutLabel.gridy = 0;
-        add(shortcutLabel, gbcShortcutLabel);
+        innerPanel.add(shortcutLabel);
 
         shortcutTextField = new JTextField();
-        GridBagConstraints gbcShortcutTextField = new GridBagConstraints();
-        gbcShortcutTextField.insets = new Insets(4, 5, 4, 5);
-        gbcShortcutTextField.fill = GridBagConstraints.BOTH;
-        gbcShortcutTextField.weightx = 1.0;
-        gbcShortcutTextField.gridx = 1;
-        gbcShortcutTextField.gridy = 0;
-        add(shortcutTextField, gbcShortcutTextField);
+        shortcutTextField.setColumns(20);
+        innerPanel.add(shortcutTextField);
 
         applyShortcutButton = new JideButton();
-        GridBagConstraints gbcApplyButton = new GridBagConstraints();
-        gbcApplyButton.insets = new Insets(4, 5, 4, 5);
-        gbcApplyButton.fill = GridBagConstraints.BOTH;
-        gbcApplyButton.gridx = 2;
-        gbcApplyButton.gridy = 0;
-        add(applyShortcutButton, gbcApplyButton);
+        innerPanel.add(applyShortcutButton);
 
-        JLabel cacheLabel = new JLabel(i18n.getString(className + ".imageCacheLabel"));
-        GridBagConstraints gbcCacheLabel = new GridBagConstraints();
-        gbcCacheLabel.insets = new Insets(4, 5, 4, 5);
-        gbcCacheLabel.fill = GridBagConstraints.BOTH;
-        gbcCacheLabel.gridx = 0;
-        gbcCacheLabel.gridy = 1;
-        add(cacheLabel, gbcCacheLabel);
+        innerPanel.setMaximumSize(new Dimension(500, innerPanel.getPreferredSize().height));
+        add(innerPanel);
+
+        innerPanel = new JPanel();
 
         cacheCountLabel = new JLabel();
-        GridBagConstraints gbcCacheData = new GridBagConstraints();
-        gbcCacheData.insets = new Insets(4, 5, 4, 5);
-        gbcCacheData.fill = GridBagConstraints.BOTH;
-        gbcCacheData.gridx = 1;
-        gbcCacheData.gridy = 1;
-        add(cacheCountLabel, gbcCacheData);
+        innerPanel.add(cacheCountLabel);
 
         clearCacheButton = new JideButton();
-        GridBagConstraints gbcCacheButton = new GridBagConstraints();
-        gbcCacheButton.insets = new Insets(4, 5, 4, 5);
-        gbcCacheButton.fill = GridBagConstraints.BOTH;
-        gbcCacheButton.gridx = 2;
-        gbcCacheButton.gridy = 1;
-        add(clearCacheButton, gbcCacheButton);
+        innerPanel.add(clearCacheButton);
 
+        innerPanel.setMaximumSize(new Dimension(500, innerPanel.getPreferredSize().height));
+        add(innerPanel);
+
+        innerPanel = new JPanel();
 
         JLabel restoreFocusLabel = new JLabel(i18n.getString(className + ".transferFocusLabel"));
-        GridBagConstraints gbcRestoreFocusLabel = new GridBagConstraints();
-        gbcRestoreFocusLabel.insets = new Insets(4, 5, 4, 5);
-        gbcRestoreFocusLabel.fill = GridBagConstraints.BOTH;
-        gbcRestoreFocusLabel.gridwidth = 2;
-        gbcRestoreFocusLabel.gridx = 0;
-        gbcRestoreFocusLabel.gridy = 2;
-        add(restoreFocusLabel, gbcRestoreFocusLabel);
+        innerPanel.add(restoreFocusLabel);
 
         transferFocusCheckBox = new JCheckBox();
-        GridBagConstraints gbcRestoreFocusCheckBox = new GridBagConstraints();
-        gbcRestoreFocusCheckBox.insets = new Insets(4, 5, 4, 5);
-        gbcRestoreFocusCheckBox.fill = GridBagConstraints.BOTH;
-        gbcRestoreFocusCheckBox.gridx = 2;
-        gbcRestoreFocusCheckBox.gridy = 2;
-        add(transferFocusCheckBox, gbcRestoreFocusCheckBox);
+        innerPanel.add(transferFocusCheckBox);
 
+        add(innerPanel);
 
-        setPreferredSize(new Dimension(PREFERRED_WIDTH, getPreferredSize().height));
     }
 
     /**

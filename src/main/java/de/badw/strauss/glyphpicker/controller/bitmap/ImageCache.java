@@ -29,14 +29,14 @@ import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 
 /**
- * A class providing access methods to the image cache
+ * The bitmap image cache
  */
-public class ImageCacheAccess {
+public class ImageCache {
 
     /**
      * The logger.
      */
-    private static final Logger LOGGER = Logger.getLogger(ImageCacheAccess.class
+    private static final Logger LOGGER = Logger.getLogger(ImageCache.class
             .getName());
 
     /**
@@ -78,11 +78,11 @@ public class ImageCacheAccess {
     private final File cacheFolder;
 
     /**
-     * Instantiates a new ImageCacheAccess
+     * Instantiates a new ImageCache
      *
      * @param cacheFolder the cache folder
      */
-    public ImageCacheAccess(File cacheFolder) {
+    public ImageCache(File cacheFolder) {
         this.cacheFolder = cacheFolder;
     }
 

@@ -1,17 +1,13 @@
 package de.badw.strauss.glyphpicker;
 
-import de.badw.strauss.glyphpicker.controller.main.ConfigLoader;
-import de.badw.strauss.glyphpicker.model.Config;
+import de.badw.strauss.glyphpicker.controller.ConfigLoader;
 import org.apache.log4j.Logger;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
 import ro.sync.exml.workspace.api.standalone.StandalonePluginWorkspace;
 
-import java.io.IOException;
-import java.util.Locale;
 import java.util.Properties;
-import java.util.ResourceBundle;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;

@@ -13,10 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package de.badw.strauss.glyphpicker.view.editor;
+package de.badw.strauss.glyphpicker.view.options;
 
 import de.badw.strauss.glyphpicker.model.GlyphTable;
-import de.badw.strauss.glyphpicker.model.editor.FormItemConfig;
+import de.badw.strauss.glyphpicker.model.options.FormItemConfig;
 
 import javax.swing.*;
 import javax.swing.border.CompoundBorder;
@@ -134,6 +134,7 @@ public class DataSourceEditor extends JPanel {
         setPreferredSize(new Dimension(PREFERRED_WIDTH, PREFERRED_HEIGHT));
 
         setLayout(new BorderLayout(8, 0));
+        setBorder(new EmptyBorder(8,8,8,8));
 
         JPanel listPanel = new JPanel();
         listPanel.setBorder(new CompoundBorder(new TitledBorder(UIManager

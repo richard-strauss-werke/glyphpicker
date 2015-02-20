@@ -65,20 +65,20 @@ public class BitmapLoadWorker extends
     /**
      * The plugin's config directory
      */
-    private final ImageCacheAccess imageCacheAccess;
+    private final ImageCache imageCache;
 
     /**
      * Instantiates a new BitmapLoadWorker.
      *
      * @param glyphDefinitions the glyph definitions
      * @param size             The maximum scaled height / width of the images
-     * @param imageCacheAccess The plugin's config directory
+     * @param imageCache The plugin's config directory
      */
     public BitmapLoadWorker(List<GlyphDefinition> glyphDefinitions,
-                            int size, ImageCacheAccess imageCacheAccess) {
+                            int size, ImageCache imageCache) {
         this.glyphDefinitions = glyphDefinitions;
         this.size = size;
-        this.imageCacheAccess = imageCacheAccess;
+        this.imageCache = imageCache;
     }
 
     /**
@@ -113,7 +113,7 @@ public class BitmapLoadWorker extends
 
                 BitmapLoader loader = (isLocalFile(basePath))
                         ? new BitmapFileLoader(d, basePath, relativePath, imageProcessor, size)
-                        : new BitmapUrlLoader(d, basePath, relativePath, imageProcessor, size, imageCacheAccess);
+                        : new BitmapUrlLoader(d, basePath, relativePath, imageProcessor, size, imageCache);
 
                 executorService.submit(new BitmapLoadRunnable(this, d, loader));
 

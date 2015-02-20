@@ -13,12 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package de.badw.strauss.glyphpicker.controller.editor;
+package de.badw.strauss.glyphpicker.controller.options;
 
 import com.jidesoft.swing.JideButton;
 import de.badw.strauss.glyphpicker.controller.action.AbstractPickerAction;
 import de.badw.strauss.glyphpicker.model.GlyphTable;
-import de.badw.strauss.glyphpicker.view.editor.DataSourceEditor;
+import de.badw.strauss.glyphpicker.view.options.DataSourceEditor;
 import org.apache.log4j.Logger;
 import ro.sync.ui.Icons;
 
@@ -59,11 +59,6 @@ public class DataSourceEditorController implements PropertyChangeListener {
     private final DataSourceEditor contentPane;
 
     /**
-     * The panel from which the window has been opened.
-     */
-    private final JPanel parentPanel;
-
-    /**
      * The display modes added to the display mode JCombo.
      */
     private final List<String> glyphRendererLabels = new ArrayList<>();
@@ -100,18 +95,15 @@ public class DataSourceEditorController implements PropertyChangeListener {
 
     /**
      * Instantiates a new DataSourceEditorController.
+     *  @param contentPane The window's content pane
      *
-     * @param contentPane The window's content pane
-     * @param parentPanel The panel from which the window has been opened
      */
-    public DataSourceEditorController(DataSourceEditor contentPane,
-                                      JPanel parentPanel) {
+    public DataSourceEditorController(DataSourceEditor contentPane) {
 
         cloneAction = new CloneAction(this);
         deleteAction = new DeleteAction(this);
 
         this.contentPane = contentPane;
-        this.parentPanel = parentPanel;
 
         JideButton addButton = new JideButton(new NewAction(this));
         addButton.setHideActionText(true);
@@ -251,30 +243,14 @@ public class DataSourceEditorController implements PropertyChangeListener {
     }
 
     /**
-     * Loads the data source editor window.
-     *
+     * initializes the list model and list component
      * @param glyphTableList the data source list
-     * @return if changes occurred, a new data source list, otherwise null
      */
-    public List<GlyphTable> load(List<GlyphTable> glyphTableList) {
-
+    public void initList(List<GlyphTable> glyphTableList){
         initListModel(glyphTableList);
         initListComponent(contentPane.getList());
-
-        int result = JOptionPane.showConfirmDialog(parentPanel, contentPane,
-                i18n.getString("DataSourceEditorController.frameTitle"),
-                JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
-
-        if (result == JOptionPane.OK_OPTION && listEditingOccurred) {
-            List<GlyphTable> resultList = new ArrayList<>();
-            for (int i = 0; i < listModel.getSize(); i++) {
-                resultList.add(listModel.getElementAt(i));
-            }
-            return resultList;
-        } else {
-            return null;
-        }
     }
+
 
     /**
      * Initializes the list component.
@@ -417,19 +393,33 @@ public class DataSourceEditorController implements PropertyChangeListener {
         }
     }
 
+    /**
+     * gets the editing results or null if no editing has occurred
+     * @return the results
+     */
+    public List<GlyphTable> getEditingResults() {
+        if (listEditingOccurred) {
+            List<GlyphTable> resultList = new ArrayList<>();
+            for (int i = 0; i < listModel.getSize(); i++) {
+                resultList.add(listModel.getElementAt(i));
+            }
+            return resultList;
+        } else {
+            return null;
+        }
+    }
+
     /* (non-Javadoc)
      * @see java.beans.PropertyChangeListener#propertyChange(java.beans.PropertyChangeEvent)
      */
     @Override
     public void propertyChange(PropertyChangeEvent e) {
-
         if (DataSourceEditor.FORM_EDITING_OCCURRED.equals(e.getPropertyName())) {
             updateCurrentModelFromForm();
             listEditingOccurred = true;
         } else if (LIST_EDITING_OCCURRED.equals(e.getPropertyName())) {
             listEditingOccurred = true;
         }
-
     }
 
 }

@@ -16,7 +16,7 @@
 package de.badw.strauss.glyphpicker.controller.options;
 
 import de.badw.strauss.glyphpicker.controller.action.AbstractPickerAction;
-import de.badw.strauss.glyphpicker.controller.bitmap.ImageCacheAccess;
+import de.badw.strauss.glyphpicker.controller.bitmap.ImageCache;
 import de.badw.strauss.glyphpicker.model.Config;
 import de.badw.strauss.glyphpicker.view.options.OptionsEditor;
 import ro.sync.ui.Icons;
@@ -29,7 +29,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ResourceBundle;
 
-public class OptionsEditorController {
+public class PluginOptionsEditorController {
 
     /**
      * The window's content pane.
@@ -37,14 +37,9 @@ public class OptionsEditorController {
     private final OptionsEditor contentPane;
 
     /**
-     * The panel from which the window has been opened.
+     * the ImageCache object
      */
-    private final JPanel parentPanel;
-
-    /**
-     * the ImageCacheAccess object
-     */
-    private final ImageCacheAccess imageCacheAccess;
+    private final ImageCache imageCache;
 
     /**
      * The i18n resource bundle.
@@ -55,6 +50,7 @@ public class OptionsEditorController {
      * The plugin's config
      */
     private final Config config;
+    private final PropertyChangeListener imageCacheListener;
 
     /**
      * The action to clear the cache;
@@ -62,31 +58,24 @@ public class OptionsEditorController {
     private ClearCacheAction clearCacheAction;
 
     /**
-     * Initializes a new OptionsEditorController
-     *
-     * @param contentPane      the content pane of the the editor popup
-     * @param parentPanel      the panel
+     * Initializes a new PluginOptionsEditorController
+     *  @param contentPane      the content pane of the the editor popup
      * @param config           the plugin's config
-     * @param imageCacheAccess the panel from which the window has been opened
+     * @param imageCache the panel from which the window has been opened
      */
-    public OptionsEditorController(final OptionsEditor contentPane, JPanel parentPanel, Config config, final ImageCacheAccess imageCacheAccess) {
+    public PluginOptionsEditorController(final OptionsEditor contentPane, final Config config, final ImageCache imageCache) {
         this.contentPane = contentPane;
-        this.parentPanel = parentPanel;
         this.config = config;
-        this.imageCacheAccess = imageCacheAccess;
-
-    }
-
-    public void load() {
+        this.imageCache = imageCache;
 
         contentPane.getShortcutTextField().setText(config.getShortcut());
-        contentPane.updateCacheItemCount(imageCacheAccess.getSize());
+        contentPane.updateCacheItemCount(imageCache.getSize());
 
         contentPane.getApplyShortcutButton().requestFocusInWindow();
 
         Action applyShortcutAction = new ApplyShortcutAction();
         clearCacheAction = new ClearCacheAction();
-        updateCacheActionState(imageCacheAccess.getSize());
+        updateCacheActionState(imageCache.getSize());
 
         contentPane.getApplyShortcutButton().setAction(applyShortcutAction);
 
@@ -108,15 +97,14 @@ public class OptionsEditorController {
             }
         });
 
-
-        PropertyChangeListener imageCacheListener = new PropertyChangeListener() {
+         imageCacheListener = new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent e) {
-                if (ImageCacheAccess.IMAGE_STORED.equals(e.getPropertyName())) {
-                    int imageCacheSize = imageCacheAccess.getSize();
+                if (ImageCache.IMAGE_STORED.equals(e.getPropertyName())) {
+                    int imageCacheSize = imageCache.getSize();
                     contentPane.updateCacheItemCount(imageCacheSize);
                     updateCacheActionState(imageCacheSize);
-                } else if (ImageCacheAccess.CACHE_CLEARED.equals(e.getPropertyName())) {
+                } else if (ImageCache.CACHE_CLEARED.equals(e.getPropertyName())) {
                     contentPane.updateCacheItemCount(0);
                     updateCacheActionState(0);
                 }
@@ -124,14 +112,20 @@ public class OptionsEditorController {
             }
         };
 
-        imageCacheAccess.addPropertyChangeListener(imageCacheListener);
+    }
 
-        JOptionPane.showOptionDialog(parentPanel, contentPane,
-                i18n.getString("OptionsEditorController.frameTitle"),
-                JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, new String[]{i18n.getString("OptionsEditorController.close")}, null);
+    /**
+     * sets the image cache listener
+     */
+    public void setImageCacheListener(){
+        imageCache.addPropertyChangeListener(imageCacheListener);
+    }
 
-        imageCacheAccess.removePropertyChangeListener(imageCacheListener);
-
+    /**
+     * removes the image cache listener
+     */
+    public void removeImageCacheListener(){
+        imageCache.removePropertyChangeListener(imageCacheListener);
     }
 
     private void updateCacheActionState(int imageCacheSize) {
@@ -186,7 +180,7 @@ public class OptionsEditorController {
          */
         @Override
         public void actionPerformed(ActionEvent e) {
-            imageCacheAccess.clear();
+            imageCache.clear();
         }
     }
 }

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package de.badw.strauss.glyphpicker.controller;
+package de.badw.strauss.glyphpicker.controller.tab;
 
 import ca.odell.glazedlists.FilterList;
 import ca.odell.glazedlists.SortedList;
@@ -83,27 +83,27 @@ public class GlyphSelectionChangeHandler implements ListSelectionListener {
     public void valueChanged(ListSelectionEvent event) {
 
         if (!event.getValueIsAdjusting()) {
-            Boolean enableButtons;
+            Boolean enableActions;
 
             @SuppressWarnings("unchecked")
             DefaultEventSelectionModel<GlyphDefinition> model = ((DefaultEventSelectionModel<GlyphDefinition>) event
                     .getSource());
 
             if (model.isSelectionEmpty()) {
-                enableButtons = false;
+                enableActions = false;
             } else {
                 GlyphDefinition d = model.getSelected().get(0);
 
                 if (d == null) {
                     infoLabel.setText(null);
-                    enableButtons = false;
+                    enableActions = false;
                 } else {
                     infoLabel.setText(DescriptionRenderer.getHTML(d));
-                    enableButtons = true;
+                    enableActions = true;
                 }
             }
 
-            adjustActions(enableButtons, model);
+            adjustActions(enableActions, model);
         }
     }
 

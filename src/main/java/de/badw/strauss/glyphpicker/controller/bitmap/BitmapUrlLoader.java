@@ -77,7 +77,7 @@ public class BitmapUrlLoader implements BitmapLoader {
     /**
      * The image cache
      */
-    private final ImageCacheAccess imageCacheAccess;
+    private final ImageCache imageCache;
 
     /**
      * Instantiates a new bitmap file loader.
@@ -87,16 +87,16 @@ public class BitmapUrlLoader implements BitmapLoader {
      * @param relativePath     The path to the graphic relative to the base path
      * @param imageProcessor   The image processor used to scale the image
      * @param containerSize    The bitmap container's size
-     * @param imageCacheAccess The image cache
+     * @param imageCache The image cache
      */
     public BitmapUrlLoader(GlyphDefinition d, String basePath, String relativePath,
-                           ImageProcessor imageProcessor, int containerSize, ImageCacheAccess imageCacheAccess) {
+                           ImageProcessor imageProcessor, int containerSize, ImageCache imageCache) {
         this.d = d;
         this.basePath = basePath;
         this.relativePath = relativePath;
         this.imageProcessor = imageProcessor;
         this.containerSize = containerSize;
-        this.imageCacheAccess = imageCacheAccess;
+        this.imageCache = imageCache;
     }
 
     /**
@@ -110,9 +110,9 @@ public class BitmapUrlLoader implements BitmapLoader {
                     .toString();
 
             String imageNameInCache;
-            if (imageCacheAccess != null) {
-                imageNameInCache = ImageCacheAccess.createCacheFileName(imagePath);
-                File cachedImageFile = imageCacheAccess.getFile(imageNameInCache);
+            if (imageCache != null) {
+                imageNameInCache = ImageCache.createCacheFileName(imagePath);
+                File cachedImageFile = imageCache.getFile(imageNameInCache);
                 if (cachedImageFile != null) {
                     GlyphBitmapIcon iconFromFile = new BitmapFileLoader(d, cachedImageFile, imageProcessor, containerSize).getImage();
                     if (iconFromFile != null)  {
@@ -129,12 +129,12 @@ public class BitmapUrlLoader implements BitmapLoader {
                         .round(containerSize * d.getGlyphTable().getSizeFactor());
                 Image scaledImage = imageProcessor.scaleToBound(bi, scaledSize, scaledSize);
 
-                if (imageCacheAccess != null) {
+                if (imageCache != null) {
 
                     // NB: saves the original image instead of the scaled image so the image cache
                     // doesn't have to be cleared when a new bitmap size ratio is provided by
                     // the user:
-                    imageCacheAccess.writeImage(bi, imageNameInCache);
+                    imageCache.writeImage(bi, imageNameInCache);
                 }
 
                 return new GlyphBitmapIcon(scaledImage, scaledSize);

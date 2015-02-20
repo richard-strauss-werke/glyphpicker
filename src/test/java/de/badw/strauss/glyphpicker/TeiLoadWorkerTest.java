@@ -1,20 +1,13 @@
 package de.badw.strauss.glyphpicker;
 
-import de.badw.strauss.glyphpicker.controller.browser.TeiLoadWorker;
-import de.badw.strauss.glyphpicker.controller.main.ConfigLoader;
-import de.badw.strauss.glyphpicker.model.GlyphTable;
 import org.apache.log4j.Logger;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
-import ro.sync.exml.workspace.api.standalone.StandalonePluginWorkspace;
-
-import java.util.Properties;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class TeiLoadWorkerTest {

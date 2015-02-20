@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package de.badw.strauss.glyphpicker.model.editor;
+package de.badw.strauss.glyphpicker.model.options;
 
 import javax.swing.*;
 

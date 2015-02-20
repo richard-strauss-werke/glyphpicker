@@ -6,12 +6,11 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.io.File;
 import java.util.Locale;
 
 import javax.swing.*;
 
-import de.badw.strauss.glyphpicker.controller.main.MainController;
+import de.badw.strauss.glyphpicker.controller.MainController;
 import de.badw.strauss.glyphpicker.model.GlyphDefinition;
 import org.apache.log4j.Logger;
 import org.junit.Test;

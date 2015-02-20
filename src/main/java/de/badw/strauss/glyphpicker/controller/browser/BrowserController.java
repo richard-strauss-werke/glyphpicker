@@ -15,12 +15,12 @@
  */
 package de.badw.strauss.glyphpicker.controller.browser;
 
-import de.badw.strauss.glyphpicker.controller.GlyphSelectionChangeHandler;
-import de.badw.strauss.glyphpicker.controller.TabController;
+import de.badw.strauss.glyphpicker.controller.options.PreferencesDialogAction;
+import de.badw.strauss.glyphpicker.controller.tab.GlyphSelectionChangeHandler;
+import de.badw.strauss.glyphpicker.controller.tab.AbstractTabController;
 import de.badw.strauss.glyphpicker.controller.action.CopyAction;
 import de.badw.strauss.glyphpicker.controller.action.InsertXmlAction;
-import de.badw.strauss.glyphpicker.controller.bitmap.ImageCacheAccess;
-import de.badw.strauss.glyphpicker.controller.editor.EditAction;
+import de.badw.strauss.glyphpicker.controller.bitmap.ImageCache;
 import de.badw.strauss.glyphpicker.model.Config;
 import de.badw.strauss.glyphpicker.model.GlyphTable;
 import de.badw.strauss.glyphpicker.model.GlyphTableList;
@@ -43,7 +43,7 @@ import java.util.Set;
 /**
  * The browser tab controller.
  */
-public class BrowserController extends TabController {
+public class BrowserController extends AbstractTabController {
 
     /**
      * The list of all data sources.
@@ -70,24 +70,28 @@ public class BrowserController extends TabController {
      *
      * @param panel            the browser tab's container panel
      * @param config           the plugin config
-     * @param imageCacheAccess the image cache
+     * @param imageCache the image cache
      */
-    public BrowserController(TabPanel panel, Config config, ImageCacheAccess imageCacheAccess) {
+    public BrowserController(TabPanel panel, Config config, ImageCache imageCache) {
 
         super(panel, config, config.getBrowserSearchFieldScopeIndex(), config
-                .getBrowserViewIndex(), imageCacheAccess);
+                .getBrowserViewIndex(), imageCache);
 
         glyphTableList = config.getGlyphTables();
         controlPanel.getDataSourceCombo().setModel(glyphTableList);
-
-        controlPanel.getEditBtn().setAction(
-                new EditAction(this, panel, glyphTableList));
-        controlPanel.getEditBtn().setHideActionText(true);
 
         setAdditionalActions();
 
         setAdditionalListeners();
 
+    }
+
+    /**
+     * gets the glyph table list
+     * @return the list
+     */
+    public GlyphTableList getGlyphTableList(){
+        return glyphTableList;
     }
 
     /**
@@ -241,7 +245,7 @@ public class BrowserController extends TabController {
         if (CopyAction.KEY.equals(e.getPropertyName())
                 || InsertXmlAction.KEY.equals(e.getPropertyName())) {
             pcs.firePropertyChange(e);
-        } else if (EditAction.KEY.equals(e.getPropertyName())) {
+        } else if (PreferencesDialogAction.EDITING_OCCURRED.equals(e.getPropertyName())) {
             loadData();
         }
 

@@ -17,10 +17,10 @@ package de.badw.strauss.glyphpicker.controller.user;
 
 import ca.odell.glazedlists.event.ListEvent;
 import ca.odell.glazedlists.event.ListEventListener;
-import de.badw.strauss.glyphpicker.controller.GlyphSelectionChangeHandler;
-import de.badw.strauss.glyphpicker.controller.TabController;
+import de.badw.strauss.glyphpicker.controller.tab.GlyphSelectionChangeHandler;
+import de.badw.strauss.glyphpicker.controller.tab.AbstractTabController;
 import de.badw.strauss.glyphpicker.controller.action.*;
-import de.badw.strauss.glyphpicker.controller.bitmap.ImageCacheAccess;
+import de.badw.strauss.glyphpicker.controller.bitmap.ImageCache;
 import de.badw.strauss.glyphpicker.model.Config;
 import de.badw.strauss.glyphpicker.model.GlyphDefinition;
 import de.badw.strauss.glyphpicker.model.GlyphDefinitions;
@@ -37,7 +37,7 @@ import java.util.Set;
 /**
  * The user collection tab controller.
  */
-public class UserCollectionController extends TabController {
+public class UserCollectionController extends AbstractTabController {
 
     /**
      * The user collection data loader.
@@ -71,13 +71,13 @@ public class UserCollectionController extends TabController {
      * @param config           the plugin config
      * @param properties       the plugin properties
      * @param workspace        the workspace
-     * @param imageCacheAccess the image cache
+     * @param imageCache the image cache
      */
     public UserCollectionController(TabPanel panel, Config config,
-                                    Properties properties, StandalonePluginWorkspace workspace, ImageCacheAccess imageCacheAccess) {
+                                    Properties properties, StandalonePluginWorkspace workspace, ImageCache imageCache) {
 
         super(panel, config, config.getUserSearchFieldScopeIndex(), config
-                .getUserViewIndex(), imageCacheAccess);
+                .getUserViewIndex(), imageCache);
 
         loader = new UserCollectionLoader(workspace, properties);
 

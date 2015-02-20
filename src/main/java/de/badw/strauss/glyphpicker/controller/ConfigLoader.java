@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package de.badw.strauss.glyphpicker.controller.main;
+package de.badw.strauss.glyphpicker.controller;
 
 import de.badw.strauss.glyphpicker.model.Config;
 import de.badw.strauss.glyphpicker.model.GlyphTableList;
@@ -131,7 +131,7 @@ public class ConfigLoader {
         String shortcutModifier = (System.getProperty("os.name")
                 .toLowerCase().contains("mac")) ? "meta option" : "ctrl alt";
 
-        config.setShortcut(shortcutModifier + " P");
+        config.setShortcut(shortcutModifier + " G");
     }
 
     /**

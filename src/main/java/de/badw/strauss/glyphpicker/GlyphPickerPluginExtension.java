@@ -17,7 +17,7 @@
 package de.badw.strauss.glyphpicker;
 
 import de.badw.strauss.glyphpicker.controller.action.InsertXmlAction;
-import de.badw.strauss.glyphpicker.controller.main.MainController;
+import de.badw.strauss.glyphpicker.controller.MainController;
 import de.badw.strauss.glyphpicker.model.GlyphDefinition;
 import de.badw.strauss.glyphpicker.view.MainPanel;
 import org.apache.log4j.Logger;

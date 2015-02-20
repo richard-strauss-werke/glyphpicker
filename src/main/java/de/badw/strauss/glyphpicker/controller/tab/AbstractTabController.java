@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package de.badw.strauss.glyphpicker.controller;
+package de.badw.strauss.glyphpicker.controller.tab;
 
 import ca.odell.glazedlists.BasicEventList;
 import ca.odell.glazedlists.EventList;
@@ -31,8 +31,7 @@ import de.badw.strauss.glyphpicker.controller.action.InsertXmlAction;
 import de.badw.strauss.glyphpicker.controller.action.SortAction;
 import de.badw.strauss.glyphpicker.controller.autocomplete.AutoCompleteController;
 import de.badw.strauss.glyphpicker.controller.bitmap.BitmapLoadWorker;
-import de.badw.strauss.glyphpicker.controller.bitmap.ImageCacheAccess;
-import de.badw.strauss.glyphpicker.controller.options.OptionsAction;
+import de.badw.strauss.glyphpicker.controller.bitmap.ImageCache;
 import de.badw.strauss.glyphpicker.model.Config;
 import de.badw.strauss.glyphpicker.model.GlyphDefinition;
 import de.badw.strauss.glyphpicker.view.*;
@@ -52,13 +51,16 @@ import java.util.List;
 /**
  * An abstract controller of a tab panel.
  */
-public abstract class TabController implements PropertyChangeListener {
+public abstract class AbstractTabController implements PropertyChangeListener {
 
     /**
      * The pixel height and width of a rendered glyph.
      */
     public static final int LIST_ITEM_SIZE = 40;
 
+    /**
+     * The key of the data-loaded event
+     */
     public static final String DATA_LOADED = "dataLoaded";
 
     /**
@@ -113,9 +115,9 @@ public abstract class TabController implements PropertyChangeListener {
     protected final GlyphGrid list;
 
     /**
-     * The image cache access
+     * The bitmap image cache
      */
-    private final ImageCacheAccess imageCacheAccess;
+    private final ImageCache imageCache;
 
     /**
      * The bmp load worker.
@@ -144,14 +146,14 @@ public abstract class TabController implements PropertyChangeListener {
      * @param config                The plugin config
      * @param searchFieldScopeIndex the index of the auto complete scope checkbox which should be selected initially
      * @param listViewIndex         the index of the list view to show initially. Set 0 for the grid and 1 for the table component.
-     * @param imageCacheAccess      the image cache
+     * @param imageCache      the image cache
      */
     @SuppressWarnings("unchecked")
-    public TabController(final TabPanel tabPanel,
-                         Config config, int searchFieldScopeIndex, int listViewIndex, ImageCacheAccess imageCacheAccess) {
+    public AbstractTabController(final TabPanel tabPanel,
+                                 Config config, int searchFieldScopeIndex, int listViewIndex, ImageCache imageCache) {
 
         this.tabPanel = tabPanel;
-        this.imageCacheAccess = imageCacheAccess;
+        this.imageCache = imageCache;
 
         controlPanel = tabPanel.getControlPanel();
 
@@ -192,7 +194,6 @@ public abstract class TabController implements PropertyChangeListener {
         list.setSelectionModel(selectionModel);
         table.setSelectionModel(selectionModel);
 
-        controlPanel.getOptionsBtn().setAction(new OptionsAction(tabPanel, this, config, imageCacheAccess));
         controlPanel.getSortBtn().setAction(new SortAction(tabPanel, controlPanel.getSortBtn()));
         controlPanel.getViewBtn().setAction(new ChangeViewAction(tabPanel, table, list));
 
@@ -277,7 +278,7 @@ public abstract class TabController implements PropertyChangeListener {
      */
     public void startBitmapLoadWorker(List<GlyphDefinition> data) {
 
-        bmpLoader = new BitmapLoadWorker(data, LIST_ITEM_SIZE, imageCacheAccess);
+        bmpLoader = new BitmapLoadWorker(data, LIST_ITEM_SIZE, imageCache);
 
         bmpListener = new PropertyChangeListener() {
             @Override

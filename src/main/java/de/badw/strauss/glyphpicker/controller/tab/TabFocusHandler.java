@@ -1,4 +1,4 @@
-package de.badw.strauss.glyphpicker.controller.main;
+package de.badw.strauss.glyphpicker.controller.tab;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
