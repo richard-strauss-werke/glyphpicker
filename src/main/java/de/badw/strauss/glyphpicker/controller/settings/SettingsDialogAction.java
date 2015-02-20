@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package de.badw.strauss.glyphpicker.controller.options;
+package de.badw.strauss.glyphpicker.controller.settings;
 
 import de.badw.strauss.glyphpicker.controller.action.AbstractPickerAction;
 import de.badw.strauss.glyphpicker.controller.bitmap.ImageCache;
@@ -74,7 +74,7 @@ public class SettingsDialogAction extends AbstractPickerAction {
      */
     public SettingsDialogAction(JPanel parentPanel, PropertyChangeListener listener, Config config, ImageCache imageCache,
                                 GlyphTableList glyphTableList) {
-        super(CLASS_NAME, Icons.OPTIONS_SHORTCUT_CENTERED, "ctrl P");
+        super(CLASS_NAME, Icons.OPTIONS_SHORTCUT_CENTERED, "ctrl E");
         addPropertyChangeListener(listener);
         this.parentPanel = parentPanel;
         this.imageCache = imageCache;

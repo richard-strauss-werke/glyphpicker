@@ -20,7 +20,7 @@ import de.badw.strauss.glyphpicker.controller.action.CopyAction;
 import de.badw.strauss.glyphpicker.controller.action.InsertXmlAction;
 import de.badw.strauss.glyphpicker.controller.bitmap.ImageCache;
 import de.badw.strauss.glyphpicker.controller.browser.BrowserController;
-import de.badw.strauss.glyphpicker.controller.options.SettingsDialogAction;
+import de.badw.strauss.glyphpicker.controller.settings.SettingsDialogAction;
 import de.badw.strauss.glyphpicker.controller.tab.AbstractTabController;
 import de.badw.strauss.glyphpicker.controller.tab.TabFocusHandler;
 import de.badw.strauss.glyphpicker.controller.user.UserCollectionController;

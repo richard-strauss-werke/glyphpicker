@@ -18,7 +18,7 @@ package de.badw.strauss.glyphpicker.controller.browser;
 import de.badw.strauss.glyphpicker.controller.action.CopyAction;
 import de.badw.strauss.glyphpicker.controller.action.InsertXmlAction;
 import de.badw.strauss.glyphpicker.controller.bitmap.ImageCache;
-import de.badw.strauss.glyphpicker.controller.options.SettingsDialogAction;
+import de.badw.strauss.glyphpicker.controller.settings.SettingsDialogAction;
 import de.badw.strauss.glyphpicker.controller.tab.AbstractTabController;
 import de.badw.strauss.glyphpicker.controller.tab.GlyphSelectionChangeHandler;
 import de.badw.strauss.glyphpicker.model.Config;

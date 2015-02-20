@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package de.badw.strauss.glyphpicker.controller.options;
+package de.badw.strauss.glyphpicker.controller.settings;
 
 import de.badw.strauss.glyphpicker.controller.action.AbstractPickerAction;
 import de.badw.strauss.glyphpicker.controller.bitmap.ImageCache;
