@@ -42,27 +42,23 @@ public class AutoCompleteController {
      * Maps PropertySelector labels to PropertySelector objects.
      */
     private final Map<String, PropertySelector> autoCompleteScope = new LinkedHashMap<>();
-
-    /**
-     * GlazedLists' modified auto complete support.
-     */
-    private CustomAutoCompleteSupport<String> autoCompleteSupport = null;
-
     /**
      * The auto complete combo component.
      */
     private final JComboBox<String> autoCompleteCombo;
-
     /**
      * A TextMatcherEditor handling glyph list filtering triggered by changes in
      * the autocomplete combo's editor box.
      */
     private final GlyphSelect glyphSelect = new GlyphSelect();
-
     /**
      * The sorted list model.
      */
     private final SortedList<GlyphDefinition> sortedList;
+    /**
+     * GlazedLists' modified auto complete support.
+     */
+    private CustomAutoCompleteSupport<String> autoCompleteSupport = null;
 
     /**
      * Instantiates a new AutoCompleteController.

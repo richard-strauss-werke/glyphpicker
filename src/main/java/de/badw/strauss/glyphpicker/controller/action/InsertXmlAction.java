@@ -27,22 +27,19 @@ import java.beans.PropertyChangeListener;
  */
 public class InsertXmlAction extends AbstractPickerAction {
 
-    private static final long serialVersionUID = 1L;
-
     /**
      * The key of the action.
      */
     public static final String KEY = "insert";
-
-    /**
-     * The event selection model.
-     */
-    private final DefaultEventSelectionModel<GlyphDefinition> selectionModel;
-
+    private static final long serialVersionUID = 1L;
     /**
      * The name of the class.
      */
     private static final String CLASS_NAME = InsertXmlAction.class.getSimpleName();
+    /**
+     * The event selection model.
+     */
+    private final DefaultEventSelectionModel<GlyphDefinition> selectionModel;
 
     /**
      * Instantiates a new InsertXmlAction.

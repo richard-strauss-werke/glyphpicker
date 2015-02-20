@@ -15,8 +15,8 @@
  */
 package de.badw.strauss.glyphpicker.controller.bitmap;
 
-import de.badw.strauss.glyphpicker.model.GlyphTable;
 import de.badw.strauss.glyphpicker.model.GlyphDefinition;
+import de.badw.strauss.glyphpicker.model.GlyphTable;
 import org.apache.log4j.Logger;
 
 import javax.swing.*;
@@ -32,16 +32,14 @@ public class BitmapLoadWorker extends
         SwingWorker<List<GlyphDefinition>, Void> {
 
     /**
+     * The key of the property change event after a icon has been loaded
+     */
+    public static final String ICON_LOADED = "iconLoaded";
+    /**
      * The logger.
      */
     private static final Logger LOGGER = Logger.getLogger(BitmapLoadWorker.class
             .getName());
-
-    /**
-     * The key of the property change event after a icon has been loaded
-     */
-    public static final String ICON_LOADED = "iconLoaded";
-
     /**
      * The size of the thread pool.
      */
@@ -72,13 +70,23 @@ public class BitmapLoadWorker extends
      *
      * @param glyphDefinitions the glyph definitions
      * @param size             The maximum scaled height / width of the images
-     * @param imageCache The plugin's config directory
+     * @param imageCache       The plugin's config directory
      */
     public BitmapLoadWorker(List<GlyphDefinition> glyphDefinitions,
                             int size, ImageCache imageCache) {
         this.glyphDefinitions = glyphDefinitions;
         this.size = size;
         this.imageCache = imageCache;
+    }
+
+    /**
+     * Checks if a string refers to a local file.
+     *
+     * @param path the path
+     * @return the result
+     */
+    public static Boolean isLocalFile(String path) {
+        return !path.matches("^\\w+://.*");
     }
 
     /**
@@ -128,16 +136,6 @@ public class BitmapLoadWorker extends
         }
 
         return null;
-    }
-
-    /**
-     * Checks if a string refers to a local file.
-     *
-     * @param path the path
-     * @return the result
-     */
-    public static Boolean isLocalFile(String path) {
-        return !path.matches("^\\w+://.*");
     }
 
 }

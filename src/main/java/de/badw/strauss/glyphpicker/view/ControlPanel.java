@@ -29,41 +29,34 @@ import java.util.ResourceBundle;
 public class ControlPanel extends JPanel {
 
     private static final long serialVersionUID = 1L;
-
-    /**
-     * The data source combo.
-     */
-    private JComboBox dataSourceCombo;
-
     /**
      * The options button.
      */
     private final JButton optionsBtn;
-
     /**
      * The view button.
      */
     private final JButton viewBtn;
-
     /**
      * The sort button.
      */
     private final JideToggleButton sortBtn;
-
     /**
      * The auto complete combo.
      */
     private final JComboBox<String> autoCompleteCombo;
-
     /**
      * The auto complete scope combo.
      */
     private final JComboBox<String> autoCompleteScopeCombo;
-
     /**
      * The toolbar.
      */
     private final JToolBar toolBar;
+    /**
+     * The data source combo.
+     */
+    private JComboBox dataSourceCombo;
 
     /**
      * Instantiates a new ControlPanel.

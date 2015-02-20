@@ -15,16 +15,16 @@
  */
 package de.badw.strauss.glyphpicker.controller.browser;
 
-import de.badw.strauss.glyphpicker.controller.options.SettingsDialogAction;
-import de.badw.strauss.glyphpicker.controller.tab.GlyphSelectionChangeHandler;
-import de.badw.strauss.glyphpicker.controller.tab.AbstractTabController;
 import de.badw.strauss.glyphpicker.controller.action.CopyAction;
 import de.badw.strauss.glyphpicker.controller.action.InsertXmlAction;
 import de.badw.strauss.glyphpicker.controller.bitmap.ImageCache;
+import de.badw.strauss.glyphpicker.controller.options.SettingsDialogAction;
+import de.badw.strauss.glyphpicker.controller.tab.AbstractTabController;
+import de.badw.strauss.glyphpicker.controller.tab.GlyphSelectionChangeHandler;
 import de.badw.strauss.glyphpicker.model.Config;
+import de.badw.strauss.glyphpicker.model.GlyphDefinition;
 import de.badw.strauss.glyphpicker.model.GlyphTable;
 import de.badw.strauss.glyphpicker.model.GlyphTableList;
-import de.badw.strauss.glyphpicker.model.GlyphDefinition;
 import de.badw.strauss.glyphpicker.view.TabPanel;
 
 import javax.swing.*;
@@ -68,8 +68,8 @@ public class BrowserController extends AbstractTabController {
     /**
      * Instantiates a new BrowserController.
      *
-     * @param panel            the browser tab's container panel
-     * @param config           the plugin config
+     * @param panel      the browser tab's container panel
+     * @param config     the plugin config
      * @param imageCache the image cache
      */
     public BrowserController(TabPanel panel, Config config, ImageCache imageCache) {
@@ -88,9 +88,10 @@ public class BrowserController extends AbstractTabController {
 
     /**
      * gets the glyph table list
+     *
      * @return the list
      */
-    public GlyphTableList getGlyphTableList(){
+    public GlyphTableList getGlyphTableList() {
         return glyphTableList;
     }
 

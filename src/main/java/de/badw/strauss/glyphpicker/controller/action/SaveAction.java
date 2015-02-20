@@ -28,22 +28,19 @@ import java.util.Set;
  */
 public class SaveAction extends AbstractPickerAction {
 
-    private static final long serialVersionUID = 1L;
-
     /**
      * The key of the action.
      */
     public static final String KEY = "saveData";
-
-    /**
-     * The actions affected by this action.
-     */
-    private final Set<Action> actions;
-
+    private static final long serialVersionUID = 1L;
     /**
      * The name of the class.
      */
     private static final String CLASS_NAME = SaveAction.class.getSimpleName();
+    /**
+     * The actions affected by this action.
+     */
+    private final Set<Action> actions;
 
     /**
      * Instantiates a new save action.

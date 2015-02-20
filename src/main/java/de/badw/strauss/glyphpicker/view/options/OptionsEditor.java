@@ -54,7 +54,7 @@ public class OptionsEditor extends JPanel {
         cacheCountLabelSuffixPlural = i18n.getString(className + ".images");
 
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        setBorder(new EmptyBorder(8,8,8,8));
+        setBorder(new EmptyBorder(8, 8, 8, 8));
 
         JPanel innerPanel = new JPanel();
 

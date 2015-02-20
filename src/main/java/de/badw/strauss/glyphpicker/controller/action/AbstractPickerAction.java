@@ -28,29 +28,25 @@ import java.util.ResourceBundle;
  */
 public abstract class AbstractPickerAction extends AbstractAction {
 
-    private static final long serialVersionUID = 1L;
-
-    /**
-     * The logger.
-     */
-    private static final Logger LOGGER = Logger
-            .getLogger(AbstractPickerAction.class.getName());
-
-    /**
-     * The Constant i18n resource bundle.
-     */
-    protected static final ResourceBundle I18N = ResourceBundle
-            .getBundle("GlyphPicker");
-
     /**
      * Indicates if the program is run on a MAC
      */
     public static final boolean IS_MAC = (System.getProperty("os.name")
             .toLowerCase().contains("mac"));
-
+    /**
+     * The Constant i18n resource bundle.
+     */
+    protected static final ResourceBundle I18N = ResourceBundle
+            .getBundle("GlyphPicker");
     public static final String MENU_SHORTCUT_NAME = (IS_MAC) ?
             I18N.getString("AbstractPickerAction.commandKey") :
             I18N.getString("AbstractPickerAction.controlKey");
+    private static final long serialVersionUID = 1L;
+    /**
+     * The logger.
+     */
+    private static final Logger LOGGER = Logger
+            .getLogger(AbstractPickerAction.class.getName());
 
     /**
      * Instantiates a new AbstractPickerAction.

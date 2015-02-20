@@ -113,31 +113,26 @@ public abstract class AbstractTabController implements PropertyChangeListener {
      * The glyph list component.
      */
     protected final GlyphGrid list;
-
-    /**
-     * The bitmap image cache
-     */
-    private final ImageCache imageCache;
-
-    /**
-     * The bmp load worker.
-     */
-    protected BitmapLoadWorker bmpLoader = null;
-
-    /**
-     * The listener to property changes in the bmp load worker.
-     */
-    private PropertyChangeListener bmpListener;
-
     /**
      * The auto complete controller.
      */
     protected final AutoCompleteController autoCompleteController;
-
     /**
      * The action to trigger the insertion of a glyph reference into an XML document.
      */
     protected final Action insertAction;
+    /**
+     * The bitmap image cache
+     */
+    private final ImageCache imageCache;
+    /**
+     * The bmp load worker.
+     */
+    protected BitmapLoadWorker bmpLoader = null;
+    /**
+     * The listener to property changes in the bmp load worker.
+     */
+    private PropertyChangeListener bmpListener;
 
     /**
      * Instantiates a new tab controller.
@@ -146,7 +141,7 @@ public abstract class AbstractTabController implements PropertyChangeListener {
      * @param config                The plugin config
      * @param searchFieldScopeIndex the index of the auto complete scope checkbox which should be selected initially
      * @param listViewIndex         the index of the list view to show initially. Set 0 for the grid and 1 for the table component.
-     * @param imageCache      the image cache
+     * @param imageCache            the image cache
      */
     @SuppressWarnings("unchecked")
     public AbstractTabController(final TabPanel tabPanel,
@@ -212,8 +207,6 @@ public abstract class AbstractTabController implements PropertyChangeListener {
                         if (list.isVisible()) {
                             list.fixRowCountForVisibleColumns();
                         }
-
-
 
 
                     }

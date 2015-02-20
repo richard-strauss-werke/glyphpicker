@@ -35,23 +35,19 @@ import java.util.List;
  */
 public class SettingsDialogAction extends AbstractPickerAction {
 
-    private static final long serialVersionUID = 1L;
-
     /**
      * The key of the "editing occurred" event;
      */
     public static final String EDITING_OCCURRED = "editingOccurred";
-
-    /**
-     * The panel from which the data source editor has been opened.
-     */
-    private final JPanel parentPanel;
-
+    private static final long serialVersionUID = 1L;
     /**
      * The name of the class.
      */
     private static final String CLASS_NAME = SettingsDialogAction.class.getSimpleName();
-
+    /**
+     * The panel from which the data source editor has been opened.
+     */
+    private final JPanel parentPanel;
     /**
      * the ImageCache object
      */
@@ -70,10 +66,10 @@ public class SettingsDialogAction extends AbstractPickerAction {
     /**
      * Instantiates a new SettingsDialogAction.
      *
-     * @param parentPanel            The panel from which the data source editor has been opened
-     * @param listener         the property change listener to be added to this action
-     * @param config           The plugin's config
-     * @param imageCache the ImageCache object
+     * @param parentPanel    The panel from which the data source editor has been opened
+     * @param listener       the property change listener to be added to this action
+     * @param config         The plugin's config
+     * @param imageCache     the ImageCache object
      * @param glyphTableList The original data source list
      */
     public SettingsDialogAction(JPanel parentPanel, PropertyChangeListener listener, Config config, ImageCache imageCache,

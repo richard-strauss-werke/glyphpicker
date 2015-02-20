@@ -28,77 +28,66 @@ import java.io.File;
 public class Config {
 
     /**
+     * The change event key of the shortcut property
+     */
+    @XmlTransient
+    public static final String SHORTCUT_KEY = "shortcut";
+    /**
+     * The property change support.
+     */
+    @XmlTransient
+    private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
+    /**
      * The version of the config file
      */
     @XmlElement
     private String version;
-
     /**
      * The plugin's shortcut in oXygen, for possible values see
      * http://docs.oracle.com/javase/7/docs/api/javax/swing/KeyStroke.html#getKeyStroke%28java.lang.String%29
      */
     @XmlElement
     private String shortcut;
-
     /**
      * Indicates if the previous component's focus should be restored when a glyph gets inserted.
      */
     @XmlElement
     private boolean transferFocusAfterInsert = true;
-
     /**
      * The tab index to select when the plug-in window is shown the first time in a session.
      */
     @XmlElement
     private int tabIndex = 1;
-
     /**
      * The user search field scope index.
      */
     @XmlElement
     private int userSearchFieldScopeIndex = 0;
-
     /**
      * The browser search field scope index.
      */
     @XmlElement
     private int browserSearchFieldScopeIndex = 0;
-
     /**
      * The user view index.
      */
     @XmlElement
     private int userViewIndex = 0;
-
     /**
      * The browser view index.
      */
     @XmlElement
     private int browserViewIndex = 0;
-
     /**
      * The data sources.
      */
     @XmlElement(name = "glyphTables")
     private GlyphTableList glyphTables = null;
-
     /**
      * The plugin's config directory
      */
     @XmlTransient
     private File configDir;
-
-    /**
-     * The change event key of the shortcut property
-     */
-    @XmlTransient
-    public static final String SHORTCUT_KEY = "shortcut";
-
-    /**
-     * The property change support.
-     */
-    @XmlTransient
-    private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
 
     /**
      * Adds a property change listener.
@@ -120,6 +109,7 @@ public class Config {
 
     /**
      * gets the version of the config file
+     *
      * @return the version
      */
     public String getVersion() {
@@ -128,6 +118,7 @@ public class Config {
 
     /**
      * sets the version of the config file
+     *
      * @param version the version
      */
     public void setVersion(String version) {

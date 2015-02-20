@@ -26,32 +26,29 @@ import java.util.ResourceBundle;
 public class MainPanel extends JPanel {
 
     private static final long serialVersionUID = 1L;
-
+    /**
+     * The main panel's border width.
+     */
+    private static final int MAIN_BORDER_THICKNESS = 2;
+    /**
+     * The minimum width.
+     */
+    private static final int MIN_WIDTH = 200;
+    /**
+     * The minimum height.
+     */
+    private static final int MIN_HEIGHT = 200;
     /**
      * The tabbed pane.
      */
     private final JTabbedPane tabbedPane;
 
     /**
-     * The main panel's border width.
-     */
-    private static final int MAIN_BORDER_THICKNESS = 2;
-
-    /**
-     * The minimum width.
-     */
-    private static final int MIN_WIDTH = 200;
-
-    /**
-     * The minimum height.
-     */
-    private static final int MIN_HEIGHT = 200;
-
-    /**
      * Instantiates a new main panel.
-     *  @param userCollectionPanel the user collection panel
+     *
+     * @param userCollectionPanel the user collection panel
      * @param browserPanel        the browser panel
-     * @param menuShortcutName  the OS dependent name of the menu shortcut
+     * @param menuShortcutName    the OS dependent name of the menu shortcut
      */
     public MainPanel(JComponent userCollectionPanel, JComponent browserPanel, String menuShortcutName) {
 
@@ -67,12 +64,12 @@ public class MainPanel extends JPanel {
         String userCollectionLabel = i18n.getString(className
                 + ".userCollection");
         tabbedPane.addTab(null, null, userCollectionPanel, i18n.getString(className
-                + ".userCollectionTooltip") + " ("+menuShortcutName+"+1)");
+                + ".userCollectionTooltip") + " (" + menuShortcutName + "+1)");
         tabbedPane.setTabComponentAt(0, new HighlightLabel(userCollectionLabel));
 
         String dataSourcesLabel = i18n.getString(className + ".allCharacters");
         tabbedPane.addTab(null, null, browserPanel, i18n.getString(className
-                + ".allCharactersTooltip") + " ("+menuShortcutName+"+2)");
+                + ".allCharactersTooltip") + " (" + menuShortcutName + "+2)");
         tabbedPane.setTabComponentAt(1, new HighlightLabel(dataSourcesLabel));
 
         add(tabbedPane, BorderLayout.CENTER);

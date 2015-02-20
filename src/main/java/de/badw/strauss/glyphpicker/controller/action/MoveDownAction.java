@@ -31,27 +31,23 @@ import java.beans.PropertyChangeListener;
  */
 public class MoveDownAction extends AbstractPickerAction {
 
-    private static final long serialVersionUID = 1L;
-
     /**
      * The key of the action.
      */
     public static final String KEY = "moveDown";
-
-    /**
-     * The glyph list model.
-     */
-    private final EventList<GlyphDefinition> glyphList;
-
-    /**
-     * The list component.
-     */
-    private final GlyphGrid list;
-
+    private static final long serialVersionUID = 1L;
     /**
      * The name of the class.
      */
     private static final String CLASS_NAME = MoveDownAction.class.getSimpleName();
+    /**
+     * The glyph list model.
+     */
+    private final EventList<GlyphDefinition> glyphList;
+    /**
+     * The list component.
+     */
+    private final GlyphGrid list;
 
     /**
      * Instantiates a MoveDownAction.

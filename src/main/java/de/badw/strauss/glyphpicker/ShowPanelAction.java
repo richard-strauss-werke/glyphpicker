@@ -32,27 +32,23 @@ import java.beans.PropertyChangeListener;
 public class ShowPanelAction extends AbstractPickerAction implements PropertyChangeListener {
 
     private static final long serialVersionUID = 1L;
-
-    /**
-     * oXygen's plugin workspace
-     */
-    private final StandalonePluginWorkspace workspace;
-
-    /**
-     * The plugin's view ID in oXygen.
-     */
-    private final String viewId;
-
-    /**
-     * The plugin's main panel.
-     */
-    private final MainPanel mainPanel;
-
     /**
      * The name of the current class.
      */
     private static final String CLASS_NAME = ShowPanelAction.class
             .getSimpleName();
+    /**
+     * oXygen's plugin workspace
+     */
+    private final StandalonePluginWorkspace workspace;
+    /**
+     * The plugin's view ID in oXygen.
+     */
+    private final String viewId;
+    /**
+     * The plugin's main panel.
+     */
+    private final MainPanel mainPanel;
 
     /**
      * Instantiates a new ShowPanelAction.

@@ -59,55 +59,30 @@ public class MainController implements PropertyChangeListener {
      * The property change support.
      */
     private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
-
-    /**
-     * Adds a property change listener.
-     *
-     * @param l the listener to add
-     */
-    public void addPropertyChangeListener(PropertyChangeListener l) {
-        pcs.addPropertyChangeListener(l);
-    }
-
-    /**
-     * Removes a property change listener.
-     *
-     * @param l the listener to remove
-     */
-    public void removePropertyChangeListener(PropertyChangeListener l) {
-        pcs.removePropertyChangeListener(l);
-    }
-
     /**
      * The plugin's config
      */
     private final Config config;
-
     /**
      * The main panel.
      */
     private final MainPanel mainPanel;
-
     /**
      * The config loader.
      */
     private final ConfigLoader configLoader;
-
     /**
      * The browser controller.
      */
     private final BrowserController browserController;
-
     /**
      * The user collection controller.
      */
     private final UserCollectionController userCollectionController;
-
     /**
      * The browser panel.
      */
     private final TabPanel browserPanel;
-
     /**
      * The user collection panel.
      */
@@ -176,6 +151,24 @@ public class MainController implements PropertyChangeListener {
 
         setTabAccelerator(tabbedPane, 0);
         setTabAccelerator(tabbedPane, 1);
+    }
+
+    /**
+     * Adds a property change listener.
+     *
+     * @param l the listener to add
+     */
+    public void addPropertyChangeListener(PropertyChangeListener l) {
+        pcs.addPropertyChangeListener(l);
+    }
+
+    /**
+     * Removes a property change listener.
+     *
+     * @param l the listener to remove
+     */
+    public void removePropertyChangeListener(PropertyChangeListener l) {
+        pcs.removePropertyChangeListener(l);
     }
 
     /**

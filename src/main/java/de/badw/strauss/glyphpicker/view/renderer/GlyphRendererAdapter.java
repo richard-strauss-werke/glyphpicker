@@ -15,8 +15,8 @@
  */
 package de.badw.strauss.glyphpicker.view.renderer;
 
-import de.badw.strauss.glyphpicker.model.GlyphTable;
 import de.badw.strauss.glyphpicker.model.GlyphDefinition;
+import de.badw.strauss.glyphpicker.model.GlyphTable;
 
 import javax.swing.*;
 import javax.swing.table.TableCellRenderer;

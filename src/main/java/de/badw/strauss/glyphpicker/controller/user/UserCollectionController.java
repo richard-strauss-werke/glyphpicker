@@ -17,10 +17,10 @@ package de.badw.strauss.glyphpicker.controller.user;
 
 import ca.odell.glazedlists.event.ListEvent;
 import ca.odell.glazedlists.event.ListEventListener;
-import de.badw.strauss.glyphpicker.controller.tab.GlyphSelectionChangeHandler;
-import de.badw.strauss.glyphpicker.controller.tab.AbstractTabController;
 import de.badw.strauss.glyphpicker.controller.action.*;
 import de.badw.strauss.glyphpicker.controller.bitmap.ImageCache;
+import de.badw.strauss.glyphpicker.controller.tab.AbstractTabController;
+import de.badw.strauss.glyphpicker.controller.tab.GlyphSelectionChangeHandler;
 import de.badw.strauss.glyphpicker.model.Config;
 import de.badw.strauss.glyphpicker.model.GlyphDefinition;
 import de.badw.strauss.glyphpicker.model.GlyphDefinitions;
@@ -43,22 +43,18 @@ public class UserCollectionController extends AbstractTabController {
      * The user collection data loader.
      */
     private final UserCollectionLoader loader;
-
-    /**
-     * Indicates if the list in memory is in sync with the list stored on disk.
-     */
-    private boolean listInSync = true;
-
     /**
      * The set of actions whose activation depends on the sync status of memory / disk lists.
      */
     private final Set<Action> syncDependentActions = new HashSet<>();
-
     /**
      * The set of actions whose activation depends on whether there is a list selection or not.
      */
     private final Set<Action> selectionDependentActions = new HashSet<>();
-
+    /**
+     * Indicates if the list in memory is in sync with the list stored on disk.
+     */
+    private boolean listInSync = true;
     /**
      * The move-down action
      */
@@ -67,10 +63,10 @@ public class UserCollectionController extends AbstractTabController {
     /**
      * Instantiates a new UserCollectionController.
      *
-     * @param panel            the user collection tab's container panel
-     * @param config           the plugin config
-     * @param properties       the plugin properties
-     * @param workspace        the workspace
+     * @param panel      the user collection tab's container panel
+     * @param config     the plugin config
+     * @param properties the plugin properties
+     * @param workspace  the workspace
      * @param imageCache the image cache
      */
     public UserCollectionController(TabPanel panel, Config config,

@@ -28,13 +28,11 @@ import java.util.ResourceBundle;
  */
 public class DescriptionRenderer extends JLabel implements TableCellRenderer {
 
-    private static final long serialVersionUID = 1L;
-
     /**
      * The thickness of the component's border.
      */
     public static final int BORDER_THICKNESS = 4;
-
+    private static final long serialVersionUID = 1L;
     /**
      * The internationalisation resource bundle.
      */
@@ -73,31 +71,6 @@ public class DescriptionRenderer extends JLabel implements TableCellRenderer {
                 BORDER_THICKNESS));
     }
 
-    /* (non-Javadoc)
-     * @see javax.swing.table.TableCellRenderer#getTableCellRendererComponent(javax.swing.JTable, java.lang.Object, boolean, boolean, int, int)
-     */
-    public Component getTableCellRendererComponent(JTable table, Object value,
-                                                   boolean isSelected, boolean hasFocus, int row, int column) {
-
-        if (value == null) {
-            setText("");
-        } else {
-            GlyphDefinition d = (GlyphDefinition) value;
-            setText(getHTML(d));
-        }
-
-        if (isSelected) {
-            setBackground(table.getSelectionBackground());
-            setForeground(table.getSelectionForeground());
-        } else {
-            setBackground(table.getBackground());
-            setForeground(table.getForeground());
-        }
-
-        setOpaque(true);
-        return this;
-    }
-
     /**
      * Gets the html.
      *
@@ -127,6 +100,31 @@ public class DescriptionRenderer extends JLabel implements TableCellRenderer {
 
         return sb.toString();
 
+    }
+
+    /* (non-Javadoc)
+     * @see javax.swing.table.TableCellRenderer#getTableCellRendererComponent(javax.swing.JTable, java.lang.Object, boolean, boolean, int, int)
+     */
+    public Component getTableCellRendererComponent(JTable table, Object value,
+                                                   boolean isSelected, boolean hasFocus, int row, int column) {
+
+        if (value == null) {
+            setText("");
+        } else {
+            GlyphDefinition d = (GlyphDefinition) value;
+            setText(getHTML(d));
+        }
+
+        if (isSelected) {
+            setBackground(table.getSelectionBackground());
+            setForeground(table.getSelectionForeground());
+        } else {
+            setBackground(table.getBackground());
+            setForeground(table.getForeground());
+        }
+
+        setOpaque(true);
+        return this;
     }
 
 }

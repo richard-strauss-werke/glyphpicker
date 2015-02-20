@@ -109,6 +109,15 @@ public class GlyphDefinition implements Cloneable {
     }
 
     /**
+     * Sets the mapped characters.
+     *
+     * @param mappedChars the mapped characters
+     */
+    public void setMappedChars(String mappedChars) {
+        this.mappedChars = mappedChars;
+    }
+
+    /**
      * Formats the mapped characters as Strings "U+xxxx".
      *
      * @return the formatted string
@@ -138,15 +147,6 @@ public class GlyphDefinition implements Cloneable {
             return sb.toString();
         }
         return null;
-    }
-
-    /**
-     * Sets the mapped characters.
-     *
-     * @param mappedChars the mapped characters
-     */
-    public void setMappedChars(String mappedChars) {
-        this.mappedChars = mappedChars;
     }
 
     /**
@@ -204,15 +204,6 @@ public class GlyphDefinition implements Cloneable {
     }
 
     /**
-     * Sets the url.
-     *
-     * @param url the new url
-     */
-    public void setUrl(String url) {
-        this.url = url;
-    }
-
-    /**
      * Gets the url.
      *
      * @return the url
@@ -222,12 +213,12 @@ public class GlyphDefinition implements Cloneable {
     }
 
     /**
-     * Sets the icon.
+     * Sets the url.
      *
-     * @param image the new icon
+     * @param url the new url
      */
-    public void setIcon(ImageIcon image) {
-        this.icon = image;
+    public void setUrl(String url) {
+        this.url = url;
     }
 
     /**
@@ -237,6 +228,15 @@ public class GlyphDefinition implements Cloneable {
      */
     public ImageIcon getIcon() {
         return icon;
+    }
+
+    /**
+     * Sets the icon.
+     *
+     * @param image the new icon
+     */
+    public void setIcon(ImageIcon image) {
+        this.icon = image;
     }
 
     /**

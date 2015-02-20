@@ -58,20 +58,6 @@ public class GlyphGrid extends JList<GlyphDefinition> {
     }
 
     /**
-     * A ComponentAdapter to adjust the row / columns count when the component is resized.
-     */
-    private class ResizeAdapter extends ComponentAdapter {
-
-        /* (non-Javadoc)
-         * @see java.awt.event.ComponentAdapter#componentResized(java.awt.event.ComponentEvent)
-         */
-        @Override
-        public void componentResized(ComponentEvent e) {
-            fixRowCountForVisibleColumns();
-        }
-    }
-
-    /**
      * Gets the top visible row.
      *
      * @return the top visible row
@@ -116,6 +102,20 @@ public class GlyphGrid extends JList<GlyphDefinition> {
     private int computeVisibleColumnCount() {
         return Math.max(
                 (int) Math.floor(getVisibleRect().width / (double) size), 1);
+    }
+
+    /**
+     * A ComponentAdapter to adjust the row / columns count when the component is resized.
+     */
+    private class ResizeAdapter extends ComponentAdapter {
+
+        /* (non-Javadoc)
+         * @see java.awt.event.ComponentAdapter#componentResized(java.awt.event.ComponentEvent)
+         */
+        @Override
+        public void componentResized(ComponentEvent e) {
+            fixRowCountForVisibleColumns();
+        }
     }
 
 }

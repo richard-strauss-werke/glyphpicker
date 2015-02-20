@@ -16,8 +16,8 @@
 package de.badw.strauss.glyphpicker.controller.browser;
 
 import com.icl.saxon.aelfred.SAXParserFactoryImpl;
-import de.badw.strauss.glyphpicker.model.GlyphTable;
 import de.badw.strauss.glyphpicker.model.GlyphDefinition;
+import de.badw.strauss.glyphpicker.model.GlyphTable;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.StatusLine;
@@ -25,7 +25,6 @@ import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpResponseException;
 import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.client.SystemDefaultHttpClient;
 import org.apache.log4j.Logger;
 import org.xml.sax.SAXException;
@@ -59,30 +58,18 @@ public class TeiLoadWorker extends SwingWorker<List<GlyphDefinition>, Void> {
      * The data source object providing the loading parameters.
      */
     private final GlyphTable glyphTable;
-
-    /**
-     * The loading result, a list of GlyphDefinition objects.
-     */
-    private List<GlyphDefinition> result = null;
-
-    /**
-     * returns the resulting glyph list.
-     *
-     * @return the result list
-     */
-    public List<GlyphDefinition> getResult() {
-        return result;
-    }
-
-    /**
-     * The SAX parser.
-     */
-    private SAXParser parser;
-
     /**
      * The i18n resource bundle.
      */
     private final ResourceBundle i18n;
+    /**
+     * The loading result, a list of GlyphDefinition objects.
+     */
+    private List<GlyphDefinition> result = null;
+    /**
+     * The SAX parser.
+     */
+    private SAXParser parser;
 
     /**
      * Instantiates a new TeiLoadWorker.
@@ -100,6 +87,15 @@ public class TeiLoadWorker extends SwingWorker<List<GlyphDefinition>, Void> {
         } catch (ParserConfigurationException | SAXException e) {
             LOGGER.error(e);
         }
+    }
+
+    /**
+     * returns the resulting glyph list.
+     *
+     * @return the result list
+     */
+    public List<GlyphDefinition> getResult() {
+        return result;
     }
 
     /* (non-Javadoc)
@@ -176,35 +172,6 @@ public class TeiLoadWorker extends SwingWorker<List<GlyphDefinition>, Void> {
     }
 
     /**
-     * The XML response handler.
-     */
-    private class XMLResponseHandler implements
-            ResponseHandler<List<GlyphDefinition>> {
-
-        /* (non-Javadoc)
-         * @see org.apache.http.client.ResponseHandler#handleResponse(org.apache.http.HttpResponse)
-         */
-        @Override
-        public List<GlyphDefinition> handleResponse(final HttpResponse response)
-                throws IOException {
-            StatusLine statusLine = response.getStatusLine();
-            HttpEntity entity = response.getEntity();
-            if (statusLine.getStatusCode() >= 300) {
-                throw new HttpResponseException(statusLine.getStatusCode(),
-                        statusLine.getReasonPhrase());
-            }
-            if (entity == null) {
-                throw new ClientProtocolException(
-                        "Response contains no content");
-            }
-
-            InputStream inputStream = entity.getContent();
-
-            return parseXmlSax(inputStream);
-        }
-    }
-
-    /**
      * Loads data from a file.
      *
      * @return the resulting GlyphDefinition list
@@ -256,6 +223,35 @@ public class TeiLoadWorker extends SwingWorker<List<GlyphDefinition>, Void> {
         }
 
         return handler.getGlyphDefinitions();
+    }
+
+    /**
+     * The XML response handler.
+     */
+    private class XMLResponseHandler implements
+            ResponseHandler<List<GlyphDefinition>> {
+
+        /* (non-Javadoc)
+         * @see org.apache.http.client.ResponseHandler#handleResponse(org.apache.http.HttpResponse)
+         */
+        @Override
+        public List<GlyphDefinition> handleResponse(final HttpResponse response)
+                throws IOException {
+            StatusLine statusLine = response.getStatusLine();
+            HttpEntity entity = response.getEntity();
+            if (statusLine.getStatusCode() >= 300) {
+                throw new HttpResponseException(statusLine.getStatusCode(),
+                        statusLine.getReasonPhrase());
+            }
+            if (entity == null) {
+                throw new ClientProtocolException(
+                        "Response contains no content");
+            }
+
+            InputStream inputStream = entity.getContent();
+
+            return parseXmlSax(inputStream);
+        }
     }
 
 }

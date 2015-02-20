@@ -28,25 +28,21 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class GlyphTable implements Cloneable {
 
     /**
-     * The default glyph display size factor.
-     */
-    private static final float DEFAULT_SIZE_FACTOR = 0.5f;
-
-    /**
      * The vector glyph renderer code.
      */
     public static final String GLYPH_VECTOR_RENDERER = "vector";
-
     /**
      * The scaled vector glyph renderer code.
      */
     public static final String GLYPH_SCALED_VECTOR_RENDERER = "scaled vector";
-
     /**
      * The bitmap glyph renderer code.
      */
     public static final String GLYPH_BITMAP_RENDERER = "bitmap";
-
+    /**
+     * The default glyph display size factor.
+     */
+    private static final float DEFAULT_SIZE_FACTOR = 0.5f;
     /**
      * The label.
      */

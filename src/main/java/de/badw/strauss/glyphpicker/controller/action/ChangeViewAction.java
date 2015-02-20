@@ -28,26 +28,22 @@ import java.awt.event.ActionEvent;
 public class ChangeViewAction extends AbstractPickerAction {
 
     private static final long serialVersionUID = 1L;
-
-    /**
-     * The panel containing table and list view.
-     */
-    private final TabPanel panel;
-
-    /**
-     * The table component.
-     */
-    private final GlyphTable table;
-
-    /**
-     * The list component.
-     */
-    private final GlyphGrid list;
-
     /**
      * The class name.
      */
     private static final String CLASS_NAME = ChangeViewAction.class.getSimpleName();
+    /**
+     * The panel containing table and list view.
+     */
+    private final TabPanel panel;
+    /**
+     * The table component.
+     */
+    private final GlyphTable table;
+    /**
+     * The list component.
+     */
+    private final GlyphGrid list;
 
     /**
      * Instantiates a new ChangeViewAction.

@@ -51,16 +51,14 @@ public class GlyphTable extends JTable {
      * The minimum width of the second column.
      */
     private static final int COL_2_MIN_WIDTH = 10;
-
-    /**
-     * The glyph renderer.
-     */
-    private TableCellRenderer glyphRenderer;
-
     /**
      * The glyph description renderer.
      */
     private final TableCellRenderer glyphDescriptionRenderer;
+    /**
+     * The glyph renderer.
+     */
+    private TableCellRenderer glyphRenderer;
 
     /**
      * Instantiates a new glyph table.

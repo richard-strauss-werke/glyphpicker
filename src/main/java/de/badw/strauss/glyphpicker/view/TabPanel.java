@@ -129,21 +129,21 @@ public class TabPanel extends JPanel {
     }
 
     /**
-     * Sets the list component.
-     *
-     * @param component the new list component
-     */
-    public void setListComponent(JComponent component) {
-        jPane.setViewportView(component);
-    }
-
-    /**
      * Gets the list component.
      *
      * @return the list component
      */
     public Component getListComponent() {
         return jPane.getViewport().getComponent(0);
+    }
+
+    /**
+     * Sets the list component.
+     *
+     * @param component the new list component
+     */
+    public void setListComponent(JComponent component) {
+        jPane.setViewportView(component);
     }
 
     /**

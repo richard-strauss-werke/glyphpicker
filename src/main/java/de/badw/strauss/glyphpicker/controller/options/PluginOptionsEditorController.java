@@ -59,9 +59,10 @@ public class PluginOptionsEditorController {
 
     /**
      * Initializes a new PluginOptionsEditorController
-     *  @param contentPane      the content pane of the the editor popup
-     * @param config           the plugin's config
-     * @param imageCache the panel from which the window has been opened
+     *
+     * @param contentPane the content pane of the the editor popup
+     * @param config      the plugin's config
+     * @param imageCache  the panel from which the window has been opened
      */
     public PluginOptionsEditorController(final OptionsEditor contentPane, final Config config, final ImageCache imageCache) {
         this.contentPane = contentPane;
@@ -97,7 +98,7 @@ public class PluginOptionsEditorController {
             }
         });
 
-         imageCacheListener = new PropertyChangeListener() {
+        imageCacheListener = new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent e) {
                 if (ImageCache.IMAGE_STORED.equals(e.getPropertyName())) {
@@ -117,14 +118,14 @@ public class PluginOptionsEditorController {
     /**
      * sets the image cache listener
      */
-    public void setImageCacheListener(){
+    public void setImageCacheListener() {
         imageCache.addPropertyChangeListener(imageCacheListener);
     }
 
     /**
      * removes the image cache listener
      */
-    public void removeImageCacheListener(){
+    public void removeImageCacheListener() {
         imageCache.removePropertyChangeListener(imageCacheListener);
     }
 

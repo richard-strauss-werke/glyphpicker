@@ -16,9 +16,9 @@
 package de.badw.strauss.glyphpicker.controller.browser;
 
 import com.icl.saxon.aelfred.DefaultHandler;
-import de.badw.strauss.glyphpicker.model.GlyphTable;
 import de.badw.strauss.glyphpicker.model.GlyphDefinition;
 import de.badw.strauss.glyphpicker.model.GlyphReference;
+import de.badw.strauss.glyphpicker.model.GlyphTable;
 import org.apache.log4j.Logger;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
@@ -35,66 +35,54 @@ public class TeiXmlHandler extends DefaultHandler {
      */
     private static final Logger LOGGER = Logger.getLogger(TeiXmlHandler.class
             .getName());
-
-    /**
-     * indicates ancestor-or-self::char.
-     */
-    private Boolean inChar = false;
-
-    /**
-     * indicates ancestor-or-self::mapping.
-     */
-    private Boolean inMapping = false;
-
     /**
      * The resulting glyph definitions.
      */
     private final List<GlyphDefinition> glyphDefinitions = new ArrayList<>();
-
     /**
      * An element stack of all ancestors and the current element.
      */
     private final Stack<String> elementStack = new Stack<>();
-
-    /**
-     * The list of all glyph references in the current mapping.
-     */
-    private List<GlyphReference> currentGlyphReferences = new ArrayList<>();
-
     /**
      * A list of the glyph definitions with glyph references in <mapping>.
      */
     private final List<GlyphDefinition> referencingGlyphDefinitions = new ArrayList<>();
-
-    /**
-     * The current glyph definition.
-     */
-    private GlyphDefinition currentGlyphDefinition;
-
-    /**
-     * The range property.
-     */
-    private String range = "";
-
     /**
      * The data source providing handler parameters.
      */
     private final GlyphTable glyphTable;
-
     /**
      * A string buffer for the text content of elements.
      */
     private final StringBuffer textContent = new StringBuffer();
-
     /**
      * The mapping matcher.
      */
     private final MappingMatcher mappingMatcher;
-
     /**
      * The mapping parser.
      */
     private final MappingParser mappingParser;
+    /**
+     * indicates ancestor-or-self::char.
+     */
+    private Boolean inChar = false;
+    /**
+     * indicates ancestor-or-self::mapping.
+     */
+    private Boolean inMapping = false;
+    /**
+     * The list of all glyph references in the current mapping.
+     */
+    private List<GlyphReference> currentGlyphReferences = new ArrayList<>();
+    /**
+     * The current glyph definition.
+     */
+    private GlyphDefinition currentGlyphDefinition;
+    /**
+     * The range property.
+     */
+    private String range = "";
 
     /**
      * Instantiates a new TeiXmlHandler.
@@ -136,191 +124,6 @@ public class TeiXmlHandler extends DefaultHandler {
     }
 
     /**
-     * The Interface MappingMatcher.
-     */
-    public interface MappingMatcher {
-
-        /**
-         * Matches.
-         *
-         * @param attrs the attrs
-         * @return true, if successful
-         */
-        boolean matches(Attributes attrs);
-    }
-
-    /**
-     * A MappingMatcher matching a single attribute.
-     */
-    public static class MappingSingleMatcher implements MappingMatcher {
-
-        /**
-         * The key.
-         */
-        private final String key;
-
-        /**
-         * The value.
-         */
-        private final String value;
-
-        /**
-         * Instantiates a new MappingSingleMatcher.
-         *
-         * @param key   the key = attribute name
-         * @param value the value = attribute value
-         */
-        public MappingSingleMatcher(String key, String value) {
-            this.key = key;
-            this.value = value;
-        }
-
-        /*
-         * (non-Javadoc)
-         * 
-         * @see
-         * TeiXmlHandler
-         * .MappingMatcher#matches(org.xml.sax.Attributes)
-         */
-        @Override
-        public boolean matches(Attributes attrs) {
-            return value.equals(attrs.getValue(key));
-        }
-    }
-
-    /**
-     * A MappingMatcher matching two attributes.
-     */
-    public static class MappingDoubleMatcher implements MappingMatcher {
-
-        /**
-         * The first attribute's name.
-         */
-        private final String key1;
-
-        /**
-         * The first attribute's value.
-         */
-        private final String value1;
-
-        /**
-         * The second attribute's name.
-         */
-        private final String key2;
-
-        /**
-         * The second attribute's value.
-         */
-        private final String value2;
-
-        /**
-         * Instantiates a new MappingDoubleMatcher.
-         *
-         * @param key1   the first attribute's name
-         * @param value1 the first attribute's value
-         * @param key2   the second attribute's name
-         * @param value2 the second attribute's value
-         */
-        public MappingDoubleMatcher(String key1, String value1, String key2,
-                                    String value2) {
-            this.key1 = key1;
-            this.value1 = value1;
-            this.key2 = key2;
-            this.value2 = value2;
-        }
-
-        /*
-         * (non-Javadoc)
-         * 
-         * @see
-         * TeiXmlHandler
-         * .MappingMatcher#matches(org.xml.sax.Attributes)
-         */
-        @Override
-        public boolean matches(Attributes attrs) {
-            return value1.equals(attrs.getValue(key1))
-                    && value2.equals(attrs.getValue(key2));
-        }
-    }
-
-    /**
-     * A MappingMatcher always returning true.
-     */
-    public static class MappingAllMatcher implements MappingMatcher {
-
-        /*
-         * (non-Javadoc)
-         * 
-         * @see
-         * TeiXmlHandler
-         * .MappingMatcher#matches(org.xml.sax.Attributes)
-         */
-        @Override
-        public boolean matches(Attributes attrs) {
-            return true;
-        }
-    }
-
-    /**
-     * The Interface MappingParser.
-     */
-    public interface MappingParser {
-
-        /**
-         * Parses the specified string to a new string.
-         *
-         * @param str the input string
-         * @return the output string
-         */
-        String parse(String str);
-    }
-
-    /**
-     * A MappingParser rendering strings like "U+E002" to codepoint strings.
-     */
-    public static class MappingUPlusParser implements MappingParser {
-
-        /*
-         * (non-Javadoc)
-         * 
-         * @see
-         * TeiXmlHandler
-         * .MappingParser#parse(java.lang.String)
-         */
-        @Override
-        public String parse(String str) {
-            if (str == null) {
-                return null;
-            }
-            try {
-                String cp = str.substring(2);
-                int c = Integer.parseInt(cp, 16);
-                return Character.toString((char) c);
-            } catch (Exception e) {
-                return null;
-            }
-        }
-    }
-
-    /**
-     * A MappingParser returning the input.
-     */
-    public static class MappingNoParser implements MappingParser {
-
-        /*
-         * (non-Javadoc)
-         * 
-         * @see
-         * TeiXmlHandler
-         * .MappingParser#parse(java.lang.String)
-         */
-        @Override
-        public String parse(String str) {
-            return str;
-        }
-    }
-
-    /**
      * Gets the resulting glyph definitions.
      *
      * @return the glyph definitions
@@ -331,7 +134,7 @@ public class TeiXmlHandler extends DefaultHandler {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.xml.sax.helpers.DefaultHandler#startElement(java.lang.String,
      * java.lang.String, java.lang.String, org.xml.sax.Attributes)
      */
@@ -382,7 +185,7 @@ public class TeiXmlHandler extends DefaultHandler {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.xml.sax.helpers.DefaultHandler#characters(char[], int, int)
      */
     @Override
@@ -403,7 +206,7 @@ public class TeiXmlHandler extends DefaultHandler {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.xml.sax.helpers.DefaultHandler#endElement(java.lang.String,
      * java.lang.String, java.lang.String)
      */
@@ -451,7 +254,7 @@ public class TeiXmlHandler extends DefaultHandler {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.xml.sax.helpers.DefaultHandler#endDocument()
      */
     public void endDocument() throws SAXException {
@@ -516,6 +319,191 @@ public class TeiXmlHandler extends DefaultHandler {
                 }
             }
             r.setMappedChars(sb.toString());
+        }
+    }
+
+    /**
+     * The Interface MappingMatcher.
+     */
+    public interface MappingMatcher {
+
+        /**
+         * Matches.
+         *
+         * @param attrs the attrs
+         * @return true, if successful
+         */
+        boolean matches(Attributes attrs);
+    }
+
+    /**
+     * The Interface MappingParser.
+     */
+    public interface MappingParser {
+
+        /**
+         * Parses the specified string to a new string.
+         *
+         * @param str the input string
+         * @return the output string
+         */
+        String parse(String str);
+    }
+
+    /**
+     * A MappingMatcher matching a single attribute.
+     */
+    public static class MappingSingleMatcher implements MappingMatcher {
+
+        /**
+         * The key.
+         */
+        private final String key;
+
+        /**
+         * The value.
+         */
+        private final String value;
+
+        /**
+         * Instantiates a new MappingSingleMatcher.
+         *
+         * @param key   the key = attribute name
+         * @param value the value = attribute value
+         */
+        public MappingSingleMatcher(String key, String value) {
+            this.key = key;
+            this.value = value;
+        }
+
+        /*
+         * (non-Javadoc)
+         *
+         * @see
+         * TeiXmlHandler
+         * .MappingMatcher#matches(org.xml.sax.Attributes)
+         */
+        @Override
+        public boolean matches(Attributes attrs) {
+            return value.equals(attrs.getValue(key));
+        }
+    }
+
+    /**
+     * A MappingMatcher matching two attributes.
+     */
+    public static class MappingDoubleMatcher implements MappingMatcher {
+
+        /**
+         * The first attribute's name.
+         */
+        private final String key1;
+
+        /**
+         * The first attribute's value.
+         */
+        private final String value1;
+
+        /**
+         * The second attribute's name.
+         */
+        private final String key2;
+
+        /**
+         * The second attribute's value.
+         */
+        private final String value2;
+
+        /**
+         * Instantiates a new MappingDoubleMatcher.
+         *
+         * @param key1   the first attribute's name
+         * @param value1 the first attribute's value
+         * @param key2   the second attribute's name
+         * @param value2 the second attribute's value
+         */
+        public MappingDoubleMatcher(String key1, String value1, String key2,
+                                    String value2) {
+            this.key1 = key1;
+            this.value1 = value1;
+            this.key2 = key2;
+            this.value2 = value2;
+        }
+
+        /*
+         * (non-Javadoc)
+         *
+         * @see
+         * TeiXmlHandler
+         * .MappingMatcher#matches(org.xml.sax.Attributes)
+         */
+        @Override
+        public boolean matches(Attributes attrs) {
+            return value1.equals(attrs.getValue(key1))
+                    && value2.equals(attrs.getValue(key2));
+        }
+    }
+
+    /**
+     * A MappingMatcher always returning true.
+     */
+    public static class MappingAllMatcher implements MappingMatcher {
+
+        /*
+         * (non-Javadoc)
+         *
+         * @see
+         * TeiXmlHandler
+         * .MappingMatcher#matches(org.xml.sax.Attributes)
+         */
+        @Override
+        public boolean matches(Attributes attrs) {
+            return true;
+        }
+    }
+
+    /**
+     * A MappingParser rendering strings like "U+E002" to codepoint strings.
+     */
+    public static class MappingUPlusParser implements MappingParser {
+
+        /*
+         * (non-Javadoc)
+         *
+         * @see
+         * TeiXmlHandler
+         * .MappingParser#parse(java.lang.String)
+         */
+        @Override
+        public String parse(String str) {
+            if (str == null) {
+                return null;
+            }
+            try {
+                String cp = str.substring(2);
+                int c = Integer.parseInt(cp, 16);
+                return Character.toString((char) c);
+            } catch (Exception e) {
+                return null;
+            }
+        }
+    }
+
+    /**
+     * A MappingParser returning the input.
+     */
+    public static class MappingNoParser implements MappingParser {
+
+        /*
+         * (non-Javadoc)
+         *
+         * @see
+         * TeiXmlHandler
+         * .MappingParser#parse(java.lang.String)
+         */
+        @Override
+        public String parse(String str) {
+            return str;
         }
     }
 

@@ -21,7 +21,6 @@ import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.StatusLine;
 import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.client.SystemDefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 import org.apache.log4j.Logger;
@@ -83,12 +82,12 @@ public class BitmapUrlLoader implements BitmapLoader {
     /**
      * Instantiates a new bitmap file loader.
      *
-     * @param d                The glyph definition
-     * @param basePath         The base path to the graphic
-     * @param relativePath     The path to the graphic relative to the base path
-     * @param imageProcessor   The image processor used to scale the image
-     * @param containerSize    The bitmap container's size
-     * @param imageCache The image cache
+     * @param d              The glyph definition
+     * @param basePath       The base path to the graphic
+     * @param relativePath   The path to the graphic relative to the base path
+     * @param imageProcessor The image processor used to scale the image
+     * @param containerSize  The bitmap container's size
+     * @param imageCache     The image cache
      */
     public BitmapUrlLoader(GlyphDefinition d, String basePath, String relativePath,
                            ImageProcessor imageProcessor, int containerSize, ImageCache imageCache) {
@@ -116,7 +115,7 @@ public class BitmapUrlLoader implements BitmapLoader {
                 File cachedImageFile = imageCache.getFile(imageNameInCache);
                 if (cachedImageFile != null) {
                     GlyphBitmapIcon iconFromFile = new BitmapFileLoader(d, cachedImageFile, imageProcessor, containerSize).getImage();
-                    if (iconFromFile != null)  {
+                    if (iconFromFile != null) {
                         return iconFromFile;
                     }
                 }

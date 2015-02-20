@@ -34,44 +34,22 @@ import java.nio.charset.StandardCharsets;
 public class ImageCache {
 
     /**
-     * The logger.
-     */
-    private static final Logger LOGGER = Logger.getLogger(ImageCache.class
-            .getName());
-
-    /**
-     * The property change support.
-     */
-    private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
-
-    /**
-     * Adds a property change listener.
-     *
-     * @param l the listener to add
-     */
-    public void addPropertyChangeListener(PropertyChangeListener l) {
-        pcs.addPropertyChangeListener(l);
-    }
-
-    /**
-     * Removes a property change listener.
-     *
-     * @param l the listener to remove
-     */
-    public void removePropertyChangeListener(PropertyChangeListener l) {
-        pcs.removePropertyChangeListener(l);
-    }
-
-    /**
      * The property change event key fired after writing an image to the cache
      */
     public static final String IMAGE_STORED = "imageWritten";
-
     /**
      * The property change event key fired after clearing the cache
      */
     public static final String CACHE_CLEARED = "cacheCleared";
-
+    /**
+     * The logger.
+     */
+    private static final Logger LOGGER = Logger.getLogger(ImageCache.class
+            .getName());
+    /**
+     * The property change support.
+     */
+    private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
     /**
      * The image cache folder
      */
@@ -99,6 +77,24 @@ public class ImageCache {
             LOGGER.info(e);
         }
         return null;
+    }
+
+    /**
+     * Adds a property change listener.
+     *
+     * @param l the listener to add
+     */
+    public void addPropertyChangeListener(PropertyChangeListener l) {
+        pcs.addPropertyChangeListener(l);
+    }
+
+    /**
+     * Removes a property change listener.
+     *
+     * @param l the listener to remove
+     */
+    public void removePropertyChangeListener(PropertyChangeListener l) {
+        pcs.removePropertyChangeListener(l);
     }
 
     /**

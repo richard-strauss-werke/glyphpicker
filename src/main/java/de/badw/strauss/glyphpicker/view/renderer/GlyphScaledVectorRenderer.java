@@ -37,31 +37,26 @@ public class GlyphScaledVectorRenderer extends GlyphRenderer {
      * The Constant serialVersionUID.
      */
     private static final long serialVersionUID = 1L;
-
-    /**
-     * The font name.
-     */
-    private String fontName = null;
-
-    /**
-     * The scaling factor.
-     */
-    private float factor = 0.73f;
-
     /**
      * The font render context.
      */
     private final FontRenderContext frc;
-
-    /**
-     * The characters to render.
-     */
-    private String ch = null;
-
     /**
      * The font attributes.
      */
     private final Map<TextAttribute, Integer> attr;
+    /**
+     * The font name.
+     */
+    private String fontName = null;
+    /**
+     * The scaling factor.
+     */
+    private float factor = 0.73f;
+    /**
+     * The characters to render.
+     */
+    private String ch = null;
 
     /**
      * Instantiates a new glyph shape renderer.

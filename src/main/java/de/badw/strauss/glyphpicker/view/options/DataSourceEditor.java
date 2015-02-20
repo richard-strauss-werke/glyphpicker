@@ -36,13 +36,11 @@ import java.util.ResourceBundle;
  */
 public class DataSourceEditor extends JPanel {
 
-    private static final long serialVersionUID = 1L;
-
     /**
      * The key of the "formEditingOccurred" event.
      */
     public static final String FORM_EDITING_OCCURRED = "formEditingOccurred";
-
+    private static final long serialVersionUID = 1L;
     /**
      * The component's preferred width.
      */
@@ -134,7 +132,7 @@ public class DataSourceEditor extends JPanel {
         setPreferredSize(new Dimension(PREFERRED_WIDTH, PREFERRED_HEIGHT));
 
         setLayout(new BorderLayout(8, 0));
-        setBorder(new EmptyBorder(8,8,8,8));
+        setBorder(new EmptyBorder(8, 8, 8, 8));
 
         JPanel listPanel = new JPanel();
         listPanel.setBorder(new CompoundBorder(new TitledBorder(UIManager
@@ -215,50 +213,6 @@ public class DataSourceEditor extends JPanel {
     public void setFormEnabled(boolean enabled) {
         for (FormItemConfig formItemConfig : formItemConfigList) {
             formItemConfig.getComponent().setEnabled(enabled);
-        }
-    }
-
-    /**
-     * A DocumentListener added to the form text fields, firing the change event of the property FORM_EDITING_OCCURRED
-     */
-    private class TextFieldEditingListener implements DocumentListener {
-
-        /* (non-Javadoc)
-         * @see javax.swing.event.DocumentListener#removeUpdate(javax.swing.event.DocumentEvent)
-         */
-        @Override
-        public void removeUpdate(DocumentEvent e) {
-            firePropertyChange(FORM_EDITING_OCCURRED, null, null);
-        }
-
-        /* (non-Javadoc)
-         * @see javax.swing.event.DocumentListener#insertUpdate(javax.swing.event.DocumentEvent)
-         */
-        @Override
-        public void insertUpdate(DocumentEvent e) {
-            firePropertyChange(FORM_EDITING_OCCURRED, null, null);
-        }
-
-        /* (non-Javadoc)
-         * @see javax.swing.event.DocumentListener#changedUpdate(javax.swing.event.DocumentEvent)
-         */
-        @Override
-        public void changedUpdate(DocumentEvent e) {
-            firePropertyChange(FORM_EDITING_OCCURRED, null, null);
-        }
-    }
-
-    /**
-     * An ActionListener added to the form combo, firing the change event of the property FORM_EDITING_OCCURRED
-     */
-    private class ComboChangeListener implements ActionListener {
-
-        /* (non-Javadoc)
-         * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
-         */
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            firePropertyChange(FORM_EDITING_OCCURRED, null, null);
         }
     }
 
@@ -400,6 +354,50 @@ public class DataSourceEditor extends JPanel {
      */
     public JPanel getListButtonPane() {
         return listButtonPane;
+    }
+
+    /**
+     * A DocumentListener added to the form text fields, firing the change event of the property FORM_EDITING_OCCURRED
+     */
+    private class TextFieldEditingListener implements DocumentListener {
+
+        /* (non-Javadoc)
+         * @see javax.swing.event.DocumentListener#removeUpdate(javax.swing.event.DocumentEvent)
+         */
+        @Override
+        public void removeUpdate(DocumentEvent e) {
+            firePropertyChange(FORM_EDITING_OCCURRED, null, null);
+        }
+
+        /* (non-Javadoc)
+         * @see javax.swing.event.DocumentListener#insertUpdate(javax.swing.event.DocumentEvent)
+         */
+        @Override
+        public void insertUpdate(DocumentEvent e) {
+            firePropertyChange(FORM_EDITING_OCCURRED, null, null);
+        }
+
+        /* (non-Javadoc)
+         * @see javax.swing.event.DocumentListener#changedUpdate(javax.swing.event.DocumentEvent)
+         */
+        @Override
+        public void changedUpdate(DocumentEvent e) {
+            firePropertyChange(FORM_EDITING_OCCURRED, null, null);
+        }
+    }
+
+    /**
+     * An ActionListener added to the form combo, firing the change event of the property FORM_EDITING_OCCURRED
+     */
+    private class ComboChangeListener implements ActionListener {
+
+        /* (non-Javadoc)
+         * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+         */
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            firePropertyChange(FORM_EDITING_OCCURRED, null, null);
+        }
     }
 
 }

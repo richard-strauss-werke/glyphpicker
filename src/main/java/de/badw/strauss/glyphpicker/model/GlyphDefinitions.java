@@ -58,6 +58,7 @@ public class GlyphDefinitions {
 
     /**
      * Instantiates a new glyph definitions.
+     *
      * @param version the plugin version
      */
     public GlyphDefinitions(String version) {
@@ -66,6 +67,7 @@ public class GlyphDefinitions {
 
     /**
      * gets the version of the user data
+     *
      * @return the version
      */
     public String getVersion() {
@@ -74,19 +76,11 @@ public class GlyphDefinitions {
 
     /**
      * sets the version of the user data
+     *
      * @param version the version
      */
     public void setVersion(String version) {
         this.version = version;
-    }
-
-    /**
-     * Sets the glyph definition list.
-     *
-     * @param data the new glyph definition list
-     */
-    public void setData(List<GlyphDefinition> data) {
-        this.data = data;
     }
 
     /**
@@ -96,6 +90,15 @@ public class GlyphDefinitions {
      */
     public List<GlyphDefinition> getData() {
         return data;
+    }
+
+    /**
+     * Sets the glyph definition list.
+     *
+     * @param data the new glyph definition list
+     */
+    public void setData(List<GlyphDefinition> data) {
+        this.data = data;
     }
 
 }

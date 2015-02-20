@@ -30,32 +30,27 @@ import java.beans.PropertyChangeListener;
  */
 public class RemoveAction extends AbstractPickerAction {
 
-    private static final long serialVersionUID = 1L;
-
     /**
      * The key of the action.
      */
     public static final String KEY = "remove";
-
-    /**
-     * The glyph list model.
-     */
-    private final EventList<GlyphDefinition> glyphList;
-
-    /**
-     * The filter list model.
-     */
-    private final FilterList<GlyphDefinition> filterList;
-
-    /**
-     * The list component.
-     */
-    private final GlyphGrid list;
-
+    private static final long serialVersionUID = 1L;
     /**
      * The name of the class.
      */
     private static final String CLASS_NAME = RemoveAction.class.getSimpleName();
+    /**
+     * The glyph list model.
+     */
+    private final EventList<GlyphDefinition> glyphList;
+    /**
+     * The filter list model.
+     */
+    private final FilterList<GlyphDefinition> filterList;
+    /**
+     * The list component.
+     */
+    private final GlyphGrid list;
 
     /**
      * Instantiates a new RemoveAction.
