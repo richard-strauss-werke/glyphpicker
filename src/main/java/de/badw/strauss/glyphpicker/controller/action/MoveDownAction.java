@@ -74,7 +74,7 @@ public class MoveDownAction extends AbstractPickerAction {
         putValue(SHORT_DESCRIPTION, description + " (" + MENU_SHORTCUT_NAME + "+↓)");
         putValue(MNEMONIC_KEY, KeyEvent.VK_DOWN);
 
-        String osIndependentAccelerator = (IS_MAC) ? "command DOWN" : "ctrl DOWN";
+        String osIndependentAccelerator = (IS_MAC) ? "meta DOWN" : "ctrl DOWN";
         putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke(osIndependentAccelerator));
         bindAcceleratorToComponent(this, panel);
     }

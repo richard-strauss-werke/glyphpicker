@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <config xmlns="http://www.richard-strauss-ausgabe.de/ns/1.0">
-    <version>0.9.3</version>
+    <version>0.9.4</version>
     <transferFocusAfterInsert>true</transferFocusAfterInsert>
     <tabIndex>1</tabIndex>
     <userSearchFieldScopeIndex>4</userSearchFieldScopeIndex>
@@ -9,7 +9,7 @@
     <browserViewIndex>0</browserViewIndex>
     <glyphTables>
         <glyphTable>
-            <name>Edirom SMuFL Browser (web, bitmap)</name>
+            <name>Edirom SMuFL Browser</name>
             <path>http://edirom.de/smufl-browser/index.xml</path>
             <font>BravuraText</font>
             <renderer>bitmap</renderer>
@@ -20,29 +20,7 @@
             <parseMapping>true</parseMapping>
         </glyphTable>
         <glyphTable>
-            <name>SMuFL Browser (web, bitmap)</name>
-            <path>http://richard-strauss-werke.github.io/glyphpicker/testdata/smuflBrowser/data/charDecl.xml</path>
-            <font>BravuraText</font>
-            <renderer>bitmap</renderer>
-            <sizeFactor>0.8</sizeFactor>
-            <template>&lt;g ref="${basePath}#${id}"/&gt;</template>
-            <typeAttributeValue>smufl</typeAttributeValue>
-            <subtypeAttributeValue></subtypeAttributeValue>
-            <parseMapping>true</parseMapping>
-        </glyphTable>
-        <glyphTable>
-            <name>SMuFL Browser (web, glyph)</name>
-            <path>http://richard-strauss-werke.github.io/glyphpicker/testdata/smuflBrowser/data/charDecl.xml</path>
-            <font>BravuraText</font>
-            <renderer>scaled vector</renderer>
-            <sizeFactor>0.7</sizeFactor>
-            <template>&lt;g ref="${basePath}#${id}"/&gt;</template>
-            <typeAttributeValue>smufl</typeAttributeValue>
-            <subtypeAttributeValue></subtypeAttributeValue>
-            <parseMapping>true</parseMapping>
-        </glyphTable>
-        <glyphTable>
-            <name>gBank (web, bitmap)</name>
+            <name>ENRICH gBank</name>
             <path>http://richard-strauss-werke.github.io/glyphpicker/testdata/gBankImages/gBank.xml</path>
             <font>Andron Scriptor Web</font>
             <renderer>bitmap</renderer>
@@ -50,83 +28,6 @@
             <template>&lt;g ref="#${id}"/&gt;</template>
             <typeAttributeValue></typeAttributeValue>
             <subtypeAttributeValue>PUA</subtypeAttributeValue>
-            <parseMapping>true</parseMapping>
-        </glyphTable>
-        <glyphTable>
-            <name>gBank (web, glyph)</name>
-            <path>http://richard-strauss-werke.github.io/glyphpicker/testdata/gBankImages/gBank.xml</path>
-            <font>Andron Scriptor Web</font>
-            <renderer>vector</renderer>
-            <sizeFactor>0.5</sizeFactor>
-            <template>&lt;g ref="#${id}"/&gt;</template>
-            <typeAttributeValue></typeAttributeValue>
-            <subtypeAttributeValue>PUA</subtypeAttributeValue>
-            <parseMapping>true</parseMapping>
-        </glyphTable>
-        <glyphTable>
-            <name>SMuFL Browser (local, bitmap)</name>
-            <path>/Users/Ahlse/Desktop/SMuFL-Browser-1.0/data/charDecl.xml</path>
-            <font>BravuraText</font>
-            <renderer>bitmap</renderer>
-            <sizeFactor>0.7</sizeFactor>
-            <template>&lt;g ref="${basePath}#${id}"/&gt;</template>
-            <typeAttributeValue>smufl</typeAttributeValue>
-            <subtypeAttributeValue></subtypeAttributeValue>
-            <parseMapping>true</parseMapping>
-        </glyphTable>
-        <glyphTable>
-            <name>SMuFL Browser (local, glyph)</name>
-            <path>/Users/Ahlse/Desktop/SMuFL-Browser-1.0/data/charDecl.xml</path>
-            <font>BravuraText</font>
-            <renderer>scaled vector</renderer>
-            <sizeFactor>0.7</sizeFactor>
-            <template>&lt;g ref="${basePath}#${id}"/&gt;</template>
-            <typeAttributeValue>smufl</typeAttributeValue>
-            <subtypeAttributeValue></subtypeAttributeValue>
-            <parseMapping>true</parseMapping>
-        </glyphTable>
-        <glyphTable>
-            <name>gBank (local, bitmap)</name>
-            <path>/Users/Ahlse/Desktop/gBankImages/gBank.xml</path>
-            <font>Andron Scriptor Web</font>
-            <renderer>bitmap</renderer>
-            <sizeFactor>1.0</sizeFactor>
-            <template>&lt;g ref="#${id}"/&gt;</template>
-            <typeAttributeValue></typeAttributeValue>
-            <subtypeAttributeValue>PUA</subtypeAttributeValue>
-            <parseMapping>true</parseMapping>
-        </glyphTable>
-        <glyphTable>
-            <name>gBank (local, glyph)</name>
-            <path>/Users/Ahlse/Desktop/gBankImages/gBank.xml</path>
-            <font>Andron Scriptor Web</font>
-            <renderer>vector</renderer>
-            <sizeFactor>0.5</sizeFactor>
-            <template>&lt;g ref="#${id}"/&gt;</template>
-            <typeAttributeValue></typeAttributeValue>
-            <subtypeAttributeValue>PUA</subtypeAttributeValue>
-            <parseMapping>true</parseMapping>
-        </glyphTable>
-        <glyphTable>
-            <name>SMuFL Browser (localhost, glyph)</name>
-            <path>http://localhost:8080/exist/apps/smufl-browser/index.xml</path>
-            <font>BravuraText</font>
-            <renderer>scaled vector</renderer>
-            <sizeFactor>0.7</sizeFactor>
-            <template>&lt;g ref="http://edirom.de/smufl-browser/${id}.xml"/&gt;</template>
-            <typeAttributeValue>smufl</typeAttributeValue>
-            <subtypeAttributeValue></subtypeAttributeValue>
-            <parseMapping>true</parseMapping>
-        </glyphTable>
-        <glyphTable>
-            <name>SMuFL Browser (localhost, bitmap)</name>
-            <path>http://localhost:8080/exist/apps/smufl-browser/index.xml</path>
-            <font>BravuraText</font>
-            <renderer>bitmap</renderer>
-            <sizeFactor>0.7</sizeFactor>
-            <template>&lt;g ref="http://edirom.de/smufl-browser/${id}.xml"/&gt;</template>
-            <typeAttributeValue>smufl</typeAttributeValue>
-            <subtypeAttributeValue></subtypeAttributeValue>
             <parseMapping>true</parseMapping>
         </glyphTable>
     </glyphTables>

@@ -39,16 +39,24 @@ public class ConfigLoaderTest {
         }
 
         // let the path to the external config file point to a missing file
-        // to let the config loader load the default config at /src/main/resources/config.xml
+        // to let the config loader load the default config at /src/main/resources/default_config.xml
         properties.setProperty("config.filename", "missing-file.xml");
 
         StandalonePluginWorkspace workspace = mock(StandalonePluginWorkspace.class);
         when(workspace.getPreferencesDirectory()).thenReturn(TestHelper.getTempFolder());
 
+        // first run: test test_config.xml
         ConfigLoader c = new ConfigLoader(workspace, properties);
         c.load();
+        assertEquals("The config version given in "+properties.getProperty("default.config.path")+" must " +
+                        "match the project version in /pom.xml", properties.getProperty("config.version"),
+                c.getConfig().getVersion());
 
-        assertEquals("The config version given in /src/main/resources/config.xml must " +
+        // second run: test default_config.xml
+        properties.setProperty("default.config.path", "/config.xml");
+        c = new ConfigLoader(workspace, properties);
+        c.load();
+        assertEquals("The config version given in "+properties.getProperty("default.config.path")+" must " +
                         "match the project version in /pom.xml", properties.getProperty("config.version"),
                 c.getConfig().getVersion());
     }

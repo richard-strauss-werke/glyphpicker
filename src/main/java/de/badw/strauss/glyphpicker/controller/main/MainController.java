@@ -171,7 +171,7 @@ public class MainController implements PropertyChangeListener {
     }
 
     /**
-     * Sets the accelerator ctrl + tab index / command + tab index for a specified index in a JTabbedPane
+     * Sets the accelerator ctrl key + tab index / command key + tab index for a specified index in a JTabbedPane
      *
      * @param tabbedPane  the tabbed pane
      * @param actualIndex the actual index, starting with 0
@@ -179,7 +179,7 @@ public class MainController implements PropertyChangeListener {
     private void setTabAccelerator(final JTabbedPane tabbedPane, final int actualIndex) {
         int index = actualIndex + 1;
         String actionKey = "select_tab_" + index;
-        String modifier = (AbstractPickerAction.IS_MAC) ? "command" : "ctrl";
+        String modifier = (AbstractPickerAction.IS_MAC) ? "meta" : "ctrl";
         mainPanel.getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put(KeyStroke.getKeyStroke(modifier + " " + index),
                 actionKey);
         mainPanel.getActionMap().put(actionKey, new AbstractAction() {

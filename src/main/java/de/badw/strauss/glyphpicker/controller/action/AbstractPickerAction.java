@@ -72,7 +72,7 @@ public abstract class AbstractPickerAction extends AbstractAction {
      * @param accelerator the keyboard accelerator string in Windows / Linux nomenclature
      */
     public AbstractPickerAction(String accelerator) {
-        String osIndependentAccelerator = (IS_MAC) ? accelerator.replace("ctrl", "command") : accelerator;
+        String osIndependentAccelerator = (IS_MAC) ? accelerator.replace("ctrl", "meta") : accelerator;
         putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke(osIndependentAccelerator));
     }
 
@@ -89,7 +89,7 @@ public abstract class AbstractPickerAction extends AbstractAction {
 
         String description = I18N.getString(className + ".description");
 
-        String osIndependentAccelerator = (IS_MAC) ? accelerator.replace("ctrl", "command") : accelerator;
+        String osIndependentAccelerator = (IS_MAC) ? accelerator.replace("ctrl", "meta") : accelerator;
 
         String keyStrokeLabel = accelerator.replace("ctrl ", MENU_SHORTCUT_NAME + "+");
 

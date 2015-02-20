@@ -27,9 +27,9 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 /**
- * An action to show or hide the GlyphPicker panel in oXygen.
+ * The action to show the GlyphPicker panel in oXygen.
  */
-public class ToggleWindowAction extends AbstractPickerAction implements PropertyChangeListener {
+public class ShowPanelAction extends AbstractPickerAction implements PropertyChangeListener {
 
     private static final long serialVersionUID = 1L;
 
@@ -51,21 +51,21 @@ public class ToggleWindowAction extends AbstractPickerAction implements Property
     /**
      * The name of the current class.
      */
-    private static final String CLASS_NAME = ToggleWindowAction.class
+    private static final String CLASS_NAME = ShowPanelAction.class
             .getSimpleName();
 
     /**
-     * Instantiates a new ToggleWindowAction.
+     * Instantiates a new ShowPanelAction.
      *
      * @param workspace oXygen's plugin workspace
      * @param icon      The plugin's icon
      * @param viewId    The plugin's view ID in oXygen
      * @param config    The plugin config
      */
-    public ToggleWindowAction(StandalonePluginWorkspace workspace,
-                              String icon, String viewId, MainPanel mainPanel, Config config) {
+    public ShowPanelAction(StandalonePluginWorkspace workspace,
+                           String icon, String viewId, MainPanel mainPanel, Config config) {
         super("GlyphPicker", new ImageIcon(
-                ToggleWindowAction.class.getResource(icon)));
+                ShowPanelAction.class.getResource(icon)));
 
         this.workspace = workspace;
         this.viewId = viewId;

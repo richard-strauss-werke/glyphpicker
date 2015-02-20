@@ -38,7 +38,7 @@ public class TeiLoadWorkerTest {
         }
 
         // let the path to the external config file point to a missing file
-        // to let the config loader load the default config at /src/main/resources/config.xml
+        // to let the config loader load the default config at /src/main/resources/test_config.xml
         properties.setProperty("config.filename", "missing-file.xml");
 
         StandalonePluginWorkspace workspace = mock(StandalonePluginWorkspace.class);

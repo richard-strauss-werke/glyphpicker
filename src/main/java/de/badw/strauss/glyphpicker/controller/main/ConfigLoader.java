@@ -48,6 +48,11 @@ public class ConfigLoader {
     private final String fileName;
 
     /**
+     * The path to the default config file.
+     */
+    private final String defaultConfigPath;
+
+    /**
      * The config object.
      */
     private Config config = null;
@@ -63,6 +68,7 @@ public class ConfigLoader {
         pathName = workspace.getPreferencesDirectory() + "/"
                 + properties.getProperty("config.path");
         fileName = properties.getProperty("config.filename");
+        defaultConfigPath = properties.getProperty("default.config.path");
     }
 
     /**
@@ -100,7 +106,7 @@ public class ConfigLoader {
         } else {
             try {
                 URL resource = ConfigLoader.class
-                        .getResource("/config.xml");
+                        .getResource(defaultConfigPath);
                 config = JAXB.unmarshal(resource, Config.class);
 
                 setDefaultShortcut();
