@@ -15,7 +15,7 @@
  */
 package de.badw.strauss.glyphpicker.controller.browser;
 
-import de.badw.strauss.glyphpicker.controller.options.PreferencesDialogAction;
+import de.badw.strauss.glyphpicker.controller.options.SettingsDialogAction;
 import de.badw.strauss.glyphpicker.controller.tab.GlyphSelectionChangeHandler;
 import de.badw.strauss.glyphpicker.controller.tab.AbstractTabController;
 import de.badw.strauss.glyphpicker.controller.action.CopyAction;
@@ -245,7 +245,7 @@ public class BrowserController extends AbstractTabController {
         if (CopyAction.KEY.equals(e.getPropertyName())
                 || InsertXmlAction.KEY.equals(e.getPropertyName())) {
             pcs.firePropertyChange(e);
-        } else if (PreferencesDialogAction.EDITING_OCCURRED.equals(e.getPropertyName())) {
+        } else if (SettingsDialogAction.EDITING_OCCURRED.equals(e.getPropertyName())) {
             loadData();
         }
 

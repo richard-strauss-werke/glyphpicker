@@ -20,7 +20,7 @@ import de.badw.strauss.glyphpicker.controller.action.CopyAction;
 import de.badw.strauss.glyphpicker.controller.action.InsertXmlAction;
 import de.badw.strauss.glyphpicker.controller.bitmap.ImageCache;
 import de.badw.strauss.glyphpicker.controller.browser.BrowserController;
-import de.badw.strauss.glyphpicker.controller.options.PreferencesDialogAction;
+import de.badw.strauss.glyphpicker.controller.options.SettingsDialogAction;
 import de.badw.strauss.glyphpicker.controller.tab.AbstractTabController;
 import de.badw.strauss.glyphpicker.controller.tab.TabFocusHandler;
 import de.badw.strauss.glyphpicker.controller.user.UserCollectionController;
@@ -147,10 +147,10 @@ public class MainController implements PropertyChangeListener {
         mainPanel = new MainPanel(userCollectionPanel, browserPanel,
                 AbstractPickerAction.MENU_SHORTCUT_NAME);
 
-        PreferencesDialogAction preferencesDialogAction = new PreferencesDialogAction(mainPanel,
+        SettingsDialogAction settingsDialogAction = new SettingsDialogAction(mainPanel,
                 browserController, config, imageCache, browserController.getGlyphTableList());
-        browserPanel.getControlPanel().getOptionsBtn().setAction(preferencesDialogAction);
-        userCollectionPanel.getControlPanel().getOptionsBtn().setAction(preferencesDialogAction);
+        browserPanel.getControlPanel().getOptionsBtn().setAction(settingsDialogAction);
+        userCollectionPanel.getControlPanel().getOptionsBtn().setAction(settingsDialogAction);
 
 
         final JTabbedPane tabbedPane = mainPanel.getTabbedPane();

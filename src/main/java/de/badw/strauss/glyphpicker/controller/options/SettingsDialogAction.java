@@ -33,7 +33,7 @@ import java.util.List;
  * An action to open the options dialog and process the results if editing
  * has occurred.
  */
-public class PreferencesDialogAction extends AbstractPickerAction {
+public class SettingsDialogAction extends AbstractPickerAction {
 
     private static final long serialVersionUID = 1L;
 
@@ -50,7 +50,7 @@ public class PreferencesDialogAction extends AbstractPickerAction {
     /**
      * The name of the class.
      */
-    private static final String CLASS_NAME = PreferencesDialogAction.class.getSimpleName();
+    private static final String CLASS_NAME = SettingsDialogAction.class.getSimpleName();
 
     /**
      * the ImageCache object
@@ -68,7 +68,7 @@ public class PreferencesDialogAction extends AbstractPickerAction {
     private final GlyphTableList glyphTableList;
 
     /**
-     * Instantiates a new PreferencesDialogAction.
+     * Instantiates a new SettingsDialogAction.
      *
      * @param parentPanel            The panel from which the data source editor has been opened
      * @param listener         the property change listener to be added to this action
@@ -76,8 +76,8 @@ public class PreferencesDialogAction extends AbstractPickerAction {
      * @param imageCache the ImageCache object
      * @param glyphTableList The original data source list
      */
-    public PreferencesDialogAction(JPanel parentPanel, PropertyChangeListener listener, Config config, ImageCache imageCache,
-                                   GlyphTableList glyphTableList) {
+    public SettingsDialogAction(JPanel parentPanel, PropertyChangeListener listener, Config config, ImageCache imageCache,
+                                GlyphTableList glyphTableList) {
         super(CLASS_NAME, Icons.OPTIONS_SHORTCUT_CENTERED, "ctrl P");
         addPropertyChangeListener(listener);
         this.parentPanel = parentPanel;
@@ -105,14 +105,14 @@ public class PreferencesDialogAction extends AbstractPickerAction {
                 optionsEditor, config, imageCache);
 
         JTabbedPane tabbedPane = new JTabbedPane();
-        tabbedPane.add(I18N.getString("PreferencesDialogAction.plugin"), optionsEditor);
-        tabbedPane.add(I18N.getString("PreferencesDialogAction.tables"), dataSourceEditor);
+        tabbedPane.add(I18N.getString("SettingsDialogAction.tables"), dataSourceEditor);
+        tabbedPane.add(I18N.getString("SettingsDialogAction.plugin"), optionsEditor);
 
         dataSourceEditorController.initList(glyphTableList.getData());
         pluginOptionsEditorController.setImageCacheListener();
 
         int dialogResult = JOptionPane.showConfirmDialog(parentPanel, tabbedPane,
-                I18N.getString("PreferencesDialogAction.label"),
+                I18N.getString("SettingsDialogAction.label"),
                 JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
 
         pluginOptionsEditorController.removeImageCacheListener();
