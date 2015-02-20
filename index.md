@@ -12,11 +12,12 @@ from a web server or from the file system.
 
 #### Features
 
-- Font- and image-based glyph rendering
-- Template engine for customized XML output
+- Rendition of glyphs either font-based or by displaying the images referenced in the XML source
+- Template engine for custom XML output
 - Support of oXygen's Text and Author mode
 - Search facilities
-- SOON Pre-configured access to glyph definitions provided by the SMuFL Browser and ENRICH gBank webservices 
+- SOON Pre-configured access to character declarations provided by the SMuFL Browser and ENRICH gBank webservices
+- Support for custom character declarations provided by a web server of a local file
 
 #### Requirements
 
@@ -26,9 +27,9 @@ The GlyphPicker plugin requires oXygen v15.0 or higher.
 
 `http://richard-strauss-werke.github.io/glyphpicker/update/latest.xml`
 
-#### Developers
+#### Contribute
 
-Fork or clone the source code at https://github.com/richard-strauss-werke/glyphpicker
+You can fork or clone the source code at https://github.com/richard-strauss-werke/glyphpicker; for setup instructions, see the `development` section on this page.
 
 #### Issues
 
