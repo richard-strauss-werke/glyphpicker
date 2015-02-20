@@ -3,14 +3,16 @@ layout: default
 title: "GlyphPicker"
 ---
 
-# GlyphPicker
+# <img src="img/EBC6.png" style="padding-right:1.5em"></img>GlyphPicker
 
-The GlyphPicker oXygen plugin adds a new component to oXygen, allowing to
+The GlyphPicker plugin adds a component to oXygen which allows to
 browse TEI character declarations and insert glyph references into TEI documents. 
+
+<img src="img/oxygen.png" style="width:100%"></img>
 
 #### Features
 
-- Rendition of glyphs either font-based or by displaying the images referenced in the XML source
+- Rendition of glyphs either font-based or by displaying images referenced in the TEI character declarations
 - Template engine for custom XML output
 - Support of oXygen's Text and Author mode
 - Search facilities
