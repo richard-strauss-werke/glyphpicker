@@ -8,7 +8,9 @@ title: "GlyphPicker"
 The GlyphPicker plugin adds a component to oXygen which allows to
 browse TEI character declarations and insert glyph references into TEI documents. 
 
-<img src="img/oxygen.png" style="width:100%"></img>
+<p style="text-align:center">
+<img src="img/oxygen.PNG" style="width:80%"></img>
+</p>
 
 #### Features
 
