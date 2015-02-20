@@ -80,7 +80,9 @@ public class ChangeViewAction extends AbstractPickerAction {
             panel.setListComponent(table);
             panel.getInfoPanel().setVisible(false);
             panel.revalidate();
-            table.setTopVisibleRow(row);
+            if (row != -1) {
+                table.setTopVisibleRow(row);
+            }
         } else {
             // NB get the old component's top row before the component
             // is replaced!
@@ -88,7 +90,9 @@ public class ChangeViewAction extends AbstractPickerAction {
             panel.setListComponent(list);
             panel.getInfoPanel().setVisible(true);
             panel.revalidate();
-            list.setTopVisibleRow(row);
+            if (row != -1) {
+                list.setTopVisibleRow(row);
+            }
         }
 
         if (shouldRequestFocus) {
