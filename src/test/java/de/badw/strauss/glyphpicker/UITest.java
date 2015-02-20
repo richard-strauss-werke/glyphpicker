@@ -72,6 +72,7 @@ public class UITest {
 
         mainController.loadData();
 
+        frame.setIconImage(new ImageIcon(UITest.class.getResource(GlyphPickerPluginExtension.PLUGIN_ICON)).getImage());
         frame.pack();
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
