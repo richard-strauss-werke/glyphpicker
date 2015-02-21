@@ -66,8 +66,8 @@ public class GlyphDefinition implements Cloneable {
     /**
      * The data source in which the current glyph definition originates.
      */
-    @XmlElement(name = "glyphTable")
-    private GlyphTable glyphTable;
+    @XmlElement(name = "dataSource")
+    private DataSource dataSource;
 
     /**
      * The icon component.
@@ -244,17 +244,17 @@ public class GlyphDefinition implements Cloneable {
      *
      * @return the data source
      */
-    public GlyphTable getGlyphTable() {
-        return glyphTable;
+    public DataSource getDataSource() {
+        return dataSource;
     }
 
     /**
      * Sets the data source.
      *
-     * @param glyphTable the new data source
+     * @param dataSource the new data source
      */
-    public void setGlyphTable(GlyphTable glyphTable) {
-        this.glyphTable = glyphTable;
+    public void setDataSource(DataSource dataSource) {
+        this.dataSource = dataSource;
     }
 
     /**
@@ -264,15 +264,15 @@ public class GlyphDefinition implements Cloneable {
      */
     public String getXmlString() {
 
-        String template = getGlyphTable().getTemplate();
+        String template = getDataSource().getTemplate();
 
         // use a default template if no template is specified
         if (template == null) {
-            return String.format("<g ref=\"%s#%s\"/>", getGlyphTable().getBasePath(), getId());
+            return String.format("<g ref=\"%s#%s\"/>", getDataSource().getBasePath(), getId());
         }
 
         return template
-                .replaceAll("\\$\\{basePath\\}", getGlyphTable().getBasePath() == null ? "" : getGlyphTable().getBasePath())
+                .replaceAll("\\$\\{basePath\\}", getDataSource().getBasePath() == null ? "" : getDataSource().getBasePath())
                 .replaceAll("\\$\\{id\\}", getId() == null ? "" : getId())
                 .replaceAll("\\$\\{char\\}", getMappedChars() == null ? "" : getMappedChars())
                 .replaceAll("\\$\\{num\\}", getNumericCharRef() == null ? "" : getNumericCharRef());

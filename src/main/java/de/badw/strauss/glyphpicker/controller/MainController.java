@@ -123,7 +123,7 @@ public class MainController implements PropertyChangeListener {
                 AbstractPickerAction.MENU_SHORTCUT_NAME);
 
         SettingsDialogAction settingsDialogAction = new SettingsDialogAction(mainPanel,
-                browserController, config, imageCache, browserController.getGlyphTableList());
+                browserController, config, imageCache, browserController.getDataSourceList());
         browserPanel.getControlPanel().getOptionsBtn().setAction(settingsDialogAction);
         userCollectionPanel.getControlPanel().getOptionsBtn().setAction(settingsDialogAction);
 

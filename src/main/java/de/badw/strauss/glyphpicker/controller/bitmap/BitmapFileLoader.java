@@ -97,7 +97,7 @@ public class BitmapFileLoader implements BitmapLoader {
         BufferedImage bi = getImageFromFile(imageFile);
         if (bi != null) {
             int scaledSize = Math
-                    .round(containerSize * d.getGlyphTable().getSizeFactor());
+                    .round(containerSize * d.getDataSource().getSizeFactor());
             return new GlyphBitmapIcon(imageProcessor.scaleToBound(bi, scaledSize, scaledSize),
                     scaledSize);
         }

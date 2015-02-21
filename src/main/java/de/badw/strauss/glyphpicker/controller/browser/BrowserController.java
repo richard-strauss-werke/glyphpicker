@@ -22,9 +22,9 @@ import de.badw.strauss.glyphpicker.controller.settings.SettingsDialogAction;
 import de.badw.strauss.glyphpicker.controller.tab.AbstractTabController;
 import de.badw.strauss.glyphpicker.controller.tab.GlyphSelectionChangeHandler;
 import de.badw.strauss.glyphpicker.model.Config;
+import de.badw.strauss.glyphpicker.model.DataSource;
+import de.badw.strauss.glyphpicker.model.DataSourceList;
 import de.badw.strauss.glyphpicker.model.GlyphDefinition;
-import de.badw.strauss.glyphpicker.model.GlyphTable;
-import de.badw.strauss.glyphpicker.model.GlyphTableList;
 import de.badw.strauss.glyphpicker.view.TabPanel;
 
 import javax.swing.*;
@@ -48,7 +48,7 @@ public class BrowserController extends AbstractTabController {
     /**
      * The list of all data sources.
      */
-    private final GlyphTableList glyphTableList;
+    private final DataSourceList dataSourceList;
 
     /**
      * The add action.
@@ -77,8 +77,8 @@ public class BrowserController extends AbstractTabController {
         super(panel, config, config.getBrowserSearchFieldScopeIndex(), config
                 .getBrowserViewIndex(), imageCache);
 
-        glyphTableList = config.getGlyphTables();
-        controlPanel.getDataSourceCombo().setModel(glyphTableList);
+        dataSourceList = config.getGlyphTables();
+        controlPanel.getDataSourceCombo().setModel(dataSourceList);
 
         setAdditionalActions();
 
@@ -91,8 +91,8 @@ public class BrowserController extends AbstractTabController {
      *
      * @return the list
      */
-    public GlyphTableList getGlyphTableList() {
-        return glyphTableList;
+    public DataSourceList getDataSourceList() {
+        return dataSourceList;
     }
 
     /**
@@ -152,14 +152,14 @@ public class BrowserController extends AbstractTabController {
             index = 0;
         }
 
-        if (index > glyphTableList.getSize() - 1) {
+        if (index > dataSourceList.getSize() - 1) {
             showNoDataSourceMessage();
             return;
         }
 
-        GlyphTable glyphTable = glyphTableList.getDataSourceAt(index);
+        DataSource dataSource = dataSourceList.getDataSourceAt(index);
 
-        if (glyphTable == null) {
+        if (dataSource == null) {
             showNoDataSourceMessage();
             return;
         }
@@ -169,7 +169,7 @@ public class BrowserController extends AbstractTabController {
 
         tabPanel.setMask(true);
 
-        teiLoadWorker = new TeiLoadWorker(glyphTable);
+        teiLoadWorker = new TeiLoadWorker(dataSource);
 
         teiLoadListener = new PropertyChangeListener() {
             @Override
@@ -232,7 +232,7 @@ public class BrowserController extends AbstractTabController {
             // set the loading path as first item in the pathComboModel
             int index = controlPanel.getDataSourceCombo().getSelectedIndex();
             if (index != -1) {
-                glyphTableList.setFirstIndex(index);
+                dataSourceList.setFirstIndex(index);
             }
         }
         pcs.firePropertyChange(DATA_LOADED, null, this);

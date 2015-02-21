@@ -126,7 +126,7 @@ public class BitmapUrlLoader implements BitmapLoader {
             BufferedImage bi = getImageFromUrl(imagePath + REQUEST_PARAMETER_STRING);
             if (bi != null) {
                 int scaledSize = Math
-                        .round(containerSize * d.getGlyphTable().getSizeFactor());
+                        .round(containerSize * d.getDataSource().getSizeFactor());
                 Image scaledImage = imageProcessor.scaleToBound(bi, scaledSize, scaledSize);
 
                 if (imageCache != null) {

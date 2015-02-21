@@ -37,7 +37,7 @@ public class TeiLoadWorkerTest {
         StandalonePluginWorkspace workspace = mock(StandalonePluginWorkspace.class);
         when(workspace.getPreferencesDirectory()).thenReturn(TestHelper.getTempFolder());
 
-        GlyphTable t = new GlyphTable();
+        DataSource t = new DataSource();
         t.setBasePath("http://unknown-asdf1099nsdkjds89sdfklsdf.de");
 
         TeiLoadWorker w = new TeiLoadWorker(t);

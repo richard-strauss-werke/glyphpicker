@@ -25,7 +25,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @XmlRootElement(name = "glyphTable")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class GlyphTable implements Cloneable {
+public class DataSource implements Cloneable {
 
     /**
      * The vector glyph renderer code.
@@ -98,9 +98,9 @@ public class GlyphTable implements Cloneable {
     private boolean parseMapping = false;
 
     /**
-     * Instantiates a new GlyphTable.
+     * Instantiates a new DataSource.
      */
-    public GlyphTable() {
+    public DataSource() {
     }
 
     /**
@@ -277,7 +277,7 @@ public class GlyphTable implements Cloneable {
      * @see java.lang.Object#clone()
      */
     @Override
-    public GlyphTable clone() throws CloneNotSupportedException {
-        return (GlyphTable) super.clone();
+    public DataSource clone() throws CloneNotSupportedException {
+        return (DataSource) super.clone();
     }
 }

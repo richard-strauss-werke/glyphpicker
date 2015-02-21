@@ -8,7 +8,7 @@
     <userViewIndex>0</userViewIndex>
     <browserViewIndex>0</browserViewIndex>
     <glyphTables>
-        <glyphTable>
+        <dataSource>
             <name>Edirom SMuFL Browser</name>
             <path>http://edirom.de/smufl-browser/index.xml</path>
             <font>BravuraText</font>
@@ -18,8 +18,8 @@
             <typeAttributeValue>smufl</typeAttributeValue>
             <subtypeAttributeValue></subtypeAttributeValue>
             <parseMapping>true</parseMapping>
-        </glyphTable>
-        <glyphTable>
+        </dataSource>
+        <dataSource>
             <name>ENRICH gBank</name>
             <path>http://richard-strauss-werke.github.io/glyphpicker/testdata/gBankImages/gBank.xml</path>
             <font>Andron Scriptor Web</font>
@@ -29,6 +29,6 @@
             <typeAttributeValue></typeAttributeValue>
             <subtypeAttributeValue>PUA</subtypeAttributeValue>
             <parseMapping>true</parseMapping>
-        </glyphTable>
+        </dataSource>
     </glyphTables>
 </config>

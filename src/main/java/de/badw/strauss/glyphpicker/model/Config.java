@@ -82,7 +82,7 @@ public class Config {
      * The data sources.
      */
     @XmlElement(name = "glyphTables")
-    private GlyphTableList glyphTables = null;
+    private DataSourceList glyphTables = null;
     /**
      * The plugin's config directory
      */
@@ -258,7 +258,7 @@ public class Config {
      *
      * @return the data sources
      */
-    public GlyphTableList getGlyphTables() {
+    public DataSourceList getGlyphTables() {
         return glyphTables;
     }
 
@@ -267,7 +267,7 @@ public class Config {
      *
      * @param glyphTables the new data sources
      */
-    public void setGlyphTables(GlyphTableList glyphTables) {
+    public void setGlyphTables(DataSourceList glyphTables) {
         this.glyphTables = glyphTables;
     }
 

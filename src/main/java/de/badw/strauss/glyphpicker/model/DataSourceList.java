@@ -24,7 +24,7 @@ import java.util.List;
  */
 @XmlRootElement(name = "glyphTables")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class GlyphTableList extends AbstractListModel<String> implements
+public class DataSourceList extends AbstractListModel<String> implements
         ComboBoxModel<String> {
 
     private static final long serialVersionUID = 1L;
@@ -44,12 +44,12 @@ public class GlyphTableList extends AbstractListModel<String> implements
      * The data sources.
      */
     @XmlElement(name = "glyphTable")
-    private List<GlyphTable> data;
+    private List<DataSource> data;
 
     /**
-     * Instantiates a new GlyphTableList.
+     * Instantiates a new DataSourceList.
      */
-    public GlyphTableList() {
+    public DataSourceList() {
     }
 
     /**
@@ -68,7 +68,7 @@ public class GlyphTableList extends AbstractListModel<String> implements
      */
     public void setFirstIndex(int index) {
 
-        GlyphTable item = getDataSourceAt(index);
+        DataSource item = getDataSourceAt(index);
 
         data.add(0, item);
         for (int i = data.size() - 1; i > 0; i--) {
@@ -117,7 +117,7 @@ public class GlyphTableList extends AbstractListModel<String> implements
      * @param i the index
      * @return the data source
      */
-    public GlyphTable getDataSourceAt(int i) {
+    public DataSource getDataSourceAt(int i) {
         return data.get(i);
     }
 
@@ -126,7 +126,7 @@ public class GlyphTableList extends AbstractListModel<String> implements
      *
      * @return the data
      */
-    public List<GlyphTable> getData() {
+    public List<DataSource> getData() {
         return data;
     }
 

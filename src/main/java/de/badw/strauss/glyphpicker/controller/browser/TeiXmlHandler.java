@@ -16,9 +16,9 @@
 package de.badw.strauss.glyphpicker.controller.browser;
 
 import com.icl.saxon.aelfred.DefaultHandler;
+import de.badw.strauss.glyphpicker.model.DataSource;
 import de.badw.strauss.glyphpicker.model.GlyphDefinition;
 import de.badw.strauss.glyphpicker.model.GlyphReference;
-import de.badw.strauss.glyphpicker.model.GlyphTable;
 import org.apache.log4j.Logger;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
@@ -50,7 +50,7 @@ public class TeiXmlHandler extends DefaultHandler {
     /**
      * The data source providing handler parameters.
      */
-    private final GlyphTable glyphTable;
+    private final DataSource dataSource;
     /**
      * A string buffer for the text content of elements.
      */
@@ -87,15 +87,15 @@ public class TeiXmlHandler extends DefaultHandler {
     /**
      * Instantiates a new TeiXmlHandler.
      *
-     * @param glyphTable The data source providing handler parameters
+     * @param dataSource The data source providing handler parameters
      */
-    public TeiXmlHandler(GlyphTable glyphTable) {
-        this.glyphTable = glyphTable;
-        String mappingTypeValue = glyphTable.getTypeAttributeValue();
+    public TeiXmlHandler(DataSource dataSource) {
+        this.dataSource = dataSource;
+        String mappingTypeValue = dataSource.getTypeAttributeValue();
         if (mappingTypeValue == null) {
             mappingTypeValue = "";
         }
-        String mappingSubTypeValue = glyphTable.getSubtypeAttributeValue();
+        String mappingSubTypeValue = dataSource.getSubtypeAttributeValue();
         if (mappingSubTypeValue == null) {
             mappingSubTypeValue = "";
         }
@@ -115,7 +115,7 @@ public class TeiXmlHandler extends DefaultHandler {
             mappingMatcher = new MappingAllMatcher();
         }
 
-        if (glyphTable.getParseMapping()) {
+        if (dataSource.getParseMapping()) {
             mappingParser = new MappingUPlusParser();
         } else {
             mappingParser = new MappingNoParser();
@@ -148,7 +148,7 @@ public class TeiXmlHandler extends DefaultHandler {
             currentGlyphDefinition = new GlyphDefinition();
             currentGlyphDefinition.setId(attrs.getValue("xml:id"));
             currentGlyphDefinition.setRange(range);
-            currentGlyphDefinition.setGlyphTable(glyphTable);
+            currentGlyphDefinition.setDataSource(dataSource);
             inChar = true;
         } else if ("charDecl".equals(qName)) {
             range = "";

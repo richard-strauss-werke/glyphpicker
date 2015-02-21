@@ -18,8 +18,8 @@ package de.badw.strauss.glyphpicker.controller.settings;
 import de.badw.strauss.glyphpicker.controller.action.AbstractPickerAction;
 import de.badw.strauss.glyphpicker.controller.bitmap.ImageCache;
 import de.badw.strauss.glyphpicker.model.Config;
-import de.badw.strauss.glyphpicker.model.GlyphTable;
-import de.badw.strauss.glyphpicker.model.GlyphTableList;
+import de.badw.strauss.glyphpicker.model.DataSource;
+import de.badw.strauss.glyphpicker.model.DataSourceList;
 import de.badw.strauss.glyphpicker.view.options.DataSourceEditor;
 import de.badw.strauss.glyphpicker.view.options.OptionsEditor;
 import ro.sync.ui.Icons;
@@ -61,7 +61,7 @@ public class SettingsDialogAction extends AbstractPickerAction {
     /**
      * The original data source list.
      */
-    private final GlyphTableList glyphTableList;
+    private final DataSourceList dataSourceList;
 
     /**
      * Instantiates a new SettingsDialogAction.
@@ -70,16 +70,16 @@ public class SettingsDialogAction extends AbstractPickerAction {
      * @param listener       the property change listener to be added to this action
      * @param config         The plugin's config
      * @param imageCache     the ImageCache object
-     * @param glyphTableList The original data source list
+     * @param dataSourceList The original data source list
      */
     public SettingsDialogAction(JPanel parentPanel, PropertyChangeListener listener, Config config, ImageCache imageCache,
-                                GlyphTableList glyphTableList) {
+                                DataSourceList dataSourceList) {
         super(CLASS_NAME, Icons.OPTIONS_SHORTCUT_CENTERED, "ctrl E");
         addPropertyChangeListener(listener);
         this.parentPanel = parentPanel;
         this.imageCache = imageCache;
         this.config = config;
-        this.glyphTableList = glyphTableList;
+        this.dataSourceList = dataSourceList;
         bindAcceleratorToComponent(this, parentPanel);
     }
 
@@ -104,7 +104,7 @@ public class SettingsDialogAction extends AbstractPickerAction {
         tabbedPane.add(I18N.getString("SettingsDialogAction.tables"), dataSourceEditor);
         tabbedPane.add(I18N.getString("SettingsDialogAction.plugin"), optionsEditor);
 
-        dataSourceEditorController.initList(glyphTableList.getData());
+        dataSourceEditorController.initList(dataSourceList.getData());
         pluginOptionsEditorController.setImageCacheListener();
 
         int dialogResult = JOptionPane.showConfirmDialog(parentPanel, tabbedPane,
@@ -114,7 +114,7 @@ public class SettingsDialogAction extends AbstractPickerAction {
         pluginOptionsEditorController.removeImageCacheListener();
 
 
-        List<GlyphTable> resultList;
+        List<DataSource> resultList;
         if (dialogResult == JOptionPane.OK_OPTION) {
             resultList = dataSourceEditorController.getEditingResults();
         } else {
@@ -122,10 +122,10 @@ public class SettingsDialogAction extends AbstractPickerAction {
         }
 
         if (resultList != null) {
-            glyphTableList.getData().clear();
-            glyphTableList.getData().addAll(resultList);
-            if (glyphTableList.getSize() > 0) {
-                glyphTableList.setSelectedItem(glyphTableList.getElementAt(0));
+            dataSourceList.getData().clear();
+            dataSourceList.getData().addAll(resultList);
+            if (dataSourceList.getSize() > 0) {
+                dataSourceList.setSelectedItem(dataSourceList.getElementAt(0));
             }
             firePropertyChange(EDITING_OCCURRED, null, null);
         }

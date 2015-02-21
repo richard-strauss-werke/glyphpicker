@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0">
+   <teiHeader>
+        <!-- ... -->
+      <encodingDesc>
+         <charDecl>
+            <desc>(a) Structural ligatures</desc>
+            <char xml:id="efa0">
+               <desc>LATIN SMALL LIGATURE AA CLOSED FORM</desc>
+
+               <charProp>
+                  <localName>entity</localName>
+                  <value>aacloselig</value>
+               </charProp>
+               <mapping type="MUFI" subtype="Unicode"></mapping>
+               <mapping type="MUFI" subtype="PUA">U+EFA0</mapping>
+               <mapping type="standardized">aa</mapping>
+               <graphic url="images/efa0.png"/>
+            </char>
+            <char xml:id="f204">
+               <desc>LATIN SMALL LETTER AE WITH RIGHT UPPER LOOP</desc>
+               <charProp>
+                  <localName>entity</localName>
+                  <value>aeligred</value>
+               </charProp>
+               <mapping type="MUFI" subtype="Unicode"></mapping>
+               <mapping type="MUFI" subtype="PUA">U+F204</mapping>
+               <mapping type="standardized">ae</mapping>
+               <graphic url="images/f204.png"/>
+            </char>
+            
+         </charDecl>
+
+          <charDecl>
+              <desc>(b) <hi>Structural</hi> ligatures</desc>
+              <!-- intentionally no xml:id -->
+              <char>
+                  <desc>LATIN SMALL LIGATURE AA CLOSED FORM</desc>
+
+                  <charProp>
+                      <localName>entity</localName>
+                      <value>aacloselig</value>
+                  </charProp>
+                  <mapping type="MUFI" subtype="PUA">U+F204</mapping>
+                  <graphic url="images/efa0.png"/>
+              </char>
+              <char xml:id="f204a">
+                  <desc>LATIN SMALL LETTER AE WITH RIGHT UPPER LOOP</desc>
+                  <charProp>
+                      <localName>entity</localName>
+                      <value>aeligred</value>
+                  </charProp>
+                  <mapping type="MUFI" subtype="Unicode"></mapping>
+                  <mapping type="MUFI" subtype="PUA">U+F204</mapping>
+                  <mapping type="standardized">ae</mapping>
+                  <graphic url="images/f204.png"/>
+              </char>
+
+          </charDecl>
+      </encodingDesc>
+
+   </teiHeader>
+</TEI>

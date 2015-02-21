@@ -15,7 +15,7 @@
  */
 package de.badw.strauss.glyphpicker.view.options;
 
-import de.badw.strauss.glyphpicker.model.GlyphTable;
+import de.badw.strauss.glyphpicker.model.DataSource;
 import de.badw.strauss.glyphpicker.model.options.FormItemConfig;
 
 import javax.swing.*;
@@ -59,7 +59,7 @@ public class DataSourceEditor extends JPanel {
     /**
      * The list component.
      */
-    private final JList<GlyphTable> list;
+    private final JList<DataSource> list;
 
     /**
      * The label's text field.
@@ -262,7 +262,7 @@ public class DataSourceEditor extends JPanel {
      *
      * @return the list component
      */
-    public JList<GlyphTable> getList() {
+    public JList<DataSource> getList() {
         return list;
     }
 

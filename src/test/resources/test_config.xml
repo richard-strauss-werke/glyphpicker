@@ -8,7 +8,7 @@
     <userViewIndex>0</userViewIndex>
     <browserViewIndex>0</browserViewIndex>
     <glyphTables>
-        <glyphTable>
+        <dataSource>
             <name>gBank (local, glyph)</name>
             <path>/Users/Lokaladmin/Desktop/gBankImages/test.xml</path>
             <font>Andron Scriptor Web</font>
@@ -18,8 +18,8 @@
             <typeAttributeValue></typeAttributeValue>
             <subtypeAttributeValue>PUA</subtypeAttributeValue>
             <parseMapping>true</parseMapping>
-        </glyphTable>
-        <glyphTable>
+        </dataSource>
+        <dataSource>
             <name>Edirom SMuFL Browser (web, bitmap)</name>
             <path>http://edirom.de/smufl-browser/index.xml</path>
             <font>BravuraText</font>
@@ -29,8 +29,8 @@
             <typeAttributeValue>smufl</typeAttributeValue>
             <subtypeAttributeValue></subtypeAttributeValue>
             <parseMapping>true</parseMapping>
-        </glyphTable>
-        <glyphTable>
+        </dataSource>
+        <dataSource>
             <name>SMuFL Browser (web, bitmap)</name>
             <path>http://richard-strauss-werke.github.io/glyphpicker/testdata/smuflBrowser/data/charDecl.xml</path>
             <font>BravuraText</font>
@@ -40,8 +40,8 @@
             <typeAttributeValue>smufl</typeAttributeValue>
             <subtypeAttributeValue></subtypeAttributeValue>
             <parseMapping>true</parseMapping>
-        </glyphTable>
-        <glyphTable>
+        </dataSource>
+        <dataSource>
             <name>SMuFL Browser (web, glyph)</name>
             <path>http://richard-strauss-werke.github.io/glyphpicker/testdata/smuflBrowser/data/charDecl.xml</path>
             <font>BravuraText</font>
@@ -51,8 +51,8 @@
             <typeAttributeValue>smufl</typeAttributeValue>
             <subtypeAttributeValue></subtypeAttributeValue>
             <parseMapping>true</parseMapping>
-        </glyphTable>
-        <glyphTable>
+        </dataSource>
+        <dataSource>
             <name>gBank (web, bitmap)</name>
             <path>http://richard-strauss-werke.github.io/glyphpicker/testdata/gBankImages/gBank.xml</path>
             <font>Andron Scriptor Web</font>
@@ -62,8 +62,8 @@
             <typeAttributeValue></typeAttributeValue>
             <subtypeAttributeValue>PUA</subtypeAttributeValue>
             <parseMapping>true</parseMapping>
-        </glyphTable>
-        <glyphTable>
+        </dataSource>
+        <dataSource>
             <name>gBank (web, glyph)</name>
             <path>http://richard-strauss-werke.github.io/glyphpicker/testdata/gBankImages/gBank.xml</path>
             <font>Andron Scriptor Web</font>
@@ -73,8 +73,8 @@
             <typeAttributeValue></typeAttributeValue>
             <subtypeAttributeValue>PUA</subtypeAttributeValue>
             <parseMapping>true</parseMapping>
-        </glyphTable>
-        <glyphTable>
+        </dataSource>
+        <dataSource>
             <name>SMuFL Browser (local, bitmap)</name>
             <path>/Users/Ahlse/Desktop/SMuFL-Browser-1.0/data/charDecl.xml</path>
             <font>BravuraText</font>
@@ -84,8 +84,8 @@
             <typeAttributeValue>smufl</typeAttributeValue>
             <subtypeAttributeValue></subtypeAttributeValue>
             <parseMapping>true</parseMapping>
-        </glyphTable>
-        <glyphTable>
+        </dataSource>
+        <dataSource>
             <name>SMuFL Browser (local, glyph)</name>
             <path>/Users/Ahlse/Desktop/SMuFL-Browser-1.0/data/charDecl.xml</path>
             <font>BravuraText</font>
@@ -95,8 +95,8 @@
             <typeAttributeValue>smufl</typeAttributeValue>
             <subtypeAttributeValue></subtypeAttributeValue>
             <parseMapping>true</parseMapping>
-        </glyphTable>
-        <glyphTable>
+        </dataSource>
+        <dataSource>
             <name>gBank (local, bitmap)</name>
             <path>/Users/Ahlse/Desktop/gBankImages/gBank.xml</path>
             <font>Andron Scriptor Web</font>
@@ -106,8 +106,8 @@
             <typeAttributeValue></typeAttributeValue>
             <subtypeAttributeValue>PUA</subtypeAttributeValue>
             <parseMapping>true</parseMapping>
-        </glyphTable>
-        <glyphTable>
+        </dataSource>
+        <dataSource>
             <name>gBank (local, glyph)</name>
             <path>/Users/Ahlse/Desktop/gBankImages/gBank.xml</path>
             <font>Andron Scriptor Web</font>
@@ -117,8 +117,8 @@
             <typeAttributeValue></typeAttributeValue>
             <subtypeAttributeValue>PUA</subtypeAttributeValue>
             <parseMapping>true</parseMapping>
-        </glyphTable>
-        <glyphTable>
+        </dataSource>
+        <dataSource>
             <name>SMuFL Browser (localhost, glyph)</name>
             <path>http://localhost:8080/exist/apps/smufl-browser/index.xml</path>
             <font>BravuraText</font>
@@ -128,8 +128,8 @@
             <typeAttributeValue>smufl</typeAttributeValue>
             <subtypeAttributeValue></subtypeAttributeValue>
             <parseMapping>true</parseMapping>
-        </glyphTable>
-        <glyphTable>
+        </dataSource>
+        <dataSource>
             <name>SMuFL Browser (localhost, bitmap)</name>
             <path>http://localhost:8080/exist/apps/smufl-browser/index.xml</path>
             <font>BravuraText</font>
@@ -139,6 +139,6 @@
             <typeAttributeValue>smufl</typeAttributeValue>
             <subtypeAttributeValue></subtypeAttributeValue>
             <parseMapping>true</parseMapping>
-        </glyphTable>
+        </dataSource>
     </glyphTables>
 </config>

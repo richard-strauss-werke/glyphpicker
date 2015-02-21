@@ -81,9 +81,9 @@ public class GlyphScaledVectorRenderer extends GlyphRenderer {
     public Component getRendererComponent(GlyphDefinition gd, boolean isSelected) {
 
         ch = gd.getMappedChars();
-        fontName = gd.getGlyphTable().getFontName();
+        fontName = gd.getDataSource().getFontName();
 
-        factor = gd.getGlyphTable().getSizeFactor();
+        factor = gd.getDataSource().getSizeFactor();
 
         configureBackground(isSelected);
 
