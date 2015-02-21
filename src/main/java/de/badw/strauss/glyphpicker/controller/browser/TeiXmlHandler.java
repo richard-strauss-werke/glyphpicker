@@ -166,7 +166,7 @@ public class TeiXmlHandler extends DefaultHandler {
      * @param attrs the attributes
      */
     private void onStartElementInChar(String qName, Attributes attrs) {
-        if ("charName".equals(qName) || "mapping".equals(qName)
+        if ("charName".equals(qName) || "glyphName".equals(qName) || "mapping".equals(qName)
                 || "desc".equals(qName)) {
             textContent.setLength(0);
 
@@ -236,7 +236,7 @@ public class TeiXmlHandler extends DefaultHandler {
      * @param qName the qName
      */
     private void onEndElementInChar(String qName) {
-        if ("charName".equals(qName)) {
+        if ("charName".equals(qName) || "glyphName".equals(qName)) {
             currentGlyphDefinition.setCharName(textContent.toString());
         } else if (inMapping && "mapping".equals(qName)) {
             currentGlyphDefinition.setMappedChars(mappingParser.parse(textContent

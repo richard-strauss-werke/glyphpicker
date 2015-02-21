@@ -271,8 +271,6 @@ public class GlyphDefinition implements Cloneable {
             return String.format("<g ref=\"%s#%s\"/>", getGlyphTable().getBasePath(), getId());
         }
 
-        
-        
         return template
                 .replaceAll("\\$\\{basePath\\}", getGlyphTable().getBasePath() == null ? "" : getGlyphTable().getBasePath())
                 .replaceAll("\\$\\{id\\}", getId() == null ? "" : getId())
