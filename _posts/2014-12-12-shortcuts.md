@@ -2,7 +2,7 @@
 layout: page
 title: "Keyboard Shortcuts"
 category: doc
-date: 2014-12-16 06:23:59
+date: 2014-12-12 06:23:59
 ---
 
 ### Plugin shortcut

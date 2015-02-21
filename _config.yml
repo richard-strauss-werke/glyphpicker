@@ -27,7 +27,7 @@ baseurl: '/glyphpicker'
 permalink: none
 
 # Syntax highlighting
-highlighter: none
+highlighter: 'pygments'
 
 # Since these are pages, it doesn't really matter
 future: true
