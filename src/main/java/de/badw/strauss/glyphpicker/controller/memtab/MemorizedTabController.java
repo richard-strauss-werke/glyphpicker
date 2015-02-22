@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package de.badw.strauss.glyphpicker.controller.user;
+package de.badw.strauss.glyphpicker.controller.memtab;
 
 import ca.odell.glazedlists.event.ListEvent;
 import ca.odell.glazedlists.event.ListEventListener;
@@ -35,14 +35,14 @@ import java.util.Properties;
 import java.util.Set;
 
 /**
- * The user collection tab controller.
+ * The memorized tab tab controller.
  */
-public class UserCollectionController extends AbstractTabController {
+public class MemorizedTabController extends AbstractTabController {
 
     /**
-     * The user collection data loader.
+     * The memorized tab data loader.
      */
-    private final UserCollectionLoader loader;
+    private final MemorizedCharactersLoader loader;
     /**
      * The set of actions whose activation depends on the sync status of memory / disk lists.
      */
@@ -61,21 +61,21 @@ public class UserCollectionController extends AbstractTabController {
     private MoveDownAction moveDownAction;
 
     /**
-     * Instantiates a new UserCollectionController.
+     * Instantiates a new MemorizedTabController.
      *
-     * @param panel      the user collection tab's container panel
+     * @param panel      the memorized tab tab's container panel
      * @param config     the plugin config
      * @param properties the plugin properties
      * @param workspace  the workspace
      * @param imageCache the image cache
      */
-    public UserCollectionController(TabPanel panel, Config config,
-                                    Properties properties, StandalonePluginWorkspace workspace, ImageCache imageCache) {
+    public MemorizedTabController(TabPanel panel, Config config,
+                                  Properties properties, StandalonePluginWorkspace workspace, ImageCache imageCache) {
 
         super(panel, config, config.getUserSearchFieldScopeIndex(), config
                 .getUserViewIndex(), imageCache);
 
-        loader = new UserCollectionLoader(workspace, properties);
+        loader = new MemorizedCharactersLoader(workspace, properties);
 
         setAdditionalActions();
 
@@ -154,11 +154,11 @@ public class UserCollectionController extends AbstractTabController {
     }
 
     /**
-     * Loads the user collection data.
+     * Loads the memorized tab data.
      */
     public void loadData() {
         tabPanel.setMask(true);
-        final UserCollectionController thisController = this;
+        final MemorizedTabController thisController = this;
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
@@ -179,7 +179,7 @@ public class UserCollectionController extends AbstractTabController {
     }
 
     /**
-     * Saves the user collection data.
+     * Saves the memorized tab data.
      */
     public void saveData() {
         loader.save(new GlyphDefinitions(glyphList));
@@ -187,7 +187,7 @@ public class UserCollectionController extends AbstractTabController {
     }
 
     /**
-     * Adds a glyph definition to the user collection.
+     * Adds a glyph definition to the memorized tab.
      *
      * @param d the glyph definition to add
      */

@@ -16,14 +16,14 @@
 package de.badw.strauss.glyphpicker.controller;
 
 import de.badw.strauss.glyphpicker.controller.action.AbstractPickerAction;
-import de.badw.strauss.glyphpicker.controller.action.CopyAction;
+import de.badw.strauss.glyphpicker.controller.action.MemorizeAction;
 import de.badw.strauss.glyphpicker.controller.action.InsertXmlAction;
+import de.badw.strauss.glyphpicker.controller.alltab.AllTabController;
 import de.badw.strauss.glyphpicker.controller.bitmap.ImageCache;
-import de.badw.strauss.glyphpicker.controller.browser.BrowserController;
+import de.badw.strauss.glyphpicker.controller.memtab.MemorizedTabController;
 import de.badw.strauss.glyphpicker.controller.settings.SettingsDialogAction;
 import de.badw.strauss.glyphpicker.controller.tab.AbstractTabController;
 import de.badw.strauss.glyphpicker.controller.tab.TabFocusHandler;
-import de.badw.strauss.glyphpicker.controller.user.UserCollectionController;
 import de.badw.strauss.glyphpicker.model.Config;
 import de.badw.strauss.glyphpicker.model.GlyphDefinition;
 import de.badw.strauss.glyphpicker.view.ControlPanel;
@@ -72,21 +72,21 @@ public class MainController implements PropertyChangeListener {
      */
     private final ConfigLoader configLoader;
     /**
-     * The browser controller.
+     * The allTab controller.
      */
-    private final BrowserController browserController;
+    private final AllTabController allTabController;
     /**
-     * The user collection controller.
+     * The memorized tab controller.
      */
-    private final UserCollectionController userCollectionController;
+    private final MemorizedTabController memorizedTabController;
     /**
-     * The browser panel.
+     * The allTab panel.
      */
-    private final TabPanel browserPanel;
+    private final TabPanel allTabPanel;
     /**
-     * The user collection panel.
+     * The memorized tab panel.
      */
-    private final TabPanel userCollectionPanel;
+    private final TabPanel memorizedTabPanel;
 
     /**
      * Instantiates a new main controller.
@@ -110,31 +110,31 @@ public class MainController implements PropertyChangeListener {
 
         ImageCache imageCache = createImageCache(config);
 
-        browserPanel = new TabPanel(new ControlPanel(true));
-        browserController = new BrowserController(browserPanel, config, imageCache);
-        browserController.addPropertyChangeListener(this);
+        allTabPanel = new TabPanel(new ControlPanel(true));
+        allTabController = new AllTabController(allTabPanel, config, imageCache);
+        allTabController.addPropertyChangeListener(this);
 
-        userCollectionPanel = new TabPanel(new ControlPanel(false));
-        userCollectionController = new UserCollectionController(
-                userCollectionPanel, config, properties, workspace, imageCache);
-        userCollectionController.addPropertyChangeListener(this);
+        memorizedTabPanel = new TabPanel(new ControlPanel(false));
+        memorizedTabController = new MemorizedTabController(
+                memorizedTabPanel, config, properties, workspace, imageCache);
+        memorizedTabController.addPropertyChangeListener(this);
 
-        mainPanel = new MainPanel(userCollectionPanel, browserPanel,
+        mainPanel = new MainPanel(memorizedTabPanel, allTabPanel,
                 AbstractPickerAction.MENU_SHORTCUT_NAME);
 
         SettingsDialogAction settingsDialogAction = new SettingsDialogAction(mainPanel,
-                browserController, config, imageCache, browserController.getDataSourceList());
-        browserPanel.getControlPanel().getOptionsBtn().setAction(settingsDialogAction);
-        userCollectionPanel.getControlPanel().getOptionsBtn().setAction(settingsDialogAction);
+                allTabController, config, imageCache, allTabController.getDataSourceList());
+        allTabPanel.getControlPanel().getOptionsBtn().setAction(settingsDialogAction);
+        memorizedTabPanel.getControlPanel().getOptionsBtn().setAction(settingsDialogAction);
 
 
         final JTabbedPane tabbedPane = mainPanel.getTabbedPane();
         tabbedPane.setSelectedIndex(config.getTabIndex());
 
         final TabFocusHandler focusHandler = new TabFocusHandler(tabbedPane);
-        focusHandler.setTabComponentFocus(0, userCollectionPanel
+        focusHandler.setTabComponentFocus(0, memorizedTabPanel
                 .getControlPanel().getAutoCompleteCombo());
-        focusHandler.setTabComponentFocus(1, browserPanel.getControlPanel()
+        focusHandler.setTabComponentFocus(1, allTabPanel.getControlPanel()
                 .getAutoCompleteCombo());
 
         mainPanel.addFocusListener(new FocusAdapter() {
@@ -225,31 +225,31 @@ public class MainController implements PropertyChangeListener {
     }
 
     /**
-     * Loads glyph definition to user collection and browser tabs.
+     * Loads glyph definition to memorized tab and allTab tabs.
      */
     public void loadData() {
-        userCollectionController.loadData();
-        browserController.loadData();
+        memorizedTabController.loadData();
+        allTabController.loadData();
     }
 
     /**
-     * Saves config and user collection data.
+     * Saves config and memorized tab data.
      */
     public void saveData() {
         config.setTabIndex(mainPanel.getTabbedPane().getSelectedIndex());
-        config.setBrowserSearchFieldScopeIndex(browserPanel.getControlPanel()
+        config.setAllTabSearchFieldScopeIndex(allTabPanel.getControlPanel()
                 .getAutoCompleteScopeCombo().getSelectedIndex());
-        config.setUserSearchFieldScopeIndex(userCollectionPanel
+        config.setUserSearchFieldScopeIndex(memorizedTabPanel
                 .getControlPanel().getAutoCompleteScopeCombo()
                 .getSelectedIndex());
 
-        config.setBrowserViewIndex((browserPanel.getListComponent() instanceof GlyphGrid) ? 0
+        config.setAllTabViewIndex((allTabPanel.getListComponent() instanceof GlyphGrid) ? 0
                 : 1);
-        config.setUserViewIndex((userCollectionPanel.getListComponent() instanceof GlyphGrid) ? 0
+        config.setUserViewIndex((memorizedTabPanel.getListComponent() instanceof GlyphGrid) ? 0
                 : 1);
 
         configLoader.save();
-        userCollectionController.saveData();
+        memorizedTabController.saveData();
     }
 
     /* (non-Javadoc)
@@ -259,11 +259,11 @@ public class MainController implements PropertyChangeListener {
     public void propertyChange(PropertyChangeEvent e) {
         if (InsertXmlAction.KEY.equals(e.getPropertyName())) {
             pcs.firePropertyChange(e);
-        } else if (CopyAction.KEY.equals(e.getPropertyName())) {
+        } else if (MemorizeAction.KEY.equals(e.getPropertyName())) {
             try {
                 GlyphDefinition clone = ((GlyphDefinition) e.getNewValue())
                         .clone();
-                userCollectionController.addGlyphDefinition(clone);
+                memorizedTabController.addGlyphDefinition(clone);
                 mainPanel.highlightTabTitle(0);
             } catch (CloneNotSupportedException e1) {
                 LOGGER.error(e1);
@@ -272,10 +272,10 @@ public class MainController implements PropertyChangeListener {
 
             int selectedIndex = mainPanel.getTabbedPane().getSelectedIndex();
 
-            if (e.getNewValue() instanceof BrowserController && selectedIndex == 1) {
-                browserPanel.getControlPanel().getAutoCompleteCombo().requestFocusInWindow();
-            } else if (e.getNewValue() instanceof UserCollectionController && selectedIndex == 0) {
-                userCollectionPanel.getControlPanel().getAutoCompleteCombo().requestFocusInWindow();
+            if (e.getNewValue() instanceof AllTabController && selectedIndex == 1) {
+                allTabPanel.getControlPanel().getAutoCompleteCombo().requestFocusInWindow();
+            } else if (e.getNewValue() instanceof MemorizedTabController && selectedIndex == 0) {
+                memorizedTabPanel.getControlPanel().getAutoCompleteCombo().requestFocusInWindow();
             }
 
         }

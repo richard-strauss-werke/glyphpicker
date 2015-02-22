@@ -13,9 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package de.badw.strauss.glyphpicker.controller.browser;
+package de.badw.strauss.glyphpicker.controller.alltab;
 
-import de.badw.strauss.glyphpicker.controller.action.CopyAction;
+import de.badw.strauss.glyphpicker.controller.action.MemorizeAction;
 import de.badw.strauss.glyphpicker.controller.action.InsertXmlAction;
 import de.badw.strauss.glyphpicker.controller.bitmap.ImageCache;
 import de.badw.strauss.glyphpicker.controller.settings.SettingsDialogAction;
@@ -41,9 +41,9 @@ import java.util.ResourceBundle;
 import java.util.Set;
 
 /**
- * The browser tab controller.
+ * The allTab tab controller.
  */
-public class BrowserController extends AbstractTabController {
+public class AllTabController extends AbstractTabController {
 
     /**
      * The list of all data sources.
@@ -66,16 +66,16 @@ public class BrowserController extends AbstractTabController {
     private PropertyChangeListener teiLoadListener;
 
     /**
-     * Instantiates a new BrowserController.
+     * Instantiates a new AllTabController.
      *
-     * @param panel      the browser tab's container panel
+     * @param panel      the allTab tab's container panel
      * @param config     the plugin config
      * @param imageCache the image cache
      */
-    public BrowserController(TabPanel panel, Config config, ImageCache imageCache) {
+    public AllTabController(TabPanel panel, Config config, ImageCache imageCache) {
 
-        super(panel, config, config.getBrowserSearchFieldScopeIndex(), config
-                .getBrowserViewIndex(), imageCache);
+        super(panel, config, config.getAllTabSearchFieldScopeIndex(), config
+                .getAllTabViewIndex(), imageCache);
 
         dataSourceList = config.getGlyphTables();
         controlPanel.getDataSourceCombo().setModel(dataSourceList);
@@ -96,10 +96,10 @@ public class BrowserController extends AbstractTabController {
     }
 
     /**
-     * Sets the browser panel's additional actions.
+     * Sets the allTab panel's additional actions.
      */
     private void setAdditionalActions() {
-        addAction = new CopyAction(tabPanel, this, selectionModel);
+        addAction = new MemorizeAction(tabPanel, this, selectionModel);
         addAction.setEnabled(false);
         controlPanel.addToToolbar(addAction, 0);
     }
@@ -243,7 +243,7 @@ public class BrowserController extends AbstractTabController {
      */
     @Override
     public void propertyChange(PropertyChangeEvent e) {
-        if (CopyAction.KEY.equals(e.getPropertyName())
+        if (MemorizeAction.KEY.equals(e.getPropertyName())
                 || InsertXmlAction.KEY.equals(e.getPropertyName())) {
             pcs.firePropertyChange(e);
         } else if (SettingsDialogAction.EDITING_OCCURRED.equals(e.getPropertyName())) {

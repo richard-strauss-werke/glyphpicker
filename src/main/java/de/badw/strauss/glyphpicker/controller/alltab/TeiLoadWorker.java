@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package de.badw.strauss.glyphpicker.controller.browser;
+package de.badw.strauss.glyphpicker.controller.alltab;
 
 import com.icl.saxon.aelfred.SAXParserFactoryImpl;
 import de.badw.strauss.glyphpicker.model.DataSource;

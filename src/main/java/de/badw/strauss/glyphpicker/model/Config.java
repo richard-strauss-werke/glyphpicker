@@ -62,22 +62,22 @@ public class Config {
      * The user search field scope index.
      */
     @XmlElement
-    private int userSearchFieldScopeIndex = 0;
+    private int memTabSearchFieldScopeIndex = 0;
     /**
-     * The browser search field scope index.
+     * The allTab search field scope index.
      */
     @XmlElement
-    private int browserSearchFieldScopeIndex = 0;
+    private int allTabSearchFieldScopeIndex = 0;
     /**
      * The user view index.
      */
     @XmlElement
     private int userViewIndex = 0;
     /**
-     * The browser view index.
+     * The allTab view index.
      */
     @XmlElement
-    private int browserViewIndex = 0;
+    private int allTabViewIndex = 0;
     /**
      * The data sources.
      */
@@ -187,34 +187,34 @@ public class Config {
      * @return the user search field scope index
      */
     public int getUserSearchFieldScopeIndex() {
-        return userSearchFieldScopeIndex;
+        return memTabSearchFieldScopeIndex;
     }
 
     /**
      * Sets the user search field scope index.
      *
-     * @param userSearchFieldScopeIndex the new user search field scope index
+     * @param memTabSearchFieldScopeIndex the new user search field scope index
      */
-    public void setUserSearchFieldScopeIndex(int userSearchFieldScopeIndex) {
-        this.userSearchFieldScopeIndex = userSearchFieldScopeIndex;
+    public void setUserSearchFieldScopeIndex(int memTabSearchFieldScopeIndex) {
+        this.memTabSearchFieldScopeIndex = memTabSearchFieldScopeIndex;
     }
 
     /**
-     * Gets the browser search field scope index.
+     * Gets the allTab search field scope index.
      *
-     * @return the browser search field scope index
+     * @return the allTab search field scope index
      */
-    public int getBrowserSearchFieldScopeIndex() {
-        return browserSearchFieldScopeIndex;
+    public int getAllTabSearchFieldScopeIndex() {
+        return allTabSearchFieldScopeIndex;
     }
 
     /**
-     * Sets the browser search field scope index.
+     * Sets the allTab search field scope index.
      *
-     * @param browserSearchFieldScopeIndex the new browser search field scope index
+     * @param allTabSearchFieldScopeIndex the new allTab search field scope index
      */
-    public void setBrowserSearchFieldScopeIndex(int browserSearchFieldScopeIndex) {
-        this.browserSearchFieldScopeIndex = browserSearchFieldScopeIndex;
+    public void setAllTabSearchFieldScopeIndex(int allTabSearchFieldScopeIndex) {
+        this.allTabSearchFieldScopeIndex = allTabSearchFieldScopeIndex;
     }
 
     /**
@@ -236,21 +236,21 @@ public class Config {
     }
 
     /**
-     * Gets the browser view index.
+     * Gets the allTab view index.
      *
-     * @return the browser view index
+     * @return the allTab view index
      */
-    public int getBrowserViewIndex() {
-        return browserViewIndex;
+    public int getAllTabViewIndex() {
+        return allTabViewIndex;
     }
 
     /**
-     * Sets the browser view index.
+     * Sets the allTab view index.
      *
-     * @param browserViewIndex the new browser view index
+     * @param allTabViewIndex the new allTab view index
      */
-    public void setBrowserViewIndex(int browserViewIndex) {
-        this.browserViewIndex = browserViewIndex;
+    public void setAllTabViewIndex(int allTabViewIndex) {
+        this.allTabViewIndex = allTabViewIndex;
     }
 
     /**

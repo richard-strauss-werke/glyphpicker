@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package de.badw.strauss.glyphpicker.controller.user;
+package de.badw.strauss.glyphpicker.controller.memtab;
 
 import de.badw.strauss.glyphpicker.model.GlyphDefinitions;
 import org.apache.log4j.Logger;
@@ -27,23 +27,23 @@ import java.util.Properties;
 import java.util.ResourceBundle;
 
 /**
- * Loads and saves the user collection data.
+ * Loads and saves the memorized tab data.
  */
-public class UserCollectionLoader {
+public class MemorizedCharactersLoader {
 
     /**
      * The logger.
      */
     private static final Logger LOGGER = Logger
-            .getLogger(UserCollectionLoader.class.getName());
+            .getLogger(MemorizedCharactersLoader.class.getName());
 
     /**
-     * The folder path to the user collection data file.
+     * The folder path to the memorized tab data file.
      */
     private final String pathName;
 
     /**
-     * The name of the user collection data file.
+     * The name of the memorized tab data file.
      */
     private final String fileName;
 
@@ -58,13 +58,13 @@ public class UserCollectionLoader {
     private final Properties properties;
 
     /**
-     * Instantiates a new UserCollectionLoader.
+     * Instantiates a new MemorizedCharactersLoader.
      *
      * @param workspace  oXygen's plugin workspace
      * @param properties the plugin's properties
      */
-    public UserCollectionLoader(StandalonePluginWorkspace workspace,
-                                Properties properties) {
+    public MemorizedCharactersLoader(StandalonePluginWorkspace workspace,
+                                     Properties properties) {
 
         this.properties = properties;
 
@@ -76,7 +76,7 @@ public class UserCollectionLoader {
     }
 
     /**
-     * Saves the user collection.
+     * Saves the memorized tab.
      *
      * @param glyphDefinitions the glyph definitions
      */
@@ -104,7 +104,7 @@ public class UserCollectionLoader {
     }
 
     /**
-     * Loads the user collection.
+     * Loads the memorized tab.
      *
      * @return the glyph definitions
      */

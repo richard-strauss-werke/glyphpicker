@@ -3,10 +3,10 @@
     <version>0.9.4</version>
     <transferFocusAfterInsert>true</transferFocusAfterInsert>
     <tabIndex>1</tabIndex>
-    <userSearchFieldScopeIndex>4</userSearchFieldScopeIndex>
-    <browserSearchFieldScopeIndex>4</browserSearchFieldScopeIndex>
+    <memTabSearchFieldScopeIndex>4</memTabSearchFieldScopeIndex>
+    <allTabSearchFieldScopeIndex>4</allTabSearchFieldScopeIndex>
     <userViewIndex>0</userViewIndex>
-    <browserViewIndex>0</browserViewIndex>
+    <allTabViewIndex>0</allTabViewIndex>
     <glyphTables>
         <dataSource>
             <name>Edirom SMuFL Browser</name>

@@ -1,10 +1,9 @@
 package de.badw.strauss.glyphpicker;
 
 import com.icl.saxon.aelfred.SAXParserFactoryImpl;
-import de.badw.strauss.glyphpicker.controller.browser.TeiXmlHandler;
+import de.badw.strauss.glyphpicker.controller.alltab.TeiXmlHandler;
 import de.badw.strauss.glyphpicker.model.DataSource;
 import de.badw.strauss.glyphpicker.model.GlyphDefinition;
-import de.badw.strauss.glyphpicker.model.GlyphDefinitions;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -15,13 +14,9 @@ import org.xml.sax.SAXException;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;

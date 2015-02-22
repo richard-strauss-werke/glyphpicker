@@ -27,31 +27,31 @@ import java.beans.PropertyChangeListener;
  * An action which picks the selected glyph definition from a list and returns
  * it as new value of the ADD property change event.
  */
-public class CopyAction extends AbstractPickerAction {
+public class MemorizeAction extends AbstractPickerAction {
 
     /**
      * The key of the action.
      */
-    public static final String KEY = "copyToUserCollection";
+    public static final String KEY = "copyToMemorizedTab";
     private static final long serialVersionUID = 1L;
     /**
      * The name of the class.
      */
-    private static final String CLASS_NAME = CopyAction.class.getSimpleName();
+    private static final String CLASS_NAME = MemorizeAction.class.getSimpleName();
     /**
      * The event selection model.
      */
     private final DefaultEventSelectionModel<GlyphDefinition> selectionModel;
 
     /**
-     * Instantiates a new CopyAction.
+     * Instantiates a new MemorizeAction.
      *
      * @param panel          The container tab panel
      * @param listener       the property change listener to be added to this action
      * @param selectionModel the event selection model
      */
-    public CopyAction(TabPanel panel, PropertyChangeListener listener,
-                      DefaultEventSelectionModel<GlyphDefinition> selectionModel) {
+    public MemorizeAction(TabPanel panel, PropertyChangeListener listener,
+                          DefaultEventSelectionModel<GlyphDefinition> selectionModel) {
         super(CLASS_NAME, Icons.COPY_MENU, "ctrl ENTER");
 
         addPropertyChangeListener(listener);
