@@ -55,6 +55,43 @@
                   <mapping type="standardized">ae</mapping>
                   <graphic url="images/f204.png"/>
               </char>
+              <char xml:id="secondOrderReferringMapping1">
+                  <desc>Another character forming part of another character</desc>
+                  <mapping>0<g ref="#referringMapping"/></mapping>
+              </char>
+              <char xml:id="referringMapping">
+                  <desc>A composed character</desc>
+                  <mapping type="composed">ab<g ref="#referencedMapping1"/>ef<g ref="#referencedMapping2">X</g></mapping>
+              </char>
+              <char xml:id="referencedMapping1">
+                  <desc>A character forming part of another character</desc>
+                  <mapping>CD</mapping>
+              </char>
+              <char xml:id="referencedMapping2">
+                  <desc>Another character forming part of another character</desc>
+                  <mapping>G</mapping>
+              </char>
+              <char xml:id="secondOrderReferringMapping2">
+                  <desc>Another character forming part of another character</desc>
+                  <mapping>0<g ref="#referringMapping"/></mapping>
+              </char>
+              
+              <!-- infinite recursions -->
+              <char xml:id="infinite0">
+                  <desc>A character referencing itself in its mapping</desc>
+                  <mapping>ok</mapping>
+                  <mapping type="infinite-recursion-1">1<g ref="#infinite0"/></mapping>
+              </char>
+              <char xml:id="infinite1">
+                  <desc>The first character forming a part of an infinite reference loop</desc>
+                  <mapping>ok</mapping>
+                  <mapping type="infinite-recursion-2">1<g ref="#infinite2"/></mapping>
+              </char>
+              <char xml:id="infinite2">
+                  <desc>The second character forming a part of an infinite reference loop</desc>
+                  <mapping>ok</mapping>
+                  <mapping type="infinite-recursion-2">2<g ref="#infinite1"/></mapping>
+              </char>
 
           </charDecl>
       </encodingDesc>

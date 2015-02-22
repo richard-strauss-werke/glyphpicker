@@ -152,8 +152,7 @@ public class TeiLoadWorker extends SwingWorker<List<GlyphDefinition>, Void> {
             return httpClient.execute(httpGet, new XMLResponseHandler());
         } catch (IOException e) {
             String message = String.format(
-                    i18n.getString(this.getClass().getSimpleName()
-                            + ".couldNotLoadData"),
+                    i18n.getString("TeiLoadWorker.couldNotLoadData"),
                     dataSource.getBasePath());
             if (e instanceof UnknownHostException) {
                 message += " Unknown host";
@@ -161,7 +160,7 @@ public class TeiLoadWorker extends SwingWorker<List<GlyphDefinition>, Void> {
             JOptionPane.showMessageDialog(
                     null,
                     message,
-                    i18n.getString(this.getClass().getSimpleName() + ".error"),
+                    i18n.getString("TeiLoadWorker.error"),
                     JOptionPane.ERROR_MESSAGE);
             LOGGER.info(e);
         } finally {
@@ -190,10 +189,8 @@ public class TeiLoadWorker extends SwingWorker<List<GlyphDefinition>, Void> {
                 JOptionPane.showMessageDialog(
                         null,
                         String.format(
-                                i18n.getString(this.getClass().getSimpleName()
-                                        + ".couldNotLoadData"), fileName),
-                        i18n.getString(this.getClass().getSimpleName()
-                                + ".error"), JOptionPane.ERROR_MESSAGE);
+                                i18n.getString("TeiLoadWorker.couldNotLoadData"), fileName),
+                        i18n.getString("TeiLoadWorker.error"), JOptionPane.ERROR_MESSAGE);
                 LOGGER.info(e);
             }
             if (inputStream != null) {
@@ -210,19 +207,23 @@ public class TeiLoadWorker extends SwingWorker<List<GlyphDefinition>, Void> {
      * @return the resulting GlyphDefinition list
      */
     public List<GlyphDefinition> parseXmlSax(InputStream is) {
-
         TeiXmlHandler handler = new TeiXmlHandler(dataSource);
         try {
             parser.parse(is, handler);
+            handler.resolveReferences();
+            return handler.getGlyphDefinitions();
         } catch (SAXException | IOException e) {
             JOptionPane.showMessageDialog(
                     null,
                     e.toString(),
-                    i18n.getString(this.getClass().getSimpleName()
-                            + ".xmlParsingError"), JOptionPane.ERROR_MESSAGE);
+                    i18n.getString("TeiLoadWorker.xmlParsingError"), JOptionPane.ERROR_MESSAGE);
+        } catch (TeiXmlHandler.RecursionException e) {
+            JOptionPane.showMessageDialog(
+                    null,
+                    e.getMessage(),
+                    i18n.getString("TeiLoadWorker.xmlParsingError"), JOptionPane.ERROR_MESSAGE);
         }
-
-        return handler.getGlyphDefinitions();
+        return null;
     }
 
     /**

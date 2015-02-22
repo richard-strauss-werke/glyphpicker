@@ -19,7 +19,6 @@ import com.icl.saxon.aelfred.DefaultHandler;
 import de.badw.strauss.glyphpicker.model.DataSource;
 import de.badw.strauss.glyphpicker.model.GlyphDefinition;
 import de.badw.strauss.glyphpicker.model.GlyphReference;
-import org.apache.log4j.Logger;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
@@ -31,10 +30,13 @@ import java.util.*;
 public class TeiXmlHandler extends DefaultHandler {
 
     /**
-     * The logger.
+     *  The maximum number of recursions allowed when resolving g references in mappings.
      */
-    private static final Logger LOGGER = Logger.getLogger(TeiXmlHandler.class
-            .getName());
+    private static final int MAXIMUM_RECURSIONS = 10;
+    /**
+     * the current number of recursions when resolving g references in mappings
+     */
+    private int recursionDepth;
     /**
      * The resulting glyph definitions.
      */
@@ -170,7 +172,8 @@ public class TeiXmlHandler extends DefaultHandler {
                 || "desc".equals(qName)) {
             textContent.setLength(0);
 
-            if ("mapping".equals(qName) && mappingMatcher.matches(attrs)) {
+            if ("mapping".equals(qName) && mappingMatcher.matches(attrs) 
+                    && currentGlyphDefinition.getMappedChars() == null) {
                 inMapping = true;
             }
         } else if ("graphic".equals(qName)) {
@@ -238,33 +241,40 @@ public class TeiXmlHandler extends DefaultHandler {
     private void onEndElementInChar(String qName) {
         if ("charName".equals(qName) || "glyphName".equals(qName)) {
             currentGlyphDefinition.setCharName(textContent.toString());
-        } else if (inMapping && "mapping".equals(qName)) {
-            currentGlyphDefinition.setMappedChars(mappingParser.parse(textContent
-                    .toString()));
+        } else if (inMapping) {
 
-            if (!currentGlyphReferences.isEmpty()) {
-                currentGlyphDefinition.setGlyphReferences(currentGlyphReferences);
-                currentGlyphReferences = new ArrayList<>();
-                referencingGlyphDefinitions.add(currentGlyphDefinition);
+            if ("mapping".equals(qName)) {
+                currentGlyphDefinition.setMappedChars(mappingParser.parse(textContent
+                        .toString()));
+
+                if (!currentGlyphReferences.isEmpty()) {
+                    currentGlyphDefinition.setGlyphReferences(currentGlyphReferences);
+                    currentGlyphReferences = new ArrayList<>();
+                    referencingGlyphDefinitions.add(currentGlyphDefinition);
+                }
+
+                inMapping = false;
+            } else {
+                // g element: remove the glyph reference if there is text content in the g element
+                int lastIndex = currentGlyphReferences.size()-1;
+                if (textContent.length() > currentGlyphReferences.get(lastIndex).getIndex()) {
+                    currentGlyphReferences.remove(lastIndex);
+                }
             }
-
-            inMapping = false;
+            
+            
         }
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see org.xml.sax.helpers.DefaultHandler#endDocument()
+    /**
+     * resolves <g> references in mappings if there are any
+     * @throws RecursionException
+     * @throws SAXException
      */
-    public void endDocument() throws SAXException {
+    public void resolveReferences () throws RecursionException, SAXException {
         if (!referencingGlyphDefinitions.isEmpty()) {
-            try {
-                setReferencedTargets(createIdHashMap());
-                addTargetCodepoints();
-            } catch (Exception e) {
-                LOGGER.error(e);
-            }
+            setReferencedTargets(createIdHashMap());
+            addTargetCharacters();
         }
     }
 
@@ -299,27 +309,52 @@ public class TeiXmlHandler extends DefaultHandler {
     }
 
     /**
-     * Adds the codepoints of referenced glyphs to the referring glyph
-     * definition's codePoint field.
+     * Adds the mapped characters of the reference targets to the referring glyph
+     * definition's characters.
      */
-    private void addTargetCodepoints() {
-        // TODO recurse glyphdefinitions in order to include references
-        // of references
+    private void addTargetCharacters() throws SAXException, RecursionException {
+        // TODO take the possibility of infinite loops into account!
 
-        for (GlyphDefinition r : referencingGlyphDefinitions) {
-            int offset = 0;
-            StringBuilder sb = new StringBuilder(r.getMappedChars());
-            for (GlyphReference ref : r.getGlyphReferences()) {
-                GlyphDefinition target = ref.getTarget();
-                if (target != null) {
-                    String additionalString = target.getMappedChars();
-                    ref.incrementIndex(offset);
-                    sb.insert(ref.getIndex(), additionalString);
-                    offset += additionalString.length();
-                }
+        for (GlyphDefinition d : referencingGlyphDefinitions) {
+            if (d.getGlyphReferences() != null) {
+                recursionDepth = 0;
+                resolveRefs(d);
             }
-            r.setMappedChars(sb.toString());
         }
+    }
+    
+    public class RecursionException extends Exception {
+        RecursionException (String message) {
+            super(message);
+        }
+    }
+
+    private void resolveRefs(GlyphDefinition origin) throws RecursionException {
+        if (recursionDepth > MAXIMUM_RECURSIONS) {
+            throw new RecursionException("<g> reference recursion deeper than " + MAXIMUM_RECURSIONS +
+                    ".\nSuspecting infinite recursion in data at xml:id=\"" + origin.getId()+"\".");
+        }
+        int offset = 0;
+        StringBuilder sb = new StringBuilder(origin.getMappedChars());
+        for (GlyphReference reference : origin.getGlyphReferences()) {
+            GlyphDefinition target = reference.getTarget();
+            if (target != null) {
+                
+                // check if the referred glyph itself needs resolving
+                if (target.getGlyphReferences() != null) {
+                    recursionDepth++;
+                    resolveRefs(target);
+                    recursionDepth--;
+                }
+
+                String targetMappedChars = target.getMappedChars();
+                reference.incrementIndex(offset);
+                sb.insert(reference.getIndex(), targetMappedChars);
+                offset += targetMappedChars.length();
+            }
+        }
+        origin.setMappedChars(sb.toString());
+        origin.setGlyphReferences(null);
     }
 
     /**
