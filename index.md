@@ -12,7 +12,7 @@ support for inserting non-standard characters into TEI documents.
 The character tables displayed by the plugin are based on XML character declarations encoded according to the
 TEI's Gaiji module (see http://www.tei-c.org/release/doc/tei-p5-doc/en/html/WD.html), allowing to incorporate 
 data shared across projects (see [ENRICH gBank](http://www.manuscriptorium.com/apps/gbank/) and [SMuFL-Browser](http://edirom.de/smufl-browser) available on the web) 
-as well as custom character declarations / subsets of ENRICH or SMuFL specific to a particular encoding project (see the section 
+as well as custom character declarations specific to a particular encoding project (see the section
 [Incorporating custom character declarations]({{ site.baseurl }}{% post_url 2014-12-14-custom-data %})).
 
 <p style="text-align:center;text-align:center;padding-top:2em;padding-bottom:2em">
@@ -25,7 +25,7 @@ as well as custom character declarations / subsets of ENRICH or SMuFL specific t
 - Template engine for custom XML output
 - Support of oXygen's Text and Author mode
 - Search facilities
-- Pre-configured character tables by the SMuFL Browser and ENRICH gBank projects
+- Pre-configured access to character declarations by the SMuFL Browser and ENRICH gBank projects
 
 #### Requirements
 

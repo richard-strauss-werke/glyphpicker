@@ -67,6 +67,6 @@ Result:
 
 Adding characters or numeric character reference to the document can simplify displaying the characters at the cost of encoding a specific character mapping.
 Since id and code point references can be altered independently, projects might consider adding automatic text
- quality checks to be sure there mismatching combinations.
+ quality checks to be sure there are no mismatching combinations.
 
 The resulting XML code fragment references an element with the xml:id `luteFrenchFretG` in the same document (or included via xinclude).
