@@ -18,7 +18,7 @@ package de.badw.strauss.glyphpicker.controller.settings;
 import com.jidesoft.swing.JideButton;
 import de.badw.strauss.glyphpicker.controller.action.AbstractPickerAction;
 import de.badw.strauss.glyphpicker.model.DataSource;
-import de.badw.strauss.glyphpicker.view.options.DataSourceEditor;
+import de.badw.strauss.glyphpicker.view.settings.DataSourceEditor;
 import org.apache.log4j.Logger;
 import ro.sync.ui.Icons;
 

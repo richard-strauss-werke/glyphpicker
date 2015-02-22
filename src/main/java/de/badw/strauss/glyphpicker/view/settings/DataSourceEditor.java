@@ -13,10 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package de.badw.strauss.glyphpicker.view.options;
+package de.badw.strauss.glyphpicker.view.settings;
 
 import de.badw.strauss.glyphpicker.model.DataSource;
-import de.badw.strauss.glyphpicker.model.options.FormItemConfig;
+import de.badw.strauss.glyphpicker.model.settings.FormItemConfig;
 
 import javax.swing.*;
 import javax.swing.border.CompoundBorder;

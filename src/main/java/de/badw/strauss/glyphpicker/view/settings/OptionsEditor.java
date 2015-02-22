@@ -1,4 +1,4 @@
-package de.badw.strauss.glyphpicker.view.options;
+package de.badw.strauss.glyphpicker.view.settings;
 
 import com.jidesoft.swing.JideButton;
 

@@ -21,7 +21,7 @@ public class i18nTest {
         ResourceBundle i18n = ResourceBundle.getBundle("GlyphPicker");
 
         assertEquals("Could not create folder \"xxx\".", String.format(
-                i18n.getString("UserCollectionLoader.couldNotCreateFolder"),
+                i18n.getString("MemorizedCharactersLoader.couldNotCreateFolder"),
                 "xxx"));
         assertEquals("Loading data ...",
                 i18n.getString("TabPanel.loading"));
@@ -35,7 +35,7 @@ public class i18nTest {
         ResourceBundle i18n = ResourceBundle.getBundle("GlyphPicker",
                 Locale.GERMAN);
         assertEquals("Der Ordner \"xxx\" konnte nicht angelegt werden.", String.format(
-                i18n.getString("UserCollectionLoader.couldNotCreateFolder"),
+                i18n.getString("MemorizedCharactersLoader.couldNotCreateFolder"),
                 "xxx"));
         assertEquals("Lade Daten ...",
                 i18n.getString("TabPanel.loading"));

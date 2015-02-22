@@ -20,8 +20,8 @@ import de.badw.strauss.glyphpicker.controller.bitmap.ImageCache;
 import de.badw.strauss.glyphpicker.model.Config;
 import de.badw.strauss.glyphpicker.model.DataSource;
 import de.badw.strauss.glyphpicker.model.DataSourceList;
-import de.badw.strauss.glyphpicker.view.options.DataSourceEditor;
-import de.badw.strauss.glyphpicker.view.options.OptionsEditor;
+import de.badw.strauss.glyphpicker.view.settings.DataSourceEditor;
+import de.badw.strauss.glyphpicker.view.settings.OptionsEditor;
 import ro.sync.ui.Icons;
 
 import javax.swing.*;
