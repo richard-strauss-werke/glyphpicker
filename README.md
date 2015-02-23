@@ -1,12 +1,5 @@
-GlyphPicker Plugin for oXygen
+GlyphPicker - TEI-based glyph table plugin for oXygen
 ========
 
-Update Site
------------
+http://richard-strauss-werke.github.io/glyphpicker/
 
-http://richard-strauss-werke.github.io/glyphpicker/update/latest.xml
-
-Build with Maven
------
-
-run `mvn assembly:assembly` from the root of the project directory
