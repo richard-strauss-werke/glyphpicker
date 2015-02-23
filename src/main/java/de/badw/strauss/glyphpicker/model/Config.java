@@ -54,7 +54,7 @@ public class Config {
     @XmlElement
     private boolean transferFocusAfterInsert = true;
     /**
-     * The tab index to select when the plug-in window is shown the first time in a session.
+     * The tab index to select when the plugin window is shown the first time in a session.
      */
     @XmlElement
     private int tabIndex = 1;
