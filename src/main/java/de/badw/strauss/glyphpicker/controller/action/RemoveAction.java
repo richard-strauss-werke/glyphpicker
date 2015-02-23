@@ -64,7 +64,7 @@ public class RemoveAction extends AbstractPickerAction {
     public RemoveAction(TabPanel panel, PropertyChangeListener listener,
                         EventList<GlyphDefinition> glyphList,
                         FilterList<GlyphDefinition> filterList, GlyphGrid list) {
-        super(CLASS_NAME, Icons.REMOVE_MENU, "ctrl D");
+        super(CLASS_NAME, "/images/bin-metal.png", "ctrl D");
         this.addPropertyChangeListener(listener);
         this.glyphList = glyphList;
         this.filterList = filterList;

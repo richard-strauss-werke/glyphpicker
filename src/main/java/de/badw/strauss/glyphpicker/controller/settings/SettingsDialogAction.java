@@ -74,7 +74,7 @@ public class SettingsDialogAction extends AbstractPickerAction {
      */
     public SettingsDialogAction(JPanel parentPanel, PropertyChangeListener listener, Config config, ImageCache imageCache,
                                 DataSourceList dataSourceList) {
-        super(CLASS_NAME, Icons.OPTIONS_SHORTCUT_CENTERED, "ctrl E");
+        super(CLASS_NAME, "/images/gear.png", "ctrl E");
         addPropertyChangeListener(listener);
         this.parentPanel = parentPanel;
         this.imageCache = imageCache;

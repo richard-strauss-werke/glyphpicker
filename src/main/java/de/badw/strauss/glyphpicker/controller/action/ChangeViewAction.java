@@ -54,7 +54,7 @@ public class ChangeViewAction extends AbstractPickerAction {
      */
     public ChangeViewAction(TabPanel panel, GlyphTable table,
                             GlyphGrid list) {
-        super(CLASS_NAME, Icons.TABLE_MENU, "ctrl T");
+        super(CLASS_NAME, "/images/grid.png", "ctrl T");
         this.panel = panel;
         this.table = table;
         this.list = list;

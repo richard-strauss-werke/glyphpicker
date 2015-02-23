@@ -52,7 +52,7 @@ public class MemorizeAction extends AbstractPickerAction {
      */
     public MemorizeAction(TabPanel panel, PropertyChangeListener listener,
                           DefaultEventSelectionModel<GlyphDefinition> selectionModel) {
-        super(CLASS_NAME, Icons.XPATH_EDIT_FAVORITES, "ctrl ENTER");
+        super(CLASS_NAME, "/images/star.png", "ctrl ENTER");
 
         addPropertyChangeListener(listener);
         this.selectionModel = selectionModel;

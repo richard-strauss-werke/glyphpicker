@@ -50,7 +50,7 @@ public class ReloadAction extends AbstractPickerAction {
      * @param actions  The actions affected by this action
      */
     public ReloadAction(TabPanel panel, PropertyChangeListener listener, Set<Action> actions) {
-        super(CLASS_NAME, Icons.REFRESH, "ctrl L");
+        super(CLASS_NAME, "/images/arrow-circle-225-left.png", "ctrl L");
         addPropertyChangeListener(listener);
         this.actions = actions;
         bindAcceleratorToComponent(this, panel);

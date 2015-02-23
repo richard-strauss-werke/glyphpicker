@@ -50,7 +50,7 @@ public class SaveAction extends AbstractPickerAction {
      * @param actions  The actions affected by this action.
      */
     public SaveAction(TabPanel panel, PropertyChangeListener listener, Set<Action> actions) {
-        super(CLASS_NAME, Icons.SAVE_MENU, "ctrl S");
+        super(CLASS_NAME, "/images/disk.png", "ctrl S");
         this.addPropertyChangeListener(listener);
         this.actions = actions;
         bindAcceleratorToComponent(this, panel);

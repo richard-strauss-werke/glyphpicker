@@ -299,7 +299,7 @@ public class DataSourceEditorController implements PropertyChangeListener {
          * @param listener the property change listener to be added to this action
          */
         private NewAction(PropertyChangeListener listener) {
-            super(NewAction.class.getSimpleName(), Icons.ADD);
+            super(NewAction.class.getSimpleName(), "/images/new.png");
             addPropertyChangeListener(listener);
         }
 
@@ -333,7 +333,7 @@ public class DataSourceEditorController implements PropertyChangeListener {
          * @param listener the property change listener to be added to this action
          */
         private CloneAction(PropertyChangeListener listener) {
-            super(CloneAction.class.getSimpleName(), Icons.COPY_MENU);
+            super(CloneAction.class.getSimpleName(), "/images/document-copy.png");
             addPropertyChangeListener(listener);
             setEnabled(false);
         }
@@ -374,7 +374,7 @@ public class DataSourceEditorController implements PropertyChangeListener {
          * @param listener the property change listener to be added to this action
          */
         private DeleteAction(PropertyChangeListener listener) {
-            super(DeleteAction.class.getSimpleName(), Icons.REMOVE_MENU);
+            super(DeleteAction.class.getSimpleName(), "/images/bin-metal.png");
             addPropertyChangeListener(listener);
             setEnabled(false);
         }

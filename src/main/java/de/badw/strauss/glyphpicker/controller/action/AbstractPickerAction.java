@@ -54,10 +54,11 @@ public abstract class AbstractPickerAction extends AbstractAction {
      * @param className the name of the subclass; used to identify the action's label,
      *                  description and mnemonic string in the language resource
      *                  bundle
-     * @param icon      the icon path; may be one of the constants defined in ro.sync.ui.Icons
+     * @param icon      the icon path
      */
     public AbstractPickerAction(String className, String icon) {
-        super(I18N.getString(className + ".label"), Icons.getIcon(icon));
+        super(I18N.getString(className + ".label"), new ImageIcon(
+                AbstractPickerAction.class.getResource(icon)));
         String description = I18N.getString(className + ".description");
         putValue(SHORT_DESCRIPTION, description);
     }
@@ -77,11 +78,12 @@ public abstract class AbstractPickerAction extends AbstractAction {
      *
      * @param className   the name of the subclass; used to identify the action's label and description
      *                    in the language resource bundle
-     * @param icon        the icon path; may be one of the constants defined in ro.sync.ui.Icons
+     * @param icon        the icon path
      * @param accelerator the keyboard accelerator string in Windows / Linux nomenclature
      */
     public AbstractPickerAction(String className, String icon, String accelerator) {
-        super(I18N.getString(className + ".label"), Icons.getIcon(icon));
+        super(I18N.getString(className + ".label"), new ImageIcon(
+                AbstractPickerAction.class.getResource(icon)));
 
         String description = I18N.getString(className + ".description");
 
