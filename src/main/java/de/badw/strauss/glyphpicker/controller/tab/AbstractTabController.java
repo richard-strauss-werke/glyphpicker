@@ -144,8 +144,7 @@ public abstract class AbstractTabController implements PropertyChangeListener {
      * @param imageCache            the image cache
      */
     @SuppressWarnings("unchecked")
-    public AbstractTabController(final TabPanel tabPanel,
-                                 Config config, int searchFieldScopeIndex, int listViewIndex, ImageCache imageCache) {
+    public AbstractTabController(final TabPanel tabPanel, int searchFieldScopeIndex, int listViewIndex, ImageCache imageCache) {
 
         this.tabPanel = tabPanel;
         this.imageCache = imageCache;

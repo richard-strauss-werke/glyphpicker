@@ -19,7 +19,6 @@ import de.badw.strauss.glyphpicker.controller.action.AbstractPickerAction;
 import de.badw.strauss.glyphpicker.controller.bitmap.ImageCache;
 import de.badw.strauss.glyphpicker.model.Config;
 import de.badw.strauss.glyphpicker.view.settings.OptionsEditor;
-import ro.sync.ui.Icons;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;

@@ -98,7 +98,6 @@ public class AutoCompleteController {
         // TODO add entity field
 
         ResourceBundle i18n = ResourceBundle.getBundle("GlyphPicker");
-        String className = this.getClass().getSimpleName();
 
         autoCompleteScope.put(i18n.getString("AutoCompleteController.charName"),
                 new CharNameSelector());

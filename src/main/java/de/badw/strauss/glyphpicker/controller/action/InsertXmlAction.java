@@ -17,7 +17,6 @@ package de.badw.strauss.glyphpicker.controller.action;
 
 import ca.odell.glazedlists.swing.DefaultEventSelectionModel;
 import de.badw.strauss.glyphpicker.model.GlyphDefinition;
-import ro.sync.ui.Icons;
 
 import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeListener;

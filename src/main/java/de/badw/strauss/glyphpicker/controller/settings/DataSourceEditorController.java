@@ -20,7 +20,6 @@ import de.badw.strauss.glyphpicker.controller.action.AbstractPickerAction;
 import de.badw.strauss.glyphpicker.model.DataSource;
 import de.badw.strauss.glyphpicker.view.settings.DataSourceEditor;
 import org.apache.log4j.Logger;
-import ro.sync.ui.Icons;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;

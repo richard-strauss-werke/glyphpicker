@@ -18,7 +18,6 @@ package de.badw.strauss.glyphpicker.controller.action;
 import de.badw.strauss.glyphpicker.view.GlyphGrid;
 import de.badw.strauss.glyphpicker.view.GlyphTable;
 import de.badw.strauss.glyphpicker.view.TabPanel;
-import ro.sync.ui.Icons;
 
 import java.awt.event.ActionEvent;
 

@@ -17,7 +17,6 @@
 package de.badw.strauss.glyphpicker.controller.action;
 
 import org.apache.log4j.Logger;
-import ro.sync.ui.Icons;
 
 import javax.swing.*;
 import java.util.ResourceBundle;

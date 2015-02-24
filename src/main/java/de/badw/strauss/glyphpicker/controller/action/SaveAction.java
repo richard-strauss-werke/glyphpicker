@@ -16,7 +16,6 @@
 package de.badw.strauss.glyphpicker.controller.action;
 
 import de.badw.strauss.glyphpicker.view.TabPanel;
-import ro.sync.ui.Icons;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;

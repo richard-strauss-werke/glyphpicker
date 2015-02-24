@@ -20,7 +20,6 @@ import ca.odell.glazedlists.FilterList;
 import de.badw.strauss.glyphpicker.model.GlyphDefinition;
 import de.badw.strauss.glyphpicker.view.GlyphGrid;
 import de.badw.strauss.glyphpicker.view.TabPanel;
-import ro.sync.ui.Icons;
 
 import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeListener;
