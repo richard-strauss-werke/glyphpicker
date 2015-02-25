@@ -76,12 +76,12 @@ public abstract class AbstractTabController implements PropertyChangeListener {
     /**
      * The glyph list.
      */
-    protected final EventList<GlyphDefinition> glyphList = new BasicEventList<>();
+    protected final EventList<GlyphDefinition> glyphList = new BasicEventList<GlyphDefinition>();
 
     /**
      * The sorted glyph list.
      */
-    protected final SortedList<GlyphDefinition> sortedList = new SortedList<>(
+    protected final SortedList<GlyphDefinition> sortedList = new SortedList<GlyphDefinition>(
             glyphList, null);
 
     /**
@@ -138,7 +138,6 @@ public abstract class AbstractTabController implements PropertyChangeListener {
      * Instantiates a new tab controller.
      *
      * @param tabPanel              The container panel in the tab
-     * @param config                The plugin config
      * @param searchFieldScopeIndex the index of the auto complete scope checkbox which should be selected initially
      * @param listViewIndex         the index of the list view to show initially. Set 0 for the grid and 1 for the table component.
      * @param imageCache            the image cache
@@ -155,20 +154,20 @@ public abstract class AbstractTabController implements PropertyChangeListener {
                 searchFieldScopeIndex, controlPanel.getAutoCompleteCombo(),
                 controlPanel.getAutoCompleteScopeCombo(), sortedList);
 
-        filterList = new FilterList<>(sortedList,
+        filterList = new FilterList<GlyphDefinition>(sortedList,
                 autoCompleteController.getGlyphSelect());
 
-        selectionModel = new DefaultEventSelectionModel<>(
+        selectionModel = new DefaultEventSelectionModel<GlyphDefinition>(
                 filterList);
 
-        list = new GlyphGrid(new DefaultEventListModel<>(
+        list = new GlyphGrid(new DefaultEventListModel<GlyphDefinition>(
                 filterList));
         GlyphRendererAdapter r = new GlyphRendererAdapter(list);
         r.setPreferredSize(new Dimension(LIST_ITEM_SIZE, LIST_ITEM_SIZE));
         list.setFixedSize(LIST_ITEM_SIZE);
         list.setCellRenderer(r);
 
-        DefaultEventTableModel<GlyphDefinition> tableListModel = new DefaultEventTableModel<>(
+        DefaultEventTableModel<GlyphDefinition> tableListModel = new DefaultEventTableModel<GlyphDefinition>(
                 filterList, new GlyphTableFormat());
         table = new GlyphTable(tableListModel);
         r = new GlyphRendererAdapter(table);

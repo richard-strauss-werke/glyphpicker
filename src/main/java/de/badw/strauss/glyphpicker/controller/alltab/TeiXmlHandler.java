@@ -40,15 +40,15 @@ public class TeiXmlHandler extends DefaultHandler {
     /**
      * The resulting glyph definitions.
      */
-    private final List<GlyphDefinition> glyphDefinitions = new ArrayList<>();
+    private final List<GlyphDefinition> glyphDefinitions = new ArrayList<GlyphDefinition>();
     /**
      * An element stack of all ancestors and the current element.
      */
-    private final Stack<String> elementStack = new Stack<>();
+    private final Stack<String> elementStack = new Stack<String>();
     /**
      * A list of the glyph definitions with glyph references in <mapping>.
      */
-    private final List<GlyphDefinition> referencingGlyphDefinitions = new ArrayList<>();
+    private final List<GlyphDefinition> referencingGlyphDefinitions = new ArrayList<GlyphDefinition>();
     /**
      * The data source providing handler parameters.
      */
@@ -76,7 +76,7 @@ public class TeiXmlHandler extends DefaultHandler {
     /**
      * The list of all glyph references in the current mapping.
      */
-    private List<GlyphReference> currentGlyphReferences = new ArrayList<>();
+    private List<GlyphReference> currentGlyphReferences = new ArrayList<GlyphReference>();
     /**
      * The current glyph definition.
      */
@@ -249,7 +249,7 @@ public class TeiXmlHandler extends DefaultHandler {
 
                 if (!currentGlyphReferences.isEmpty()) {
                     currentGlyphDefinition.setGlyphReferences(currentGlyphReferences);
-                    currentGlyphReferences = new ArrayList<>();
+                    currentGlyphReferences = new ArrayList<GlyphReference>();
                     referencingGlyphDefinitions.add(currentGlyphDefinition);
                 }
 
@@ -284,7 +284,7 @@ public class TeiXmlHandler extends DefaultHandler {
      * @return the map
      */
     private Map<String, GlyphDefinition> createIdHashMap() {
-        Map<String, GlyphDefinition> ids = new HashMap<>();
+        Map<String, GlyphDefinition> ids = new HashMap<String, GlyphDefinition>();
         for (GlyphDefinition d : glyphDefinitions) {
             ids.put(d.getId(), d);
         }

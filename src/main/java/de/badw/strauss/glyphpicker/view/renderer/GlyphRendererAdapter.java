@@ -36,7 +36,7 @@ public class GlyphRendererAdapter extends JLabel implements TableCellRenderer,
     /**
      * The GlyphRenderer objects.
      */
-    private final Map<String, GlyphRenderer> glyphRenderers = new HashMap<>();
+    private final Map<String, GlyphRenderer> glyphRenderers = new HashMap<String, GlyphRenderer>();
 
     /**
      * Instantiates a new GlyphRendererAdapter.

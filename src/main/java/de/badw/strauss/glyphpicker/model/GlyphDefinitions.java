@@ -39,7 +39,7 @@ public class GlyphDefinitions {
      * The glyph definition list.
      */
     @XmlElement(name = "char")
-    private List<GlyphDefinition> data = new ArrayList<>();
+    private List<GlyphDefinition> data = new ArrayList<GlyphDefinition>();
 
     /**
      * Instantiates a new GlyphDefinitions object.

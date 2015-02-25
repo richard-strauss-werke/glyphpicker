@@ -84,7 +84,9 @@ public class TeiLoadWorker extends SwingWorker<List<GlyphDefinition>, Void> {
         SAXParserFactory parserFactory = SAXParserFactoryImpl.newInstance();
         try {
             parser = parserFactory.newSAXParser();
-        } catch (ParserConfigurationException | SAXException e) {
+        } catch (ParserConfigurationException e) {
+            LOGGER.error(e);
+        } catch (SAXException e) {
             LOGGER.error(e);
         }
     }
@@ -113,7 +115,11 @@ public class TeiLoadWorker extends SwingWorker<List<GlyphDefinition>, Void> {
     protected void done() {
         try {
             result = get();
-        } catch (InterruptedException | ExecutionException | CancellationException e) {
+        } catch (InterruptedException e) {
+            LOGGER.error(e);
+        } catch (ExecutionException e) {
+            LOGGER.error(e);
+        } catch (CancellationException e) {
             LOGGER.error(e);
         }
     }
@@ -212,7 +218,12 @@ public class TeiLoadWorker extends SwingWorker<List<GlyphDefinition>, Void> {
             parser.parse(is, handler);
             handler.resolveReferences();
             return handler.getGlyphDefinitions();
-        } catch (SAXException | IOException e) {
+        } catch (SAXException e) {
+            JOptionPane.showMessageDialog(
+                    null,
+                    e.toString(),
+                    i18n.getString("TeiLoadWorker.xmlParsingError"), JOptionPane.ERROR_MESSAGE);
+        } catch (IOException e) {
             JOptionPane.showMessageDialog(
                     null,
                     e.toString(),

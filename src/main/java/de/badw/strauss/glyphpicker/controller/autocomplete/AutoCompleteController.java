@@ -41,7 +41,7 @@ public class AutoCompleteController {
     /**
      * Maps PropertySelector labels to PropertySelector objects.
      */
-    private final Map<String, PropertySelector> autoCompleteScope = new LinkedHashMap<>();
+    private final Map<String, PropertySelector> autoCompleteScope = new LinkedHashMap<String, PropertySelector>();
     /**
      * The auto complete combo component.
      */
@@ -119,7 +119,7 @@ public class AutoCompleteController {
      */
     private void initAutoCompleteScopeCombo(int scopeIndex,
                                             JComboBox<String> scopeCombo) {
-        DefaultComboBoxModel<String> autoCompleteScopeModel = new DefaultComboBoxModel<>();
+        DefaultComboBoxModel<String> autoCompleteScopeModel = new DefaultComboBoxModel<String>();
 
         for (String property : autoCompleteScope.keySet()) {
             autoCompleteScopeModel.addElement(property);
@@ -156,7 +156,7 @@ public class AutoCompleteController {
      * @return the propertySelector
      */
     public final PropertySelector getPropertySelectorByIndex(int index) {
-        List<String> l = new ArrayList<>(autoCompleteScope.keySet());
+        List<String> l = new ArrayList<String>(autoCompleteScope.keySet());
         return autoCompleteScope.get(l.get(index));
     }
 
@@ -171,7 +171,7 @@ public class AutoCompleteController {
             public void run() {
                 GlyphPropertyEventList propertyList = new GlyphPropertyEventList(
                         sortedList, propertySelector);
-                UniqueList<String> uniquePropertyList = new UniqueList<>(
+                UniqueList<String> uniquePropertyList = new UniqueList<String>(
                         propertyList);
                 Object previousText = autoCompleteCombo.getEditor().getItem();
                 if (autoCompleteSupport != null) {

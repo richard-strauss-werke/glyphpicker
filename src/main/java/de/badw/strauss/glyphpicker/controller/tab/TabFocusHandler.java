@@ -18,7 +18,7 @@ public class TabFocusHandler implements ChangeListener, PropertyChangeListener {
      * Contains pairs of tab container panels and the corresponding child
      * components which should gain focus.
      */
-    private final Map<Component, Component> tabFocus = new HashMap<>();
+    private final Map<Component, Component> tabFocus = new HashMap<Component, Component>();
 
     /**
      * The tabbed pane.

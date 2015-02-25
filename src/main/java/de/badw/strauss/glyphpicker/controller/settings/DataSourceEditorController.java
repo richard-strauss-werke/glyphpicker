@@ -29,7 +29,6 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ResourceBundle;
 
 /**
  * The controller of the data source editor window.
@@ -57,21 +56,16 @@ public class DataSourceEditorController implements PropertyChangeListener {
     /**
      * The display modes added to the display mode JCombo.
      */
-    private final List<String> glyphRendererLabels = new ArrayList<>();
+    private final List<String> glyphRendererLabels = new ArrayList<String>();
 
     /**
      * The clone action.
      */
     private final CloneAction cloneAction;
-
     /**
      * The delete action.
      */
     private final DeleteAction deleteAction;
-    /**
-     * The i18n resource bundle.
-     */
-    private final ResourceBundle i18n = ResourceBundle.getBundle("GlyphPicker");
     /**
      * Indicates if there have been changes to the data source list.
      */
@@ -153,7 +147,7 @@ public class DataSourceEditorController implements PropertyChangeListener {
      * @param dataSourceList the data source list
      */
     private void initListModel(List<DataSource> dataSourceList) {
-        listModel = new DefaultListModel<>();
+        listModel = new DefaultListModel<DataSource>();
 
         try {
             for (DataSource dataSource : dataSourceList) {
@@ -262,7 +256,7 @@ public class DataSourceEditorController implements PropertyChangeListener {
      */
     public List<DataSource> getEditingResults() {
         if (listEditingOccurred) {
-            List<DataSource> resultList = new ArrayList<>();
+            List<DataSource> resultList = new ArrayList<DataSource>();
             for (int i = 0; i < listModel.getSize(); i++) {
                 resultList.add(listModel.getElementAt(i));
             }

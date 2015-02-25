@@ -46,11 +46,11 @@ public class MemorizedTabController extends AbstractTabController {
     /**
      * The set of actions whose activation depends on the sync status of memory / disk lists.
      */
-    private final Set<Action> syncDependentActions = new HashSet<>();
+    private final Set<Action> syncDependentActions = new HashSet<Action>();
     /**
      * The set of actions whose activation depends on whether there is a list selection or not.
      */
-    private final Set<Action> selectionDependentActions = new HashSet<>();
+    private final Set<Action> selectionDependentActions = new HashSet<Action>();
     /**
      * Indicates if the list in memory is in sync with the list stored on disk.
      */
@@ -72,7 +72,7 @@ public class MemorizedTabController extends AbstractTabController {
     public MemorizedTabController(TabPanel panel, Config config,
                                   Properties properties, StandalonePluginWorkspace workspace, ImageCache imageCache) {
 
-        super(panel, config, config.getUserSearchFieldScopeIndex(), config
+        super(panel, config.getUserSearchFieldScopeIndex(), config
                 .getUserViewIndex(), imageCache);
 
         loader = new MemorizedCharactersLoader(workspace, properties);

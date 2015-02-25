@@ -22,7 +22,7 @@ public class GlyphPickerPluginExtensionTest {
 
         String ns = " xmlns=\"http://www.tei-c.org/ns/1.0\"";
 
-        Map<String, String> tests = new HashMap<>();
+        Map<String, String> tests = new HashMap<String, String>();
         tests.put("<a/>", "<a"+ns+"/>");
         tests.put("<a><b/></a>", "<a"+ns+"><b/></a>");
         tests.put("<a s=\"n\"/>", "<a"+ns+" s=\"n\"/>");

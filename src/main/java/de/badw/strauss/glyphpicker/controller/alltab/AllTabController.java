@@ -74,7 +74,7 @@ public class AllTabController extends AbstractTabController {
      */
     public AllTabController(TabPanel panel, Config config, ImageCache imageCache) {
 
-        super(panel, config, config.getAllTabSearchFieldScopeIndex(), config
+        super(panel, config.getAllTabSearchFieldScopeIndex(), config
                 .getAllTabViewIndex(), imageCache);
 
         dataSourceList = config.getGlyphTables();
@@ -109,7 +109,7 @@ public class AllTabController extends AbstractTabController {
      */
     private void setAdditionalListeners() {
 
-        Set<Action> selectionDependentActions = new HashSet<>();
+        Set<Action> selectionDependentActions = new HashSet<Action>();
         selectionDependentActions.add(addAction);
         selectionDependentActions.add(insertAction);
 

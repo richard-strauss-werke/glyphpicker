@@ -219,7 +219,9 @@ public class GlyphPickerPluginExtension implements
                 int endOffset = endOffsetPos != null ? endOffsetPos.getOffset() - 1
                         : offset;
                 authorAccess.getEditorAccess().setCaretPosition(endOffset);
-            } catch (BadLocationException | AuthorOperationException e1) {
+            } catch (BadLocationException e1) {
+                LOGGER.error(e1);
+            } catch (AuthorOperationException e1) {
                 LOGGER.error(e1);
             }
         }

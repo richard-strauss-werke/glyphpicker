@@ -68,7 +68,7 @@ public class GlyphScaledVectorRenderer extends GlyphRenderer {
         frc = new FontRenderContext(null, true, true);
         setText(null);
 
-        attr = new HashMap<>();
+        attr = new HashMap<TextAttribute, Integer>();
         {
             attr.put(KERNING, KERNING_ON);
             attr.put(LIGATURES, LIGATURES_ON);

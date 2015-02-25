@@ -159,7 +159,7 @@ public class ControlPanel extends JPanel {
         panelLayout.rowWeights = new double[]{0.0};
         searchPanel.setLayout(panelLayout);
 
-        autoCompleteScopeCombo = new JComboBox<>();
+        autoCompleteScopeCombo = new JComboBox<String>();
         GridBagConstraints gbcAutoCompleteScopeCombo = new GridBagConstraints();
         gbcAutoCompleteScopeCombo.anchor = GridBagConstraints.WEST;
         gbcAutoCompleteScopeCombo.fill = GridBagConstraints.BOTH;
@@ -168,7 +168,7 @@ public class ControlPanel extends JPanel {
         gbcAutoCompleteScopeCombo.gridy = row;
         searchPanel.add(autoCompleteScopeCombo, gbcAutoCompleteScopeCombo);
 
-        autoCompleteCombo = new JComboBox<>();
+        autoCompleteCombo = new JComboBox<String>();
         autoCompleteCombo.setEditable(true);
         GridBagConstraints gbcAutoCompleteCombo = new GridBagConstraints();
         gbcAutoCompleteCombo.gridwidth = 3;

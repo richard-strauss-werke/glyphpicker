@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <config xmlns="http://www.richard-strauss-ausgabe.de/ns/1.0">
-    <version>0.9.6</version>
+    <version>0.9.7</version>
     <transferFocusAfterInsert>true</transferFocusAfterInsert>
     <tabIndex>1</tabIndex>
     <memTabSearchFieldScopeIndex>4</memTabSearchFieldScopeIndex>

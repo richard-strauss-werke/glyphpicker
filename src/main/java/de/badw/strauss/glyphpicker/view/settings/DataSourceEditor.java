@@ -119,7 +119,7 @@ public class DataSourceEditor extends JPanel {
     /**
      * A list of form item config objects.
      */
-    private final List<FormItemConfig> formItemConfigList = new ArrayList<>();
+    private final List<FormItemConfig> formItemConfigList = new ArrayList<FormItemConfig>();
 
     /**
      * Instantiates a new DataSourceEditor panel.
@@ -148,7 +148,7 @@ public class DataSourceEditor extends JPanel {
         listPanel.add(listButtonPane, BorderLayout.SOUTH);
         listButtonPane.setAlignmentY(Component.BOTTOM_ALIGNMENT);
 
-        list = new JList<>();
+        list = new JList<DataSource>();
         JScrollPane scrollPane = new JScrollPane(list);
         listPanel.add(scrollPane);
 
@@ -169,7 +169,7 @@ public class DataSourceEditor extends JPanel {
         labelTextField = new JTextField();
         pathTextField = new JTextField();
         fontNameTextField = new JTextField();
-        glyphRendererCombo = new JComboBox<>();
+        glyphRendererCombo = new JComboBox<String>();
         sizeTextField = new JTextField();
         templateTextField = new JTextField();
         typeAttributeTextField = new JTextField();

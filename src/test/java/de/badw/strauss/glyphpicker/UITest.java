@@ -94,7 +94,13 @@ public class UITest {
     private static void setSystemLookAndFeel() {
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
+        } catch (ClassNotFoundException e) {
+            LOGGER.error(e);
+        } catch (InstantiationException e) {
+            LOGGER.error(e);
+        } catch (IllegalAccessException e) {
+            LOGGER.error(e);
+        } catch (UnsupportedLookAndFeelException e) {
             LOGGER.error(e);
         }
     }
