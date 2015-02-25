@@ -43,8 +43,8 @@ public class Config {
     @XmlElement
     private String version;
     /**
-     * The plugin's shortcut in oXygen, for possible values see
-     * http://docs.oracle.com/javase/7/docs/api/javax/swing/KeyStroke.html#getKeyStroke%28java.lang.String%29
+     * The plugin's shortcut in oXygen, for valid values, see
+     * http://docs.oracle.com/javase/6/docs/api/javax/swing/KeyStroke.html#getKeyStroke%28java.lang.String%29     
      */
     @XmlElement
     private String shortcut;
