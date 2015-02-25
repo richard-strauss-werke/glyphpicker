@@ -72,7 +72,7 @@ public class ImageCache {
      */
     public static String createCacheFileName(String url) {
         try {
-            return URLEncoder.encode(url, StandardCharsets.UTF_8.name());
+            return URLEncoder.encode(url, "UTF-8");
         } catch (UnsupportedEncodingException e) {
             LOGGER.info(e);
         }
