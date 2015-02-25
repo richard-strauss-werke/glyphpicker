@@ -7,7 +7,13 @@ date: 2014-12-12 06:23:59
 
 ### Plugin shortcut
 
-- `Ctrl+Alt+G` / `Command+Option?+G` by default. See the setup instructions to assign a custom shortcut to the plugin.
+- Defaults to `Command+Shift+G` on a MAC / `Ctrl+Shift+G` on other systems. If this combination is already 
+occupied in you oXygen, either remove the key combination in oXygen's `Options / Keyboard Shortcuts` dialog or 
+adjust the plugin's shortcut by opening the plugin's `Settings` dialog, selecting the `Plugin` tab and entering a 
+new key combination.
+The default shortcut string is "meta shift G" on a MAC, "ctrl shift G" on other systems. You may use any of
+ the following modifiers: "shift | control | ctrl | meta | alt | altGraph". For more information, 
+ see the [Java 6 documentation](http://docs.oracle.com/javase/6/docs/api/javax/swing/KeyStroke.html#getKeyStroke%28java.lang.String%29).
 
 ### Keyboard actions in the plugin panel
 
