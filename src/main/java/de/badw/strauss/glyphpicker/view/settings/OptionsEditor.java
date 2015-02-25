@@ -68,7 +68,7 @@ public class OptionsEditor extends JPanel {
         applyShortcutButton = new JideButton();
         innerPanel.add(applyShortcutButton);
 
-        innerPanel.setMaximumSize(new Dimension(500, innerPanel.getPreferredSize().height));
+        innerPanel.setMaximumSize(new Dimension(600, innerPanel.getPreferredSize().height));
         add(innerPanel);
 
         innerPanel = new JPanel();
@@ -79,7 +79,7 @@ public class OptionsEditor extends JPanel {
         clearCacheButton = new JideButton();
         innerPanel.add(clearCacheButton);
 
-        innerPanel.setMaximumSize(new Dimension(500, innerPanel.getPreferredSize().height));
+        innerPanel.setMaximumSize(new Dimension(600, innerPanel.getPreferredSize().height));
         add(innerPanel);
 
         innerPanel = new JPanel();
