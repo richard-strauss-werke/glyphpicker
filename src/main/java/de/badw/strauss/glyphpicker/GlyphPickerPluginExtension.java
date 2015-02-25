@@ -58,7 +58,7 @@ public class GlyphPickerPluginExtension implements
     /**
      * The path of the plugin's icon.
      */
-    static final String PLUGIN_ICON = "/images/g.png";
+    static final String PLUGIN_ICON = "/images/bravura/g.png";
 
     /**
      * The plugin's view ID in oXygen.

@@ -48,7 +48,7 @@ public class InsertXmlAction extends AbstractPickerAction {
      */
     public InsertXmlAction(PropertyChangeListener listener,
                            DefaultEventSelectionModel<GlyphDefinition> selectionModel) {
-        super(CLASS_NAME, "/images/g.png", "ENTER");
+        super(CLASS_NAME, "/images/bravura/g.png", "ENTER");
 
         addPropertyChangeListener(listener);
         this.selectionModel = selectionModel;

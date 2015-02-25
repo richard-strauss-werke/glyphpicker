@@ -147,7 +147,7 @@ public class PluginOptionsEditorController {
          * Instantiates a new ApplyShortcutAction.
          */
         private ApplyShortcutAction() {
-            super(ApplyShortcutAction.class.getSimpleName(), "/images/tick.png");
+            super(ApplyShortcutAction.class.getSimpleName(), "/images/oxygen/AcceptChange16.png");
             setEnabled(false);
         }
 
@@ -172,7 +172,7 @@ public class PluginOptionsEditorController {
          * Instantiates a new ClearCacheAction.
          */
         private ClearCacheAction() {
-            super(ClearCacheAction.class.getSimpleName(), "/images/bin-metal.png");
+            super(ClearCacheAction.class.getSimpleName(), "/images/oxygen/TrashIcon16.gif");
         }
 
         /* (non-Javadoc)

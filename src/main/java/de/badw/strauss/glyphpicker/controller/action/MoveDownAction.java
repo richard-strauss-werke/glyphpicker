@@ -59,7 +59,7 @@ public class MoveDownAction extends AbstractPickerAction {
     public MoveDownAction(TabPanel panel, PropertyChangeListener listener,
                           EventList<GlyphDefinition> glyphList, GlyphGrid list) {
         super(I18N.getString(CLASS_NAME + ".label"), new ImageIcon(
-                MoveDownAction.class.getResource("/images/arrow-270.png")));
+                MoveDownAction.class.getResource("/images/oxygen/MoveDown16.gif")));
 
         this.addPropertyChangeListener(listener);
         this.glyphList = glyphList;

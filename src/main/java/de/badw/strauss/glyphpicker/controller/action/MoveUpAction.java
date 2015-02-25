@@ -59,7 +59,7 @@ public class MoveUpAction extends AbstractPickerAction {
     public MoveUpAction(TabPanel panel, PropertyChangeListener listener,
                         EventList<GlyphDefinition> glyphList, GlyphGrid list) {
         super(I18N.getString(CLASS_NAME + ".label"), new ImageIcon(
-                MoveUpAction.class.getResource("/images/arrow-090.png")));
+                MoveUpAction.class.getResource("/images/oxygen/MoveUp16.gif")));
 
         this.addPropertyChangeListener(listener);
         this.glyphList = glyphList;

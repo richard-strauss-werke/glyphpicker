@@ -44,7 +44,7 @@ public class SortAction extends AbstractPickerAction {
      * @param button the toggle button from which the toggle state is read
      */
     public SortAction(TabPanel panel, JideToggleButton button) {
-        super(CLASS_NAME, "/images/sort-number.png", "ctrl O");
+        super(CLASS_NAME, "/images/oxygen/Sort16.png", "ctrl O");
         this.button = button;
         bindAcceleratorToComponent(this, panel);
     }
