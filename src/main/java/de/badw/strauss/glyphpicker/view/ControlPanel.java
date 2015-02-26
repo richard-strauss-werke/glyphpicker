@@ -145,7 +145,7 @@ public class ControlPanel extends JPanel {
             @Override
             public void componentResized(ComponentEvent e) {
                 super.componentResized(e);
-                showToolbarItemText(e.getComponent().getSize().getWidth() > toolBarWidthThreshold + 30);
+                showToolbarItemText(e.getComponent().getSize().getWidth() > toolBarWidthThreshold + 40);
             }
         });
         
@@ -201,13 +201,10 @@ public class ControlPanel extends JPanel {
      */
     private void showToolbarItemText(boolean show) {
         if (((JideButton) toolBar.getComponent(0)).getHideActionText() == show) {
-            System.out.println(show);
             for (Component component : toolBar.getComponents()) {
                 if (component instanceof JideButton) {
                     ((JideButton) component).setHideActionText(!show);
-                } else if  (component instanceof JideToggleButton) {
-                    ((JideToggleButton) component).setHideActionText(!show);
-                }
+                } 
             }
             toolBar.revalidate();
         }
