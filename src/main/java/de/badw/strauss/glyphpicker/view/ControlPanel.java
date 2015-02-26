@@ -21,6 +21,8 @@ import com.jidesoft.swing.JideToggleButton;
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.util.ResourceBundle;
 
 /**
@@ -53,6 +55,11 @@ public class ControlPanel extends JPanel {
      * The toolbar.
      */
     private final JToolBar toolBar;
+    
+    /**
+     * The threshold value used to decide when to show / hide the button text in the toolbar
+     */
+    private double toolBarWidthThreshold;
     /**
      * The data source combo.
      */
@@ -85,7 +92,7 @@ public class ControlPanel extends JPanel {
         toolBar.setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createMatteBorder(0, 0, 1, 0, UIManager.getColor("Panel.background").darker()),
                 BorderFactory.createEmptyBorder(4, 8, 4, 8)));
-
+        
         GridBagConstraints gbcToolBar = new GridBagConstraints();
         gbcToolBar.fill = GridBagConstraints.HORIZONTAL;
         gbcToolBar.gridwidth = 4;
@@ -93,7 +100,6 @@ public class ControlPanel extends JPanel {
         gbcToolBar.gridx = 0;
         gbcToolBar.gridy = row;
         add(toolBar, gbcToolBar);
-
 
         toolBar.addSeparator();
 
@@ -135,6 +141,14 @@ public class ControlPanel extends JPanel {
             toolBar.add(Box.createHorizontalGlue());
         }
 
+        toolBar.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                super.componentResized(e);
+                showToolbarItemText(e.getComponent().getSize().getWidth() > toolBarWidthThreshold + 30);
+            }
+        });
+        
         row++;
 
         JPanel searchPanel = new JPanel();
@@ -181,6 +195,24 @@ public class ControlPanel extends JPanel {
 
     }
 
+    /**
+     * Shows / hides the text of all toolbar buttons / toolbar toggle buttons
+     * @param show true to show, false to hide the text
+     */
+    private void showToolbarItemText(boolean show) {
+        if (((JideButton) toolBar.getComponent(0)).getHideActionText() == show) {
+            System.out.println(show);
+            for (Component component : toolBar.getComponents()) {
+                if (component instanceof JideButton) {
+                    ((JideButton) component).setHideActionText(!show);
+                } else if  (component instanceof JideToggleButton) {
+                    ((JideToggleButton) component).setHideActionText(!show);
+                }
+            }
+            toolBar.revalidate();
+        }
+    }
+    
     /**
      * Adds a new component at the specified index to the toolbar.
      *
@@ -258,4 +290,10 @@ public class ControlPanel extends JPanel {
         return viewBtn;
     }
 
+    /**
+     * sets the threshold value used to decide when to show / hide the button text in the toolbar
+     */
+    public void setToolBarWidthThreshold() {
+        this.toolBarWidthThreshold = toolBar.getPreferredSize().getWidth();
+    }
 }
