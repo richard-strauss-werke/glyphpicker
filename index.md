@@ -25,7 +25,7 @@ as well as custom character declarations specific to a particular encoding proje
 - Template engine for custom XML output
 - Support of oXygen's Text and Author mode
 - Search facilities
-- Pre-configured access to character declarations by the SMuFL Browser and ENRICH gBank projects
+- Pre-configured access to the (SMuFL-Browser)[http://edirom.de/smufl-browser] and (ENRICH gBank)[http://projects.oucs.ox.ac.uk/ENRICH/gBank/] character declarations (the gBank data is currently read from an online copy of the official repository)
 
 #### Requirements
 

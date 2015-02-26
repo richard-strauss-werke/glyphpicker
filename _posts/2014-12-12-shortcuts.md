@@ -20,7 +20,7 @@ The default shortcut string is "meta shift G" on a MAC, "ctrl shift G" on other 
 #### Both tabs
 
 - `Enter` - Insert the selected character into the XML document at caret position
-- `Ctrl+1` / `Command+1` - Show the `User Collection` tab
+- `Ctrl+1` / `Command+1` - Show the `Memorized Characters` tab
 - `Ctrl+2` / `Command+2` - Show the `All Characters` tab
 - `Ctrl+F` / `Command+F` - Set the focus on the search field
 - `Ctrl+O` / `Command+O` - Turn code point based sorting on / off
@@ -30,9 +30,9 @@ The default shortcut string is "meta shift G" on a MAC, "ctrl shift G" on other 
 
 #### `All Characters` tab 
 
-- `Ctrl+Enter` / `Command-Enter` - Copy the selected character to the user collection
+- `Ctrl+Enter` / `Command-Enter` - Copy the selected character to the Memorized Characters collection
 
-#### `User Collection` tab
+#### `Memorized Characters` tab
 
 - `Ctrl+UP` / `Command+UP` - Move the selected character up in the list
 - `Ctrl+DOWN` / `Command+DOWN` - Move the selected character down in the list
