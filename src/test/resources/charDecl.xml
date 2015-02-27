@@ -19,6 +19,10 @@
             </char>
             <char xml:id="f204">
                <desc>LATIN SMALL LETTER AE WITH RIGHT UPPER LOOP</desc>
+                <charProp>
+                    <localName>entity</localName>
+                    <value>skip-this-one</value>
+                </charProp>
                <charProp>
                   <localName>entity</localName>
                   <value>aeligred</value>
@@ -38,7 +42,7 @@
                   <desc>LATIN SMALL LIGATURE AA CLOSED FORM</desc>
 
                   <charProp>
-                      <localName>entity</localName>
+                      <!-- missing localname -->
                       <value>aacloselig</value>
                   </charProp>
                   <mapping type="MUFI" subtype="PUA">U+F204</mapping>

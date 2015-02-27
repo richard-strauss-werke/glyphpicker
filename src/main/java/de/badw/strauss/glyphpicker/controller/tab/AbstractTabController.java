@@ -66,7 +66,7 @@ public abstract class AbstractTabController implements PropertyChangeListener {
     /**
      * the height of a single table row
      */
-    private static final int TABLE_ROW_HEIGHT = 70;
+    private static final int TABLE_ROW_HEIGHT = 90;
 
     /**
      * The property change support.

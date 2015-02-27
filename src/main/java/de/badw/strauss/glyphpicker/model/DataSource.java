@@ -285,10 +285,7 @@ public class DataSource implements Cloneable {
         if (a == b) {
             return true;
         }
-        if ((a == null) || (b == null)) {
-            return false;
-        }
-        return a.equals(b);
+        return !((a == null) || (b == null)) && a.equals(b);
     }
 
     @Override

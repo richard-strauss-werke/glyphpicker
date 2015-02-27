@@ -74,6 +74,10 @@ public class TeiXmlHandler extends DefaultHandler {
      */
     private Boolean inMapping = false;
     /**
+     * The local name of the current charProp 
+     */
+    private String currentCharPropLocalName = null;
+    /**
      * The list of all glyph references in the current mapping.
      */
     private List<GlyphReference> currentGlyphReferences = new ArrayList<GlyphReference>();
@@ -85,6 +89,10 @@ public class TeiXmlHandler extends DefaultHandler {
      * The range property.
      */
     private String range = "";
+    /**
+     * The content a charProp's localName must have in order to mark an entity property
+     */
+    private String ENTITY = "entity";
 
     /**
      * Instantiates a new TeiXmlHandler.
@@ -169,7 +177,7 @@ public class TeiXmlHandler extends DefaultHandler {
      */
     private void onStartElementInChar(String qName, Attributes attrs) {
         if ("charName".equals(qName) || "glyphName".equals(qName) || "mapping".equals(qName)
-                || "desc".equals(qName)) {
+                || "desc".equals(qName) || "localName".equals(qName) || "value".equals(qName)) {
             textContent.setLength(0);
 
             if ("mapping".equals(qName) && mappingMatcher.matches(attrs) 
@@ -241,8 +249,13 @@ public class TeiXmlHandler extends DefaultHandler {
     private void onEndElementInChar(String qName) {
         if ("charName".equals(qName) || "glyphName".equals(qName)) {
             currentGlyphDefinition.setCharName(textContent.toString());
+        } else if ("charProp".equals(qName)) {
+            currentCharPropLocalName = null;
+        } else if ("localName".equals(qName)) {
+            currentCharPropLocalName = textContent.toString();
+        } else if ("value".equals(qName) && ENTITY.equals(currentCharPropLocalName)) {
+            currentGlyphDefinition.setEntity(textContent.toString());
         } else if (inMapping) {
-
             if ("mapping".equals(qName)) {
                 currentGlyphDefinition.setMappedChars(mappingParser.parse(textContent
                         .toString()));

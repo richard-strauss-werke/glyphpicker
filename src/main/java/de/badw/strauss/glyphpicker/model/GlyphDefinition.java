@@ -38,6 +38,13 @@ public class GlyphDefinition implements Cloneable {
     @XmlElement(name = "charName")
     private String charName;
 
+
+    /**
+     * The entity field.
+     */
+    @XmlElement(name = "entity")
+    private String entity;
+    
     /**
      * The characters contained or referenced in `<mapping>`.
      */
@@ -99,6 +106,23 @@ public class GlyphDefinition implements Cloneable {
         this.charName = label;
     }
 
+
+    /**
+     * gets the entity field
+     * @return the content of the entity field
+     */
+    public String getEntity() {
+        return entity;
+    }
+
+    /**
+     * sets the value of the entity field
+     * @param entity the new value
+     */
+    public void setEntity(String entity) {
+        this.entity = entity;
+    }
+    
     /**
      * Gets the mapped characters.
      *

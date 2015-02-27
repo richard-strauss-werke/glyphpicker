@@ -47,6 +47,9 @@ public class TeiXmlHandlerTest {
         assertEquals("LATIN SMALL LIGATURE AA CLOSED FORM", result.get(2).getCharName());
         assertEquals("\uF204", result.get(2).getMappedChars());
         assertEquals("U+F204 ", result.get(2).getCodePointString());
+        assertEquals("aacloselig", result.get(0).getEntity());
+        assertEquals("aeligred", result.get(1).getEntity());
+        assertNull(result.get(2).getEntity());
     }
 
     @Test

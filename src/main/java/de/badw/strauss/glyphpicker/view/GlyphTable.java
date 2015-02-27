@@ -35,7 +35,7 @@ public class GlyphTable extends JTable {
     /**
      * The preferred width of the first column.
      */
-    private static final int COL_1_PREFERRED_WIDTH = 70;
+    private static final int COL_1_PREFERRED_WIDTH = 90;
 
     /**
      * The minimum width of the first column.

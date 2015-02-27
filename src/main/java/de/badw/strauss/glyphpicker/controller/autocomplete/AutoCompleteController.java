@@ -103,6 +103,8 @@ public class AutoCompleteController {
                 new CharNameSelector());
         autoCompleteScope.put(i18n.getString("AutoCompleteController.xmlId"),
                 new IdSelector());
+        autoCompleteScope.put(i18n.getString("AutoCompleteController.entity"),
+                new EntitySelector());
         autoCompleteScope.put(i18n.getString("AutoCompleteController.codePoint"),
                 new CodePointSelector());
         autoCompleteScope.put(i18n.getString("AutoCompleteController.range"),

@@ -64,6 +64,12 @@ public class DescriptionRenderer extends JLabel implements TableCellRenderer {
             + ".xmlId");
 
     /**
+     * The Constant ENTITY_LABEL.
+     */
+    private static final String ENTITY_LABEL = I18N.getString(CLASS_NAME
+            + ".entity");
+    
+    /**
      * Instantiates a new description renderer.
      */
     public DescriptionRenderer() {
@@ -86,6 +92,10 @@ public class DescriptionRenderer extends JLabel implements TableCellRenderer {
             sb.append("<nobr><b>").append(d.getCharName()).append("</b></nobr><br>");
         }
 
+        if (d.getEntity() != null) {
+            sb.append("<nobr>").append(ENTITY_LABEL).append(": ").append(d.getEntity()).append("</nobr><br>");
+        }
+
         if (d.getMappedChars() != null) {
             sb.append("<nobr>").append(CODEPOINT_LABEL).append(": ").append(d.getCodePointString()).append("</nobr><br>");
         }
@@ -95,7 +105,7 @@ public class DescriptionRenderer extends JLabel implements TableCellRenderer {
         }
 
         if (d.getId() != null) {
-            sb.append("<nobr>").append(XML_ID_LABEL).append(": <em>").append(d.getId()).append("</em></nobr><br>");
+            sb.append("<nobr>").append(XML_ID_LABEL).append(": ").append(d.getId()).append("</nobr><br>");
         }
 
         return sb.toString();
