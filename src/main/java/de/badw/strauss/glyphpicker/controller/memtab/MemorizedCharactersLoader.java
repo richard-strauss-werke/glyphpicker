@@ -86,7 +86,7 @@ public class MemorizedCharactersLoader {
         Boolean pathExists = path.exists() || path.mkdir();
         if (pathExists) {
             File file = new File(path, fileName);
-            LOGGER.info("Storing user list.");
+            LOGGER.info("Storing memorized characters table.");
             try {
                 JAXB.marshal(glyphDefinitions, file);
             } catch (DataBindingException e) {
