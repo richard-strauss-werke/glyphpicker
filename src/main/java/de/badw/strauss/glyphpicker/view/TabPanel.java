@@ -34,7 +34,7 @@ public class TabPanel extends JPanel {
     /**
      * The preferred height and width of the info label component.
      */
-    private static final int INFO_LABEL_PREFERRED_SIZE = 86;
+    private static final int INFO_LABEL_PREFERRED_SIZE = 88;
 
     /**
      * The scroll pane.
@@ -49,7 +49,7 @@ public class TabPanel extends JPanel {
     /**
      * The info label.
      */
-    private final JTextPane infoLabel;
+    private final JLabel infoLabel;
 
     /**
      * The info panel containing the info label.
@@ -110,18 +110,16 @@ public class TabPanel extends JPanel {
 
         tablePanel.add(infoPanel, BorderLayout.SOUTH);
 
-        infoLabel = new JTextPane();
-        infoLabel.putClientProperty(JEditorPane.HONOR_DISPLAY_PROPERTIES, true);
-        infoLabel.setEditable(false);
+        infoLabel = new JLabel();
         infoLabel.setFocusable(false);
-        infoLabel.setContentType("text/html");
+        infoLabel.setVerticalAlignment(SwingConstants.CENTER);
         infoLabel.setPreferredSize(new Dimension(INFO_LABEL_PREFERRED_SIZE, INFO_LABEL_PREFERRED_SIZE));
         GridBagConstraints gbcInfoLabel = new GridBagConstraints();
-        gbcInfoLabel.insets = new Insets(6, 8, 0, 8);
+        gbcInfoLabel.insets = new Insets(0, 8, 0, 8);
         gbcInfoLabel.gridwidth = 2;
         gbcInfoLabel.weightx = 1.0;
         gbcInfoLabel.fill = GridBagConstraints.HORIZONTAL;
-        gbcInfoLabel.anchor = GridBagConstraints.NORTHWEST;
+        gbcInfoLabel.anchor = GridBagConstraints.CENTER;
         gbcInfoLabel.gridx = 0;
         gbcInfoLabel.gridy = 0;
         infoPanel.add(infoLabel, gbcInfoLabel);
@@ -169,7 +167,7 @@ public class TabPanel extends JPanel {
      *
      * @return the info label
      */
-    public JTextPane getInfoLabel() {
+    public JLabel getInfoLabel() {
         return infoLabel;
     }
 

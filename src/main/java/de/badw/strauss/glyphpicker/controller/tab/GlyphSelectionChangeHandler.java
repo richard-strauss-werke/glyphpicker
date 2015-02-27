@@ -38,7 +38,7 @@ public class GlyphSelectionChangeHandler implements ListSelectionListener {
     /**
      * The panel containing the glyph info in grid view.
      */
-    private final JTextPane infoLabel;
+    private final JLabel infoLabel;
 
     /**
      * The actions affected by selection changes.
@@ -57,13 +57,12 @@ public class GlyphSelectionChangeHandler implements ListSelectionListener {
 
     /**
      * Instantiates a new GlyphSelectionChangeHandler.
-     *
-     * @param infoLabel  The panel containing the glyph info in grid view
+     *  @param infoLabel  The panel containing the glyph info in grid view
      * @param sortedList The sorted glyph list
      * @param filterList The filtered glyph list
      * @param actions    The actions affected by selection changes
      */
-    public GlyphSelectionChangeHandler(JTextPane infoLabel,
+    public GlyphSelectionChangeHandler(JLabel infoLabel,
                                        SortedList<GlyphDefinition> sortedList,
                                        FilterList<GlyphDefinition> filterList, Set<Action> actions) {
         this.infoLabel = infoLabel;
