@@ -196,7 +196,7 @@ public class ControlPanel extends JPanel {
     }
 
     /**
-     * Shows / hides the text of all toolbar buttons / toolbar toggle buttons
+     * Shows / hides the text of all toolbar items
      * @param show true to show, false to hide the text
      */
     private void showToolbarItemText(boolean show) {
@@ -205,6 +205,9 @@ public class ControlPanel extends JPanel {
                 if (component instanceof JideButton) {
                     ((JideButton) component).setHideActionText(!show);
                 } 
+                else if (component instanceof JLabel) {
+                    component.setVisible(show);
+                }
             }
             toolBar.revalidate();
         }
@@ -288,9 +291,19 @@ public class ControlPanel extends JPanel {
     }
 
     /**
-     * sets the threshold value used to decide when to show / hide the button text in the toolbar
+     * gets the preferred width of the toolbar
+     * @return the width
      */
-    public void setToolBarWidthThreshold() {
-        this.toolBarWidthThreshold = toolBar.getPreferredSize().getWidth();
+    public double getToolbarPreferredWidth() {
+        return toolBar.getPreferredSize().getWidth();
     }
+
+    /**
+     * sets the threshold value which should be used to decide when to show / hide the button text in the toolbar
+     */
+    public void setToolBarWidthThreshold(double threshold) {
+        this.toolBarWidthThreshold = threshold;
+    }
+
+
 }

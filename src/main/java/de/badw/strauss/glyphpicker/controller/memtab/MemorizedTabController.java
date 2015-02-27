@@ -119,8 +119,6 @@ public class MemorizedTabController extends AbstractTabController {
         selectionDependentActions.add(insertAction);
         selectionDependentActions.add(moveUpAction);
         selectionDependentActions.add(moveDownAction);
-
-        controlPanel.setToolBarWidthThreshold();
     }
 
     /**

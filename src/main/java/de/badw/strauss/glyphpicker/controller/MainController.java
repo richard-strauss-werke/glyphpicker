@@ -16,8 +16,8 @@
 package de.badw.strauss.glyphpicker.controller;
 
 import de.badw.strauss.glyphpicker.controller.action.AbstractPickerAction;
-import de.badw.strauss.glyphpicker.controller.action.MemorizeAction;
 import de.badw.strauss.glyphpicker.controller.action.InsertXmlAction;
+import de.badw.strauss.glyphpicker.controller.action.MemorizeAction;
 import de.badw.strauss.glyphpicker.controller.alltab.AllTabController;
 import de.badw.strauss.glyphpicker.controller.bitmap.ImageCache;
 import de.badw.strauss.glyphpicker.controller.memtab.MemorizedTabController;
@@ -121,6 +121,13 @@ public class MainController implements PropertyChangeListener {
 
         mainPanel = new MainPanel(memorizedTabPanel, allTabPanel,
                 AbstractPickerAction.MENU_SHORTCUT_NAME);
+
+        double maximumToolbarPreferredWidth = Math.max(
+                memorizedTabPanel.getControlPanel().getToolbarPreferredWidth(),
+                allTabPanel.getControlPanel().getToolbarPreferredWidth());
+        memorizedTabPanel.getControlPanel().setToolBarWidthThreshold(maximumToolbarPreferredWidth);
+        allTabPanel.getControlPanel().setToolBarWidthThreshold(maximumToolbarPreferredWidth);
+
 
         SettingsDialogAction settingsDialogAction = new SettingsDialogAction(mainPanel,
                 allTabController, config, imageCache, allTabController.getDataSourceList());

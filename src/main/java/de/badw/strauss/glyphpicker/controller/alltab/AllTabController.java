@@ -102,7 +102,6 @@ public class AllTabController extends AbstractTabController {
         addAction = new MemorizeAction(tabPanel, this, selectionModel);
         addAction.setEnabled(false);
         controlPanel.addToToolbar(addAction, 0);
-        controlPanel.setToolBarWidthThreshold();
     }
 
     /**
