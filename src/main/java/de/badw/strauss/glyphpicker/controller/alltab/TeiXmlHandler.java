@@ -229,7 +229,7 @@ public class TeiXmlHandler extends DefaultHandler {
             if (isParent("charDecl")) {
                 range = textContent.toString();
             } else if (isParent("char")) {
-                currentGlyphDefinition.setCharName(textContent.toString());
+                currentGlyphDefinition.setDescription(textContent.toString());
             }
         } else if ("char".equals(qName) || "glyph".equals(qName)) {
             glyphDefinitions.add(currentGlyphDefinition);
@@ -248,7 +248,7 @@ public class TeiXmlHandler extends DefaultHandler {
      */
     private void onEndElementInChar(String qName) {
         if ("charName".equals(qName) || "glyphName".equals(qName)) {
-            currentGlyphDefinition.setCharName(textContent.toString());
+            currentGlyphDefinition.setDescription(textContent.toString());
         } else if ("charProp".equals(qName)) {
             currentCharPropLocalName = null;
         } else if ("localName".equals(qName)) {

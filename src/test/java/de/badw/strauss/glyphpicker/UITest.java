@@ -57,7 +57,7 @@ public class UITest {
             public void propertyChange(PropertyChangeEvent e) {
                 if ("insert".equals(e.getPropertyName())) {
                     GlyphDefinition model = (GlyphDefinition) e.getNewValue();
-                    LOGGER.info("Insertion triggered: " + model.getCharName()
+                    LOGGER.info("Insertion triggered: " + model.getDescription()
                             + "\nrefString: " + model.getXmlString());
                 }
             }

@@ -18,16 +18,16 @@ package de.badw.strauss.glyphpicker.model.selector;
 import de.badw.strauss.glyphpicker.model.GlyphDefinition;
 
 /**
- * A PropertySelector returning the character name property.
+ * A PropertySelector returning the description property.
  */
-public class CharNameSelector implements PropertySelector {
+public class DescriptionSelector implements PropertySelector {
 
     /* (non-Javadoc)
      * @see PropertySelector#get(GlyphDefinition)
      */
     @Override
     public String get(GlyphDefinition d) {
-        return d.getCharName();
+        return d.getDescription();
     }
 
 }

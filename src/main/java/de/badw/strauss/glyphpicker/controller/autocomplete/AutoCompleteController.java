@@ -99,8 +99,8 @@ public class AutoCompleteController {
 
         ResourceBundle i18n = ResourceBundle.getBundle("GlyphPicker");
 
-        autoCompleteScope.put(i18n.getString("AutoCompleteController.charName"),
-                new CharNameSelector());
+        autoCompleteScope.put(i18n.getString("AutoCompleteController.description"),
+                new DescriptionSelector());
         autoCompleteScope.put(i18n.getString("AutoCompleteController.xmlId"),
                 new IdSelector());
         autoCompleteScope.put(i18n.getString("AutoCompleteController.entity"),

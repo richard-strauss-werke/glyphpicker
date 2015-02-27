@@ -33,10 +33,10 @@ public class GlyphDefinition implements Cloneable {
     private String id;
 
     /**
-     * The char name.
+     * The description.
      */
     @XmlElement(name = "charName")
-    private String charName;
+    private String description;
 
 
     /**
@@ -89,21 +89,21 @@ public class GlyphDefinition implements Cloneable {
     }
 
     /**
-     * Gets the char name.
+     * Gets the description.
      *
-     * @return the char name
+     * @return the description
      */
-    public String getCharName() {
-        return charName;
+    public String getDescription() {
+        return description;
     }
 
     /**
-     * Sets the char name.
+     * Sets the description.
      *
-     * @param label the new char name
+     * @param label the new description
      */
-    public void setCharName(String label) {
-        this.charName = label;
+    public void setDescription(String label) {
+        this.description = label;
     }
 
 
@@ -315,7 +315,7 @@ public class GlyphDefinition implements Cloneable {
      */
     @Override
     public String toString() {
-        return getCodePointString() + ": " + charName + " (" + range + ")";
+        return getCodePointString() + ": " + description + " (" + range + ")";
     }
 
 }

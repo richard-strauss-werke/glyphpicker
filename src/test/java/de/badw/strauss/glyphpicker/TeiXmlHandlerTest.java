@@ -44,7 +44,7 @@ public class TeiXmlHandlerTest {
     public void basicTest() throws ParserConfigurationException, SAXException, IOException, TeiXmlHandler.RecursionException {
         List<GlyphDefinition> result = transform("/charDecl.xml", true, "MUFI");
         assertNull(result.get(2).getId());
-        assertEquals("LATIN SMALL LIGATURE AA CLOSED FORM", result.get(2).getCharName());
+        assertEquals("LATIN SMALL LIGATURE AA CLOSED FORM", result.get(2).getDescription());
         assertEquals("\uF204", result.get(2).getMappedChars());
         assertEquals("U+F204 ", result.get(2).getCodePointString());
         assertEquals("aacloselig", result.get(0).getEntity());

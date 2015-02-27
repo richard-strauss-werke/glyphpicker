@@ -88,8 +88,8 @@ public class DescriptionRenderer extends JLabel implements TableCellRenderer {
 
         sb.append("<html>");
 
-        if (d.getCharName() != null) {
-            sb.append("<nobr><b>").append(d.getCharName()).append("</b></nobr><br>");
+        if (d.getDescription() != null) {
+            sb.append("<nobr><b>").append(d.getDescription()).append("</b></nobr><br>");
         }
 
         if (d.getEntity() != null) {
