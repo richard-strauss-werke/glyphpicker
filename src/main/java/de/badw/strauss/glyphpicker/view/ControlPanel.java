@@ -174,9 +174,10 @@ public class ControlPanel extends JPanel {
         searchPanel.setLayout(panelLayout);
 
         autoCompleteScopeCombo = new JComboBox<String>();
+        autoCompleteScopeCombo.setMinimumSize(new Dimension(70, (int) autoCompleteScopeCombo.getPreferredSize().getHeight()));
         GridBagConstraints gbcAutoCompleteScopeCombo = new GridBagConstraints();
         gbcAutoCompleteScopeCombo.anchor = GridBagConstraints.WEST;
-        gbcAutoCompleteScopeCombo.fill = GridBagConstraints.BOTH;
+        gbcAutoCompleteScopeCombo.fill = GridBagConstraints.HORIZONTAL;
         gbcAutoCompleteScopeCombo.insets = new Insets(5, 5, 5, 5);
         gbcAutoCompleteScopeCombo.gridx = 0;
         gbcAutoCompleteScopeCombo.gridy = row;
@@ -188,7 +189,7 @@ public class ControlPanel extends JPanel {
         GridBagConstraints gbcAutoCompleteCombo = new GridBagConstraints();
         gbcAutoCompleteCombo.gridwidth = 3;
         gbcAutoCompleteCombo.weightx = 1.0;
-        gbcAutoCompleteCombo.fill = GridBagConstraints.BOTH;
+        gbcAutoCompleteCombo.fill = GridBagConstraints.HORIZONTAL;
         gbcAutoCompleteCombo.insets = new Insets(5, 3, 5, 5);
         gbcAutoCompleteCombo.gridx = 1;
         gbcAutoCompleteCombo.gridy = row;
