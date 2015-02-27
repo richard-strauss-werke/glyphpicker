@@ -34,7 +34,7 @@ public class TabPanel extends JPanel {
     /**
      * The preferred height and width of the info label component.
      */
-    private static final int INFO_LABEL_PREFERRED_SIZE = 84;
+    private static final int INFO_LABEL_PREFERRED_SIZE = 86;
 
     /**
      * The scroll pane.

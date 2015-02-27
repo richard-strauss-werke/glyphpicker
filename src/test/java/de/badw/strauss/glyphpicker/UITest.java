@@ -37,7 +37,8 @@ public class UITest {
     private static void runTest() {
         TestHelper.setSystemLookAndFeel();
         
-        Locale.setDefault(Locale.ENGLISH);
+        Locale.setDefault(Locale.GERMAN);
+        //Locale.setDefault(Locale.ENGLISH);
 
         StandalonePluginWorkspace workspace = mock(StandalonePluginWorkspace.class);
         when(workspace.getPreferencesDirectory()).thenReturn(TestHelper.getTempFolder());

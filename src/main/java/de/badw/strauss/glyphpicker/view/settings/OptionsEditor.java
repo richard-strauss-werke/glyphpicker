@@ -62,7 +62,7 @@ public class OptionsEditor extends JPanel {
         innerPanel.add(shortcutLabel);
 
         shortcutTextField = new JTextField();
-        shortcutTextField.setColumns(20);
+        shortcutTextField.setColumns(12);
         innerPanel.add(shortcutTextField);
 
         applyShortcutButton = new JideButton();

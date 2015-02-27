@@ -44,7 +44,7 @@ public class DataSourceEditor extends JPanel {
     /**
      * The component's preferred width.
      */
-    private static final int PREFERRED_WIDTH = 650;
+    private static final int PREFERRED_WIDTH = 750;
 
     /**
      * The component's preferred height.
@@ -54,7 +54,7 @@ public class DataSourceEditor extends JPanel {
     /**
      * The list component's preferred width;
      */
-    private static final int PREFERRED_LIST_WIDTH = 250;
+    private static final int PREFERRED_LIST_WIDTH = 300;
 
     /**
      * The list component.
