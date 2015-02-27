@@ -23,6 +23,9 @@ An `xml:id` on `<char>` and `<glyph>` is necessary to provide an id reference to
 
 - The character name is read from the content of the last ancestor element with the name `desc`, `charName` or `glyphName`
 
+- When a `<charProp>` element containing a child element `<localName>` with the value `entity` is present, the text content of the following child element `<value>` gets
+written to the "entity" field.
+
 - As described in the TEI Guidelines, the `<mapping>` child element of `<char>` / `<glyph>` 
 "contains one or more characters which are related to the parent character or glyph in 
 some respect, as specified by the type attribute" (see [guidelines, mapping](http://www.tei-c.org/release/doc/tei-p5-doc/de/html/ref-mapping.html)).
