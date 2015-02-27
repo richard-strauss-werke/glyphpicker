@@ -114,7 +114,6 @@ public class GlyphPickerPluginExtension implements
                     viewInfo.setComponent(mainPanel);
                     viewInfo.setTitle(TITLE);
 
-                    // TODO use custom icon
                     viewInfo.setIcon(new ImageIcon(
                             GlyphPickerPluginExtension.class
                                     .getResource(PLUGIN_ICON)));

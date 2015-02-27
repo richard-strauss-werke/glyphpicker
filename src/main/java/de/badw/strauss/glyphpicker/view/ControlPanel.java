@@ -183,6 +183,7 @@ public class ControlPanel extends JPanel {
         searchPanel.add(autoCompleteScopeCombo, gbcAutoCompleteScopeCombo);
 
         autoCompleteCombo = new JComboBox<String>();
+        autoCompleteCombo.setMinimumSize(autoCompleteCombo.getPreferredSize());
         autoCompleteCombo.setEditable(true);
         GridBagConstraints gbcAutoCompleteCombo = new GridBagConstraints();
         gbcAutoCompleteCombo.gridwidth = 3;
