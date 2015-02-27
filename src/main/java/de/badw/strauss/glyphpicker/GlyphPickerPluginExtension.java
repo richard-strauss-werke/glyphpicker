@@ -147,7 +147,7 @@ public class GlyphPickerPluginExtension implements
         } else if (currentPage instanceof WSAuthorEditorPage) {
             insertIntoAuthorPage(d.getXmlString(), (WSAuthorEditorPage) currentPage);
         } else {
-            JOptionPane.showMessageDialog(mainPanel, "No editor pane found to insert the glyph.");
+            return;
         }
         if (mainController.getConfig().shouldTransferFocusAfterInsert()) {
             transferFocus();
@@ -163,7 +163,7 @@ public class GlyphPickerPluginExtension implements
             Robot robot = new Robot();
             robot.keyPress(KeyEvent.VK_ESCAPE);
         } catch (AWTException e) {
-            JOptionPane.showMessageDialog(mainPanel, e.toString());
+            LOGGER.error(e.toString());
         }
     }
 
