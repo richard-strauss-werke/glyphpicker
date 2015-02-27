@@ -6,7 +6,9 @@ import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
 @SuiteClasses({ i18nTest.class, UITest.class, GlyphPickerPluginExtensionTest.class,
-ConfigLoaderTest.class, TeiLoadWorkerTest.class, TeiXmlHandlerTest.class})
+ConfigLoaderTest.class, TeiLoadWorkerTest.class, TeiXmlHandlerTest.class,
+//SettingsDialogActionTest.class
+})
 public class AllTests {
 
 }

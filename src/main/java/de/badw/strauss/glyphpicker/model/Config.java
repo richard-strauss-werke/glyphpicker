@@ -141,8 +141,10 @@ public class Config {
      */
     public void setShortcut(String shortcut) {
         String oldShortcut = this.shortcut;
-        this.shortcut = shortcut;
-        pcs.firePropertyChange(SHORTCUT_KEY, oldShortcut, shortcut);
+        if (shortcut instanceof String && !shortcut.equals(this.shortcut)) {
+            this.shortcut = shortcut;
+            pcs.firePropertyChange(SHORTCUT_KEY, oldShortcut, shortcut);
+        }
     }
 
     /**

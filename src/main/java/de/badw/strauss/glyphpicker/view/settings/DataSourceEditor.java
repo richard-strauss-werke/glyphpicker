@@ -37,9 +37,9 @@ import java.util.ResourceBundle;
 public class DataSourceEditor extends JPanel {
 
     /**
-     * The key of the "formEditingOccurred" event.
+     * The key of the "formChanged" event.
      */
-    public static final String FORM_EDITING_OCCURRED = "formEditingOccurred";
+    public static final String FORM_CHANGED = "formChanged";
     private static final long serialVersionUID = 1L;
     /**
      * The component's preferred width.
@@ -357,7 +357,7 @@ public class DataSourceEditor extends JPanel {
     }
 
     /**
-     * A DocumentListener added to the form text fields, firing the change event of the property FORM_EDITING_OCCURRED
+     * A DocumentListener added to the form text fields, firing the change event of the property FORM_CHANGED
      */
     private class TextFieldEditingListener implements DocumentListener {
 
@@ -366,7 +366,7 @@ public class DataSourceEditor extends JPanel {
          */
         @Override
         public void removeUpdate(DocumentEvent e) {
-            firePropertyChange(FORM_EDITING_OCCURRED, null, null);
+            firePropertyChange(FORM_CHANGED, null, null);
         }
 
         /* (non-Javadoc)
@@ -374,7 +374,7 @@ public class DataSourceEditor extends JPanel {
          */
         @Override
         public void insertUpdate(DocumentEvent e) {
-            firePropertyChange(FORM_EDITING_OCCURRED, null, null);
+            firePropertyChange(FORM_CHANGED, null, null);
         }
 
         /* (non-Javadoc)
@@ -382,12 +382,12 @@ public class DataSourceEditor extends JPanel {
          */
         @Override
         public void changedUpdate(DocumentEvent e) {
-            firePropertyChange(FORM_EDITING_OCCURRED, null, null);
+            firePropertyChange(FORM_CHANGED, null, null);
         }
     }
 
     /**
-     * An ActionListener added to the form combo, firing the change event of the property FORM_EDITING_OCCURRED
+     * An ActionListener added to the form combo, firing the change event of the property FORM_CHANGED
      */
     private class ComboChangeListener implements ActionListener {
 
@@ -396,7 +396,7 @@ public class DataSourceEditor extends JPanel {
          */
         @Override
         public void actionPerformed(ActionEvent e) {
-            firePropertyChange(FORM_EDITING_OCCURRED, null, null);
+            firePropertyChange(FORM_CHANGED, null, null);
         }
     }
 

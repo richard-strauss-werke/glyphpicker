@@ -17,6 +17,8 @@ package de.badw.strauss.glyphpicker.model;
 
 import javax.swing.*;
 import javax.xml.bind.annotation.*;
+import javax.xml.crypto.Data;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -44,7 +46,7 @@ public class DataSourceList extends AbstractListModel<String> implements
      * The data sources.
      */
     @XmlElement(name = "glyphTable")
-    private List<DataSource> data;
+    private List<DataSource> data = new ArrayList<DataSource>();
 
     /**
      * Instantiates a new DataSourceList.

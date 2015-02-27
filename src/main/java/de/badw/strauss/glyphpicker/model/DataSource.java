@@ -53,7 +53,7 @@ public class DataSource implements Cloneable {
      * The base path.
      */
     @XmlElement(name = "path")
-    private String basePath;
+    private String basePath = "";
 
     /**
      * The font name.
@@ -65,7 +65,7 @@ public class DataSource implements Cloneable {
      * The glyph renderer.
      */
     @XmlElement(name = "renderer")
-    private String glyphRenderer;
+    private String glyphRenderer = "bitmap";
 
     /**
      * The size factor.
@@ -279,5 +279,38 @@ public class DataSource implements Cloneable {
     @Override
     public DataSource clone() throws CloneNotSupportedException {
         return (DataSource) super.clone();
+    }
+
+    private boolean equalsWithNulls(Object a, Object b) {
+        if (a == b) {
+            return true;
+        }
+        if ((a == null) || (b == null)) {
+            return false;
+        }
+        return a.equals(b);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null || !(obj instanceof DataSource)) {
+            return false;
+        }
+        DataSource ds = (DataSource) obj;
+
+        if (equalsWithNulls(label, ds.getLabel())
+                && equalsWithNulls(basePath, ds.getBasePath())
+                && equalsWithNulls(fontName, ds.getFontName())
+                && equalsWithNulls(glyphRenderer, ds.getGlyphRenderer())
+                && equalsWithNulls(sizeFactor, ds.getSizeFactor())
+                && equalsWithNulls(template, ds.getTemplate())
+                && equalsWithNulls(typeAttributeValue, ds.getTypeAttributeValue())
+                && equalsWithNulls(subtypeAttributeValue, ds.getSubtypeAttributeValue())
+                && equalsWithNulls(parseMapping, ds.getParseMapping())
+                ) {
+            return true;
+        }
+
+        return false;
     }
 }

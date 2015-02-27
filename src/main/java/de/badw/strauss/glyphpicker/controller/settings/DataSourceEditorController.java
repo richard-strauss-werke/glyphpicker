@@ -25,7 +25,6 @@ import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import java.awt.event.ActionEvent;
-import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,12 +32,12 @@ import java.util.List;
 /**
  * The controller of the data source editor window.
  */
-public class DataSourceEditorController implements PropertyChangeListener {
+public class DataSourceEditorController {
 
     /**
-     * The name of the "listEditingOccurred" change property.
+     * The name of the "listChanged" change property.
      */
-    public static final String LIST_EDITING_OCCURRED = "listEditingOccurred";
+    public static final String LIST_CHANGED = "listChanged";
     /**
      * The logger.
      */
@@ -66,10 +65,7 @@ public class DataSourceEditorController implements PropertyChangeListener {
      * The delete action.
      */
     private final DeleteAction deleteAction;
-    /**
-     * Indicates if there have been changes to the data source list.
-     */
-    private boolean listEditingOccurred = false;
+
     /**
      * The list model.
      */
@@ -78,20 +74,27 @@ public class DataSourceEditorController implements PropertyChangeListener {
      * The current data source.
      */
     private DataSource currentDataSource = null;
+    /**
+     * The property change listener 
+     */
+    private PropertyChangeListener listener;
 
     /**
      * Instantiates a new DataSourceEditorController.
      *
      * @param contentPane The window's content pane
+     * @param listener The property change listener
      */
-    public DataSourceEditorController(DataSourceEditor contentPane) {
+    public DataSourceEditorController(DataSourceEditor contentPane, PropertyChangeListener listener) {
 
-        cloneAction = new CloneAction(this);
-        deleteAction = new DeleteAction(this);
-
+        this.listener = listener;
+        
+        cloneAction = new CloneAction(listener);
+        deleteAction = new DeleteAction(listener);
+        
         this.contentPane = contentPane;
-
-        JideButton addButton = new JideButton(new NewAction(this));
+        
+        JideButton addButton = new JideButton(new NewAction(listener));
         addButton.setHideActionText(true);
         contentPane.getListButtonPane().add(addButton);
 
@@ -120,8 +123,8 @@ public class DataSourceEditorController implements PropertyChangeListener {
      *
      * @param dataSourceList the data source list
      */
-    public void initList(List<DataSource> dataSourceList) {
-        initListModel(dataSourceList);
+    public void initList(DefaultListModel<DataSource> dataSourceList) {
+        setListModel(dataSourceList);
         initListComponent(contentPane.getList());
     }
 
@@ -142,20 +145,12 @@ public class DataSourceEditorController implements PropertyChangeListener {
     }
 
     /**
-     * Initializes the list model.
+     * Sets the data source list model.
      *
      * @param dataSourceList the data source list
      */
-    private void initListModel(List<DataSource> dataSourceList) {
-        listModel = new DefaultListModel<DataSource>();
-
-        try {
-            for (DataSource dataSource : dataSourceList) {
-                listModel.addElement(dataSource.clone());
-            }
-        } catch (CloneNotSupportedException e) {
-            LOGGER.error(e);
-        }
+    private void setListModel(DefaultListModel<DataSource> dataSourceList) {
+        listModel = dataSourceList;
     }
 
     /**
@@ -186,7 +181,7 @@ public class DataSourceEditorController implements PropertyChangeListener {
      */
     private void setFormValues(DataSource dataSource) {
 
-        contentPane.removePropertyChangeListener(this);
+        contentPane.removePropertyChangeListener(listener);
 
         contentPane.getLabelTextField().setText(dataSource.getLabel());
         contentPane.getPathTextField().setText(dataSource.getBasePath());
@@ -212,13 +207,13 @@ public class DataSourceEditorController implements PropertyChangeListener {
         contentPane.getParseMappingCheckBox().setSelected(
                 dataSource.getParseMapping());
 
-        contentPane.addPropertyChangeListener(this);
+        contentPane.addPropertyChangeListener(listener);
     }
 
     /**
-     * Updates data source model from the form's values.
+     * Updates the current data source model in the list from the form's values.
      */
-    private void updateCurrentModelFromForm() {
+    void updateCurrentListModelFromForm() {
         if (currentDataSource != null) {
             currentDataSource.setLabel(contentPane.getLabelTextField()
                     .getText());
@@ -250,34 +245,18 @@ public class DataSourceEditorController implements PropertyChangeListener {
     }
 
     /**
-     * gets the editing results or null if no editing has occurred
+     * gets the data in the data source list
      *
-     * @return the results
+     * @return the list data
      */
-    public List<DataSource> getEditingResults() {
-        if (listEditingOccurred) {
-            List<DataSource> resultList = new ArrayList<DataSource>();
-            for (int i = 0; i < listModel.getSize(); i++) {
-                resultList.add(listModel.getElementAt(i));
-            }
-            return resultList;
-        } else {
-            return null;
+    public List<DataSource> getList() {
+        List<DataSource> resultList = new ArrayList<DataSource>();
+        for (int i = 0; i < listModel.getSize(); i++) {
+            resultList.add(listModel.getElementAt(i));
         }
+        return resultList;
     }
 
-    /* (non-Javadoc)
-     * @see java.beans.PropertyChangeListener#propertyChange(java.beans.PropertyChangeEvent)
-     */
-    @Override
-    public void propertyChange(PropertyChangeEvent e) {
-        if (DataSourceEditor.FORM_EDITING_OCCURRED.equals(e.getPropertyName())) {
-            updateCurrentModelFromForm();
-            listEditingOccurred = true;
-        } else if (LIST_EDITING_OCCURRED.equals(e.getPropertyName())) {
-            listEditingOccurred = true;
-        }
-    }
 
     /**
      * An action to create a new data source record.
@@ -309,7 +288,7 @@ public class DataSourceEditorController implements PropertyChangeListener {
                     .getSelectionModel()
                     .setSelectionInterval(listModel.size() - 1,
                             listModel.size() - 1);
-            firePropertyChange(LIST_EDITING_OCCURRED, null, null);
+            firePropertyChange(LIST_CHANGED, null, null);
         }
     }
 
@@ -347,7 +326,7 @@ public class DataSourceEditorController implements PropertyChangeListener {
                         .getSelectionModel()
                         .setSelectionInterval(listModel.size() - 1,
                                 listModel.size() - 1);
-                firePropertyChange(LIST_EDITING_OCCURRED, null, null);
+                firePropertyChange(LIST_CHANGED, null, null);
             } catch (CloneNotSupportedException e1) {
                 LOGGER.error(e1);
             }
@@ -387,7 +366,7 @@ public class DataSourceEditorController implements PropertyChangeListener {
                             .setSelectionInterval(index, index);
                 }
             }
-            firePropertyChange(LIST_EDITING_OCCURRED, null, null);
+            firePropertyChange(LIST_CHANGED, null, null);
 
         }
     }

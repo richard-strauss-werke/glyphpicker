@@ -21,34 +21,21 @@ import de.badw.strauss.glyphpicker.model.Config;
 import de.badw.strauss.glyphpicker.view.settings.OptionsEditor;
 
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.ResourceBundle;
 
 public class PluginOptionsEditorController {
-
-    /**
-     * The window's content pane.
-     */
-    private final OptionsEditor contentPane;
 
     /**
      * the ImageCache object
      */
     private final ImageCache imageCache;
 
-    /**
-     * The i18n resource bundle.
-     */
-    private final ResourceBundle i18n = ResourceBundle.getBundle("GlyphPicker");
-
-    /**
-     * The plugin's config
-     */
-    private final Config config;
     private final PropertyChangeListener imageCacheListener;
 
     /**
@@ -58,14 +45,13 @@ public class PluginOptionsEditorController {
 
     /**
      * Initializes a new PluginOptionsEditorController
-     *
-     * @param contentPane the content pane of the the editor popup
+     *  @param contentPane the content pane of the the editor popup
      * @param config      the plugin's config
      * @param imageCache  the panel from which the window has been opened
+     * @param applyAction the action associated with the dialog's apply button
      */
-    public PluginOptionsEditorController(final OptionsEditor contentPane, final Config config, final ImageCache imageCache) {
-        this.contentPane = contentPane;
-        this.config = config;
+    public PluginOptionsEditorController(final OptionsEditor contentPane, final Config config, final ImageCache imageCache, final Action applyAction) {
+
         this.imageCache = imageCache;
 
         contentPane.getShortcutTextField().setText(config.getShortcut());
@@ -73,27 +59,31 @@ public class PluginOptionsEditorController {
 
         contentPane.getApplyShortcutButton().requestFocusInWindow();
 
-        Action applyShortcutAction = new ApplyShortcutAction();
         clearCacheAction = new ClearCacheAction();
         updateCacheActionState(imageCache.getSize());
-
-        contentPane.getApplyShortcutButton().setAction(applyShortcutAction);
 
         contentPane.getClearCacheButton().setAction(clearCacheAction);
 
         contentPane.getShortcutTextField().getDocument().addDocumentListener(
-                new ShortcutFieldInputHandler(config, applyShortcutAction));
+                new DocumentListener(){
+                    @Override
+                    public void insertUpdate(DocumentEvent e) {
+                        applyAction.setEnabled(true);
+                    }
+                    @Override
+                    public void removeUpdate(DocumentEvent e) {
+                        applyAction.setEnabled(true);
+                    }
+                    @Override
+                    public void changedUpdate(DocumentEvent e) {}
+                });
 
         contentPane.getTransferFocusCheckBox().setSelected(config.shouldTransferFocusAfterInsert());
 
         contentPane.getTransferFocusCheckBox().addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
-                if (ItemEvent.SELECTED == e.getStateChange()) {
-                    config.setTransferFocusAfterInsert(true);
-                } else if (ItemEvent.DESELECTED == e.getStateChange()) {
-                    config.setTransferFocusAfterInsert(false);
-                }
+                applyAction.setEnabled(true);
             }
         });
 
@@ -133,31 +123,6 @@ public class PluginOptionsEditorController {
             clearCacheAction.setEnabled(false);
         } else if (imageCacheSize != 0 && !clearCacheAction.isEnabled()) {
             clearCacheAction.setEnabled(true);
-        }
-    }
-
-    /**
-     * An action to apply a new shortcut string.
-     */
-    private final class ApplyShortcutAction extends AbstractPickerAction {
-
-        private static final long serialVersionUID = 1L;
-
-        /**
-         * Instantiates a new ApplyShortcutAction.
-         */
-        private ApplyShortcutAction() {
-            super(ApplyShortcutAction.class.getSimpleName(), "/images/oxygen/AcceptChange16.png");
-            setEnabled(false);
-        }
-
-        /* (non-Javadoc)
-         * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
-         */
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            config.setShortcut(contentPane.getShortcutTextField().getText());
-            setEnabled(false);
         }
     }
 
