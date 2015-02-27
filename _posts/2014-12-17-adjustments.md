@@ -18,7 +18,7 @@ You can adjust the XML code inserted from the GlyphPicker plugin into XML docume
 
 Examples:
 
-Use a custom base url and the xml:id in order to provide the full path to the character declaration in each `<g>` element:
+Use a custom base url and the xml:id in order to provide an absolute path to the character declaration in each `<g>` element:
 
 ```
 Template:
