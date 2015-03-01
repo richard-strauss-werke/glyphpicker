@@ -17,7 +17,6 @@ package de.badw.strauss.glyphpicker.model;
 
 import javax.swing.*;
 import javax.xml.bind.annotation.*;
-import javax.xml.crypto.Data;
 import java.util.ArrayList;
 import java.util.List;
 

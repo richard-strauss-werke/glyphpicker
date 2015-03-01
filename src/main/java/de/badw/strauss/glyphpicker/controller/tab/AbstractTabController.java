@@ -32,7 +32,6 @@ import de.badw.strauss.glyphpicker.controller.action.SortAction;
 import de.badw.strauss.glyphpicker.controller.autocomplete.AutoCompleteController;
 import de.badw.strauss.glyphpicker.controller.bitmap.BitmapLoadWorker;
 import de.badw.strauss.glyphpicker.controller.bitmap.ImageCache;
-import de.badw.strauss.glyphpicker.model.Config;
 import de.badw.strauss.glyphpicker.model.GlyphDefinition;
 import de.badw.strauss.glyphpicker.view.*;
 import de.badw.strauss.glyphpicker.view.renderer.GlyphRendererAdapter;

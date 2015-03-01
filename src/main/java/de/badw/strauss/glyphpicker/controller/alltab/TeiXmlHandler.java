@@ -92,7 +92,7 @@ public class TeiXmlHandler extends DefaultHandler {
     /**
      * The content a charProp's localName must have in order to mark an entity property
      */
-    private String ENTITY = "entity";
+    private static final String ENTITY = "entity";
 
     /**
      * Instantiates a new TeiXmlHandler.

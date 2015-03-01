@@ -282,10 +282,7 @@ public class DataSource implements Cloneable {
     }
 
     private boolean equalsWithNulls(Object a, Object b) {
-        if (a == b) {
-            return true;
-        }
-        return !((a == null) || (b == null)) && a.equals(b);
+        return a == b || !((a == null) || (b == null)) && a.equals(b);
     }
 
     @Override
@@ -295,7 +292,7 @@ public class DataSource implements Cloneable {
         }
         DataSource ds = (DataSource) obj;
 
-        if (equalsWithNulls(label, ds.getLabel())
+        return equalsWithNulls(label, ds.getLabel())
                 && equalsWithNulls(basePath, ds.getBasePath())
                 && equalsWithNulls(fontName, ds.getFontName())
                 && equalsWithNulls(glyphRenderer, ds.getGlyphRenderer())
@@ -303,11 +300,7 @@ public class DataSource implements Cloneable {
                 && equalsWithNulls(template, ds.getTemplate())
                 && equalsWithNulls(typeAttributeValue, ds.getTypeAttributeValue())
                 && equalsWithNulls(subtypeAttributeValue, ds.getSubtypeAttributeValue())
-                && equalsWithNulls(parseMapping, ds.getParseMapping())
-                ) {
-            return true;
-        }
+                && equalsWithNulls(parseMapping, ds.getParseMapping());
 
-        return false;
     }
 }

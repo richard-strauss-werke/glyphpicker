@@ -53,10 +53,6 @@ public class SettingsDialogAction extends AbstractPickerAction implements Proper
      */
     private static final String CLASS_NAME = SettingsDialogAction.class.getSimpleName();
     /**
-     * The panel from which the data source editor has been opened.
-     */
-    private final JPanel parentPanel;
-    /**
      * the ImageCache object
      */
     private final ImageCache imageCache;
@@ -87,7 +83,6 @@ public class SettingsDialogAction extends AbstractPickerAction implements Proper
                                 DataSourceList originalDataSourceList) {
         super(CLASS_NAME, "/images/oxygen/OptionsShortcut16_centered.png", "ctrl E");
         addPropertyChangeListener(listener);
-        this.parentPanel = parentPanel;
         this.imageCache = imageCache;
         this.config = config;
         this.originalDataSourceList = originalDataSourceList;
@@ -103,7 +98,7 @@ public class SettingsDialogAction extends AbstractPickerAction implements Proper
     @Override
     public void actionPerformed(ActionEvent e) {
 
-        firstOriginalListItemClone = getFirstOriginalListItemClone();
+        DataSource firstOriginalListItemClone = getFirstOriginalListItemClone();
         
         DataSourceEditor dataSourceEditor = new DataSourceEditor();
          optionsEditor = new OptionsEditor();
@@ -137,13 +132,7 @@ public class SettingsDialogAction extends AbstractPickerAction implements Proper
         pluginOptionsEditorController.removeImageCacheListener();
         dataSourceEditorController = null;
         optionsEditor = null;
-        firstOriginalListItemClone = null;
     }
-
-    /**
-     * a clone of the first data source in the original list
-     */
-    private DataSource firstOriginalListItemClone;
 
     /**
      * gets a clone of the first item in the original list or null if there is no item or an error occurred

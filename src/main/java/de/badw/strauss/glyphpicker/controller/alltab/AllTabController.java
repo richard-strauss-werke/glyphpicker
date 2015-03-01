@@ -146,23 +146,19 @@ public class AllTabController extends AbstractTabController {
      */
     public final void loadData() {
 
+        if (dataSourceList.getSize() == 0) {
+            showNoDataSourceMessage();
+            return;
+        }
+        
         int index = controlPanel.getDataSourceCombo().getSelectedIndex();
 
-        if (index == -1) {
+        if (index == -1 || index > dataSourceList.getSize() - 1) {
+            controlPanel.getDataSourceCombo().setSelectedIndex(0);
             index = 0;
         }
 
-        if (index > dataSourceList.getSize() - 1) {
-            showNoDataSourceMessage();
-            return;
-        }
-
         DataSource dataSource = dataSourceList.getDataSourceAt(index);
-
-        if (dataSource == null) {
-            showNoDataSourceMessage();
-            return;
-        }
 
         cancelTeiLoadWorker();
         cancelBitmapLoadWorker();
@@ -229,12 +225,14 @@ public class AllTabController extends AbstractTabController {
 
             glyphList.addAll(data);
 
-            // set the loading path as first item in the pathComboModel
-            int index = controlPanel.getDataSourceCombo().getSelectedIndex();
-            if (index != -1) {
-                dataSourceList.setFirstIndex(index);
-            }
         }
+
+        // set the loading path as first item in the pathComboModel
+        int index = controlPanel.getDataSourceCombo().getSelectedIndex();
+        if (index != -1) {
+            dataSourceList.setFirstIndex(index);
+        }
+        
         pcs.firePropertyChange(DATA_LOADED, null, this);
     }
 
