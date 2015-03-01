@@ -159,6 +159,7 @@ public class TeiLoadWorker extends SwingWorker<List<GlyphDefinition>, Void> {
         } catch (IOException e) {
             String message = String.format(
                     i18n.getString("TeiLoadWorker.couldNotLoadData"),
+                    e.getLocalizedMessage(),
                     dataSource.getBasePath());
             if (e instanceof UnknownHostException) {
                 message += " Unknown host";
@@ -195,7 +196,7 @@ public class TeiLoadWorker extends SwingWorker<List<GlyphDefinition>, Void> {
                 JOptionPane.showMessageDialog(
                         null,
                         String.format(
-                                i18n.getString("TeiLoadWorker.couldNotLoadData"), fileName),
+                                i18n.getString("TeiLoadWorker.couldNotLoadData"), e.getLocalizedMessage(), fileName),
                         i18n.getString("TeiLoadWorker.error"), JOptionPane.ERROR_MESSAGE);
                 LOGGER.info(e);
             }
