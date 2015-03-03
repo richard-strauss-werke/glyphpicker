@@ -41,6 +41,12 @@ Add `http://richard-strauss-werke.github.io/glyphpicker/update/latest.xml` to oX
 You can fork or clone the source code at https://github.com/richard-strauss-werke/glyphpicker; for further 
 instructions, see [Development]({{ site.baseurl }}{% post_url 2014-12-13-development %}).
 
-#### Issues
+#### Limitations and known issues
+
+- Composite characters: `<g>` character references in `<mapping>` only get resolved when the referenced character is declared in the same file;
+  references to external character declarations are not supported.
+- Rendering of BravuraText characters in `vector` and `scaled vector` mode: BravuraText doesn't render at all when the plugin is run in a Java 6 virtual machine on Windows (Java 7+ on Windows and Java 6 in OSX should work).
+
+#### Reporting Issues
 
 To report an issue, please visit the project's GitHub page at https://github.com/richard-strauss-werke/glyphpicker
