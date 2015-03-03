@@ -228,6 +228,7 @@ public class GlyphPickerPluginExtension implements
         String stringWithNs = addNamespace(str);
 
         if (stringWithNs != null && !stringWithNs.isEmpty()) {
+            page.getDocumentController().beginCompoundEdit();
             try {
                 AuthorAccess authorAccess = page.getAuthorAccess();
 
@@ -249,6 +250,7 @@ public class GlyphPickerPluginExtension implements
             } catch (AuthorOperationException e) {
                 JOptionPane.showInputDialog(e.toString());
             }
+            page.getDocumentController().endCompoundEdit();
         }
     }
 
