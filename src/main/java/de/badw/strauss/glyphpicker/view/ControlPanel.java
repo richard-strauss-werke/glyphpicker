@@ -134,6 +134,7 @@ public class ControlPanel extends JPanel {
                 }
             };
             dataSourceCombo.setPreferredSize(new Dimension(150, dataSourceCombo.getPreferredSize().height));
+            dataSourceCombo.setMinimumSize(new Dimension(1, dataSourceCombo.getMinimumSize().height));
             dataSourceCombo.setEditable(false);
             toolBar.add(dataSourceCombo);
 
