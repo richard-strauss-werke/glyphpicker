@@ -69,24 +69,18 @@ public class GlyphScaledVectorRenderer extends GlyphRenderer {
         setText(null);
 
         attr = new HashMap<TextAttribute, Integer>();
-        {
-            attr.put(KERNING, KERNING_ON);
-            attr.put(LIGATURES, LIGATURES_ON);
-        }
+        attr.put(KERNING, KERNING_ON);
+        attr.put(LIGATURES, LIGATURES_ON);
     }
 
     /* (non-Javadoc)
      * @see GlyphRenderer#getRendererComponent(GlyphDefinition, boolean)
      */
     public Component getRendererComponent(GlyphDefinition gd, boolean isSelected) {
-
         ch = gd.getMappedChars();
         fontName = gd.getDataSource().getFontName();
-
         factor = gd.getDataSource().getSizeFactor();
-
         configureBackground(isSelected);
-
         return this;
     }
 
@@ -122,16 +116,16 @@ public class GlyphScaledVectorRenderer extends GlyphRenderer {
         Font font = baseFont.deriveFont(attr);
 
         GlyphVector gv = font.createGlyphVector(frc, text);
-        Rectangle visualBounds = gv.getPixelBounds(frc, 0, 0);
+        Rectangle pixelBounds = gv.getPixelBounds(frc, 0, 0);
 
-        float scaleFactor = Math.min(w / visualBounds.width, h
-                / visualBounds.height);
+        float scaleFactor = Math.min(w / pixelBounds.width, h
+                / pixelBounds.height);
 
         int centerX = getWidth() / 2;
         int centerY = getHeight() / 2;
 
-        float scaledOffsetX = (visualBounds.x + (visualBounds.width / 2)) * scaleFactor;
-        float scaledOffsetY = (visualBounds.y + (visualBounds.height / 2)) * scaleFactor;
+        float scaledOffsetX = (pixelBounds.x + (pixelBounds.width / 2)) * scaleFactor;
+        float scaledOffsetY = (pixelBounds.y + (pixelBounds.height / 2)) * scaleFactor;
 
         AffineTransform at = new AffineTransform();
         at.translate(centerX - scaledOffsetX, centerY - scaledOffsetY);

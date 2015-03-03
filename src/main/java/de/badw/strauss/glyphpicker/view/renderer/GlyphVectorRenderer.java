@@ -69,24 +69,18 @@ public class GlyphVectorRenderer extends GlyphRenderer {
         setText(null);
 
         attr = new HashMap<TextAttribute, Integer>();
-        {
-            attr.put(KERNING, KERNING_ON);
-            attr.put(LIGATURES, LIGATURES_ON);
-        }
+        attr.put(KERNING, KERNING_ON);
+        attr.put(LIGATURES, LIGATURES_ON);
     }
 
     /* (non-Javadoc)
      * @see GlyphRenderer#getRendererComponent(GlyphDefinition, boolean)
      */
     public Component getRendererComponent(GlyphDefinition gd, boolean isSelected) {
-
         ch = gd.getMappedChars();
         fontName = gd.getDataSource().getFontName();
-
         factor = gd.getDataSource().getSizeFactor();
-
         configureBackground(isSelected);
-
         return this;
     }
 
@@ -100,7 +94,7 @@ public class GlyphVectorRenderer extends GlyphRenderer {
             Graphics2D g2 = (Graphics2D) g;
             g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
                     RenderingHints.VALUE_ANTIALIAS_ON);
-            drawGlyph(g2, ch, fontName);
+            drawText(g2, ch, fontName);
         }
     }
 
@@ -111,7 +105,7 @@ public class GlyphVectorRenderer extends GlyphRenderer {
      * @param text     the text
      * @param fontName the font name
      */
-    private void drawGlyph(Graphics2D g2, String text, String fontName) {
+    private void drawText(Graphics2D g2, String text, String fontName) {
 
         int fontSize = Math.round(getHeight() * factor);
 
@@ -119,13 +113,13 @@ public class GlyphVectorRenderer extends GlyphRenderer {
         Font font = baseFont.deriveFont(attr);
 
         GlyphVector gv = font.createGlyphVector(frc, text);
-        Rectangle visualBounds = gv.getPixelBounds(frc, 0, 0);
+        Rectangle pixelBounds = gv.getPixelBounds(frc, 0, 0);
 
         int centerX = getWidth() / 2;
         int centerY = getHeight() / 2;
 
-        float offsetX = visualBounds.x + (visualBounds.width / 2);
-        float offsetY = visualBounds.y + (visualBounds.height / 2);
+        float offsetX = pixelBounds.x + (pixelBounds.width / 2);
+        float offsetY = pixelBounds.y + (pixelBounds.height / 2);
 
         AffineTransform at = new AffineTransform();
         at.translate(centerX - offsetX, centerY - offsetY);
