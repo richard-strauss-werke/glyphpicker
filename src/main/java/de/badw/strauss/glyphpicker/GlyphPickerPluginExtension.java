@@ -25,6 +25,7 @@ import ro.sync.ecss.extensions.api.AuthorAccess;
 import ro.sync.ecss.extensions.api.AuthorOperationException;
 import ro.sync.exml.plugin.workspace.WorkspaceAccessPluginExtension;
 import ro.sync.exml.workspace.api.PluginWorkspace;
+import ro.sync.exml.workspace.api.editor.WSEditor;
 import ro.sync.exml.workspace.api.editor.page.WSEditorPage;
 import ro.sync.exml.workspace.api.editor.page.author.WSAuthorEditorPage;
 import ro.sync.exml.workspace.api.editor.page.text.WSTextEditorPage;
@@ -40,6 +41,7 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.ResourceBundle;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -55,6 +57,11 @@ public class GlyphPickerPluginExtension implements
     private static final Logger LOGGER = Logger
             .getLogger(GlyphPickerPluginExtension.class.getName());
 
+    /**
+     * The internationalization resource bundle 
+     */
+    ResourceBundle i18n;
+    
     /**
      * The path of the plugin's icon.
      */
@@ -133,6 +140,19 @@ public class GlyphPickerPluginExtension implements
     }
 
     /**
+     * gets the internationalization resource bundle by returning the i18n field. If the
+     * resource bundle is null, it will be declared
+     * @return the i18n resource bundle
+     */
+    private ResourceBundle getI18n () {
+        if (i18n == null) {
+            i18n = ResourceBundle
+                    .getBundle("GlyphPicker");
+        }
+        return i18n;
+    }
+    
+    /**
      * Inserts a text fragment into a text or author editor pane.
      *
      * @param workspace oXygen's plugin workspace
@@ -140,30 +160,36 @@ public class GlyphPickerPluginExtension implements
      */
     private void insertFragment(StandalonePluginWorkspace workspace,
                                 GlyphDefinition d) {
-        WSEditorPage currentPage = workspace.getCurrentEditorAccess(
-                PluginWorkspace.MAIN_EDITING_AREA).getCurrentPage();
-        if (currentPage instanceof WSTextEditorPage) {
-            insertIntoTextEditorPage(d.getXmlString(), (WSTextEditorPage) currentPage);
-        } else if (currentPage instanceof WSAuthorEditorPage) {
-            insertIntoAuthorPage(d.getXmlString(), (WSAuthorEditorPage) currentPage);
-        } else {
-            return;
-        }
-        if (mainController.getConfig().shouldTransferFocusAfterInsert()) {
-            transferFocus();
-        }
+        WSEditor editorAccess = workspace.getCurrentEditorAccess(
+                PluginWorkspace.MAIN_EDITING_AREA);
+        if (editorAccess != null) {
+            WSEditorPage currentPage = editorAccess.getCurrentPage();
+            if (currentPage instanceof WSTextEditorPage) {
+                insertIntoTextEditorPage(d.getXmlString(), (WSTextEditorPage) currentPage);
+                transferFocus();
+                return;
+            } else if (currentPage instanceof WSAuthorEditorPage) {
+                insertIntoAuthorPage(d.getXmlString(), (WSAuthorEditorPage) currentPage);
+                transferFocus();
+                return;
+            } 
+        } 
+         
+        workspace.showErrorMessage(getI18n().getString("GlyphPickerPluginExtension.noEditorFound"));
     }
 
     /**
      * transfers the focus of the GlyphPicker panel to the previously focused component
      */
     private void transferFocus() {
-        // TODO find the parent component in oXygen, get action map, trigger event
-        try {
-            Robot robot = new Robot();
-            robot.keyPress(KeyEvent.VK_ESCAPE);
-        } catch (AWTException e) {
-            LOGGER.error(e.toString());
+        if (mainController.getConfig().shouldTransferFocusAfterInsert()) {
+            // TODO find the parent component in oXygen, get action map, trigger event
+            try {
+                Robot robot = new Robot();
+                robot.keyPress(KeyEvent.VK_ESCAPE);
+            } catch (AWTException e) {
+                LOGGER.error(e.toString());
+            }
         }
     }
 
@@ -178,8 +204,8 @@ public class GlyphPickerPluginExtension implements
         if (str != null && !str.isEmpty()) {
             page.beginCompoundUndoableEdit();
             int selectionOffset = page.getSelectionStart();
-            page.deleteSelection();
             try {
+                page.deleteSelection();
                 page.getDocument().insertString(selectionOffset,
                         str,
                         javax.swing.text.SimpleAttributeSet.EMPTY);
@@ -218,10 +244,10 @@ public class GlyphPickerPluginExtension implements
                 int endOffset = endOffsetPos != null ? endOffsetPos.getOffset() - 1
                         : offset;
                 authorAccess.getEditorAccess().setCaretPosition(endOffset);
-            } catch (BadLocationException e1) {
-                LOGGER.error(e1);
-            } catch (AuthorOperationException e1) {
-                LOGGER.error(e1);
+            } catch (BadLocationException e) {
+                JOptionPane.showInputDialog(e.toString());
+            } catch (AuthorOperationException e) {
+                JOptionPane.showInputDialog(e.toString());
             }
         }
     }
