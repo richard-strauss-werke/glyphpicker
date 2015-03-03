@@ -44,7 +44,8 @@ instructions, see [Development]({{ site.baseurl }}{% post_url 2014-12-13-develop
 #### Limitations and known issues
 
 - Composite characters: `<g>` character references in `<mapping>` only get resolved when the referenced character is declared in the same file;
-  references to external character declarations are not supported.
+  references to external character declarations are not supported; adding the 
+  target declaration's mapping as text content of the `<g>` element could be used as a workaround. 
 - Rendering of BravuraText characters in `vector` and `scaled vector` mode: BravuraText doesn't render at all when the plugin is run in a Java 6 virtual machine on Windows (Java 7+ on Windows and Java 6 in OSX should work).
 
 #### Reporting Issues
